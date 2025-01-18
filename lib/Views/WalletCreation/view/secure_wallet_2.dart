@@ -1,0 +1,327 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/hidden_write_phrase.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/write_seed_phrase.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+
+class SecureWallet2 extends StatelessWidget {
+  const SecureWallet2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: whiteColor,
+         appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: whiteColor,
+        shadowColor: whiteColor,
+        foregroundColor: whiteColor,
+        surfaceTintColor: whiteColor,
+        elevation: 0.0,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: GestureDetector(
+            onTap: (){
+             Get.back();
+            },
+            child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(child: SvgPicture.asset(arrowLeft)),
+            ),
+          ),
+        ),
+        title: SizedBox(
+          width: Get.width / 2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(() => buildStep(0)), // Wrap individual widgets
+              Obx(() => buildLine(1)),
+              Obx(() => buildStep(1)),
+              Obx(() => buildLine(2)),
+              Obx(() => buildStep(2)),
+            ],
+          ),
+        ),
+      ),
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 25.w,vertical: 25.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomDivider(),
+                SizedBox(height: 25.h,),
+                Center(
+                  child: Text("Secure Your Wallet",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 32.sp,
+                    color: orange3
+                  ),),
+                ),
+                SizedBox(height: 10.h,),
+      Center(
+        child: RichText(
+          text: TextSpan(
+            text: "Secure your wallet's ",
+            style: GoogleFonts.urbanist(
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w500,
+        color: darkGreyColor,
+            ),
+            children: [
+        TextSpan(
+          text: '"', // Opening black quote
+          style: GoogleFonts.urbanist(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w500,
+            color: darkGreyColor,
+          ),
+        ),
+        TextSpan(
+          text: "Seed Phrase",
+          style: GoogleFonts.urbanist(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w500,
+            color: orange3,
+          ),
+        ),
+        TextSpan(
+          text: '"', // Closing black quote
+          style: GoogleFonts.urbanist(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w500,
+            color: darkGreyColor,
+          ),
+        ),
+            ],
+          ),
+        ),
+      )
+,
+                 SizedBox(height: 25.h,),
+                CustomDivider(),
+                SizedBox(height: 25.h,),
+               
+                 Text("Manual",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20.sp,
+                    color: blackColor2
+                  ),),
+                  SizedBox(height: 20.h,),
+                   Text("Write down your seed phrase on a piece of paper and store in a safe place.",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 19.sp,
+                    color: darkGreyColor
+                  ),),
+                   SizedBox(height: 20.h,),
+                   Text("Security level: Very strong",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: darkGreyColor
+                  ),),
+               SizedBox(height: 15.h,),
+                    SizedBox(
+                      height: 4.h,
+                      child: ListView.builder(
+                        itemCount: 3,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context,index){
+                        return  Padding(
+                          padding:  EdgeInsets.only(right: 5.w),
+                          child: Container(
+                          height: 4.h,
+                          width: 63.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.r),
+                            gradient: LinearGradient(
+                              colors: [orange2,orange1], // Your gradient colors
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                          ),
+                                              ),
+                        );
+                      }),
+                    ),
+                     SizedBox(height: 20.h,),
+                   Text("Risks are: ",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: darkGreyColor
+                  ),),
+                  
+      ListView.builder(
+        itemCount: 3,
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "• ", // Bullet point
+              style: GoogleFonts.urbanist(
+                fontWeight: FontWeight.w500,
+                fontSize: 18.sp,
+                color: darkGreyColor,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                index==0?"You lose it":index==1?"You forget where you put it":"Someone else finds it",
+                style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
+                  color: darkGreyColor,
+                ),
+              ),
+              
+            ),
+            
+          ],
+        ),
+      );
+        },
+      )
+         ,
+         SizedBox(height: 20.h,),
+                   Text("Other options: Doesn't have to be paper!",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: darkGreyColor
+                  ),),
+                   SizedBox(height: 20.h,),
+                   Text("Tips:",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: darkGreyColor
+                  ),),
+                  ListView.builder(
+        itemCount: 3,
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "• ", // Bullet point
+              style: GoogleFonts.urbanist(
+                fontWeight: FontWeight.w500,
+                fontSize: 18.sp,
+                color: darkGreyColor,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                index==0?"Store in bank vault":index==1?"Store in a safe":"Store in multiple secret places",
+                style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
+                  color: darkGreyColor,
+                ),
+              ),
+              
+            ),
+            
+          ],
+        ),
+      );
+        },
+      )
+      
+              ],
+            ),
+          ),
+       SizedBox(height: 200.h,)
+        ],
+      ),
+    ),
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+ floatingActionButton: Container(
+  decoration: BoxDecoration(
+    border: Border(
+      top: BorderSide(
+        color: greyColor4
+      )
+    )
+  ),
+   child: Padding(
+            padding:  EdgeInsets.only(left: 15.w,top: 20.h,right: 15.w,bottom: 10.h),
+            child: CustomButton(buttonText: "Start", onPressed: (){
+   Get.to(()=>HiddenWriteSeedPhraseScreen());
+            })
+          ),
+ ),
+   
+    );
+  }
+  
+  Widget buildStep(int index) {
+    final StepController controller = Get.find();
+    bool isActive = controller.currentIndex.value >= index;
+
+    return Container(
+      width: 20.w,
+      height: 20.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: isActive
+            ? LinearGradient(
+                colors: [
+                  Color(0xFFFFE580),
+                  Color(0xFFFACC15),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : null,
+        color: isActive ? null : greyColor, // Default color for inactive steps
+      ),
+    );
+  }
+
+  Widget buildLine(int index) {
+    final StepController controller = Get.find();
+    bool isActive = controller.currentIndex.value >= index;
+
+    return Expanded(
+      child: Container(
+        height: 4.h,
+        decoration: BoxDecoration(
+          gradient: isActive
+              ? LinearGradient(
+                  colors: [primaryColor, lightPrimaryColor],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                )
+              : null,
+          color:
+              isActive ? null : greyColor, // Default color for inactive lines
+        ),
+      ),
+    );
+  }
+
+}

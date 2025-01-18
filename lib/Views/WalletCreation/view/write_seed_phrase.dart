@@ -1,0 +1,266 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+
+class WriteSeedPhraseScreen extends StatelessWidget {
+  const WriteSeedPhraseScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: whiteColor,
+         appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: whiteColor,
+        shadowColor: whiteColor,
+        foregroundColor: whiteColor,
+        surfaceTintColor: whiteColor,
+        elevation: 0.0,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 5.w),
+          child: GestureDetector(
+            onTap: (){
+            Get.back();
+            },
+            child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(child: SvgPicture.asset(arrowLeft)),
+            ),
+          ),
+        ),
+        title: SizedBox(
+          width: Get.width / 2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(() => buildStep(0)), // Wrap individual widgets
+              Obx(() => buildLine(1)),
+              Obx(() => buildStep(1)),
+              Obx(() => buildLine(2)),
+              Obx(() => buildStep(2)),
+            ],
+          ),
+        ),
+      ),
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 25.w,vertical: 15.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomDivider(),
+                SizedBox(height: 10.h,),
+                Center(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    "Write Down Your Seed Phrase",style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 32.sp,
+                    color: orange3
+                  ),),
+                ),
+                SizedBox(height: 10.h,),
+                Text(
+                  textAlign: TextAlign.center,
+                  "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",style: GoogleFonts.urbanist(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+        color: darkGreyColor,
+            ),),
+                
+  
+                 SizedBox(height: 25.h,),
+                CustomDivider(),
+                SizedBox(height: 25.h,),
+
+                Container(
+                  height: 378.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient:  LinearGradient(
+        colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
+      ),
+      borderRadius: BorderRadius.circular(40.r)
+                  ),
+                  child: Padding(
+                    padding:  EdgeInsets.all(2.h),
+                    child: Container(
+                      decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(40.r),
+                            color: whiteColor,   
+                      ),
+                     
+                      child: Padding(
+                        padding:  EdgeInsets.all(10.h),
+                        child: GridViewBuilderExample(),
+                      )),
+                  ),
+                ),
+                SizedBox(height: 25.h,),
+              
+// Container(
+//   height: 378.h,
+//   width: double.infinity,
+//   decoration: BoxDecoration(
+//     borderRadius: BorderRadius.circular(40.r),
+//     color: whiteColor,
+//   ),
+//   child: ShaderMask(
+//     shaderCallback: (Rect bounds) {
+//       return LinearGradient(
+//         colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
+//       ).createShader(bounds);
+//     },
+//     child: Container(
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(40.r),
+//         border: Border.all(
+//           width: 3, // Border thickness
+//           color: Colors.white, // Base color
+//         ),
+//       ),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           color: Colors.grey, // Explicit background color for the child
+//           borderRadius: BorderRadius.circular(40.r), // Ensure border radius is consistent
+//         ),
+//         child: Padding(
+//           padding: EdgeInsets.all(10.h),
+//           child: GridViewBuilderExample(),
+//         ),
+//       ),
+//     ),
+//   ),
+// )
+
+          ],
+            ),
+          ),
+            CustomDivider(),
+       SizedBox(height: 200.h,)
+        ],
+      ),
+    ),
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+ floatingActionButton:
+    Padding(
+            padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
+            child: CustomButton(buttonText: "Next", onPressed: (){
+   
+            })
+          ),
+   
+    );
+  }
+  
+  Widget buildStep(int index) {
+    final StepController controller = Get.find();
+    bool isActive = controller.currentIndex.value >= index;
+
+    return Container(
+      width: 20.w,
+      height: 20.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: isActive
+            ? LinearGradient(
+                colors: [
+                  Color(0xFFFFE580),
+                  Color(0xFFFACC15),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : null,
+        color: isActive ? null : greyColor, // Default color for inactive steps
+      ),
+    );
+  }
+
+  Widget buildLine(int index) {
+    final StepController controller = Get.find();
+    bool isActive = controller.currentIndex.value >= index;
+
+    return Expanded(
+      child: Container(
+        height: 4.h,
+        decoration: BoxDecoration(
+          gradient: isActive
+              ? LinearGradient(
+                  colors: [primaryColor, lightPrimaryColor],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                )
+              : null,
+          color:
+              isActive ? null : greyColor, // Default color for inactive lines
+        ),
+      ),
+    );
+  }
+
+  
+
+}
+
+
+
+class GridViewBuilderExample extends StatelessWidget {
+  final List<String> items = [
+    '1. material',
+    '7. space',
+    '2. wristn',
+    '8. bench',
+    '3. option',
+    '9. payment',
+    '4. skate',
+    '10. bomb',
+    '5. harbor',
+    '11. hint',
+    '6. peart',
+    '12. maze'
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2 columns
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 3, // Width to height ratio
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              color: greyColor4,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Text(
+                items[index],
+                style: GoogleFonts.urbanist(fontSize: 18.sp,color: darkGreyColor,fontWeight: FontWeight.w700),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
