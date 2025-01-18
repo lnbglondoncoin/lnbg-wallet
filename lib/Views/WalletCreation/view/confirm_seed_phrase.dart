@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/confirm_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
-class WriteSeedPhraseScreen extends StatelessWidget {
-   WriteSeedPhraseScreen({super.key});
+class ConfirmSeedPhraseScreen extends StatelessWidget {
+   ConfirmSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
 
   @override
@@ -23,10 +19,12 @@ class WriteSeedPhraseScreen extends StatelessWidget {
       backgroundColor: whiteColor,
     appBar: CustomStepAppBar(
         onBackTap: () {
-           Get.back();
+        controller.decreseIndexValue(2);
+              Get.back();
         },
         currentIndex: controller.currentIndex, onWillPop: () { 
-        Get.back();
+            controller.decreseIndexValue(2);
+              Get.back();
          }, // Pass the RxInt
       ),   body: SingleChildScrollView(
       child: Column(
@@ -41,7 +39,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                 Center(
                   child: Text(
                     textAlign: TextAlign.center,
-                    "Write Down Your Seed Phrase",style: GoogleFonts.urbanist(
+                    "Confirm Seed Phrase",style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 32.sp,
                     color: orange3
@@ -50,7 +48,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                 SizedBox(height: 10.h,),
                 Text(
                   textAlign: TextAlign.center,
-                  "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",style: GoogleFonts.urbanist(
+                  "Select each word in the order it was presented to you.",style: GoogleFonts.urbanist(
         fontSize: 18.sp,
         fontWeight: FontWeight.w500,
         color: darkGreyColor,
@@ -59,8 +57,15 @@ class WriteSeedPhraseScreen extends StatelessWidget {
   
                  SizedBox(height: 25.h,),
                 CustomDivider(),
-                SizedBox(height: 25.h,),
-
+                SizedBox(height: 45.h,),
+Center(
+  child: Text("6.",style: GoogleFonts.urbanist(
+    fontSize: 48.sp,
+    fontWeight: FontWeight.w700,
+    color: orange3
+  ),),
+),
+SizedBox(height: 45.h,),
                 Container(
                   height: 378.h,
                   width: double.infinity,
@@ -80,47 +85,13 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                      
                       child: Padding(
                         padding:  EdgeInsets.all(10.h),
-                        child: GridViewBuilderWidget(),
+                        child:  GridViewBuilderWidget(items: controller.selectedSeeds,)
+                        
                       )),
                   ),
                 ),
                 SizedBox(height: 25.h,),
-              
-// Container(
-//   height: 378.h,
-//   width: double.infinity,
-//   decoration: BoxDecoration(
-//     borderRadius: BorderRadius.circular(40.r),
-//     color: whiteColor,
-//   ),
-//   child: ShaderMask(
-//     shaderCallback: (Rect bounds) {
-//       return LinearGradient(
-//         colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
-//       ).createShader(bounds);
-//     },
-//     child: Container(
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(40.r),
-//         border: Border.all(
-//           width: 3, // Border thickness
-//           color: Colors.white, // Base color
-//         ),
-//       ),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           color: Colors.grey, // Explicit background color for the child
-//           borderRadius: BorderRadius.circular(40.r), // Ensure border radius is consistent
-//         ),
-//         child: Padding(
-//           padding: EdgeInsets.all(10.h),
-//           child: GridViewBuilderExample(),
-//         ),
-//       ),
-//     ),
-//   ),
-// )
-
+   
           ],
             ),
           ),
@@ -134,7 +105,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
     Padding(
             padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
             child: CustomButton(buttonText: "Next", onPressed: (){
-   Get.to(()=>ConfirmSeedPhraseScreen());
+   //Get.to(()=>ConfirmSeedPhraseScreen());
    controller.updateIndex(2);
             })
           ),
@@ -149,21 +120,9 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 
 
 class GridViewBuilderWidget extends StatelessWidget {
-  final StepController controller = Get.put(StepController());
-  final List<String> items = [
-    'material',
-    'space',
-    'wristn',
-    'bench',
-    'option',
-    'payment',
-    'skate',
-    'bomb',
-    'harbor',
-    'hint',
-    'peart',
-    'maze'
-  ];
+  final List items;
+
+  const GridViewBuilderWidget({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -179,36 +138,20 @@ class GridViewBuilderWidget extends StatelessWidget {
         ),
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return  Obx((){
-            return GestureDetector(
-            onTap: (){
-              controller.addSeeds(items[index]);
-              controller.addToSelectedIndex(index);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: controller.selecetedIndexs.contains(index)?orange3: greyColor4,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                     Text(
-                      "${(index+1).toString()} ",
-                      style: GoogleFonts.urbanist(fontSize: 18.sp,color: controller.selecetedIndexs.contains(index)?whiteColor: darkGreyColor,fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      items[index],
-                      style: GoogleFonts.urbanist(fontSize: 18.sp,color: controller.selecetedIndexs.contains(index)?whiteColor:darkGreyColor,fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
+          return Container(
+            height: 45.h,
+            decoration: BoxDecoration(
+              color: greyColor4,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Text(
+                items[index],
+                style: GoogleFonts.urbanist(fontSize: 18.sp,color: darkGreyColor,fontWeight: FontWeight.w700),
               ),
             ),
           );
-     
-          }) ;  },
+        },
       ),
     );
   }

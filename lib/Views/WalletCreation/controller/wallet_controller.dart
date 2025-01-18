@@ -49,4 +49,24 @@ class StepController extends GetxController {
       Get.to(()=>SecureWalletScreen());
     }
   }
+
+    var selectedSeeds=[].obs;
+    addSeeds(value){
+if(selectedSeeds.contains(value)){
+  selectedSeeds.remove(value);
+}
+else{
+  selectedSeeds.add(value);
+}
+    }
+
+    var selecetedIndexs=[].obs;
+    addToSelectedIndex(index){
+     if(selecetedIndexs.contains(index)){
+       selecetedIndexs.remove(index);
+     }
+     else {
+       selecetedIndexs.add(index);
+     }
+    }
 }

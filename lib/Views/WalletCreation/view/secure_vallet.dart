@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_wallet_2.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
 class SecureWalletScreen extends StatelessWidget {
    SecureWalletScreen({super.key});
@@ -19,47 +17,23 @@ class SecureWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: whiteColor,
-        shadowColor: whiteColor,
-        foregroundColor: whiteColor,
-        surfaceTintColor: whiteColor,
-        elevation: 0.0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: GestureDetector(
-            onTap: (){
-              controller.decreseIndexValue(1);
+
+      appBar:CustomStepAppBar(
+        onBackTap: () {
+         controller.decreseIndexValue(1);
               Get.back();
-            },
-            child: SizedBox(
-              height: 28.h,
-              width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft)),
-            ),
-          ),
-        ),
-        title: SizedBox(
-          width: Get.width / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() => buildStep(0)), // Wrap individual widgets
-              Obx(() => buildLine(1)),
-              Obx(() => buildStep(1)),
-              Obx(() => buildLine(2)),
-              Obx(() => buildStep(2)),
-            ],
-          ),
-        ),
+        },
+        currentIndex: controller.currentIndex, onWillPop: () { 
+           controller.decreseIndexValue(1);
+              Get.back();
+         }, // Pass the RxInt
       ),
-      body: Column(
+   body: Column(
        
         children: [
           Padding(
             padding:  EdgeInsets.all(25.h),
-            child: CustomDivider(),
+            child: const CustomDivider(),
           ),
           /// First section (Image) - Takes 3/8 (1.5/4) of available space
           Expanded(
@@ -153,7 +127,7 @@ class SecureWalletScreen extends StatelessWidget {
          CustomButton(
                       buttonText: "Start",
                       onPressed: () {
-                      Get.to(()=>SecureWallet2());
+                      Get.to(()=> SecureWallet2());
                       },
                     ),
                     SizedBox(height: 25.h),
@@ -176,7 +150,7 @@ class SecureWalletScreen extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: isActive
-            ? LinearGradient(
+            ? const LinearGradient(
                 colors: [
                   Color(0xFFFFE580),
                   Color(0xFFFACC15),
@@ -199,7 +173,7 @@ class SecureWalletScreen extends StatelessWidget {
         height: 4.h,
         decoration: BoxDecoration(
           gradient: isActive
-              ? LinearGradient(
+              ? const LinearGradient(
                   colors: [primaryColor, lightPrimaryColor],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,

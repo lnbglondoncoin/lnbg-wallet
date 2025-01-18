@@ -13,47 +13,25 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_co
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/write_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
 class HiddenWriteSeedPhraseScreen extends StatelessWidget {
-  const HiddenWriteSeedPhraseScreen({super.key});
+   HiddenWriteSeedPhraseScreen({super.key});
+  final StepController controller = Get.put(StepController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-         appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: whiteColor,
-        shadowColor: whiteColor,
-        foregroundColor: whiteColor,
-        surfaceTintColor: whiteColor,
-        elevation: 0.0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: GestureDetector(
-            onTap: (){
-            Get.back();
-            },
-            child: SizedBox(
-              height: 28.h,
-              width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft)),
-            ),
-          ),
-        ),
-        title: SizedBox(
-          width: Get.width / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() => buildStep(0)), // Wrap individual widgets
-              Obx(() => buildLine(1)),
-              Obx(() => buildStep(1)),
-              Obx(() => buildLine(2)),
-              Obx(() => buildStep(2)),
-            ],
-          ),
-        ),
+   appBar: CustomStepAppBar(
+        onBackTap: () {
+        
+              Get.back();
+        },
+        currentIndex: controller.currentIndex, onWillPop: () { 
+           
+              Get.back();
+         }, // Pass the RxInt
       ),
     body: SingleChildScrollView(
       child: Column(
@@ -163,7 +141,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(Icons.remove_red_eye,color: whiteColor,),
-                                      SizedBox(width: 8),
+                                      SizedBox(width: 8.w),
                                       Text("View", style: GoogleFonts.urbanist(fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
                                       color: whiteColor)),
@@ -181,40 +159,6 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
               ),
            SizedBox(height: 25.h,),
           
-// Container(
-//   height: 378.h,
-//   width: double.infinity,
-//   decoration: BoxDecoration(
-//     borderRadius: BorderRadius.circular(40.r),
-//     color: whiteColor,
-//   ),
-//   child: ShaderMask(
-//     shaderCallback: (Rect bounds) {
-//       return LinearGradient(
-//         colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
-//       ).createShader(bounds);
-//     },
-//     child: Container(
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(40.r),
-//         border: Border.all(
-//           width: 3, // Border thickness
-//           color: Colors.white, // Base color
-//         ),
-//       ),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           color: Colors.grey, // Explicit background color for the child
-//           borderRadius: BorderRadius.circular(40.r), // Ensure border radius is consistent
-//         ),
-//         child: Padding(
-//           padding: EdgeInsets.all(10.h),
-//           child: GridViewBuilderExample(),
-//         ),
-//       ),
-//     ),
-//   ),
-// )
 
           ],
             ),
@@ -236,52 +180,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
     );
   }
   
-  Widget buildStep(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
-
-    return Container(
-      width: 20.w,
-      height: 20.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: isActive
-            ? LinearGradient(
-                colors: [
-                  Color(0xFFFFE580),
-                  Color(0xFFFACC15),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
-        color: isActive ? null : greyColor, // Default color for inactive steps
-      ),
-    );
-  }
-
-  Widget buildLine(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
-
-    return Expanded(
-      child: Container(
-        height: 4.h,
-        decoration: BoxDecoration(
-          gradient: isActive
-              ? LinearGradient(
-                  colors: [primaryColor, lightPrimaryColor],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                )
-              : null,
-          color:
-              isActive ? null : greyColor, // Default color for inactive lines
-        ),
-      ),
-    );
-  }
-
+ 
   
 
 }

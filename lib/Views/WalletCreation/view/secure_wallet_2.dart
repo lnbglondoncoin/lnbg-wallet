@@ -12,49 +12,27 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/hidden_write_ph
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/write_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
 class SecureWallet2 extends StatelessWidget {
-  const SecureWallet2({super.key});
+   SecureWallet2({super.key});
+    final StepController controller = Get.put(StepController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-         appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: whiteColor,
-        shadowColor: whiteColor,
-        foregroundColor: whiteColor,
-        surfaceTintColor: whiteColor,
-        elevation: 0.0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 5.w),
-          child: GestureDetector(
-            onTap: (){
-             Get.back();
-            },
-            child: SizedBox(
-              height: 28.h,
-              width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft)),
-            ),
-          ),
-        ),
-        title: SizedBox(
-          width: Get.width / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() => buildStep(0)), // Wrap individual widgets
-              Obx(() => buildLine(1)),
-              Obx(() => buildStep(1)),
-              Obx(() => buildLine(2)),
-              Obx(() => buildStep(2)),
-            ],
-          ),
-        ),
+      appBar: CustomStepAppBar(
+        onBackTap: () {
+        
+              Get.back();
+        },
+        currentIndex: controller.currentIndex, onWillPop: () { 
+           
+              Get.back();
+         }, // Pass the RxInt
       ),
-    body: SingleChildScrollView(
+        body: SingleChildScrollView(
       child: Column(
         children: [
           Padding(
@@ -278,50 +256,5 @@ class SecureWallet2 extends StatelessWidget {
     );
   }
   
-  Widget buildStep(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
-
-    return Container(
-      width: 20.w,
-      height: 20.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: isActive
-            ? LinearGradient(
-                colors: [
-                  Color(0xFFFFE580),
-                  Color(0xFFFACC15),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
-        color: isActive ? null : greyColor, // Default color for inactive steps
-      ),
-    );
-  }
-
-  Widget buildLine(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
-
-    return Expanded(
-      child: Container(
-        height: 4.h,
-        decoration: BoxDecoration(
-          gradient: isActive
-              ? LinearGradient(
-                  colors: [primaryColor, lightPrimaryColor],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                )
-              : null,
-          color:
-              isActive ? null : greyColor, // Default color for inactive lines
-        ),
-      ),
-    );
-  }
 
 }
