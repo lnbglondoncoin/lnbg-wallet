@@ -69,4 +69,24 @@ else{
        selecetedIndexs.add(index);
      }
     }
+
+
+     var  items = [
+    'material',
+    'space',
+    'wristn',
+    'bench',
+    'option',
+    'payment',
+    'skate',
+    'bomb',
+    'harbor',
+    'hint',
+    'peart',
+    'maze'
+  ].obs;
+
+
+
+
 }

@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/confirm_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
@@ -16,9 +17,12 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 class WriteSeedPhraseScreen extends StatelessWidget {
    WriteSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
-
+  final walletCreatingController=Get.put(WalletCreatingController());
+ 
   @override
   Widget build(BuildContext context) {
+  
+
     return Scaffold(
       backgroundColor: whiteColor,
     appBar: CustomStepAppBar(
@@ -134,7 +138,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
     Padding(
             padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
             child: CustomButton(buttonText: "Next", onPressed: (){
-   Get.to(()=>ConfirmSeedPhraseScreen());
+    Get.to(()=>ConfirmSeedPhraseScreen());
    controller.updateIndex(2);
             })
           ),
@@ -149,22 +153,8 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 
 
 class GridViewBuilderWidget extends StatelessWidget {
-  final StepController controller = Get.put(StepController());
-  final List<String> items = [
-    'material',
-    'space',
-    'wristn',
-    'bench',
-    'option',
-    'payment',
-    'skate',
-    'bomb',
-    'harbor',
-    'hint',
-    'peart',
-    'maze'
-  ];
-
+  //final StepController controller = Get.put(StepController());
+  final walletCreatingController=Get.put(WalletCreatingController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -177,17 +167,15 @@ class GridViewBuilderWidget extends StatelessWidget {
           mainAxisSpacing: 10,
           childAspectRatio: 3, // Width to height ratio
         ),
-        itemCount: items.length,
+        itemCount: walletCreatingController.mnemonicWords.length,
         itemBuilder: (context, index) {
-          return  Obx((){
-            return GestureDetector(
+          return   GestureDetector(
             onTap: (){
-              controller.addSeeds(items[index]);
-              controller.addToSelectedIndex(index);
+             
             },
             child: Container(
               decoration: BoxDecoration(
-                color: controller.selecetedIndexs.contains(index)?orange3: greyColor4,
+                color:  greyColor4,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -196,19 +184,17 @@ class GridViewBuilderWidget extends StatelessWidget {
                   children: [
                      Text(
                       "${(index+1).toString()} ",
-                      style: GoogleFonts.urbanist(fontSize: 18.sp,color: controller.selecetedIndexs.contains(index)?whiteColor: darkGreyColor,fontWeight: FontWeight.w700),
+                      style: GoogleFonts.urbanist(fontSize: 18.sp,color:  darkGreyColor,fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      items[index],
-                      style: GoogleFonts.urbanist(fontSize: 18.sp,color: controller.selecetedIndexs.contains(index)?whiteColor:darkGreyColor,fontWeight: FontWeight.w700),
+                     walletCreatingController.mnemonicWords[index],
+                      style: GoogleFonts.urbanist(fontSize: 18.sp,color: darkGreyColor,fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
               ),
             ),
-          );
-     
-          }) ;  },
+          );  },
       ),
     );
   }

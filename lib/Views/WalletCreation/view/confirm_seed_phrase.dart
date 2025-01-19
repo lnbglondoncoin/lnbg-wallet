@@ -59,43 +59,98 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                 CustomDivider(),
                 SizedBox(height: 45.h,),
 Center(
-  child: Text("6.",style: GoogleFonts.urbanist(
+  child: Text("${controller.selectedSeeds.length.toString()}.",style: GoogleFonts.urbanist(
     fontSize: 48.sp,
     fontWeight: FontWeight.w700,
     color: orange3
   ),),
 ),
 SizedBox(height: 45.h,),
-                Container(
-                  height: 378.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient:  LinearGradient(
-        colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
+    Container(
+  width: double.infinity,
+  decoration: BoxDecoration(
+    gradient: LinearGradient(
+      colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
+    ),
+    borderRadius: BorderRadius.circular(40.r),
+  ),
+  child: Padding(
+    padding: EdgeInsets.all(2.h),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40.r),
+        color: whiteColor,
       ),
-      borderRadius: BorderRadius.circular(40.r)
-                  ),
-                  child: Padding(
-                    padding:  EdgeInsets.all(2.h),
-                    child: Container(
-                      decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(40.r),
-                            color: whiteColor,   
-                      ),
-                     
-                      child: Padding(
-                        padding:  EdgeInsets.all(10.h),
-                        child:  GridViewBuilderWidget(items: controller.selectedSeeds,)
-                        
-                      )),
+      child: Padding(
+        padding: EdgeInsets.all(10.h),
+        child: GridView.builder(
+          shrinkWrap: true, // Ensures the GridView takes only the space it needs
+          physics: NeverScrollableScrollPhysics(), // Prevents scrolling in GridView
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // 2 columns
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 3, // Width to height ratio
+          ),
+          itemCount: controller.selectedSeeds.length,
+          itemBuilder: (context, index) {
+            return Container(
+              height: 45.h,
+              decoration: BoxDecoration(
+                color: greyColor4,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  controller.selectedSeeds[index],
+                  style: GoogleFonts.urbanist(
+                    fontSize: 18.sp,
+                    color: darkGreyColor,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 25.h,),
+              ),
+            );
+          },
+        ),
+      ),
+    ),
+  ),
+),
+
+  SizedBox(height: 70.h,),
+ SizedBox(
+  height: 3.h,
+   child: ListView.builder(
+    itemCount: 12,
+    shrinkWrap: true,
+    scrollDirection: Axis.horizontal,
+    itemBuilder: (context,index){
+    return  Padding(
+      padding:  EdgeInsets.only(right: 3.w),
+      child: Obx((){
+        return Container(
+        height: 3.h,
+        width: 24.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2.r),
+      gradient:  index<controller.items.length-6? LinearGradient(colors:[
+        lightPrimaryColor,primaryColor,
+      ]): LinearGradient(colors:[
+       lightBlack,lightBlack
+      ])
+      ),
+      );
+      })
+    );
+   }),
+ )
    
           ],
             ),
           ),
-            CustomDivider(),
+          SizedBox(height: 50.h,),
+           CustomDivider(),
        SizedBox(height: 200.h,)
         ],
       ),
@@ -118,41 +173,3 @@ SizedBox(height: 45.h,),
 }
 
 
-
-class GridViewBuilderWidget extends StatelessWidget {
-  final List items;
-
-  const GridViewBuilderWidget({super.key, required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 columns
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 3, // Width to height ratio
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 45.h,
-            decoration: BoxDecoration(
-              color: greyColor4,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                items[index],
-                style: GoogleFonts.urbanist(fontSize: 18.sp,color: darkGreyColor,fontWeight: FontWeight.w700),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}

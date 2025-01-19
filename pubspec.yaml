@@ -41,6 +41,10 @@ dependencies:
   flutter_spinkit: ^5.2.1
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.17
+  bip39: ^1.0.6
+  ed25519_hd_key: ^2.3.0
+  hex: ^0.2.0
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:

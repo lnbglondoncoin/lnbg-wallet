@@ -9,6 +9,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/write_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
@@ -18,7 +19,7 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 class HiddenWriteSeedPhraseScreen extends StatelessWidget {
    HiddenWriteSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
-
+  final walletCreatingController=Get.put(WalletCreatingController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,8 +173,13 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
  floatingActionButton:
     Padding(
             padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
-            child: CustomButton(buttonText: "Next", onPressed: (){
-   
+            child: CustomButton(buttonText: "Next", onPressed: ()async{
+   final mnemonic=walletCreatingController.generateMnemonic();
+   final privateKey=await walletCreatingController.getPrivateKey(mnemonic);
+   final publicKey= await walletCreatingController.getPublicKey(privateKey);
+   print(mnemonic);
+   print(privateKey);
+   print(publicKey);
             })
           ),
    
