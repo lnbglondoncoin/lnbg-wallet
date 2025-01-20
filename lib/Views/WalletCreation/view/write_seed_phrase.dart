@@ -17,7 +17,7 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 class WriteSeedPhraseScreen extends StatelessWidget {
    WriteSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
-  final walletCreatingController=Get.put(WalletCreatingController());
+  final walletCreatingController=Get.find<WalletCreatingController>();
  
   @override
   Widget build(BuildContext context) {
@@ -138,6 +138,9 @@ class WriteSeedPhraseScreen extends StatelessWidget {
     Padding(
             padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
             child: CustomButton(buttonText: "Next", onPressed: (){
+             walletCreatingController.shuffleFirstList(
+  walletCreatingController.mnemonicWords.sublist(0, 6)
+);
     Get.to(()=>ConfirmSeedPhraseScreen());
    controller.updateIndex(2);
             })
@@ -154,7 +157,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 
 class GridViewBuilderWidget extends StatelessWidget {
   //final StepController controller = Get.put(StepController());
-  final walletCreatingController=Get.put(WalletCreatingController());
+ final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -19,7 +19,7 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 class HiddenWriteSeedPhraseScreen extends StatelessWidget {
    HiddenWriteSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
-  final walletCreatingController=Get.put(WalletCreatingController());
+  final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
