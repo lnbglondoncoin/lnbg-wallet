@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/animation_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -15,13 +17,19 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
    ConfirmSeedPhrase2Screen({super.key});
   final StepController controller = Get.put(StepController());
   final walletCreatingController=Get.find<WalletCreatingController>();
+     final ShakeAnimationController shakeController = Get.put(ShakeAnimationController());
+      final player = AudioPlayer();
+      void _playNotificationTone() async {
+await player.play(AssetSource('sounds/errorSund.mp3'));
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
     appBar: CustomStepAppBar(
         onBackTap: () {
-        controller.decreseIndexValue(2);
+        
       walletCreatingController.indexes.clear();
      /// walletCreatingController.shuffledList.clear();
        walletCreatingController.changeisTrue(true);
@@ -29,7 +37,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
               Get.back();
         },
         currentIndex: controller.currentIndex, onWillPop: () { 
-            controller.decreseIndexValue(2);
+           
             walletCreatingController.indexes.clear();
             walletCreatingController.changeisTrue(true);
      // walletCreatingController.shuffledList.clear();
@@ -76,8 +84,32 @@ Center(
   ),),
 ),
 SizedBox(height: 45.h,),
-Obx((){
-  return     Container(
+
+             Obx(() {
+  if (!walletCreatingController.isTrue.value) {
+    shakeController.startShakeAnimation();
+     _playNotificationTone();
+  }
+
+  return 
+GetBuilder<ShakeAnimationController>(
+              builder: (controller) {
+                return AnimatedBuilder(
+                  animation: controller.rotationAnimation,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: controller.rotationAnimation.value,
+                      child: AnimatedContainer(
+                          duration: Duration(milliseconds: 300),
+                          transform: walletCreatingController.isTrue.value
+                              ? Matrix4.identity()
+                              : Matrix4.rotationZ(0.1), // Rotate 30 degrees (0.1 radians)
+                          onEnd: () {
+                            // Reset rotation after animation completes
+                            walletCreatingController.changeisTrue(true);
+                          },
+                          curve: Curves.easeInOut,
+                          child: Container(
   width: double.infinity,
   decoration: BoxDecoration(
     gradient: walletCreatingController.isTrue.value?LinearGradient(
@@ -138,9 +170,16 @@ Obx((){
       ),
     ),
   ),
-);
-
+)
+   ),
+                    );
+                  },
+                );
+              },
+            );
 }),
+ 
+ 
   SizedBox(height: 70.h,),
  SizedBox(
   height: 3.h,
@@ -182,11 +221,12 @@ Obx((){
             child: CustomButton(buttonText: "Next", onPressed: (){
                walletCreatingController.changeisTrue(true);
               if (listEquals(walletCreatingController.secondHalfofMnemonic, walletCreatingController.orderList)) {
-  Get.snackbar('Success', 'Lists match!');
       _showPopup(context);
 } else {
    walletCreatingController.changeisTrue(false);
-  Get.snackbar('Error', 'Order do not match!,Please tap phrases in the order provided to you');
+   Get.snackbar('Error', 'Please tap phrases in the order provided to you on the previous page',
+                backgroundColor: orange3,
+                snackPosition: SnackPosition.TOP);
 }
               print("second mnemonic is :${walletCreatingController.secondHalfofMnemonic}");
               print("order list is :${walletCreatingController.orderList}");
@@ -262,5 +302,7 @@ Obx((){
  
 
 }
+
+
 
 

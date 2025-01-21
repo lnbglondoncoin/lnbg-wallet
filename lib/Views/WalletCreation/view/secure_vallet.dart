@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/remind%20_me_latter_bottom_sheets.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_wallet_2.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -133,56 +134,24 @@ class SecureWalletScreen extends StatelessWidget {
                     SizedBox(height: 25.h),
                     CustomLightGreenButton(
                       buttonText: "Remind Me Later",
-                      onPressed: () {},
+                      onPressed: () {
+_showCustomBottomSheet(context);
+                      },
                     ),
       ],
      ),
    ),
     );
   }
-  Widget buildStep(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
 
-    return Container(
-      width: 20.w,
-      height: 20.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: isActive
-            ? const LinearGradient(
-                colors: [
-                  Color(0xFFFFE580),
-                  Color(0xFFFACC15),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
-        color: isActive ? null : greyColor, // Default color for inactive steps
-      ),
-    );
-  }
-
-  Widget buildLine(int index) {
-    final StepController controller = Get.find();
-    bool isActive = controller.currentIndex.value >= index;
-
-    return Expanded(
-      child: Container(
-        height: 4.h,
-        decoration: BoxDecoration(
-          gradient: isActive
-              ? const LinearGradient(
-                  colors: [primaryColor, lightPrimaryColor],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                )
-              : null,
-          color:
-              isActive ? null : greyColor, // Default color for inactive lines
-        ),
-      ),
+  void _showCustomBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allows full-screen height
+      backgroundColor: Colors.transparent, // Transparent background
+      builder: (context) {
+        return AnimatedBottomSheet();
+      },
     );
   }
 

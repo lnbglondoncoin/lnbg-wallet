@@ -1,39 +1,69 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/controller/import_from_seed_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/view/finger_print_scan_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_checkbox.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_discription_feild.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_textfeild.dart';
 
-class CreateNewWallet extends StatelessWidget {
-  CreateNewWallet({super.key});
-  final StepController controller = Get.put(StepController());
+class ImportFromSeedPhraseScreen extends StatelessWidget {
+  ImportFromSeedPhraseScreen({super.key});
+  final ImportFromSeedController controller = Get.put(ImportFromSeedController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-        appBar: CustomStepAppBar(
-        onBackTap: () {
-          Get.back(); // Your custom back functionality
-        },
-        currentIndex: controller.currentIndex, onWillPop: () { 
-           Get.back(); // Your custom back functionality
-         }, // Pass the RxInt
-      ),
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          shadowColor: whiteColor,
+          foregroundColor: whiteColor,
+          surfaceTintColor: whiteColor,
+          elevation: 0.0,
+          centerTitle: true,
+          leading: Padding(
+            padding:  EdgeInsets.only(left: 10.w),
+            child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(child: SvgPicture.asset(arrowLeft))),
+          ),
+            title: Text("Import From Seed",style: GoogleFonts.urbanist(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: blackColor2
+            ),),
+            actions: [
+              Padding(
+                padding:  EdgeInsets.only(right: 20.w),
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(()=>FingerPrintScanScreen());
+                  },
+                  child: SizedBox(
+                    height: 28.h,
+                              width: 28.w,
+                    child: Center(child: SvgPicture.asset(scanIcon))),
+                ),
+              )
+            ],
+        ),
 
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
-          key: controller.passwordKey,
+          key: controller.importSeedKey,
           child: Column(
             children: [
               Padding(
@@ -41,27 +71,22 @@ class CreateNewWallet extends StatelessWidget {
                     top: 25.h, left: 18.w, right: 18.w, bottom: 20.h),
                 child: Column(
                   children: [
-                    const CustomDivider(),
-                    SizedBox(
-                      height: 25.h,
-                    ),
-                    Text(
-                      "Create Password",
-                      style: GoogleFonts.urbanist(
-                          fontSize: 32.sp,
-                          fontWeight: FontWeight.w700,
-                          color: orange3),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      "This password will unlock your LNBG Wallet wallet only on this device.",
-                      style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w500,
-                          color: darkGreyColor),
+                   
+                    CustomDescriptionTextField(
+                     
+                      hintText: "Seed Phrase",
+                      controller: controller.seedPhraseController,
+                      labelText: "Seed Phrase",
+                     // suffixIcoPath: eyeIcon,
+                       //prefixIconPath: eyeIcon,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Seed phrase cannot be empty";
+                        } else if (value.length < 12||value.length>12) {
+                          return "Phrase must consist of 12 words";
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15.h,
@@ -160,20 +185,20 @@ class CreateNewWallet extends StatelessWidget {
                             child: RichText(
                               text: TextSpan(
                                 text:
-                                    "I understand that LNBG cannot recover this password for me. ",
+                                    "I agree to LNBG Wallet ",
                                 style: GoogleFonts.urbanist(
                                     color: blackColor2,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w800,
-                                    height: 1.1.h),
+                                    height: 1.4.h),
                                 children: [
                                   TextSpan(
-                                    text: "Learn more",
+                                    text: "Term & Conditions.",
                                     style: GoogleFonts.urbanist(
                                         color: orange3,
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w800,
-                                        height: 1.1.h),
+                                        height: 1.4.h),
                                     // Launch URL or action when clicked
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {},
@@ -206,10 +231,10 @@ class CreateNewWallet extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
         child: CustomButton(
-            buttonText: "Create Password",
+            buttonText: "Import",
             onPressed: () {
               controller.isChecked.value
-                  ? controller.createPassword()
+                  ? controller.import()
                   : Get.snackbar(
                       backgroundColor: orange3,
                       snackPosition: SnackPosition.TOP,

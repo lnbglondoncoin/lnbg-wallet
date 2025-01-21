@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/view/import_from_seed_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/create_new_wallet.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 
@@ -84,7 +85,9 @@ class WalletSetUpScreen extends StatelessWidget {
                   SizedBox(height: 25.h),
                   CustomLightGreenButton(
                     buttonText: "Import Using Seed Phrase",
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(()=>ImportFromSeedPhraseScreen());
+                    },
                   ),
                 ],
               ),

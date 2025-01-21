@@ -45,7 +45,7 @@ dependencies:
   ed25519_hd_key: ^2.3.0
   hex: ^0.2.0
   shared_preferences: ^2.3.3
-  vibration: ^3.0.0
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -70,6 +70,7 @@
           ),
           SizedBox(height: 8.h),
           TextFormField(
+            
             focusNode: _focusNode, // Attach focus node
             controller: widget.controller,
             obscureText: isObscured,
@@ -82,7 +83,7 @@
               disabledBorder: InputBorder.none,
               focusedErrorBorder: InputBorder.none,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(18.r),
               ),
               focusColor: lightWhiteColor,
               filled: true,
@@ -135,7 +136,7 @@
                     )
                   : null,
               contentPadding: EdgeInsets.only(
-                top: widget.prefixIconPath != null ? 13.h : 0,
+                top:  13.h ,
                 left: widget.prefixIconPath != null ? 0 : 15.w,
               ),
               errorStyle: GoogleFonts.urbanist(
