@@ -79,14 +79,28 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                       labelText: "Seed Phrase",
                      // suffixIcoPath: eyeIcon,
                        //prefixIconPath: eyeIcon,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Seed phrase cannot be empty";
-                        } else if (value.length < 12||value.length>12) {
-                          return "Phrase must consist of 12 words";
-                        }
-                        return null;
-                      },
+                     validator: (value) {
+  if (value == null || value.isEmpty) {
+    return "Seed phrase cannot be empty";
+  } else {
+    // Split the input into words
+    List<String> words = value.trim().split(' ');
+
+    // Check if the length is exactly 12 words
+    if (words.length != 12) {
+      return "Phrase must consist of exactly 12 words";
+    }
+
+    // Optionally, check if all words are valid (if necessary)
+    for (var word in words) {
+      if (word.isEmpty) {
+        return "Seed phrase cannot have empty words";
+      }
+    }
+  }
+  return null;
+},
+
                     ),
                     SizedBox(
                       height: 15.h,
