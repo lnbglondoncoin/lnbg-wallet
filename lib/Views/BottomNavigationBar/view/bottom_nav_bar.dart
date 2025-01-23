@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/controller/bottom_nav_bar_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/HomeScreen/view/home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -15,7 +16,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
-    SizedBox(),
+    HomeScreenView(),
     SizedBox(),
     SizedBox(),
     SizedBox(),

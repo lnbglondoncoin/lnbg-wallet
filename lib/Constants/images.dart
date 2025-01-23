@@ -7,3 +7,6 @@ const wallet="assets/images/wallet.png";
 const eyeIcon="assets/icons/eyeIcon.svg";
 const lockIcon="assets/icons/lock.svg";
 const scanIcon="assets/icons/scanIcon.svg";
+const topYellow="assets/images/topYellow.png";
+const eyeShowIcon="assets/icons/eyeShow.svg";
+const notification="assets/icons/Notification.svg";
