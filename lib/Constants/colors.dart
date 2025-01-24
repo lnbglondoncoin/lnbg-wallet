@@ -19,3 +19,5 @@ const blackColor3=Color(0xFF130F26);
 const greyColor3=Color(0xFF616161);
 const greyColor4=Color(0xFFF5F5F5);
 const redColor=Color.fromARGB(255, 241, 7, 11);
+const pinkColor=Color(0xFFF75555);
+const orange4=Color(0xFFFFDC33);

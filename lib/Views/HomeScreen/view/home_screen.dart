@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
 
 class HomeScreenView extends StatefulWidget {
   const HomeScreenView({super.key});
@@ -61,15 +63,25 @@ class _HomeScreenViewState extends State<HomeScreenView> with SingleTickerProvid
                           ),
                         ),
                         Spacer(),
-                        SizedBox(
-                            height: 28.h,
-                          width: 28.w,
-                          child: Center(child: SvgPicture.asset(scanIcon,colorFilter: ColorFilter.mode(whiteColor, BlendMode.srcIn)))),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(()=>ScanQRCodeScreen());
+                          },
+                          child: SizedBox(
+                              height: 28.h,
+                            width: 28.w,
+                            child: Center(child: SvgPicture.asset(scanIcon,colorFilter: ColorFilter.mode(whiteColor, BlendMode.srcIn)))),
+                        ),
 SizedBox(width: 15.w,),
-                        SizedBox(
-                            height: 28.h,
-                          width: 28.w,
-                          child: Center(child: SvgPicture.asset(notification,colorFilter: ColorFilter.mode(whiteColor, BlendMode.srcIn)))),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(()=>NotificationScreen());
+                          },
+                          child: SizedBox(
+                              height: 28.h,
+                            width: 28.w,
+                            child: Center(child: SvgPicture.asset(notification,colorFilter: ColorFilter.mode(whiteColor, BlendMode.srcIn)))),
+                        ),
                       ],
                     ),
                // SizedBox(height: 30.h,),
@@ -269,23 +281,23 @@ SizedBox(width: 15.w,),
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
-                                                  Text("LNBG Coin",style: GoogleFonts.urbanist(
+                                                  Text(tokenList[index],style: GoogleFonts.urbanist(
                                                     fontSize: 20.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color: blackColor2
                                                   ),),
                                                   Row(
                                                     children: [
-                                                      Text("\$0.00998",style: GoogleFonts.urbanist(
+                                                      Text(tokenCoinndolorPriceWithPercentage[index],style: GoogleFonts.urbanist(
                                                         fontSize: 14.sp,
                                                         fontWeight: FontWeight.w800,
                                                         color: greyColor3
                                                       ),),
                                                     SizedBox(width: 10.w,),
-                                                      Text("+0.75%",style: GoogleFonts.urbanist(
+                                                      Text(tokenPercentage[index],style: GoogleFonts.urbanist(
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
-                                                    color: orange3
+                                                    color:tokenPercentage[index].startsWith('-')? pinkColor:orange3
                                                   ),) 
                                                     ],
                                                   ),
@@ -296,12 +308,12 @@ SizedBox(width: 15.w,),
                                                Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("159.47 \$LLC",style: GoogleFonts.urbanist(
+                                                  Text(tokenCoinPrice[index],style: GoogleFonts.urbanist(
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color: blackColor2
                                                   ),),
-                                                  Text("\$1.59129",style: GoogleFonts.urbanist(
+                                                  Text(tokenCoinndolorPrice[index],style: GoogleFonts.urbanist(
                                                         fontSize: 14.sp,
                                                         fontWeight: FontWeight.w800,
                                                         color: greyColor3
