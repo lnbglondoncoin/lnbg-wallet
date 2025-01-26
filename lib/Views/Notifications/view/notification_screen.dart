@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/controller/notification_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 
 class NotificationScreen extends StatelessWidget {
    NotificationScreen({super.key});
@@ -15,40 +16,9 @@ final NotificationController controller = Get.put(NotificationController());
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-            appBar: AppBar(
-          backgroundColor: whiteColor,
-          shadowColor: whiteColor,
-          foregroundColor: whiteColor,
-          surfaceTintColor: whiteColor,
-          elevation: 0.0,
-          centerTitle: true,
-          leading: Padding(
-            padding:  EdgeInsets.only(left: 10.w),
-            child: SizedBox(
-              height: 28.h,
-              width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft))),
-          ),
-            title: Text("Notification",style: GoogleFonts.urbanist(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w700,
-              color: blackColor2
-            ),),
-            actions: [
-              Padding(
-                padding:  EdgeInsets.only(right: 20.w),
-                child: GestureDetector(
-                  onTap: (){
-                    // Get.to(()=>FingerPrintScanScreen());
-                  },
-                  child: SizedBox(
-                    height: 28.h,
-                              width: 28.w,
-                    child: Center(child: SvgPicture.asset("assets/icons/msg.svg"))),
-                ),
-              )
-            ],
-        ),
+            appBar:
+              CustomAppBar(title: "Notifications", iconPath: 'assets/icons/msg.svg',),
+            
 body: Obx(() {
         return 
         controller.notifications.isEmpty?

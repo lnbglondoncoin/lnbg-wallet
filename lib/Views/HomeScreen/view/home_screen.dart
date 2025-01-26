@@ -10,6 +10,7 @@ import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 
 class HomeScreenView extends StatefulWidget {
   const HomeScreenView({super.key});
@@ -102,16 +103,21 @@ SizedBox(width: 15.w,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 60.h,
-                          width: 60.w,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            shape: BoxShape.circle
-                          ),
-                          child: Center(
-                            child: 
-                            SvgPicture.asset("assets/icons/chat.svg"),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(()=>SendScreen());
+                          },
+                          child: Container(
+                            height: 60.h,
+                            width: 60.w,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              shape: BoxShape.circle
+                            ),
+                            child: Center(
+                              child: 
+                              SvgPicture.asset("assets/icons/chat.svg"),
+                            ),
                           ),
                         ),
                         SizedBox(height: 10.h,),
@@ -306,7 +312,7 @@ SizedBox(width: 15.w,),
                                               
                                               Spacer(),
                                                Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(tokenCoinPrice[index],style: GoogleFonts.urbanist(
                                                     fontSize: 18.sp,
