@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/controller/send_controllr.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Send/view/confir_send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -36,7 +37,7 @@ class SendCoin extends StatelessWidget {
                           children: [
                             Flexible(
                               child: TextFormField(
-                              
+                              controller: controller.addressController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText:"Recipient Address",
@@ -198,7 +199,9 @@ class SendCoin extends StatelessWidget {
               floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
               floatingActionButton:    Padding(
                 padding: EdgeInsets.all(20.h),
-                child: CustomButton(buttonText: "Continue", onPressed: (){}),
+                child: CustomButton(buttonText: "Continue", onPressed: (){
+                  Get.to(()=>ConfirmSendCoinScreen(ammount: controller.ammountController.text, address: controller.addressController.text, coinCode: coinCode,));
+                }),
               ),
     );
   }

@@ -119,3 +119,27 @@ const tokenCoinndolorPriceWithPercentage=[
   "\$0.38",
   "\$12.83"
 ];
+const networkSpeedList=[
+  "Slow",
+  "Moderate",
+  "Fast"
+];
+
+const networkSpeedpriceWithcode=[
+  "0.02",
+  "0.04",
+  "0.08"
+];
+
+const networkSpeedpriceInDolors=[
+  "\$26.35",
+  "\$53.03",
+  "\$106.06"
+];
+
+const networkAdvance=[
+  "Max Fee (Gwei)",
+  "Gas Limit",
+  "Nonce"
+];
+

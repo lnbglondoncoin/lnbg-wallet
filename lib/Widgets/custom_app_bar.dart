@@ -7,9 +7,10 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool isSuffix;
   final String title;
   final String iconPath;
-  const CustomAppBar({super.key, required this.title, required this.iconPath});
+  const CustomAppBar({super.key, required this.title, required this.iconPath,  this.isSuffix=false});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             actions: [
               Padding(
                 padding:  EdgeInsets.only(right: 20.w),
-                child: GestureDetector(
+                child: isSuffix==true?GestureDetector(
                   onTap: (){
                     // Get.to(()=>FingerPrintScanScreen());
                   },
@@ -48,7 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     height: 28.h,
                               width: 28.w,
                     child: Center(child: SvgPicture.asset(iconPath))),
-                ),
+                ):SizedBox()
               )
             ],
         );
