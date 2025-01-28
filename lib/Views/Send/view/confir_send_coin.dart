@@ -187,7 +187,6 @@ final controller=Get.put(SendController());
         padding:  EdgeInsets.all( 25.h),
         child: CustomButton(buttonText: "Send", onPressed: (){
         //  _showSuccesPopup(context);
-        _showFailPopup(context);
         }),
       ),
     );

@@ -143,3 +143,85 @@ const networkAdvance=[
   "Nonce"
 ];
 
+const coinIconList=[
+  "assets/icons/etg.png",
+  "assets/icons/bitcoin.png",
+  "assets/icons/tether.png",
+  "assets/icons/solana.png",
+  "assets/icons/polygon.png",
+  "assets/icons/usd.png",
+  "assets/icons/dai.png",
+  "assets/icons/klaytn.png",
+  "assets/icons/shiba.png",
+  "assets/icons/santetix.png",
+  "assets/icons/cardano.png",
+  "assets/icons/bnb.png",
+  "assets/icons/dec.png",
+  "assets/icons/ape.png",
+  "assets/icons/tron.png",
+  "assets/icons/ava.png",
+
+];
+
+
+const coinList=[
+  "Ethereum",
+  "Bitcoin",
+  "Tether",
+  "Solana",
+  "Polygon",
+  "USD Coin",
+  "DAI",
+  "Klaytn",
+  "Shiba Inu",
+  "Synthetix",
+  "Cardano",
+  "BNB",
+  "Decentraland",
+  "Apecoin Ape",
+  "Tron",
+  "Avalanche",
+];
+
+
+
+const coinPrice=[
+  "59.47 ETH",
+  "0.259 BTC",
+  "1938.47 USDT",
+  "257.93 SOL",
+  "148.54 MATIC",
+  "193.49 USDC",
+  "327.44 DAI",
+  "274.85 KLAY",
+  "5,277.32 SHIB",
+  "539.25 SNX",
+  "347.64 ADA",
+  "24.379 BNB",
+  "845.39 MANA",
+  "156.29 APE",
+  "938.57 TRX",
+  "92.375 AVAX"
+];
+
+
+const coinndolorPrice=[
+  "\$79,379.2",
+  "\$5,036.9",
+  "\$1,939.19",
+  "\$8,573.58",
+  "\$4,937.46",
+  "\$193.58",
+  "\$327.15",
+  "\$259.62",
+  "\$0.06",
+  "\$1,315.96",
+  "\$151.43",
+  "\$6,882.86",
+  "\$595.66",
+  "\$840.85",
+  "\$56.06",
+  "\$1,595.8"
+];
+
+

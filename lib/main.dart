@@ -12,6 +12,7 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_addr
 void main() {
  // Get.put(SplashController());
   Get.put(WalletCreatingController());
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

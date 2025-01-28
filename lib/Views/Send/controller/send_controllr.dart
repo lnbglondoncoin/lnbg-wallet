@@ -6,12 +6,7 @@ class SendController extends GetxController {
     var addressController = TextEditingController();
     var recipientAddressController = TextEditingController();
   var isAmountEmpty = true.obs; // Reactive variable to track if amount is empty
-  @override
-  void onInit(){
-    super.onInit();
- 
-    
-  }
+
   // Listen to changes in the text field
   void updateAmount() {
     isAmountEmpty.value = ammountController.text.isEmpty; // Update based on controller value

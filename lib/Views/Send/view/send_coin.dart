@@ -205,4 +205,5 @@ class SendCoin extends StatelessWidget {
               ),
     );
   }
+
 }

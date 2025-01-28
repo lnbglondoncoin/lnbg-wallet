@@ -8,7 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 
@@ -128,51 +130,61 @@ SizedBox(width: 15.w,),
                         ),)
                       ],
                     ),
-                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                       children: [
-                         Container(
-                          height: 60.h,
-                          width: 60.w,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            shape: BoxShape.circle
-                          ),
-                          child: Center(
-                            child: 
-                            SvgPicture.asset("assets/icons/receive.svg"),
-                          ),
-                                             ),
-                                              SizedBox(height: 10.h,),
-                                              Text("Receive",style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: whiteColor
-                        ),)
-                       ],
-                     ),
-                     Column(
+                     GestureDetector(
+                      onTap: (){
+                        Get.to(()=>ReceiveView());
+                      },
+                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                       children: [
-                         Container(
-                          height: 60.h,
-                          width: 60.w,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            shape: BoxShape.circle
-                          ),
-                          child: Center(
-                            child: 
-                            SvgPicture.asset("assets/icons/cart.svg"),
-                          ),
-                                             ),
-                                              SizedBox(height: 10.h,),
-                                              Text("Buy",style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: whiteColor
-                        ),)
-                       ],
+                         children: [
+                           Container(
+                            height: 60.h,
+                            width: 60.w,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              shape: BoxShape.circle
+                            ),
+                            child: Center(
+                              child: 
+                              SvgPicture.asset("assets/icons/receive.svg"),
+                            ),
+                                               ),
+                                                SizedBox(height: 10.h,),
+                                                Text("Receive",style: GoogleFonts.urbanist(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: whiteColor
+                          ),)
+                         ],
+                       ),
+                     ),
+                     GestureDetector(
+                      onTap: (){
+                        Get.to(()=>BuyView());
+                      },
+                       child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                         children: [
+                           Container(
+                            height: 60.h,
+                            width: 60.w,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              shape: BoxShape.circle
+                            ),
+                            child: Center(
+                              child: 
+                              SvgPicture.asset("assets/icons/cart.svg"),
+                            ),
+                                               ),
+                                                SizedBox(height: 10.h,),
+                                                Text("Buy",style: GoogleFonts.urbanist(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: whiteColor
+                          ),)
+                         ],
+                       ),
                      ),
                      Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

@@ -5,18 +5,20 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_coin.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_coin_qr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 
-class SendScreen extends StatelessWidget {
-  const SendScreen({super.key});
+class BuyView extends StatelessWidget {
+  const BuyView({super.key});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: CustomAppBar(
-        title: "Send",
+        title: "Buy",
         iconPath: 'assets/icons/search.svg',
       ),
       body: SingleChildScrollView(
@@ -36,11 +38,8 @@ class SendScreen extends StatelessWidget {
                       bottom: index == coinList.length - 1 ? 50.h : 0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => SendCoin(
-                            coinName: coinList[index], 
-                            
-                            coinCode: currencyCode,
-                          ));
+                    
+                    Get.to(()=>BuyCoinScreen(coinCode: currencyCode,));
                     },
                     child: Container(
                       // height: 80.h,
