@@ -33,7 +33,7 @@
   }
   class _CustomTextFieldState extends State<CustomTextField> {
     bool isObscured = false;
-    FocusNode _focusNode = FocusNode();
+    final FocusNode _focusNode = FocusNode();
     bool isFocused = false;
 
     @override

@@ -1,8 +1,6 @@
-
 // WalkThroughController using GetX
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/wallet_setup.dart';
 
@@ -34,12 +32,12 @@ class WalkThroughController extends GetxController {
   void nextPage() {
     if (currentIndex.value < walkthroughData.length - 1) {
       pageController.nextPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
       currentIndex.value++;
     } else {
-      Get.to(()=>WalletSetUpScreen());
+      Get.to(() => const WalletSetUpScreen());
     }
   }
 }

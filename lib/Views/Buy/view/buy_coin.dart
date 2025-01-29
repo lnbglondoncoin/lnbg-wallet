@@ -18,34 +18,34 @@ class BuyCoinScreen extends StatelessWidget {
         iconPath: 'assets/icons/search.svg',
       ),
       body: Padding(
-        padding:  EdgeInsets.all(20.h),
+        padding: EdgeInsets.all(20.h),
         child: Column(
           children: [
             Center(
               child: Container(
                 width: 100.w,
-              height: 45.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.r),
-                border: Border.all(
-                  color: orange3
-                )
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("USD",style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: orange3
-                    ),),
-                    SvgPicture.asset("assets/icons/diamond.svg")
-                  ],
+                height: 45.h,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.r),
+                    border: Border.all(color: orange3)),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "USD",
+                        style: GoogleFonts.urbanist(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: orange3),
+                      ),
+                      SvgPicture.asset("assets/icons/diamond.svg")
+                    ],
+                  ),
                 ),
               ),
-                      ),
-            )],
+            )
+          ],
         ),
       ),
     );

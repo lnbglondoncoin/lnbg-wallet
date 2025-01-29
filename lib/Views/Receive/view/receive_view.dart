@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_coin_qr.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 
 class ReceiveView extends StatelessWidget {
@@ -16,7 +14,7 @@ class ReceiveView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Receive",
         iconPath: 'assets/icons/search.svg',
       ),
@@ -26,24 +24,29 @@ class ReceiveView extends StatelessWidget {
           child: ListView.builder(
               itemCount: coinIconList.length,
               shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                String coinCode=coinPrice[index];
-                List<String> parts = coinCode.split(' '); 
-                String currencyCode = parts.length > 1 ? parts[1] : ''; // Getting the part after the space (BTC)
+                String coinCode = coinPrice[index];
+                List<String> parts = coinCode.split(' ');
+                String currencyCode = parts.length > 1
+                    ? parts[1]
+                    : ''; // Getting the part after the space (BTC)
 
                 return Padding(
                   padding: EdgeInsets.only(
                       bottom: index == coinList.length - 1 ? 50.h : 0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(()=>ReceiveCoinQR(coinIconPath:   coinIconList[index], coinCode: currencyCode, coinFullName:   coinList[index],));
-                    
+                      Get.to(() => ReceiveCoinQR(
+                            coinIconPath: coinIconList[index],
+                            coinCode: currencyCode,
+                            coinFullName: coinList[index],
+                          ));
                     },
                     child: Container(
                       // height: 80.h,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           border:
                               Border(bottom: BorderSide(color: lightBlack))),
                       child: Padding(
@@ -70,7 +73,7 @@ class ReceiveView extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   color: blackColor2),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -101,5 +104,4 @@ class ReceiveView extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -8,58 +8,56 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/controller/import_from_seed_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/view/finger_print_scan_screen.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_checkbox.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_discription_feild.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
-import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_textfeild.dart';
 
 class ImportFromSeedPhraseScreen extends StatelessWidget {
   ImportFromSeedPhraseScreen({super.key});
-  final ImportFromSeedController controller = Get.put(ImportFromSeedController());
+  final ImportFromSeedController controller =
+      Get.put(ImportFromSeedController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-        appBar: AppBar(
-          backgroundColor: whiteColor,
-          shadowColor: whiteColor,
-          foregroundColor: whiteColor,
-          surfaceTintColor: whiteColor,
-          elevation: 0.0,
-          centerTitle: true,
-          leading: Padding(
-            padding:  EdgeInsets.only(left: 10.w),
-            child: SizedBox(
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        shadowColor: whiteColor,
+        foregroundColor: whiteColor,
+        surfaceTintColor: whiteColor,
+        elevation: 0.0,
+        centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 10.w),
+          child: SizedBox(
               height: 28.h,
               width: 28.w,
               child: Center(child: SvgPicture.asset(arrowLeft))),
-          ),
-            title: Text("Import From Seed",style: GoogleFonts.urbanist(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w700,
-              color: blackColor2
-            ),),
-            actions: [
-              Padding(
-                padding:  EdgeInsets.only(right: 20.w),
-                child: GestureDetector(
-                  onTap: (){
-                    Get.to(()=>FingerPrintScanScreen());
-                  },
-                  child: SizedBox(
-                    height: 28.h,
-                              width: 28.w,
-                    child: Center(child: SvgPicture.asset(scanIcon))),
-                ),
-              )
-            ],
         ),
-
+        title: Text(
+          "Import From Seed",
+          style: GoogleFonts.urbanist(
+              fontSize: 24.sp, fontWeight: FontWeight.w700, color: blackColor2),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20.w),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(() => FingerPrintScanScreen());
+              },
+              child: SizedBox(
+                  height: 28.h,
+                  width: 28.w,
+                  child: Center(child: SvgPicture.asset(scanIcon))),
+            ),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
@@ -71,36 +69,33 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                     top: 25.h, left: 18.w, right: 18.w, bottom: 20.h),
                 child: Column(
                   children: [
-                   
                     CustomDescriptionTextField(
-                     
                       hintText: "Seed Phrase",
                       controller: controller.seedPhraseController,
                       labelText: "Seed Phrase",
-                     // suffixIcoPath: eyeIcon,
-                       //prefixIconPath: eyeIcon,
-                     validator: (value) {
-  if (value == null || value.isEmpty) {
-    return "Seed phrase cannot be empty";
-  } else {
-    // Split the input into words
-    List<String> words = value.trim().split(' ');
+                      // suffixIcoPath: eyeIcon,
+                      //prefixIconPath: eyeIcon,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Seed phrase cannot be empty";
+                        } else {
+                          // Split the input into words
+                          List<String> words = value.trim().split(' ');
 
-    // Check if the length is exactly 12 words
-    if (words.length != 12) {
-      return "Phrase must consist of exactly 12 words";
-    }
+                          // Check if the length is exactly 12 words
+                          if (words.length != 12) {
+                            return "Phrase must consist of exactly 12 words";
+                          }
 
-    // Optionally, check if all words are valid (if necessary)
-    for (var word in words) {
-      if (word.isEmpty) {
-        return "Seed phrase cannot have empty words";
-      }
-    }
-  }
-  return null;
-},
-
+                          // Optionally, check if all words are valid (if necessary)
+                          for (var word in words) {
+                            if (word.isEmpty) {
+                              return "Seed phrase cannot have empty words";
+                            }
+                          }
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15.h,
@@ -188,18 +183,17 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CustomCheckbox(
-  isChecked: controller.isChecked.value,
-  onChanged: (value) {
-   controller .toggleCheckbox(!controller.isChecked.value);
-  },
-),
-                
+                            isChecked: controller.isChecked.value,
+                            onChanged: (value) {
+                              controller
+                                  .toggleCheckbox(!controller.isChecked.value);
+                            },
+                          ),
                           SizedBox(width: 12.w),
                           Expanded(
                             child: RichText(
                               text: TextSpan(
-                                text:
-                                    "I agree to LNBG Wallet ",
+                                text: "I agree to LNBG Wallet ",
                                 style: GoogleFonts.urbanist(
                                     color: blackColor2,
                                     fontSize: 18.sp,
@@ -240,7 +234,6 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
           ),
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),

@@ -10,50 +10,56 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isSuffix;
   final String title;
   final String iconPath;
-  const CustomAppBar({super.key, required this.title, required this.iconPath,  this.isSuffix=false});
+  const CustomAppBar(
+      {super.key,
+      required this.title,
+      required this.iconPath,
+      this.isSuffix = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-          backgroundColor: whiteColor,
-          shadowColor: whiteColor,
-          foregroundColor: whiteColor,
-          surfaceTintColor: whiteColor,
-          elevation: 0.0,
-          centerTitle: false,
-          leading: Padding(
-            padding:  EdgeInsets.only(left: 10.w),
-            child: GestureDetector(
-              onTap: (){
-                Get.back();
-              },
-              child: SizedBox(
-                height: 28.h,
-                width: 28.w,
-                child: Center(child: SvgPicture.asset(arrowLeft))),
-            ),
-          ),
-            title: Text(title,style: GoogleFonts.urbanist(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w700,
-              color: blackColor2
-            ),),
-            actions: [
-              Padding(
-                padding:  EdgeInsets.only(right: 20.w),
-                child: isSuffix==true?GestureDetector(
-                  onTap: (){
-                    // Get.to(()=>FingerPrintScanScreen());
-                  },
-                  child: SizedBox(
-                    height: 28.h,
-                              width: 28.w,
-                    child: Center(child: SvgPicture.asset(iconPath))),
-                ):SizedBox()
-              )
-            ],
-        );
+      backgroundColor: whiteColor,
+      shadowColor: whiteColor,
+      foregroundColor: whiteColor,
+      surfaceTintColor: whiteColor,
+      elevation: 0.0,
+      centerTitle: false,
+      leading: Padding(
+        padding: EdgeInsets.only(left: 10.w),
+        child: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(child: SvgPicture.asset(arrowLeft))),
+        ),
+      ),
+      title: Text(
+        title,
+        style: GoogleFonts.urbanist(
+            fontSize: 24.sp, fontWeight: FontWeight.w700, color: blackColor2),
+      ),
+      actions: [
+        Padding(
+            padding: EdgeInsets.only(right: 20.w),
+            child: isSuffix == true
+                ? GestureDetector(
+                    onTap: () {
+                      // Get.to(()=>FingerPrintScanScreen());
+                    },
+                    child: SizedBox(
+                        height: 28.h,
+                        width: 28.w,
+                        child: Center(child: SvgPicture.asset(iconPath))),
+                  )
+                : const SizedBox())
+      ],
+    );
   }
-    @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

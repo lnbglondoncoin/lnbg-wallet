@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 
-
 class StepProgressIndicator extends StatelessWidget {
   final StepController controller = Get.put(StepController());
+
+  StepProgressIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class StepProgressIndicator extends StatelessWidget {
                   controller.updateIndex(controller.currentIndex.value - 1);
                 }
               },
-              child: Text("Previous"),
+              child: const Text("Previous"),
             ),
             SizedBox(width: 10.w),
             ElevatedButton(
@@ -41,7 +42,7 @@ class StepProgressIndicator extends StatelessWidget {
                   controller.updateIndex(controller.currentIndex.value + 1);
                 }
               },
-              child: Text("Next"),
+              child: const Text("Next"),
             ),
           ],
         )
@@ -74,5 +75,4 @@ class StepProgressIndicator extends StatelessWidget {
       ),
     );
   }
-
 }

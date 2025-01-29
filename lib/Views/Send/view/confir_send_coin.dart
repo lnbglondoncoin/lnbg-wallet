@@ -12,304 +12,330 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class ConfirmSendCoinScreen extends StatelessWidget {
-final String ammount;
-final String address;
-final String coinCode;
-   ConfirmSendCoinScreen({super.key, required this.ammount, required this.address, required this.coinCode});
-final controller=Get.put(SendController());
+  final String ammount;
+  final String address;
+  final String coinCode;
+  ConfirmSendCoinScreen(
+      {super.key,
+      required this.ammount,
+      required this.address,
+      required this.coinCode});
+  final controller = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar:  CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Confirm",
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(vertical: 10.h,horizontal: 20.w),
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Text(
-                "$ammount $coinCode",style: GoogleFonts.urbanist(
-              fontSize: 48.sp,
-              fontWeight: FontWeight.w700,
-              color: orange3  
-              ),),
+                "$ammount $coinCode",
+                style: GoogleFonts.urbanist(
+                    fontSize: 48.sp,
+                    fontWeight: FontWeight.w700,
+                    color: orange3),
+              ),
             ),
             Center(
               child: Text(
-                  "\$2,107.11 USD",style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: greyColor3  
-                ),),
+                "\$2,107.11 USD",
+                style: GoogleFonts.urbanist(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w500,
+                    color: greyColor3),
+              ),
             ),
-            SizedBox(height: 25.h,),
-            CustomDivider(),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 25.h,
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
-                  "From",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: blackColor2  
-                ),),
-              
+              "From",
+              style: GoogleFonts.urbanist(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: blackColor2),
+            ),
             Text(
-                  address,style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: blackColor2  
-                ),),
-                  SizedBox(height: 20.h,),
+              address,
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w500,
+                  color: blackColor2),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
-                  "To",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: blackColor2  
-                ),),
-                 
-           Row(
-            children: [
-              Flexible(
-                child: TextFormField(
+              "To",
+              style: GoogleFonts.urbanist(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: blackColor2),
+            ),
+            Row(
+              children: [
+                Flexible(
+                    child: TextFormField(
                   controller: controller.recipientAddressController,
-                  enabled: controller. recipientAddressController.text==""|| controller.isEditClicked.value==true?true:false,
+                  enabled: controller.recipientAddressController.text == "" ||
+                          controller.isEditClicked.value == true
+                      ? true
+                      : false,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Enter address to send",
                     hintStyle: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: greyColor2  
-                ),
-                
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500,
+                        color: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: blackColor2  
-                ),
-                )
-              ),
-              GestureDetector(
-                onTap: (){
-                  controller.isEditClicked.value==true;
-                },
-                child: SvgPicture.asset("assets/icons/Edit.svg"))
-            ],
-           ),
-          
-           CustomDivider(),
-           SizedBox(height: 10.h,),
-           Row(
-            children: [
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor2),
+                )),
+                GestureDetector(
+                    onTap: () {
+                      controller.isEditClicked.value == true;
+                    },
+                    child: SvgPicture.asset("assets/icons/Edit.svg"))
+              ],
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
                 Text(
-                  "Network Fee",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: blackColor2  
-                ),),
-                Spacer(),
-              Flexible(
-                child: TextFormField(
+                  "Network Fee",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: blackColor2),
+                ),
+                const Spacer(),
+                Flexible(
+                    child: TextFormField(
                   controller: controller.recipientAddressController,
-                  enabled: controller. recipientAddressController.text==""|| controller.isEditClicked.value==true?true:false,
+                  enabled: controller.recipientAddressController.text == "" ||
+                          controller.isEditClicked.value == true
+                      ? true
+                      : false,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "0.02 ETH (\$26.35 USD)",
                     hintStyle: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: greyColor2  
-                ),
-                
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500,
+                        color: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: blackColor2  
-                ),
-                )
-              ),
-               GestureDetector(
-                onTap: (){
-                  Get.to(()=>EditNetworkScreen(coinCode: coinCode,));
-                },
-                child: SvgPicture.asset("assets/icons/Edit.svg"))
-            ],
-           ),
-          
-              CustomDivider(),
-           SizedBox(height: 10.h,),
-           Row(
-            children: [
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor2),
+                )),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => EditNetworkScreen(
+                            coinCode: coinCode,
+                          ));
+                    },
+                    child: SvgPicture.asset("assets/icons/Edit.svg"))
+              ],
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
                 Text(
-                  "Max Total",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: blackColor2  
-                ),),
-                Spacer(),
-              Flexible(
-                child: TextFormField(
+                  "Max Total",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: blackColor2),
+                ),
+                const Spacer(),
+                Flexible(
+                    child: TextFormField(
                   controller: controller.recipientAddressController,
-                  enabled: controller. recipientAddressController.text==""|| controller.isEditClicked.value==true?true:false,
+                  enabled: controller.recipientAddressController.text == "" ||
+                          controller.isEditClicked.value == true
+                      ? true
+                      : false,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "0.02 ETH (\$26.35 USD)",
                     hintStyle: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: greyColor2  
-                ),
-                
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500,
+                        color: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: blackColor2  
-                ),
-                )
-              ),
-             
-            ],
-           ),
-          
-           
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor2),
+                )),
+              ],
+            ),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding:  EdgeInsets.all( 25.h),
-        child: CustomButton(buttonText: "Send", onPressed: (){
-        //  _showSuccesPopup(context);
-        }),
+        padding: EdgeInsets.all(25.h),
+        child: CustomButton(
+            buttonText: "Send",
+            onPressed: () {
+              //  _showSuccesPopup(context);
+            }),
       ),
     );
   }
-    void _showSuccesPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-         contentPadding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
-         actionsPadding:  EdgeInsets.only(left: 30.w,bottom: 20.h,right: 30.w,top: 10.h),
-        backgroundColor: whiteColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(48.r),
-            
-          ),
-          icon: Image.asset("assets/images/success2.png",height: 180.h,
-          width: 186.w,),
-          title: Text("Successful Sent!",style: GoogleFonts.urbanist(
-            fontSize: 24.sp,fontWeight: FontWeight.w700,
-            color: orange3
-          ),),
-          content: Text(
-            textAlign: TextAlign.center,
-            "Your crypto was sent successfully. You can view transaction below.",
-          style: GoogleFonts.urbanist(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w400,
-            color: blackColor2)),
-          actions: [
-          GestureDetector(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 58.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.r),
-                gradient: LinearGradient(colors: 
-                [
-                 orange2, orange1 
-                ])
-              ),
-              child: Center(
-                child: Text("View Details",style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.sp,
-                  color: whiteColor
-                ),),
-              ),
-            ),
-          ),
-          SizedBox(height: 15.h,),
-         CustomLightGreenButton(buttonText: "Cancel", onPressed: (){
-          Navigator.pop(context);
-         })
-         
-          ],
-        );
-      },
-    );
-  }
- 
-   void _showFailPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-         contentPadding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
-         actionsPadding:  EdgeInsets.only(left: 30.w,bottom: 20.h,right: 30.w,top: 10.h),
-        backgroundColor: whiteColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(48.r),
-            
-          ),
-          icon: Image.asset("assets/images/fail.png",height: 180.h,
-          width: 186.w,),
-          title: Text("Oops.. .Failed!",style: GoogleFonts.urbanist(
-            fontSize: 24.sp,fontWeight: FontWeight.w700,
-            color: pinkColor
-          ),),
-          content: Text(
-            textAlign: TextAlign.center,
-            "Please check your internet connection, and then try again.",
-          style: GoogleFonts.urbanist(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w400,
-            color: blackColor2)),
-          actions: [
-          GestureDetector(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 58.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.r),
-                gradient: LinearGradient(colors: 
-                [
-                 orange2, orange1 
-                ])
-              ),
-              child: Center(
-                child: Text("Try Again",style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.sp,
-                  color: whiteColor
-                ),),
-              ),
-            ),
-          ),
-          SizedBox(height: 15.h,),
-         CustomLightGreenButton(buttonText: "Cancel", onPressed: (){
-          Navigator.pop(context);
-         })
-         
-          ],
-        );
-      },
-    );
-  }
- 
 
+  void _showSuccesPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+          actionsPadding:
+              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
+          backgroundColor: whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(48.r),
+          ),
+          icon: Image.asset(
+            "assets/images/success2.png",
+            height: 180.h,
+            width: 186.w,
+          ),
+          title: Text(
+            "Successful Sent!",
+            style: GoogleFonts.urbanist(
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
+          ),
+          content: Text(
+              textAlign: TextAlign.center,
+              "Your crypto was sent successfully. You can view transaction below.",
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                  color: blackColor2)),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 58.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.r),
+                    gradient: const LinearGradient(colors: [orange2, orange1])),
+                child: Center(
+                  child: Text(
+                    "View Details",
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        color: whiteColor),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            CustomLightGreenButton(
+                buttonText: "Cancel",
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
+        );
+      },
+    );
+  }
+
+  void _showFailPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+          actionsPadding:
+              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
+          backgroundColor: whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(48.r),
+          ),
+          icon: Image.asset(
+            "assets/images/fail.png",
+            height: 180.h,
+            width: 186.w,
+          ),
+          title: Text(
+            "Oops.. .Failed!",
+            style: GoogleFonts.urbanist(
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: pinkColor),
+          ),
+          content: Text(
+              textAlign: TextAlign.center,
+              "Please check your internet connection, and then try again.",
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                  color: blackColor2)),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 58.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.r),
+                    gradient: const LinearGradient(colors: [orange2, orange1])),
+                child: Center(
+                  child: Text(
+                    "Try Again",
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        color: whiteColor),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            CustomLightGreenButton(
+                buttonText: "Cancel",
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
+        );
+      },
+    );
+  }
 }

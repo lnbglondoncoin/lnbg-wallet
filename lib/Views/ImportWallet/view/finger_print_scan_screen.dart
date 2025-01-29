@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
@@ -12,7 +11,8 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 class FingerPrintScanScreen extends StatelessWidget {
   FingerPrintScanScreen({super.key});
 
-  final FingerPrintScanController controller = Get.put(FingerPrintScanController());
+  final FingerPrintScanController controller =
+      Get.put(FingerPrintScanController());
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class FingerPrintScanScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
         child: CustomButton(
           buttonText: "Continue",
-          onPressed: (){
+          onPressed: () {
             controller.authenticate(context);
           },
         ),

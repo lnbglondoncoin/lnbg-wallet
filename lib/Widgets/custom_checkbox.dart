@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 
@@ -8,10 +7,10 @@ class CustomCheckbox extends StatelessWidget {
   final Function(bool) onChanged;
 
   const CustomCheckbox({
-    Key? key,
+    super.key,
     required this.isChecked,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +26,8 @@ class CustomCheckbox extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: isChecked ? orange3 : whiteColor,
         ),
-        child: isChecked
-            ? Icon(Icons.check, size: 12.h, color: whiteColor)
-            : null,
+        child:
+            isChecked ? Icon(Icons.check, size: 12.h, color: whiteColor) : null,
       ),
     );
   }

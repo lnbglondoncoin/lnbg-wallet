@@ -1,5 +1,3 @@
-
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -19,12 +17,13 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
   ConfirmSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
   final walletCreatingController = Get.find<WalletCreatingController>();
-   final ShakeAnimationController shakeController = Get.put(ShakeAnimationController());
-   final player = AudioPlayer();
-   void _playNotificationTone() async {
-await player.play(AssetSource('sounds/errorSund.mp3'));
+  final ShakeAnimationController shakeController =
+      Get.put(ShakeAnimationController());
+  final player = AudioPlayer();
+  void _playNotificationTone() async {
+    await player.play(AssetSource('sounds/errorSund.mp3'));
+  }
 
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +37,8 @@ await player.play(AssetSource('sounds/errorSund.mp3'));
           walletCreatingController.orderList.clear();
           Get.back();
         },
-        currentIndex: controller.currentIndex, onWillPop: () {
+        currentIndex: controller.currentIndex,
+        onWillPop: () {
           controller.decreseIndexValue(2);
           walletCreatingController.indexes.clear();
           walletCreatingController.shuffledList.clear();
@@ -55,7 +55,7 @@ await player.play(AssetSource('sounds/errorSund.mp3'));
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomDivider(),
+                  const CustomDivider(),
                   SizedBox(height: 10.h),
                   Center(
                     child: Text(
@@ -78,7 +78,7 @@ await player.play(AssetSource('sounds/errorSund.mp3'));
                     ),
                   ),
                   SizedBox(height: 25.h),
-                  CustomDivider(),
+                  const CustomDivider(),
                   SizedBox(height: 45.h),
                   Center(
                     child: Text(
@@ -90,108 +90,130 @@ await player.play(AssetSource('sounds/errorSund.mp3'));
                     ),
                   ),
                   SizedBox(height: 45.h),
-             Obx(() {
-  if (!walletCreatingController.isTrue.value) {
-    shakeController.startShakeAnimation();
-    _playNotificationTone();
-  }
+                  Obx(() {
+                    if (!walletCreatingController.isTrue.value) {
+                      shakeController.startShakeAnimation();
+                      _playNotificationTone();
+                    }
 
-  return 
-GetBuilder<ShakeAnimationController>(
-              builder: (controller) {
-                return AnimatedBuilder(
-                  animation: controller.rotationAnimation,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: controller.rotationAnimation.value,
-                      child: AnimatedContainer(
-                          duration: Duration(milliseconds: 300),
-                          transform: walletCreatingController.isTrue.value
-                              ? Matrix4.identity()
-                              : Matrix4.rotationZ(0.1), // Rotate 30 degrees (0.1 radians)
-                          onEnd: () {
-                            // Reset rotation after animation completes
-                            walletCreatingController.changeisTrue(true);
-                          },
-                          curve: Curves.easeInOut,
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: walletCreatingController.isTrue.value
-                                  ? LinearGradient(
-                                      colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
-                                    )
-                                  : LinearGradient(
-                                      colors: [redColor, redColor],
-                                    ),
-                              borderRadius: BorderRadius.circular(40.r),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(2.h),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40.r),
-                                  color: whiteColor,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(20.h),
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 3,
-                                    ),
-                                    itemCount: walletCreatingController.shuffleFirstPart.length,
-                                    itemBuilder: (context, index) {
-                                      var suffeledItem = walletCreatingController.shuffleFirstPart[index];
-                                      return Obx(() {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            walletCreatingController.addInOrderList(suffeledItem);
-                                            walletCreatingController.addIndexesToList(index);
-                                          },
-                                          child: Container(
-                                            height: 45.h,
-                                            decoration: BoxDecoration(
-                      color: walletCreatingController.indexes.contains(index)
-                          ? orange3
-                          : greyColor4,
-                      borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Center(
-                      child: Text(
-                        suffeledItem,
-                        style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          color: walletCreatingController.indexes.contains(index)
-                              ? whiteColor
-                              : darkGreyColor,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                                            ),
+                    return GetBuilder<ShakeAnimationController>(
+                      builder: (controller) {
+                        return AnimatedBuilder(
+                          animation: controller.rotationAnimation,
+                          builder: (context, child) {
+                            return Transform.rotate(
+                              angle: controller.rotationAnimation.value,
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                transform: walletCreatingController.isTrue.value
+                                    ? Matrix4.identity()
+                                    : Matrix4.rotationZ(
+                                        0.1), // Rotate 30 degrees (0.1 radians)
+                                onEnd: () {
+                                  // Reset rotation after animation completes
+                                  walletCreatingController.changeisTrue(true);
+                                },
+                                curve: Curves.easeInOut,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    gradient:
+                                        walletCreatingController.isTrue.value
+                                            ? const LinearGradient(
+                                                colors: [
+                                                  Color(0xFFFACC15),
+                                                  Color(0xFFFFE580)
+                                                ],
+                                              )
+                                            : const LinearGradient(
+                                                colors: [redColor, redColor],
+                                              ),
+                                    borderRadius: BorderRadius.circular(40.r),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(2.h),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(40.r),
+                                        color: whiteColor,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(20.h),
+                                        child: GridView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10,
+                                            childAspectRatio: 3,
                                           ),
-                                        );
-                                      });
-                                    },
+                                          itemCount: walletCreatingController
+                                              .shuffleFirstPart.length,
+                                          itemBuilder: (context, index) {
+                                            var suffeledItem =
+                                                walletCreatingController
+                                                    .shuffleFirstPart[index];
+                                            return Obx(() {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  walletCreatingController
+                                                      .addInOrderList(
+                                                          suffeledItem);
+                                                  walletCreatingController
+                                                      .addIndexesToList(index);
+                                                },
+                                                child: Container(
+                                                  height: 45.h,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        walletCreatingController
+                                                                .indexes
+                                                                .contains(index)
+                                                            ? orange3
+                                                            : greyColor4,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      suffeledItem,
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                        fontSize: 18.sp,
+                                                        color:
+                                                            walletCreatingController
+                                                                    .indexes
+                                                                    .contains(
+                                                                        index)
+                                                                ? whiteColor
+                                                                : darkGreyColor,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
+                            );
+                          },
+                        );
+                      },
                     );
-                  },
-                );
-              },
-            );
-}),
- 
- 
-  SizedBox(height: 70.h),
+                  }),
+                  SizedBox(height: 70.h),
                   SizedBox(
                     height: 3.h,
                     child: ListView.builder(
@@ -207,13 +229,13 @@ GetBuilder<ShakeAnimationController>(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2.r),
                               gradient: index < 6
-                                  ? LinearGradient(
+                                  ? const LinearGradient(
                                       colors: [
                                         lightPrimaryColor,
                                         primaryColor,
                                       ],
                                     )
-                                  : LinearGradient(
+                                  : const LinearGradient(
                                       colors: [
                                         lightBlack,
                                         lightBlack,
@@ -229,22 +251,20 @@ GetBuilder<ShakeAnimationController>(
               ),
             ),
             SizedBox(height: 50.h),
-            CustomDivider(),
+            const CustomDivider(),
             SizedBox(height: 200.h),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-            left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
+        padding:
+            EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
         child: CustomButton(
             buttonText: "Next",
             onPressed: () {
-              if (listEquals(
-                  walletCreatingController.firstHalfOfMnemonic,
+              if (listEquals(walletCreatingController.firstHalfOfMnemonic,
                   walletCreatingController.orderList)) {
-                
                 walletCreatingController.changeisTrue(true);
                 walletCreatingController.shuffleList(
                     walletCreatingController.mnemonicWords.sublist(6, 12));
@@ -253,18 +273,16 @@ GetBuilder<ShakeAnimationController>(
                 walletCreatingController.indexes.clear();
                 controller.updateIndex(2);
               } else {
-                Get.snackbar('Error', 'Please tap phrases in the order provided to you on the previous page',
-                backgroundColor: orange3,
-                snackPosition: SnackPosition.TOP);
+                Get.snackbar('Error',
+                    'Please tap phrases in the order provided to you on the previous page',
+                    backgroundColor: orange3, snackPosition: SnackPosition.TOP);
                 walletCreatingController.changeisTrue(false);
               }
-              print(
-                  "first mnemonic is :${walletCreatingController.firstHalfOfMnemonic}");
-              print("order list is :${walletCreatingController.orderList}");
+              // print(
+              //     "first mnemonic is :${walletCreatingController.firstHalfOfMnemonic}");
+              // print("order list is :${walletCreatingController.orderList}");
             }),
       ),
     );
   }
 }
-
-

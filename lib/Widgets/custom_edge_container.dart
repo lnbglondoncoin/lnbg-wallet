@@ -13,10 +13,9 @@ class CustomEdgeContainer extends StatelessWidget {
       child: Stack(
         children: [
           // The main container where the child widget is placed
-          Container(
+          SizedBox(
             width: 300.w,
             height: 300.h,
-            
             child: child,
           ),
 

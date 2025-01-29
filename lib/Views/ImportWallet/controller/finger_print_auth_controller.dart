@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Views/ImportWallet/view/face_authentication.dart';
 import 'package:local_auth/local_auth.dart';
 
 class FingerPrintScanController extends GetxController {
@@ -22,11 +21,12 @@ class FingerPrintScanController extends GetxController {
     supportState.value = await auth.isDeviceSupported();
   }
 
-  Future<void> getAvailableBiometrics() async {
-    print("clicked");
-    List<BiometricType> availableBiometrics = await auth.getAvailableBiometrics();
-    print("List of biometrics: $availableBiometrics");
-  }
+  // Future<void> getAvailableBiometrics() async {
+
+  //   List<BiometricType> availableBiometrics =
+  //       await auth.getAvailableBiometrics();
+
+  // }
 
   Future<void> authenticate(BuildContext context) async {
     try {
@@ -38,46 +38,49 @@ class FingerPrintScanController extends GetxController {
         ),
       );
       if (authenticated) {
-       Get.snackbar("Success", "Authenticated",
-       backgroundColor: orange3);
-       showPopup(context);
+        Get.snackbar("Success", "Authenticated", backgroundColor: orange3);
+        showPopup(context);
       } else {
-      Get.snackbar("Error", "Authentication Failed",
-       backgroundColor: orange3);
+        Get.snackbar("Error", "Authentication Failed",
+            backgroundColor: orange3);
       }
     } on PlatformException catch (e) {
       print(e);
     }
   }
 
-   
   void showPopup(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-         contentPadding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
-         actionsPadding:  EdgeInsets.only(left: 30.w,bottom: 20.h,right: 30.w,top: 10.h),
-        backgroundColor: whiteColor,
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+          actionsPadding:
+              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
+          backgroundColor: whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
-            
           ),
-          icon: Image.asset("assets/images/success.png",height: 180.h,
-          width: 186.w,),
-          title: Text("Successful!",style: GoogleFonts.urbanist(
-            fontSize: 24.sp,fontWeight: FontWeight.w700,
-            color: orange3
-          ),),
+          icon: Image.asset(
+            "assets/images/success.png",
+            height: 180.h,
+            width: 186.w,
+          ),
+          title: Text(
+            "Successful!",
+            style: GoogleFonts.urbanist(
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
+          ),
           content: Text(
-            textAlign: TextAlign.center,
-            "Preparing...\nPlease wait a moment.",
-          style: GoogleFonts.urbanist(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w400,
-            color: blackColor2)),
+              textAlign: TextAlign.center,
+              "Preparing...\nPlease wait a moment.",
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                  color: blackColor2)),
           actions: [
-          ShaderMask(
+            ShaderMask(
               shaderCallback: (Rect bounds) {
                 return const LinearGradient(
                   colors: [primaryColor, lightPrimaryColor], // Gradient colors
@@ -95,5 +98,4 @@ class FingerPrintScanController extends GetxController {
       },
     );
   }
- 
 }

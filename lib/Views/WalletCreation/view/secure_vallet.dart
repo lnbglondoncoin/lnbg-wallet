@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/remind%20_me_latter_bottom_sheets.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/remind_me_latter_bottom_sheets.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_wallet_2.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -150,7 +150,7 @@ _showCustomBottomSheet(context);
       isScrollControlled: true, // Allows full-screen height
       backgroundColor: Colors.transparent, // Transparent background
       builder: (context) {
-        return AnimatedBottomSheet();
+        return const AnimatedBottomSheet();
       },
     );
   }

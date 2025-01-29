@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +19,7 @@ class ReceiveCoinQR extends StatelessWidget {
   final String coinCode;
   final String coinFullName;
 
-   ReceiveCoinQR({
+  const ReceiveCoinQR({
     super.key,
     required this.coinIconPath,
     required this.coinCode,
@@ -49,21 +47,18 @@ class ReceiveCoinQR extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10.h),
-              CustomDivider(),
-             
+              const CustomDivider(),
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal:20.w ),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Container(
-                 
-                 height: 360.h,
+                  height: 360.h,
                   width: double.infinity,
                   alignment: Alignment.center,
-                           
                   child: QrImageView(
                     padding: EdgeInsets.zero,
                     data: "https://your-wallet-address-or-info.com/$coinCode",
                     version: QrVersions.auto,
-                   // size: 380.h,
+                    // size: 380.h,
                     backgroundColor: whiteColor,
                     errorStateBuilder: (context, error) {
                       return Center(
@@ -77,44 +72,47 @@ class ReceiveCoinQR extends StatelessWidget {
                 ),
               ),
               Padding(
-                   padding:  EdgeInsets.symmetric(horizontal:20.w ),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
                   textAlign: TextAlign.center,
-                  "0x7131CA84856767fjfh8sjhqak8s88848f8E696",style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w800,
-                  color: darkGreyColor
-                ),),
-              
+                  "0x7131CA84856767fjfh8sjhqak8s88848f8E696",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w800,
+                      color: darkGreyColor),
+                ),
               ),
-              SizedBox(height: 10.h,),
-              CustomDivider(),
-              SizedBox(height: 10.h,),
-                Padding(
-                   padding:  EdgeInsets.symmetric(horizontal:20.w ),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  "Send only Ethereum (ETH) to this address.",style: GoogleFonts.urbanist(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: darkGreyColor
-                ),),
-              
+              SizedBox(
+                height: 10.h,
               ),
-               Padding(
-                   padding:  EdgeInsets.symmetric(horizontal:20.w ),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  "Sending any other coins may result in permanent loss.",style: GoogleFonts.urbanist(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: darkGreyColor
-                ),),
-              
+              const CustomDivider(),
+              SizedBox(
+                height: 10.h,
               ),
               Padding(
-              
-                   padding:  EdgeInsets.symmetric(horizontal:20.w ,vertical: 25.h),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Send only Ethereum (ETH) to this address.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: darkGreyColor),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Sending any other coins may result in permanent loss.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: darkGreyColor),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -125,144 +123,147 @@ class ReceiveCoinQR extends StatelessWidget {
                           height: 60.h,
                           width: 60.w,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: lightGreenColor.withOpacity(0.08)
-                          ),
-                          child: Center(child: SvgPicture.asset("assets/icons/copy.svg")),
+                              shape: BoxShape.circle,
+                              color: lightGreenColor.withOpacity(0.08)),
+                          child: Center(
+                              child: SvgPicture.asset("assets/icons/copy.svg")),
                         ),
-                        Text("Copy",style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: darkGreyColor
-                        ),)
+                        Text(
+                          "Copy",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: darkGreyColor),
+                        )
                       ],
                     ),
-                     Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                       children: [
-                         GestureDetector(
-                          onTap: (){
-                           _showCustomBottomSheet(context);
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _showCustomBottomSheet(context);
                           },
-                           child: Container(
+                          child: Container(
                             height: 60.h,
                             width: 60.w,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: lightGreenColor.withOpacity(0.08)
-                            ),
-                            child: Center(child: SvgPicture.asset("assets/icons/set.svg")),
-                                               ),
-                         ),
-                                               Text("Set Amount",style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: darkGreyColor
-                        ),)
-                       ],
-                     ),
-                     GestureDetector(
-                      onTap: (){
+                                shape: BoxShape.circle,
+                                color: lightGreenColor.withOpacity(0.08)),
+                            child: Center(
+                                child:
+                                    SvgPicture.asset("assets/icons/set.svg")),
+                          ),
+                        ),
+                        Text(
+                          "Set Amount",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: darkGreyColor),
+                        )
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         _shareQRCode();
                       },
-                       child: Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                         children: [
-                           Container(
+                        children: [
+                          Container(
                             height: 60.h,
                             width: 60.w,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: lightGreenColor.withOpacity(0.08)
-                            ),
-                            child: Center(child: SvgPicture.asset("assets/icons/share.svg")),
-                                               ),
-                                                Text("Share",style: GoogleFonts.urbanist(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w700,
-                            color: darkGreyColor
-                          ),)
-                                               
-                         ],
-                       ),
-                     )
+                                shape: BoxShape.circle,
+                                color: lightGreenColor.withOpacity(0.08)),
+                            child: Center(
+                                child:
+                                    SvgPicture.asset("assets/icons/share.svg")),
+                          ),
+                          Text(
+                            "Share",
+                            style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w700,
+                                color: darkGreyColor),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-              SizedBox(height: 50.h,)
+              SizedBox(
+                height: 50.h,
+              )
             ],
           ),
         ),
       ),
     );
   }
-    void _showCustomBottomSheet(BuildContext context) {
+
+  void _showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows full-screen height
       backgroundColor: Colors.transparent, // Transparent background
       builder: (context) {
-        return AnimatedBottomSheet(iconPath:coinIconPath,);
+        return AnimatedBottomSheet(
+          iconPath: coinIconPath,
+        );
       },
     );
   }
- void _shareQRCode() async {
-  try {
-    final qrImage = await _captureQRImage();
-    if (qrImage != null) {
-      await Share.shareXFiles([XFile(qrImage.path)], text: 'Scan this QR code!');
+
+  void _shareQRCode() async {
+    try {
+      final qrImage = await _captureQRImage();
+      if (qrImage != null) {
+        await Share.shareXFiles([XFile(qrImage.path)],
+            text: 'Scan this QR code!');
+      }
+    } catch (e) {
+    //  print("Error sharing QR code: $e");
     }
-  } catch (e) {
-    print("Error sharing QR code: $e");
+  }
+
+  Future<File?> _captureQRImage() async {
+    try {
+      final qrPainter = QrPainter(
+        data: "https://your-wallet-address-or-info.com/$coinCode",
+        version: QrVersions.auto,
+        gapless: false,
+      );
+
+      // Get the temporary directory to save the QR image
+      final tempDir = await getTemporaryDirectory();
+      final qrFile = File('${tempDir.path}/qr_code.png');
+
+      // Convert the QR code into image data
+      final image = await qrPainter.toImageData(300);
+
+      // Write the image data to the file
+      await qrFile.writeAsBytes(image!.buffer.asUint8List());
+
+      return qrFile;
+    } catch (e) {
+    //  print("Error capturing QR image: $e");
+      return null;
+    }
   }
 }
-
-
-
-Future<File?> _captureQRImage() async {
-  try {
-    final qrPainter = QrPainter(
-      data: "https://your-wallet-address-or-info.com/$coinCode",
-      version: QrVersions.auto,
-      gapless: false,
-    );
-
-    // Get the temporary directory to save the QR image
-    final tempDir = await getTemporaryDirectory();
-    final qrFile = File('${tempDir.path}/qr_code.png');
-
-    // Convert the QR code into image data
-    final image = await qrPainter.toImageData(300);
-
-    // Write the image data to the file
-    await qrFile.writeAsBytes(image!.buffer.asUint8List());
-
-    return qrFile;
-  } catch (e) {
-    print("Error capturing QR image: $e");
-    return null;
-  }
-}
-
-
-  
-
-}
-
-
-
-
-
 
 class AnimatedBottomSheet extends StatefulWidget {
   final String iconPath;
 
   const AnimatedBottomSheet({super.key, required this.iconPath});
   @override
-  _AnimatedBottomSheetState createState() => _AnimatedBottomSheetState();
+  AnimatedBottomSheetState createState() => AnimatedBottomSheetState();
 }
 
-class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
+class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
@@ -273,12 +274,12 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: Offset(0, 1), // Start position (bottom of screen)
-      end: Offset(0, 0), // End position (fully visible)
+      begin: const Offset(0, 1), // Start position (bottom of screen)
+      end: const Offset(0, 0), // End position (fully visible)
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.forward();
@@ -298,7 +299,8 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
       child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
             left: 25.w,
             right: 25.w,
             top: 10.h,
@@ -336,7 +338,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 ),
               ),
               SizedBox(height: 20.h),
-              CustomDivider(),
+              const CustomDivider(),
               SizedBox(height: 20.h),
               TextFormField(
                 controller: controller.ammountController,
@@ -377,43 +379,47 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 enableInteractiveSelection: false,
               ),
               SizedBox(height: 20.h),
-              CustomDivider(),
+              const CustomDivider(),
               SizedBox(height: 20.h),
-               Row(
-            children: [ 
-              Flexible(
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 59.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: lightGreenColor2,
-                      borderRadius: BorderRadius.circular(100.r)
+              Row(
+                children: [
+                  Flexible(
+                      child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 59.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: lightGreenColor2,
+                          borderRadius: BorderRadius.circular(100.r)),
+                      child: Center(
+                        child: Text(
+                          "Cancel",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: lightGreenColor),
+                        ),
+                      ),
                     ),
-                    child: Center(
-                      child: Text("Cancel",style: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: lightGreenColor
-                      ),),
-                    ),
+                  )),
+                  SizedBox(
+                    width: 10.w,
                   ),
-                )
+                  Flexible(
+                    child: CustomButton(
+                        buttonText: "Confirm",
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                  ),
+                ],
               ),
-              SizedBox(width: 10.w,),
-            Flexible(
-              child: CustomButton(buttonText: "Confirm", onPressed: (){
-                 Navigator.pop(context);
-              
-                         }),
-            ),
-           ],
-          ),
-           SizedBox(height: 25.h,)
-           
+              SizedBox(
+                height: 25.h,
+              )
             ],
           ),
         ),

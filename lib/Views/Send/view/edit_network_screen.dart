@@ -11,136 +11,161 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class EditNetworkScreen extends StatelessWidget {
   final String coinCode;
-   EditNetworkScreen({super.key, required this.coinCode});
-final controlelr=Get.put(SendController());
+  EditNetworkScreen({super.key, required this.coinCode});
+  final controlelr = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar:  CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Edit Network Fee",
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.all(20.h),
+          padding: EdgeInsets.all(20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Basic",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: blackColor2
-              ),),
-              SizedBox(height: 10.h,),
-               Text("The network fee covers the cost of processing your transaction on the Ethereum network.",style: GoogleFonts.urbanist(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-                color: darkGreyColor
-              ),),
-              SizedBox(height: 15.h,),
-            ListView.builder(
-              itemCount: 3,
-              shrinkWrap: true,
-        
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context,index){
-              return   Padding(
-                padding:  EdgeInsets.only(bottom: 15.h),
-                child: Obx((){
-                  return GestureDetector(
-                    onTap: (){
-                    controlelr.changeSelectedSpeed(index);
-                    },
-                    child: Container(
-                    
-                    height: 82.h,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.r),
-                    border: Border.all(
-                      color: index==controlelr.selectedSpeed.value?orange3:greyColor,
-                                  width: 1
-                    )
-                                  ),
-                                  child: Padding(
-                    padding:  EdgeInsets.all(15.h),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                          Text(networkSpeedList[index],style: GoogleFonts.urbanist(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: blackColor2
-                    ),),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                           Text("${networkSpeedpriceWithcode[index]} $coinCode",style: GoogleFonts.urbanist(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: blackColor2
-                    ),),
-                     Text(networkSpeedpriceInDolors[index],style: GoogleFonts.urbanist(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: greyColor3
-                    ),),
-                      ],
-                    )
-                      ],
-                    ),
-                                  ),
-                                  ),
-                  );
-                })
-              );
-            }),
-            SizedBox(height: 10.h,),
-            CustomDivider(),
-            SizedBox(height: 20.h,),
-            Text("Advanced",style: GoogleFonts.urbanist(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w700,
-              color: blackColor2
-            ),),
-            SizedBox(height: 20.h,),
-           ListView.builder(
-            itemCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context,index){
-            return  Padding(
-              padding:  EdgeInsets.only(bottom: 15.h),
-              child: Container(
-                height: 58.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: lightWhiteColor,
-                  borderRadius: BorderRadius.circular(18.r)
-                ),
-                child: Padding(
-                  padding:  EdgeInsets.all(15.h),
-                  child: Text(networkAdvance[index],style: GoogleFonts.urbanist(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w400,
-                    color: greyColor2 
-                  ),),
-                ),
+              Text(
+                "Basic",
+                style: GoogleFonts.urbanist(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: blackColor2),
               ),
-            );
-           }),
-           SizedBox(height: 100.h,),
+              SizedBox(
+                height: 10.h,
+              ),
+              Text(
+                "The network fee covers the cost of processing your transaction on the Ethereum network.",
+                style: GoogleFonts.urbanist(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w500,
+                    color: darkGreyColor),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              ListView.builder(
+                  itemCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                        padding: EdgeInsets.only(bottom: 15.h),
+                        child: Obx(() {
+                          return GestureDetector(
+                            onTap: () {
+                              controlelr.changeSelectedSpeed(index);
+                            },
+                            child: Container(
+                              height: 82.h,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  border: Border.all(
+                                      color: index ==
+                                              controlelr.selectedSpeed.value
+                                          ? orange3
+                                          : greyColor,
+                                      width: 1)),
+                              child: Padding(
+                                padding: EdgeInsets.all(15.h),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      networkSpeedList[index],
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: blackColor2),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "${networkSpeedpriceWithcode[index]} $coinCode",
+                                          style: GoogleFonts.urbanist(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: blackColor2),
+                                        ),
+                                        Text(
+                                          networkSpeedpriceInDolors[index],
+                                          style: GoogleFonts.urbanist(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: greyColor3),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }));
+                  }),
+              SizedBox(
+                height: 10.h,
+              ),
+              const CustomDivider(),
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                "Advanced",
+                style: GoogleFonts.urbanist(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: blackColor2),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              ListView.builder(
+                  itemCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 15.h),
+                      child: Container(
+                        height: 58.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: lightWhiteColor,
+                            borderRadius: BorderRadius.circular(18.r)),
+                        child: Padding(
+                          padding: EdgeInsets.all(15.h),
+                          child: Text(
+                            networkAdvance[index],
+                            style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                color: greyColor2),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+              SizedBox(
+                height: 100.h,
+              ),
             ],
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding:  EdgeInsets.all( 20.h),
-        child: CustomButton(buttonText: "Ok", onPressed: (){}),
+        padding: EdgeInsets.all(20.h),
+        child: CustomButton(buttonText: "Ok", onPressed: () {}),
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 class CustomSwitch extends StatelessWidget {
   final RxBool isSwitched;
 
-  CustomSwitch({required this.isSwitched});
+  const CustomSwitch({super.key, required this.isSwitched});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CustomSwitch extends StatelessWidget {
       () => GestureDetector(
         onTap: () => isSwitched.value = !isSwitched.value,  // Toggle switch state
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           width: 44.w,
           height: 24.h,
           decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class CustomSwitch extends StatelessWidget {
               child: Container(
                 width: 24.w,
                 height: 24.h,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: whiteColor,
                 ),

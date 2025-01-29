@@ -48,18 +48,15 @@ class CustomButton extends StatelessWidget {
           buttonText,
           textAlign: TextAlign.center,
           style: GoogleFonts.urbanist(
-            color: whiteColor,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
-            height: 1.2.h
-          ),
+              color: whiteColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              height: 1.2.h),
         ),
       ),
     );
   }
 }
-
-
 
 class CustomLightGreenButton extends StatelessWidget {
   final String buttonText;
@@ -75,9 +72,8 @@ class CustomLightGreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-       color: lightGreenColor2,
+        color: lightGreenColor2,
         borderRadius: BorderRadius.circular(100.r),
-       
       ),
       height: 59.h,
       width: double.infinity,
@@ -94,11 +90,10 @@ class CustomLightGreenButton extends StatelessWidget {
           buttonText,
           textAlign: TextAlign.center,
           style: GoogleFonts.urbanist(
-            color: orange3,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
-            height: 1.2.h
-          ),
+              color: orange3,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              height: 1.2.h),
         ),
       ),
     );

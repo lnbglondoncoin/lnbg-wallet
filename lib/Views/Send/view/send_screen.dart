@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
@@ -11,11 +10,11 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 class SendScreen extends StatelessWidget {
   const SendScreen({super.key});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Send",
         iconPath: 'assets/icons/search.svg',
       ),
@@ -25,11 +24,13 @@ class SendScreen extends StatelessWidget {
           child: ListView.builder(
               itemCount: coinIconList.length,
               shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                String coinCode=coinPrice[index];
-                List<String> parts = coinCode.split(' '); 
-                String currencyCode = parts.length > 1 ? parts[1] : ''; // Getting the part after the space (BTC)
+                String coinCode = coinPrice[index];
+                List<String> parts = coinCode.split(' ');
+                String currencyCode = parts.length > 1
+                    ? parts[1]
+                    : ''; // Getting the part after the space (BTC)
 
                 return Padding(
                   padding: EdgeInsets.only(
@@ -37,15 +38,14 @@ class SendScreen extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Get.to(() => SendCoin(
-                            coinName: coinList[index], 
-                            
+                            coinName: coinList[index],
                             coinCode: currencyCode,
                           ));
                     },
                     child: Container(
                       // height: 80.h,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           border:
                               Border(bottom: BorderSide(color: lightBlack))),
                       child: Padding(
@@ -72,7 +72,7 @@ class SendScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   color: blackColor2),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -103,5 +103,4 @@ class SendScreen extends StatelessWidget {
       ),
     );
   }
-
 }

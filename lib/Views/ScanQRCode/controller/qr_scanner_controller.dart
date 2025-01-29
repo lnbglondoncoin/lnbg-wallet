@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class QrScanproductionController extends GetxController
     with GetSingleTickerProviderStateMixin {
   var scanQr = false.obs;
@@ -12,7 +11,7 @@ class QrScanproductionController extends GetxController
   @override
   void onInit() {
     animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     animation = Tween<double>(begin: 0, end: 1).animate(animationController)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -37,4 +36,3 @@ class QrScanproductionController extends GetxController
     super.onClose();
   }
 }
-

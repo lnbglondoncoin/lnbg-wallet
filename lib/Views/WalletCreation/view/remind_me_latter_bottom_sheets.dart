@@ -9,11 +9,13 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_checkbox.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class AnimatedBottomSheet extends StatefulWidget {
+  const AnimatedBottomSheet({super.key});
+
   @override
-  _AnimatedBottomSheetState createState() => _AnimatedBottomSheetState();
+  AnimatedBottomSheetState createState() => AnimatedBottomSheetState();
 }
 
-class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
+class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
@@ -23,12 +25,12 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: Offset(0, 1), // Start position (bottom of screen)
-      end: Offset(0, 0), // End position (fully visible)
+      begin: const Offset(0, 1), // Start position (bottom of screen)
+      end: const Offset(0, 0), // End position (fully visible)
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.forward();
@@ -46,7 +48,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
       isScrollControlled: true, // Allows full-screen height
       backgroundColor: Colors.transparent, // Transparent background
       builder: (context) {
-        return SkippedSecurityBottomSheet();
+        return const SkippedSecurityBottomSheet();
       },
     );
   }
@@ -89,7 +91,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               ),),
             ),
             SizedBox(height: 20.h,),
-            CustomDivider(),
+            const CustomDivider(),
             SizedBox(height: 20.h,),
             Text(
                 "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",style: GoogleFonts.urbanist(
@@ -112,7 +114,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 color: darkGreyColor
               ),),
               SizedBox(height: 20.h,),
-              CustomDivider(),
+              const CustomDivider(),
               SizedBox(height: 20.h,),
            CustomButton(buttonText: "OK, I Got It", onPressed: (){
    Navigator.pop(context);
@@ -132,6 +134,8 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
 
 
 class SkippedSecurityBottomSheet extends StatefulWidget {
+  const SkippedSecurityBottomSheet({super.key});
+
   @override
   _SkippedSecurityBottomSheetState createState() => _SkippedSecurityBottomSheetState();
 }
@@ -146,12 +150,12 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: Offset(0, 1), // Start position (bottom of screen)
-      end: Offset(0, 0), // End position (fully visible)
+      begin: const Offset(0, 1), // Start position (bottom of screen)
+      end: const Offset(0, 0), // End position (fully visible)
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.forward();
@@ -201,7 +205,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
               ),),
             ),
             SizedBox(height: 20.h,),
-            CustomDivider(),
+            const CustomDivider(),
             SizedBox(height: 20.h,),
             Row(
               children: [
@@ -229,7 +233,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
               
                
               SizedBox(height: 20.h,),
-              CustomDivider(),
+              const CustomDivider(),
               SizedBox(height: 20.h,),
            Row(
             children: [

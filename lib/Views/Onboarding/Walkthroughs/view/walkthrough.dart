@@ -2,14 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/controller/walkthrough_controller.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/wallet_setup.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 
 // WalkThroughScreen
@@ -24,7 +19,7 @@ class WalkThroughScreen extends StatelessWidget {
       body: PageView.builder(
         controller: controller.pageController,
         itemCount: controller.walkthroughData.length,
-        physics: NeverScrollableScrollPhysics(), // Disable swipe navigation
+        physics: const NeverScrollableScrollPhysics(), // Disable swipe navigation
         itemBuilder: (context, index) {
           final data = controller.walkthroughData[index];
           return WalkThroughPage(

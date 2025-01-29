@@ -1,14 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/write_seed_phrase.dart';
@@ -42,7 +37,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomDivider(),
+                const CustomDivider(),
                 SizedBox(height: 10.h,),
                 Center(
                   child: Text(
@@ -64,7 +59,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                 
   
                  SizedBox(height: 25.h,),
-                CustomDivider(),
+                const CustomDivider(),
                 SizedBox(height: 25.h,),
 
                        Stack(
@@ -141,7 +136,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.remove_red_eye,color: whiteColor,),
+                                      const Icon(Icons.remove_red_eye,color: whiteColor,),
                                       SizedBox(width: 8.w),
                                       Text("View", style: GoogleFonts.urbanist(fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
@@ -164,7 +159,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
           ],
             ),
           ),
-                CustomDivider(),
+                const CustomDivider(),
        SizedBox(height: 200.h,)
         ],
       ),
@@ -177,9 +172,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
    final mnemonic=walletCreatingController.generateMnemonic();
    final privateKey=await walletCreatingController.getPrivateKey(mnemonic);
    final publicKey= await walletCreatingController.getPublicKey(privateKey);
-   print(mnemonic);
-   print(privateKey);
-   print(publicKey);
+ 
             })
           ),
    
@@ -209,12 +202,14 @@ class GridViewBuilderExample extends StatelessWidget {
     '12. maze'
   ];
 
+   GridViewBuilderExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // 2 columns
           crossAxisSpacing: 10,

@@ -22,7 +22,8 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
     if (barcode.barcodes.isNotEmpty) {
       qrController.scanQr.value = false;
       _scannerController.stop();
-      Get.snackbar("QR Code Scanned", barcode.barcodes.first.rawValue ?? "No Data");
+      Get.snackbar(
+          "QR Code Scanned", barcode.barcodes.first.rawValue ?? "No Data");
     }
   }
 
@@ -40,7 +41,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
         backgroundColor: blackColor2,
         automaticallyImplyLeading: true,
         leading: GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.back();
           },
           child: SizedBox(
@@ -72,115 +73,118 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
               ),
             ),
             SizedBox(height: 50.h),
-            Obx(
-              () => qrController.scanQr.value
-                  ? Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 380.h,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.transparent),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned.fill(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                  child: MobileScanner(
-                                    controller: _scannerController,
-                                    onDetect: _handleBarcode,
-                                  ),
-                                ),
-                              ),
-                              Positioned.fill(
-                                child: Image.asset(
-                                  "assets/images/scanImage.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50.r),
-                                child: SizedBox(
-                                 // height: 380.h,
-                                  child: AnimatedBuilder(
-                                    animation: qrController.animationController,
-                                    builder: (context, child) {
-                                      double linePosition = qrController.animation.value * 340.h;
-                                      return Stack(
-                                        children: [
-                                          // Orange section above the moving line
-                                          Positioned(
-                                            top: 0.h,
-                                            left: 0,
-                                            right: 0,
-                                            child: ClipRRect(
-                                               borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(40.r),
-                                                    topRight: Radius.circular(40.r)
-                                                  ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(40.r),
-                                                    topRight: Radius.circular(40.r)
-                                                  ),
-                                                   color: orange2.withOpacity(0.3), // Adjust opacity as needed
-                                                ),
-                                                height: linePosition,
-                                              
-                                              ),
-                                            ),
-                                          ),
-                                          // Moving scanning line
-                                          Positioned(
-                                            top: linePosition,
-                                            left: 0,
-                                            right: 0,
-                                            child: Container(
-                                              height: 4.h,
-                                              color: qrController.isMovingDown.value
-                                              ? orange2
-                                              : Colors.white,
-                                            ),
-                                          ),
-                                          // Transparent section below the moving line
-                                          Positioned(
-                                            top: linePosition + 4.h,
-                                            left: 0,
-                                            right: 0,
-                                            bottom: 0,
-                                            child: Container(
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
+            Obx(() => qrController.scanQr.value
+                ? Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 380.h,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.transparent),
                         ),
-                      ],
-                    )
-                  : Container(
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50.r),
+                                child: MobileScanner(
+                                  controller: _scannerController,
+                                  onDetect: _handleBarcode,
+                                ),
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Image.asset(
+                                "assets/images/scanImage.png",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(50.r),
+                              child: SizedBox(
+                                // height: 380.h,
+                                child: AnimatedBuilder(
+                                  animation: qrController.animationController,
+                                  builder: (context, child) {
+                                    double linePosition =
+                                        qrController.animation.value * 340.h;
+                                    return Stack(
+                                      children: [
+                                        // Orange section above the moving line
+                                        Positioned(
+                                          top: 0.h,
+                                          left: 0,
+                                          right: 0,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(40.r),
+                                                topRight:
+                                                    Radius.circular(40.r)),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(40.r),
+                                                    topRight:
+                                                        Radius.circular(40.r)),
+                                                color: orange2.withOpacity(
+                                                    0.3), // Adjust opacity as needed
+                                              ),
+                                              height: linePosition,
+                                            ),
+                                          ),
+                                        ),
+                                        // Moving scanning line
+                                        Positioned(
+                                          top: linePosition,
+                                          left: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 4.h,
+                                            color:
+                                                qrController.isMovingDown.value
+                                                    ? orange2
+                                                    : Colors.white,
+                                          ),
+                                        ),
+                                        // Transparent section below the moving line
+                                        Positioned(
+                                          top: linePosition + 4.h,
+                                          left: 0,
+                                          right: 0,
+                                          bottom: 0,
+                                          child: Container(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
                     height: 380.h,
                     width: double.infinity,
-                    decoration: BoxDecoration(
-image: DecorationImage(image: AssetImage("assets/images/scanImage.png"),fit: BoxFit.fill)
-                    ),
-                  )
-            ),
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/scanImage.png"),
+                            fit: BoxFit.fill)),
+                  )),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildIconButton("assets/icons/gallery.svg"),
-                SizedBox(width: 20.w,),
+                SizedBox(
+                  width: 20.w,
+                ),
                 GestureDetector(
                   onTap: () {
                     qrController.startScanning();
@@ -188,7 +192,7 @@ image: DecorationImage(image: AssetImage("assets/images/scanImage.png"),fit: Box
                   child: Container(
                     height: 100.h,
                     width: 100.w,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(colors: [orange2, orange1]),
                     ),
@@ -197,8 +201,9 @@ image: DecorationImage(image: AssetImage("assets/images/scanImage.png"),fit: Box
                     ),
                   ),
                 ),
-              
-                SizedBox(width: 20.w,),
+                SizedBox(
+                  width: 20.w,
+                ),
                 _buildIconButton("assets/icons/file.svg"),
               ],
             ),

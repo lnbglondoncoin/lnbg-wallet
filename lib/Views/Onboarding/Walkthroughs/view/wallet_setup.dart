@@ -44,7 +44,7 @@ class WalletSetUpScreen extends StatelessWidget {
               ),
             ),
           ),
-      Spacer(),
+      const Spacer(),
           /// Second section (Text & Buttons) - Takes 5/8 (2.5/4) of available space
           Expanded(
             flex: 6,

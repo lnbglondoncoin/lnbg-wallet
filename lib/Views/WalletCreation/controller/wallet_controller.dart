@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_vallet.dart';
 
 class StepController extends GetxController {
   var currentIndex = 0.obs;
-  var passController=TextEditingController();
-  var confirmPasswordController=TextEditingController();
+  var passController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
   void updateIndex(int index) {
     if (index >= 0 && index < 3) {
       currentIndex.value = index;
@@ -15,13 +14,13 @@ class StepController extends GetxController {
 
   void decreseIndexValue(int index) {
     if (index >= 0 && index < 3) {
-     index==0? currentIndex.value = index: currentIndex.value = index-1;
+      index == 0 ? currentIndex.value = index : currentIndex.value = index - 1;
     }
   }
 
-    GlobalKey<FormState> passwordKey = GlobalKey();
+  GlobalKey<FormState> passwordKey = GlobalKey();
 
-   // Define two RxBool variables for the switches
+  // Define two RxBool variables for the switches
   RxBool isSwitched1 = false.obs;
   RxBool isSwitched2 = true.obs;
 
@@ -34,44 +33,41 @@ class StepController extends GetxController {
   void toggleSwitch2() {
     isSwitched2.value = !isSwitched2.value;
   }
-   var isChecked = false.obs;
+
+  var isChecked = false.obs;
 
   void toggleCheckbox(bool value) {
     isChecked.value = value;
   }
 
-  createPassword(){
-     if (!passwordKey.currentState!.validate()) {
+  createPassword() {
+    if (!passwordKey.currentState!.validate()) {
       return;
-    }
-    else{
+    } else {
       updateIndex(1);
-      Get.to(()=>SecureWalletScreen());
+      Get.to(() => SecureWalletScreen());
     }
   }
 
-    var selectedSeeds=[].obs;
-    addSeeds(value){
-if(selectedSeeds.contains(value)){
-  selectedSeeds.remove(value);
-}
-else{
-  selectedSeeds.add(value);
-}
+  var selectedSeeds = [].obs;
+  addSeeds(value) {
+    if (selectedSeeds.contains(value)) {
+      selectedSeeds.remove(value);
+    } else {
+      selectedSeeds.add(value);
     }
+  }
 
-    var selecetedIndexs=[].obs;
-    addToSelectedIndex(index){
-     if(selecetedIndexs.contains(index)){
-       selecetedIndexs.remove(index);
-     }
-     else {
-       selecetedIndexs.add(index);
-     }
+  var selecetedIndexs = [].obs;
+  addToSelectedIndex(index) {
+    if (selecetedIndexs.contains(index)) {
+      selecetedIndexs.remove(index);
+    } else {
+      selecetedIndexs.add(index);
     }
+  }
 
-
-     var  items = [
+  var items = [
     'material',
     'space',
     'wristn',
@@ -85,8 +81,4 @@ else{
     'peart',
     'maze'
   ].obs;
-
-
-
-
 }

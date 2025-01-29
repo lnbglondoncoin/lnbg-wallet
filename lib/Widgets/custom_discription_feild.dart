@@ -27,12 +27,14 @@ class CustomDescriptionTextField extends StatefulWidget {
   });
 
   @override
-  State<CustomDescriptionTextField> createState() => _CustomDescriptionTextFieldState();
+  State<CustomDescriptionTextField> createState() =>
+      _CustomDescriptionTextFieldState();
 }
 
-class _CustomDescriptionTextFieldState extends State<CustomDescriptionTextField> {
+class _CustomDescriptionTextFieldState
+    extends State<CustomDescriptionTextField> {
   bool isObscured = false;
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   bool isFocused = false;
 
   @override
@@ -67,23 +69,21 @@ class _CustomDescriptionTextFieldState extends State<CustomDescriptionTextField>
           ),
         ),
         SizedBox(height: 8.h),
-        Container(
+        SizedBox(
           height: 100.h,
-        
           child: TextFormField(
             scrollPadding: EdgeInsets.zero,
             textAlignVertical: TextAlignVertical.top,
             focusNode: _focusNode,
-            cursorColor:greyColor2 ,
+            cursorColor: greyColor2,
             controller: widget.controller,
             obscureText: widget.isPasswordField ? isObscured : false,
             obscuringCharacter: "●",
             validator: widget.validator,
-            maxLines: null,  // Allow multiline input
-            expands: true,   // Expand to fit the container
+            maxLines: null, // Allow multiline input
+            expands: true, // Expand to fit the container
             decoration: InputDecoration(
-              
-               focusedBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
@@ -96,7 +96,7 @@ class _CustomDescriptionTextFieldState extends State<CustomDescriptionTextField>
                 fontWeight: FontWeight.w400,
                 color: greyColor2,
               ),
-               prefixIcon: widget.prefixIconPath != null
+              prefixIcon: widget.prefixIconPath != null
                   ? SizedBox(
                       height: 20.h,
                       width: 20.w,
@@ -111,9 +111,9 @@ class _CustomDescriptionTextFieldState extends State<CustomDescriptionTextField>
                       ),
                     )
                   : null,
-                contentPadding: EdgeInsets.only(
-                top:  13.h ,
-                left: widget.prefixIconPath != null ? 15.w: 15.w,
+              contentPadding: EdgeInsets.only(
+                top: 13.h,
+                left: widget.prefixIconPath != null ? 15.w : 15.w,
               ),
               errorStyle: GoogleFonts.urbanist(
                 color: redColor,

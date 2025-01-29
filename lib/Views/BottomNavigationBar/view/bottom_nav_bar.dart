@@ -16,10 +16,10 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
-    HomeScreenView(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
+    const HomeScreenView(),
+    const SizedBox(),
+    const SizedBox(),
+    const SizedBox(),
   ];
 
   final List<String> _labels = ["Wallet", "Discover", "Browse", "Settings"];
@@ -75,13 +75,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             SvgPicture.asset(
-                    isSelected
-                        ? iconPath.replaceFirst('.svg', '2.svg')
-                        : iconPath,
-                    width: 24.w,
-                    height: 24.h,
-                  ),
+            SvgPicture.asset(
+              isSelected ? iconPath.replaceFirst('.svg', '2.svg') : iconPath,
+              width: 24.w,
+              height: 24.h,
+            ),
             SizedBox(width: 15.w),
             Text(
               label,

@@ -21,15 +21,15 @@ class CreateNewWallet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-        appBar: CustomStepAppBar(
+      appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back(); // Your custom back functionality
         },
-        currentIndex: controller.currentIndex, onWillPop: () { 
-           Get.back(); // Your custom back functionality
-         }, // Pass the RxInt
+        currentIndex: controller.currentIndex,
+        onWillPop: () {
+          Get.back(); // Your custom back functionality
+        }, // Pass the RxInt
       ),
-
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
@@ -149,12 +149,12 @@ class CreateNewWallet extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CustomCheckbox(
-  isChecked: controller.isChecked.value,
-  onChanged: (value) {
-   controller .toggleCheckbox(!controller.isChecked.value);
-  },
-),
-                
+                            isChecked: controller.isChecked.value,
+                            onChanged: (value) {
+                              controller
+                                  .toggleCheckbox(!controller.isChecked.value);
+                            },
+                          ),
                           SizedBox(width: 12.w),
                           Expanded(
                             child: RichText(
@@ -201,7 +201,6 @@ class CreateNewWallet extends StatelessWidget {
           ),
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),

@@ -9,8 +9,9 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_co
 class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function() onBackTap;
   final RxInt currentIndex; // Pass current index as an RxInt
-   final Function() onWillPop; // Function to handle WillPopScope logic
-  CustomStepAppBar({
+  final Function() onWillPop; // Function to handle WillPopScope logic
+  const CustomStepAppBar({
+    super.key,
     required this.onBackTap,
     required this.currentIndex,
     required this.onWillPop,
@@ -19,7 +20,7 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
+      onWillPop: () async {
         onWillPop(); // Call the controller's function here
         return true; // Returning true allows the pop to happen
       },
@@ -58,7 +59,6 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
- 
   Widget buildStep(int index) {
     final StepController controller = Get.find();
     bool isActive = controller.currentIndex.value >= index;
@@ -69,7 +69,7 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: isActive
-            ? LinearGradient(
+            ? const LinearGradient(
                 colors: [
                   Color(0xFFFFE580),
                   Color(0xFFFACC15),
@@ -92,7 +92,7 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 4.h,
         decoration: BoxDecoration(
           gradient: isActive
-              ? LinearGradient(
+              ? const LinearGradient(
                   colors: [primaryColor, lightPrimaryColor],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
@@ -105,7 +105,6 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

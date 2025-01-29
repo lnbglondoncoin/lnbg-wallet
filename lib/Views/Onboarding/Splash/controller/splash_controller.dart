@@ -11,7 +11,7 @@ class SplashController extends GetxController {
 
   void _startTimer() {
     Timer(const Duration(seconds: 6), () {
-      Get.off(() =>  WalkThroughScreen());
+      Get.off(() => WalkThroughScreen());
     });
   }
 }
