@@ -225,3 +225,33 @@ const coinndolorPrice=[
 ];
 
 
+const providersTitles=[
+  "Binance Connect",
+  "MoonPay",
+  "Ramp",
+  "Paypal",
+  "Google Pay",
+  "Apple Pay"
+];
+
+
+const providersprice=[
+  "0.074229 ETH",
+  "0.072629 ETH",
+  "0.07289 ETH",
+  "0.078929 ETH",
+  "0.056729 ETH",
+  "0.078829 ETH"
+];
+
+const providerIcons=[
+  "assets/icons/binance.svg",
+  "assets/icons/moon.svg",
+  "assets/icons/ramp.svg",
+  "assets/icons/paypal.svg",
+  "assets/icons/google.svg",
+  "assets/icons/apple.svg"
+];
+
+
+

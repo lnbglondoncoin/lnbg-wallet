@@ -77,12 +77,39 @@
             obscuringCharacter: "●", // You can choose your custom character
             validator: widget.validator,
             decoration: InputDecoration(
-              focusedBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              border: OutlineInputBorder(
+              focusedBorder:  OutlineInputBorder(
+              borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              errorBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              enabledBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              disabledBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              focusedErrorBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              border: OutlineInputBorder(   borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               focusColor: lightWhiteColor,
@@ -152,6 +179,134 @@
               fontWeight: FontWeight.w800,
               color: blackColor2,
             ),
+          ),
+        ],
+      );
+    }
+  }
+
+
+
+  
+  class CustomTextField2 extends StatefulWidget {
+    final String suffixiconPath;
+    final bool isSuffix;
+    final bool isNumber;
+    final String hintText;
+    final TextEditingController controller;
+    final String labelText;
+    final FormFieldValidator<String>? validator;
+
+    const CustomTextField2({
+      super.key,
+      required this.hintText,
+      required this.controller,
+      required this.labelText,
+      this.validator,
+      this.isNumber=false,
+      this.isSuffix=false,
+      this.suffixiconPath=""
+    });
+
+    @override
+    State<CustomTextField2> createState() => _CustomTextField2State();
+  }
+  class _CustomTextField2State extends State<CustomTextField2> {
+
+    
+
+
+  
+    @override
+    Widget build(BuildContext context) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.labelText,
+            style: GoogleFonts.poppins(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+              color: blackColor2,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          TextFormField(
+ keyboardType: widget.isNumber?TextInputType.number:TextInputType.text,
+            controller: widget.controller,
+
+            validator: widget.validator,
+            decoration: InputDecoration(
+              suffixIcon:widget.isSuffix? SizedBox(
+                height: 20.h,
+                width: 20.w,
+                child: Center(child: SvgPicture.asset(widget.suffixiconPath)),
+              ):null,
+              focusedBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              errorBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              enabledBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              disabledBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              focusedErrorBorder:  OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              border: OutlineInputBorder(
+                 borderSide: BorderSide(
+                color: lightWhiteColor
+              ),
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+            
+              focusColor: lightWhiteColor,
+              filled: true,
+              
+              hintText: widget.hintText,
+              hintStyle: GoogleFonts.urbanist(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w800,
+                color: blackColor2,
+              ),
+              fillColor: lightWhiteColor,
+             
+              contentPadding: EdgeInsets.only(
+                top:  13.h ,
+                left:  15.w,
+              ),
+              errorStyle: GoogleFonts.urbanist(
+                color: redColor,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w700,
+                // Customize the error message color to yellow
+              ),
+            ),
+            
+            style: GoogleFonts.urbanist(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w800,
+                color: blackColor2,
+              ),
           ),
         ],
       );
