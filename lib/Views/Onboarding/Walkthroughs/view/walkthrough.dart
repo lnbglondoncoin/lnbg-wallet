@@ -14,8 +14,12 @@ class WalkThroughScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: lightWhiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: PageView.builder(
         controller: controller.pageController,
         itemCount: controller.walkthroughData.length,
@@ -55,6 +59,11 @@ class WalkThroughPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
+   
     return Column(
       children: [
         Padding(
@@ -64,7 +73,7 @@ class WalkThroughPage extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              color: whiteColor,
+              color: theme.scaffoldBackgroundColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(80.r),
                 topRight: Radius.circular(80.r),
@@ -84,7 +93,7 @@ class WalkThroughPage extends StatelessWidget {
                         style: GoogleFonts.urbanist(
                           fontSize: 40.sp,
                           fontWeight: FontWeight.w700,
-                          color: darkPrimaryColor,
+                          color: isDarkMode ?orange3:darkPrimaryColor,
                           height: 1.2.h,
                         ),
                       ),
@@ -95,7 +104,7 @@ class WalkThroughPage extends StatelessWidget {
                         style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          color: darkGreyColor,
+                          color:isDarkMode ?whiteColor: darkGreyColor,
                           height: 1.3.h,
                         ),
                       ),
@@ -114,7 +123,13 @@ class WalkThroughPage extends StatelessWidget {
                                 ? BorderRadius.circular(100.r)
                                 : null,
                             shape: currentIndex.value == index ? BoxShape.rectangle : BoxShape.circle,
-                            gradient: LinearGradient(
+                            gradient: 
+                            isDarkMode?LinearGradient(colors: currentIndex.value==index?[
+                             orange2, orange1,
+                            ]:[
+                              lightBlackColor,lightBlackColor
+                            ]):
+                            LinearGradient(
                               colors: currentIndex.value == index
                                   ? [lightPrimaryColor, primaryColor]
                                   : [greyColor, greyColor],

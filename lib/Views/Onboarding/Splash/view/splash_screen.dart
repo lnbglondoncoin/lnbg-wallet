@@ -8,8 +8,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor: theme.scaffoldBackgroundColor,
+      // backgroundColor: whiteColor,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 50.h),
         child: Column(
@@ -17,8 +22,10 @@ class SplashScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(),
-            Image.asset(
-              "assets/images/onboarding.png",
+           Image.asset(
+              isDarkMode
+                  ? "assets/images/logodark.png" // Dark theme image
+                  : "assets/images/onboarding.png",  // Light theme image
               height: 334.h,
               width: double.infinity,
             ),

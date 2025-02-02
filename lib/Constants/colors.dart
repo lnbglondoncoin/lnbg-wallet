@@ -22,3 +22,6 @@ const redColor=Color.fromARGB(255, 241, 7, 11);
 const pinkColor=Color(0xFFF75555);
 const orange4=Color(0xFFFFDC33);
 const orange5=Color(0xFFFF981F);
+const lightBlackColor=Color(0xFF35383F);
+const greenColor2=Color(0xFF46D375);
+const lightBlackColor2=Color(0xFF1F222A);

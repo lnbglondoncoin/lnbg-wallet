@@ -70,9 +70,13 @@ class CustomLightGreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Container(
       decoration: BoxDecoration(
-        color: lightGreenColor2,
+        color: isDarkMode?lightBlackColor: lightGreenColor2,
         borderRadius: BorderRadius.circular(100.r),
       ),
       height: 59.h,
@@ -90,7 +94,7 @@ class CustomLightGreenButton extends StatelessWidget {
           buttonText,
           textAlign: TextAlign.center,
           style: GoogleFonts.urbanist(
-              color: orange3,
+              color: isDarkMode?whiteColor: orange3,
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
               height: 1.2.h),

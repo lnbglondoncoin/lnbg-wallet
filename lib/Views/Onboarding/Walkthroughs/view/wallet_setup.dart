@@ -14,20 +14,24 @@ class WalletSetUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: whiteColor,
-        shadowColor: whiteColor,
-        foregroundColor: whiteColor,
-        surfaceTintColor: whiteColor,
+        backgroundColor:  theme.scaffoldBackgroundColor,
+        shadowColor:  theme.scaffoldBackgroundColor,
+        foregroundColor:  theme.scaffoldBackgroundColor,
+        surfaceTintColor:  theme.scaffoldBackgroundColor,
         elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 5.w),
           child: SizedBox(
             height: 28.h,
             width: 28.w,
-            child: Center(child: SvgPicture.asset(arrowLeft)),
+            child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),)),
           ),
         ),
       ),
@@ -71,7 +75,7 @@ class WalletSetUpScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color: isDarkMode?whiteColor:darkGreyColor,
                       height: 1.3,
                     ),
                   ),

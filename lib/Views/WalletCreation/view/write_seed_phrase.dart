@@ -17,8 +17,12 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back();
@@ -59,7 +63,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color: isDarkMode?whiteColor: darkGreyColor,
                     ),
                   ),
 
@@ -75,8 +79,11 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                     height: 378.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
+                        gradient:  LinearGradient(
+                          colors: [
+                            isDarkMode?Color(0XffFB9400):
+                            Color(0xFFFACC15),
+                              isDarkMode?Color(0xffFFAB38): Color(0xFFFFE580)],
                         ),
                         borderRadius: BorderRadius.circular(40.r)),
                     child: Padding(
@@ -84,7 +91,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40.r),
-                            color: whiteColor,
+                            color:theme.scaffoldBackgroundColor,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(10.h),
@@ -163,6 +170,10 @@ class GridViewBuilderWidget extends StatelessWidget {
   GridViewBuilderWidget({super.key});
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -179,7 +190,7 @@ class GridViewBuilderWidget extends StatelessWidget {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: greyColor4,
+                color:isDarkMode?lightBlackColor: greyColor4,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -190,14 +201,14 @@ class GridViewBuilderWidget extends StatelessWidget {
                       "${(index + 1).toString()} ",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color: darkGreyColor,
+                          color:isDarkMode?whiteColor: darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       walletCreatingController.mnemonicWords[index],
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color: darkGreyColor,
+                          color: isDarkMode?whiteColor:darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                   ],

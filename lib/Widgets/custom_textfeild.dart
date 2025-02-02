@@ -57,6 +57,10 @@
 
     @override
     Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,7 +69,7 @@
             style: GoogleFonts.poppins(
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
-              color: blackColor2,
+              color:isDarkMode?whiteColor: blackColor2,
             ),
           ),
           SizedBox(height: 8.h),
@@ -79,40 +83,40 @@
             decoration: InputDecoration(
               focusedBorder:  OutlineInputBorder(
               borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               errorBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               enabledBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               disabledBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               focusedErrorBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               border: OutlineInputBorder(   borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              focusColor: lightWhiteColor,
+              focusColor: isDarkMode?lightBlackColor2:lightWhiteColor,
               filled: true,
               prefixIcon: widget.prefixIconPath != null
                   ? SizedBox(
@@ -122,7 +126,7 @@
                         child: SvgPicture.asset(
                           widget.prefixIconPath!,
                           colorFilter: ColorFilter.mode(
-                            isFocused ? blackColor3 : greyColor2,
+                            isFocused ?isDarkMode?whiteColor:  blackColor3 : greyColor2,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -133,9 +137,9 @@
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
-                color: greyColor2,
+                color: isDarkMode?whiteColor: greyColor2,
               ),
-              fillColor: lightWhiteColor,
+              fillColor: isDarkMode?lightBlackColor2:lightWhiteColor,
               suffixIcon: widget.suffixIcoPath != null
                   ? SizedBox(
                       height: 20.h,
@@ -154,7 +158,7 @@
                           child: SvgPicture.asset(
                             widget.suffixIcoPath!,
                             colorFilter: ColorFilter.mode(
-                              isFocused ? blackColor3 : greyColor2,
+                              isFocused ? isDarkMode?whiteColor: blackColor3 : greyColor2,
                               BlendMode.srcIn,
                             ),
                           ),
@@ -177,7 +181,7 @@
             style: GoogleFonts.urbanist(
               fontSize: 18.sp,
               fontWeight: FontWeight.w800,
-              color: blackColor2,
+              color:isDarkMode?whiteColor:  blackColor2,
             ),
           ),
         ],

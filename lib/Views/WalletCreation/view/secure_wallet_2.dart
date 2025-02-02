@@ -15,8 +15,12 @@ class SecureWallet2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back();
@@ -57,7 +61,7 @@ class SecureWallet2 extends StatelessWidget {
                         style: GoogleFonts.urbanist(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
-                          color: darkGreyColor,
+                          color:isDarkMode?whiteColor: darkGreyColor,
                         ),
                         children: [
                           TextSpan(
@@ -65,7 +69,7 @@ class SecureWallet2 extends StatelessWidget {
                             style: GoogleFonts.urbanist(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
-                              color: darkGreyColor,
+                               color:isDarkMode?whiteColor: darkGreyColor,
                             ),
                           ),
                           TextSpan(
@@ -81,7 +85,7 @@ class SecureWallet2 extends StatelessWidget {
                             style: GoogleFonts.urbanist(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
-                              color: darkGreyColor,
+                             color:isDarkMode?whiteColor: darkGreyColor,
                             ),
                           ),
                         ],
@@ -100,7 +104,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w700,
                         fontSize: 20.sp,
-                        color: blackColor2),
+                       color:isDarkMode?whiteColor:  blackColor2),
                   ),
                   SizedBox(
                     height: 20.h,
@@ -110,7 +114,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 19.sp,
-                        color: darkGreyColor),
+                        color:isDarkMode?whiteColor: darkGreyColor),
                   ),
                   SizedBox(
                     height: 20.h,
@@ -120,7 +124,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
-                        color: darkGreyColor),
+                         color:isDarkMode?whiteColor:darkGreyColor),
                   ),
                   SizedBox(
                     height: 15.h,
@@ -161,7 +165,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
-                        color: darkGreyColor),
+                        color:isDarkMode?whiteColor: darkGreyColor),
                   ),
                   ListView.builder(
                     itemCount: 3,
@@ -180,7 +184,7 @@ class SecureWallet2 extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18.sp,
-                                color: darkGreyColor,
+                                color:isDarkMode?whiteColor: darkGreyColor,
                               ),
                             ),
                             Expanded(
@@ -193,7 +197,7 @@ class SecureWallet2 extends StatelessWidget {
                                 style: GoogleFonts.urbanist(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
-                                  color: darkGreyColor,
+                                  color:isDarkMode?whiteColor: darkGreyColor,
                                 ),
                               ),
                             ),
@@ -210,7 +214,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
-                        color: darkGreyColor),
+                        color:isDarkMode?whiteColor: darkGreyColor),
                   ),
                   SizedBox(
                     height: 20.h,
@@ -220,7 +224,7 @@ class SecureWallet2 extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
-                        color: darkGreyColor),
+                        color:isDarkMode?whiteColor: darkGreyColor),
                   ),
                   ListView.builder(
                     itemCount: 3,
@@ -239,7 +243,7 @@ class SecureWallet2 extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18.sp,
-                                color: darkGreyColor,
+                                color:isDarkMode?whiteColor: darkGreyColor,
                               ),
                             ),
                             Expanded(
@@ -252,7 +256,7 @@ class SecureWallet2 extends StatelessWidget {
                                 style: GoogleFonts.urbanist(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
-                                  color: darkGreyColor,
+                                  color:isDarkMode?whiteColor:darkGreyColor,
                                 ),
                               ),
                             ),
@@ -272,8 +276,8 @@ class SecureWallet2 extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
-        decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: greyColor4))),
+        decoration:  BoxDecoration(
+            border: Border(top: BorderSide(color: isDarkMode?lightBlackColor: greyColor4))),
         child: Padding(
             padding: EdgeInsets.only(
                 left: 15.w, top: 20.h, right: 15.w, bottom: 10.h),

@@ -17,8 +17,12 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
   final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
+       var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
    appBar: CustomStepAppBar(
         onBackTap: () {
         
@@ -54,7 +58,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                   "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",style: GoogleFonts.urbanist(
         fontSize: 18.sp,
         fontWeight: FontWeight.w500,
-        color: darkGreyColor,
+        color:isDarkMode?whiteColor: darkGreyColor,
             ),),
                 
   
@@ -69,13 +73,13 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                     height: 378.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                     color:whiteColor,
+                     color:isDarkMode?blackColor2:whiteColor,
                       borderRadius: BorderRadius.circular(40.r),
                       boxShadow: [
                         BoxShadow(
                           spreadRadius: 10,
                           blurRadius: 10,
-                          color: Colors.pink.withOpacity(0.05)
+                          color:isDarkMode?orange4.withOpacity(0.1): Colors.pink.withOpacity(0.05)
                         )
                       ]
                     ),
@@ -84,7 +88,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40.r),
-                          color: Colors.white,
+                          color: isDarkMode?blackColor2:whiteColor,
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(10.h),
@@ -101,7 +105,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 2.5, sigmaY:2.5),
                         child: Container(
-                           color: Colors.white.withOpacity(0.8), // Semi-transparent overlay
+                           color: isDarkMode?blackColor2.withOpacity(0.8):Colors.white.withOpacity(0.8), // Semi-transparent overlay
                           child: Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -111,7 +115,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                   style: GoogleFonts.urbanist(
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: blackColor2,
+                                    color:isDarkMode?whiteColor: blackColor2,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -119,7 +123,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                 Text(
                                   "Make sure no one is watching your screen.",
                                   style: GoogleFonts.urbanist(fontSize: 14.sp,fontWeight: FontWeight.w500,
-                                  color: darkGreyColor),
+                                  color:isDarkMode?whiteColor: darkGreyColor),
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(height: 20.h),

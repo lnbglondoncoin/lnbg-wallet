@@ -11,6 +11,10 @@ class CustomSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Obx(
       () => GestureDetector(
         onTap: () => isSwitched.value = !isSwitched.value,  // Toggle switch state
@@ -20,7 +24,7 @@ class CustomSwitch extends StatelessWidget {
           height: 24.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100.r),
-            color: isSwitched.value ? orange1 : lightBlack,
+            color: isSwitched.value ? orange1 :isDarkMode?lightBlackColor: lightBlack,
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 2.h),

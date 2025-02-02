@@ -19,8 +19,12 @@ class CreateNewWallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back(); // Your custom back functionality
@@ -41,7 +45,9 @@ class CreateNewWallet extends StatelessWidget {
                     top: 25.h, left: 18.w, right: 18.w, bottom: 20.h),
                 child: Column(
                   children: [
-                    const CustomDivider(),
+                     CustomDivider(
+                    
+                    ),
                     SizedBox(
                       height: 25.h,
                     ),
@@ -61,7 +67,9 @@ class CreateNewWallet extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          color: darkGreyColor),
+                          color:
+                          isDarkMode?whiteColor:
+                           darkGreyColor),
                     ),
                     SizedBox(
                       height: 15.h,
@@ -116,7 +124,7 @@ class CreateNewWallet extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color: blackColor2),
+                              color:isDarkMode?whiteColor: blackColor2),
                         ),
                         CustomSwitch(isSwitched: controller.isSwitched1),
                       ],
@@ -132,7 +140,7 @@ class CreateNewWallet extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color: blackColor2),
+                              color:isDarkMode?whiteColor: blackColor2),
                         ),
                         CustomSwitch(isSwitched: controller.isSwitched2),
                       ],
@@ -162,7 +170,7 @@ class CreateNewWallet extends StatelessWidget {
                                 text:
                                     "I understand that LNBG cannot recover this password for me. ",
                                 style: GoogleFonts.urbanist(
-                                    color: blackColor2,
+                                    color: isDarkMode?whiteColor: blackColor2,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w800,
                                     height: 1.1.h),
@@ -189,11 +197,7 @@ class CreateNewWallet extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: greyColor4,
-              ),
+             CustomDivider(),
               SizedBox(
                 height: 200.h,
               )
@@ -201,6 +205,7 @@ class CreateNewWallet extends StatelessWidget {
           ),
         ),
       ),
+    
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),

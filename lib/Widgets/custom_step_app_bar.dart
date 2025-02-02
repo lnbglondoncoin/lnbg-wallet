@@ -19,6 +19,10 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return WillPopScope(
       onWillPop: () async {
         onWillPop(); // Call the controller's function here
@@ -26,10 +30,10 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       },
       child: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
-        foregroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        backgroundColor:theme.scaffoldBackgroundColor,
+        shadowColor: theme.scaffoldBackgroundColor,
+        foregroundColor: theme.scaffoldBackgroundColor,
+        surfaceTintColor: theme.scaffoldBackgroundColor,
         elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 5.w),
@@ -38,7 +42,7 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: SizedBox(
               height: 28.h,
               width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft)),
+              child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),)),
             ),
           ),
         ),
@@ -47,11 +51,11 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Obx(() => buildStep(0)),
-              Obx(() => buildLine(1)),
-              Obx(() => buildStep(1)),
-              Obx(() => buildLine(2)),
-              Obx(() => buildStep(2)),
+              Obx(() => buildStep(0,context)),
+              Obx(() => buildLine(1,context)),
+              Obx(() => buildStep(1,context)),
+              Obx(() => buildLine(2,context)),
+              Obx(() => buildStep(2,context)),
             ],
           ),
         ),
@@ -59,9 +63,12 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget buildStep(int index) {
+  Widget buildStep(int index,BuildContext context) {
     final StepController controller = Get.find();
     bool isActive = controller.currentIndex.value >= index;
+  var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Container(
       width: 20.w,
@@ -69,23 +76,26 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: isActive
-            ? const LinearGradient(
+            ?  LinearGradient(
                 colors: [
-                  Color(0xFFFFE580),
-                  Color(0xFFFACC15),
+                 isDarkMode?Color(0xFFFFAB38) :Color(0xFFFFE580),
+                  isDarkMode?  Color(0xFFFB9400): Color(0xFFFACC15),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
             : null,
-        color: isActive ? null : greyColor, // Default color for inactive steps
+        color: isActive ? null :isDarkMode?lightBlackColor: greyColor,// Default color for inactive steps
       ),
     );
   }
 
-  Widget buildLine(int index) {
+  Widget buildLine(int index,BuildContext context) {
     final StepController controller = Get.find();
     bool isActive = controller.currentIndex.value >= index;
+  var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Expanded(
       child: Container(
@@ -99,7 +109,7 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : null,
           color:
-              isActive ? null : greyColor, // Default color for inactive lines
+              isActive ? null : isDarkMode?lightBlackColor: greyColor, // Default color for inactive lines
         ),
       ),
     );

@@ -16,8 +16,12 @@ class SecureWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+    backgroundColor: theme.scaffoldBackgroundColor,
 
       appBar:CustomStepAppBar(
         onBackTap: () {
@@ -62,7 +66,7 @@ class SecureWalletScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 32.sp,
                       fontWeight: FontWeight.w700,
-                      color: darkPrimaryColor,
+                      color:  isDarkMode?whiteColor: darkPrimaryColor,
                       height: 1.2,
                     ),
                   ),
@@ -74,7 +78,7 @@ class SecureWalletScreen extends StatelessWidget {
     style:  GoogleFonts.urbanist(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color: isDarkMode?whiteColor: darkGreyColor,
                       height: 1.3,
                     ),
     children: [
@@ -92,7 +96,7 @@ class SecureWalletScreen extends StatelessWidget {
         style: GoogleFonts.urbanist(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color: isDarkMode?whiteColor: darkGreyColor,
                       height: 1.3,
                     ),
       ),
@@ -107,7 +111,7 @@ class SecureWalletScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color:  isDarkMode?whiteColor:darkGreyColor,
                       height: 1.3,
                     ),),
                   SizedBox(height: 40.h),
