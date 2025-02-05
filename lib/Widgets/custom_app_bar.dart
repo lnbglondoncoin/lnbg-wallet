@@ -18,11 +18,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return AppBar(
-      backgroundColor: whiteColor,
-      shadowColor: whiteColor,
-      foregroundColor: whiteColor,
-      surfaceTintColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      shadowColor: theme.scaffoldBackgroundColor,
+      foregroundColor: theme.scaffoldBackgroundColor,
+      surfaceTintColor:theme.scaffoldBackgroundColor,
       elevation: 0.0,
       centerTitle: false,
       leading: Padding(
@@ -34,13 +38,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: SizedBox(
               height: 28.h,
               width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft))),
+              child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
         ),
       ),
       title: Text(
         title,
         style: GoogleFonts.urbanist(
-            fontSize: 24.sp, fontWeight: FontWeight.w700, color: blackColor2),
+            fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?whiteColor:blackColor2),
       ),
       actions: [
         Padding(
@@ -53,7 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: SizedBox(
                         height: 28.h,
                         width: 28.w,
-                        child: Center(child: SvgPicture.asset(iconPath))),
+                        child: Center(child: SvgPicture.asset(iconPath,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
                   )
                 : const SizedBox())
       ],

@@ -1,4 +1,5 @@
 const tokenIconList=[
+  "assets/icons/etg.png",
   "assets/icons/logo.png",
   "assets/icons/bitcoin.png",
   "assets/icons/tether.png",
@@ -18,6 +19,7 @@ const tokenIconList=[
 
 ];
 const tokenList=[
+  "Ethereum",
   "LNBG Coin",
   "Bitcoin",
   "Tether",
@@ -39,6 +41,7 @@ const tokenList=[
 
 const tokenPercentage=[
   "+0.75%",
+  "+0.75%",
   "-1.75%",
   "+0.06%",
   "+0.38%",
@@ -58,6 +61,7 @@ const tokenPercentage=[
 
 
 const tokenCoinPrice=[
+  "59.47 ETH",
   "159.47 \$LLC",
   "0.259 BTC",
   "1938.47 USDT",
@@ -80,6 +84,7 @@ const tokenCoinPrice=[
 
 
 const tokenCoinndolorPrice=[
+  "\$79,379.2",
   "\$1.59129",
   "\$5,036.9",
   "\$1,939.19",
@@ -102,6 +107,7 @@ const tokenCoinndolorPrice=[
 
 
 const tokenCoinndolorPriceWithPercentage=[
+  "\$0.00998",
   "\$0.00998",
   "\$24,834.58",
   "\$0.79",
@@ -253,5 +259,40 @@ const providerIcons=[
   "assets/icons/apple.svg"
 ];
 
+
+const optionImageList=[
+  "assets/icons/chat2.svg",
+  "assets/icons/receive2.svg",
+  "assets/icons/cart2.svg",
+  "assets/icons/Swap2.svg",
+
+];
+const optionImageList2=[
+   "assets/icons/chat.svg",
+    "assets/icons/receive.svg",
+    "assets/icons/cart.svg",
+  "assets/icons/Swap.svg",
+  
+];
+const options=[
+   "Send",
+    "Receive",
+    "Buy",
+  "Transfer",
+  
+];
+const optionsPrice=[
+   "1.597",
+    "1.161",
+    "0.855",
+  "1.273",
+  
+];
+const optionsSubtitles=[
+"0x16dcc0e...e2bf7c61037",
+"0x7131CA8...djk48f8E696",
+"0xA4i1o...aj2637C",
+"0x16dcc0e...e2bf7c61dui"
+];
 
 

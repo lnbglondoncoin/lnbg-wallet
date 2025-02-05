@@ -28,8 +28,11 @@ class ReceiveCoinQR extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Receive $coinCode",
         iconPath: 'assets/icons/search.svg',
@@ -79,7 +82,7 @@ class ReceiveCoinQR extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
-                      color: darkGreyColor),
+                      color:isDarkMode?whiteColor: darkGreyColor),
                 ),
               ),
               SizedBox(
@@ -97,7 +100,7 @@ class ReceiveCoinQR extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor),
+                      color:isDarkMode?whiteColor: darkGreyColor),
                 ),
               ),
               Padding(
@@ -108,7 +111,7 @@ class ReceiveCoinQR extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor),
+                      color:isDarkMode?whiteColor: darkGreyColor),
                 ),
               ),
               Padding(
@@ -126,14 +129,16 @@ class ReceiveCoinQR extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: lightGreenColor.withOpacity(0.08)),
                           child: Center(
-                              child: SvgPicture.asset("assets/icons/copy.svg")),
+                              child: SvgPicture.asset("assets/icons/copy.svg",colorFilter: 
+                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
+                                    .srcIn),)),
                         ),
                         Text(
                           "Copy",
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color: darkGreyColor),
+                              color:isDarkMode?lightWhiteColor: darkGreyColor),
                         )
                       ],
                     ),
@@ -152,7 +157,9 @@ class ReceiveCoinQR extends StatelessWidget {
                                 color: lightGreenColor.withOpacity(0.08)),
                             child: Center(
                                 child:
-                                    SvgPicture.asset("assets/icons/set.svg")),
+                                    SvgPicture.asset("assets/icons/set.svg",colorFilter: 
+                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
+                                    .srcIn),)),
                           ),
                         ),
                         Text(
@@ -160,7 +167,7 @@ class ReceiveCoinQR extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color: darkGreyColor),
+                              color:isDarkMode?lightWhiteColor: darkGreyColor),
                         )
                       ],
                     ),
@@ -179,14 +186,16 @@ class ReceiveCoinQR extends StatelessWidget {
                                 color: lightGreenColor.withOpacity(0.08)),
                             child: Center(
                                 child:
-                                    SvgPicture.asset("assets/icons/share.svg")),
+                                    SvgPicture.asset("assets/icons/share.svg",colorFilter: 
+                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
+                                    .srcIn),)),
                           ),
                           Text(
                             "Share",
                             style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w700,
-                                color: darkGreyColor),
+                                color:isDarkMode?lightWhiteColor: darkGreyColor),
                           )
                         ],
                       ),
@@ -294,6 +303,9 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return SlideTransition(
       position: _slideAnimation,
       child: SingleChildScrollView(
@@ -306,7 +318,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
             top: 10.h,
           ),
           decoration: BoxDecoration(
-            color: whiteColor,
+            color:isDarkMode?lightBlackColor2: whiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(49.r),
               topRight: Radius.circular(49.r),
@@ -321,7 +333,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   width: 38.w,
                   height: 3.h,
                   decoration: BoxDecoration(
-                    color: greyColor,
+                    color:isDarkMode?lightBlackColor: greyColor,
                     borderRadius: BorderRadius.circular(100.r),
                   ),
                 ),
@@ -333,7 +345,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
-                    color: blackColor2,
+                    color:isDarkMode?whiteColor: blackColor2,
                   ),
                 ),
               ),
@@ -350,7 +362,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   hintText: "Set amount",
                   hintStyle: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w400,
-                    color: greyColor2,
+                    color:isDarkMode?whiteColor: greyColor2,
                     fontSize: 18.sp,
                   ),
                   prefixIcon: Padding(
@@ -367,7 +379,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       ),
                     ),
                   ),
-                  fillColor: lightWhiteColor,
+                  fillColor:isDarkMode?lightBlackColor3: lightWhiteColor,
                   filled: true,
                   contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
                 ),
@@ -392,7 +404,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       height: 59.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: lightGreenColor2,
+                          color:isDarkMode?lightBlackColor: lightGreenColor2,
                           borderRadius: BorderRadius.circular(100.r)),
                       child: Center(
                         child: Text(
@@ -400,7 +412,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color: lightGreenColor),
+                              color:isDarkMode?lightGreenColor: lightGreenColor),
                         ),
                       ),
                     ),
@@ -409,7 +421,11 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                     width: 10.w,
                   ),
                   Flexible(
-                    child: CustomButton(
+                    child: isDarkMode?CustomGreenButton(
+                        buttonText: "Confirm",
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }):CustomButton(
                         buttonText: "Confirm",
                         onPressed: () {
                           Navigator.pop(context);

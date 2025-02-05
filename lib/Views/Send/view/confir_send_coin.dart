@@ -23,8 +23,11 @@ class ConfirmSendCoinScreen extends StatelessWidget {
   final controller = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(
         title: "Confirm",
         iconPath: 'assets/icons/search.svg',
@@ -41,7 +44,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 48.sp,
                     fontWeight: FontWeight.w700,
-                    color: orange3),
+                    color:isDarkMode?lightGreenColor: orange3),
               ),
             ),
             Center(
@@ -50,7 +53,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
-                    color: greyColor3),
+                    color:isDarkMode?greyColor: greyColor3),
               ),
             ),
             SizedBox(
@@ -65,14 +68,14 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               style: GoogleFonts.urbanist(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor2),
+                  color:isDarkMode?whiteColor: blackColor2),
             ),
             Text(
-              address,
+              address==""?"Adress":address,
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
-                  color: blackColor2),
+                  color: isDarkMode?whiteColor: blackColor2),
             ),
             SizedBox(
               height: 20.h,
@@ -82,7 +85,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               style: GoogleFonts.urbanist(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor2),
+                  color:isDarkMode?whiteColor: blackColor2),
             ),
             Row(
               children: [
@@ -99,18 +102,18 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                     hintStyle: GoogleFonts.urbanist(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w500,
-                        color: greyColor2),
+                        color: isDarkMode?whiteColor: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: blackColor2),
+                      color:isDarkMode?whiteColor: blackColor2),
                 )),
                 GestureDetector(
                     onTap: () {
                       controller.isEditClicked.value == true;
                     },
-                    child: SvgPicture.asset("assets/icons/Edit.svg"))
+                    child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),))
               ],
             ),
             const CustomDivider(),
@@ -124,7 +127,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                      color: blackColor2),
+                      color:isDarkMode?whiteColor: blackColor2),
                 ),
                 const Spacer(),
                 Flexible(
@@ -140,12 +143,12 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                     hintStyle: GoogleFonts.urbanist(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w500,
-                        color: greyColor2),
+                        color:isDarkMode?whiteColor: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: blackColor2),
+                      color:isDarkMode?whiteColor: blackColor2),
                 )),
                 GestureDetector(
                     onTap: () {
@@ -153,7 +156,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             coinCode: coinCode,
                           ));
                     },
-                    child: SvgPicture.asset("assets/icons/Edit.svg"))
+                    child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn)))
               ],
             ),
             const CustomDivider(),
@@ -167,7 +170,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                      color: blackColor2),
+                      color:isDarkMode?whiteColor: blackColor2),
                 ),
                 const Spacer(),
                 Flexible(
@@ -183,7 +186,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                     hintStyle: GoogleFonts.urbanist(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w500,
-                        color: greyColor2),
+                        color:isDarkMode?whiteColor: greyColor2),
                   ),
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
@@ -198,7 +201,11 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(25.h),
-        child: CustomButton(
+        child:isDarkMode? CustomGreenButton(
+            buttonText: "Send",
+            onPressed: () {
+               _showFailPopup(context);
+            }): CustomButton(
             buttonText: "Send",
             onPressed: () {
               //  _showSuccesPopup(context);
@@ -208,6 +215,9 @@ class ConfirmSendCoinScreen extends StatelessWidget {
   }
 
   void _showSuccesPopup(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -216,19 +226,19 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: whiteColor,
+          backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
           icon: Image.asset(
-            "assets/images/success2.png",
+           isDarkMode? "assets/images/success21.png": "assets/images/success2.png",
             height: 180.h,
             width: 186.w,
           ),
           title: Text(
             "Successful Sent!",
             style: GoogleFonts.urbanist(
-                fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?lightGreenColor:orange3),
           ),
           content: Text(
               textAlign: TextAlign.center,
@@ -236,8 +246,11 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: blackColor2)),
+                  color: isDarkMode?whiteColor: blackColor2)),
           actions: [
+         isDarkMode?CustomGreenButton(buttonText: "View Details", onPressed: (){
+          Navigator.pop(context);
+         }):
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -259,7 +272,8 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+           
+          SizedBox(
               height: 15.h,
             ),
             CustomLightGreenButton(
@@ -274,6 +288,9 @@ class ConfirmSendCoinScreen extends StatelessWidget {
   }
 
   void _showFailPopup(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -282,12 +299,12 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: whiteColor,
+           backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
           icon: Image.asset(
-            "assets/images/fail.png",
+           isDarkMode? "assets/images/fail2.png": "assets/images/fail.png",
             height: 180.h,
             width: 186.w,
           ),
@@ -302,9 +319,11 @@ class ConfirmSendCoinScreen extends StatelessWidget {
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: blackColor2)),
+                   color: isDarkMode?whiteColor: blackColor2)),
           actions: [
-            GestureDetector(
+            isDarkMode?CustomGreenButton(buttonText: "Try Again", onPressed: (){
+                Navigator.pop(context);
+            }):GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },

@@ -18,10 +18,14 @@ class SendCoin extends StatelessWidget {
   final controller = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Send $coinName",
+        isSuffix: true,
         iconPath: 'assets/icons/msg.svg',
       ),
       body: SingleChildScrollView(
@@ -32,7 +36,7 @@ class SendCoin extends StatelessWidget {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: lightWhiteColor,
+                    color:isDarkMode?lightBlackColor2: lightWhiteColor,
                     borderRadius: BorderRadius.circular(18.r)),
                 child: Row(
                   children: [
@@ -50,7 +54,7 @@ class SendCoin extends StatelessWidget {
                                 EdgeInsets.symmetric(horizontal: 15.w)),
                         style: GoogleFonts.urbanist(
                             fontWeight: FontWeight.w400,
-                            color: blackColor2,
+                            color:isDarkMode?whiteColor: blackColor2,
                             fontSize: 18.sp),
                       ),
                     ),
@@ -59,7 +63,7 @@ class SendCoin extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w800,
-                          color: orange4),
+                          color:isDarkMode?lightGreenColor: orange4),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -68,8 +72,8 @@ class SendCoin extends StatelessWidget {
                           width: 20.w,
                           child: SvgPicture.asset(
                             "assets/icons/scan2.svg",
-                            colorFilter: const ColorFilter.mode(
-                                orange4, BlendMode.srcIn),
+                            colorFilter:  ColorFilter.mode(
+                               isDarkMode?lightGreenColor: orange4, BlendMode.srcIn),
                           )),
                     )
                   ],
@@ -83,12 +87,12 @@ class SendCoin extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: controller.isAmountEmpty.value
-                        ? lightWhiteColor
+                        ?isDarkMode?lightBlackColor2: lightWhiteColor
                         : lightGreenColor.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(18.r),
                     border: Border.all(
                       color: controller.isAmountEmpty.value
-                          ? lightWhiteColor
+                          ? isDarkMode?lightBlackColor2:lightWhiteColor
                           : orange3,
                     ),
                   ),
@@ -127,7 +131,7 @@ class SendCoin extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w800,
-                            color: orange4,
+                            color:isDarkMode?lightGreenColor: orange4,
                           ),
                         ),
                       ),
@@ -141,7 +145,7 @@ class SendCoin extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w800,
-                    color: greyColor3),
+                    color:isDarkMode?greyColor: greyColor3),
               ),
               SizedBox(
                 height: 20.h,
@@ -158,14 +162,14 @@ class SendCoin extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
-                        color: blackColor2),
+                        color:isDarkMode?whiteColor: blackColor2),
                   ),
                   Text(
                     "Clear",
                     style: GoogleFonts.urbanist(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w800,
-                        color: orange4),
+                        color:isDarkMode?lightGreenColor: orange4),
                   ),
                 ],
               ),
@@ -187,7 +191,7 @@ class SendCoin extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
-                          color: darkGreyColor),
+                          color:isDarkMode?greyColor: darkGreyColor),
                     ),
                   ),
                 ],
@@ -210,7 +214,7 @@ class SendCoin extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
-                          color: darkGreyColor),
+                          color:isDarkMode?greyColor:  darkGreyColor),
                     ),
                   ),
                 ],
@@ -222,7 +226,15 @@ class SendCoin extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(20.h),
-        child: CustomButton(
+        child: isDarkMode? CustomGreenButton(
+            buttonText: "Continue",
+            onPressed: () {
+              Get.to(() => ConfirmSendCoinScreen(
+                    ammount: controller.ammountController.text,
+                    address: controller.addressController.text,
+                    coinCode: coinCode,
+                  ));
+            }): CustomButton(
             buttonText: "Continue",
             onPressed: () {
               Get.to(() => ConfirmSendCoinScreen(

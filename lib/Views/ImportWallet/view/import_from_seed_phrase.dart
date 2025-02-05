@@ -22,13 +22,17 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+          var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+     backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: whiteColor,
-        shadowColor: whiteColor,
-        foregroundColor: whiteColor,
-        surfaceTintColor: whiteColor,
+        backgroundColor:  theme.scaffoldBackgroundColor,
+        shadowColor:  theme.scaffoldBackgroundColor,
+        foregroundColor:  theme.scaffoldBackgroundColor,
+        surfaceTintColor:  theme.scaffoldBackgroundColor,
         elevation: 0.0,
         centerTitle: true,
         leading: Padding(
@@ -36,12 +40,12 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
           child: SizedBox(
               height: 28.h,
               width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft))),
+              child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
         ),
         title: Text(
           "Import From Seed",
           style: GoogleFonts.urbanist(
-              fontSize: 24.sp, fontWeight: FontWeight.w700, color: blackColor2),
+              fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?whiteColor:blackColor2),
         ),
         actions: [
           Padding(
@@ -53,7 +57,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
               child: SizedBox(
                   height: 28.h,
                   width: 28.w,
-                  child: Center(child: SvgPicture.asset(scanIcon))),
+                  child: Center(child: SvgPicture.asset(scanIcon,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
             ),
           )
         ],
@@ -150,7 +154,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color: blackColor2),
+                              color:isDarkMode?whiteColor: blackColor2),
                         ),
                         CustomSwitch(isSwitched: controller.isSwitched1),
                       ],
@@ -166,7 +170,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color: blackColor2),
+                              color:isDarkMode?whiteColor: blackColor2),
                         ),
                         CustomSwitch(isSwitched: controller.isSwitched2),
                       ],
@@ -195,7 +199,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                               text: TextSpan(
                                 text: "I agree to LNBG Wallet ",
                                 style: GoogleFonts.urbanist(
-                                    color: blackColor2,
+                                    color: isDarkMode?whiteColor: blackColor2,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w800,
                                     height: 1.4.h),
@@ -225,7 +229,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
               Container(
                 height: 1,
                 width: double.infinity,
-                color: greyColor4,
+                color: isDarkMode?lightBlackColor: greyColor4,
               ),
               SizedBox(
                 height: 200.h,

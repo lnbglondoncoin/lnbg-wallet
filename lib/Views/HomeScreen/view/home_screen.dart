@@ -12,6 +12,9 @@ import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_scr
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_view.dart';
+import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/token_details.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class HomeScreenView extends StatefulWidget {
   const HomeScreenView({super.key});
@@ -31,6 +34,11 @@ class _HomeScreenViewState extends State<HomeScreenView>
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
         statusBarColor: Colors.transparent, // Make status bar transparent
@@ -38,16 +46,18 @@ class _HomeScreenViewState extends State<HomeScreenView>
             Brightness.light, // Adjust icons for visibility
       ),
       child: Scaffold(
-        backgroundColor: whiteColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: Column(
           children: [
             // Image covering only the top area (including the status bar)
             Container(
               width: double.infinity,
               height: Get.height / 2.5.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(topYellow),
+                  image: AssetImage(
+                    isDarkMode ? "assets/images/home2.png" : topYellow,
+                  ),
                   fit: BoxFit.cover, // Cover only the given height
                 ),
               ),
@@ -120,6 +130,12 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             color: whiteColor),
                       ),
                     ),
+                    SizedBox(height: 5.h),
+                    Container(
+                      height: 1.h,
+                      color: whiteColor,
+                    ),
+                    SizedBox(height: 5.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -136,8 +152,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 decoration: const BoxDecoration(
                                     color: whiteColor, shape: BoxShape.circle),
                                 child: Center(
-                                  child:
-                                      SvgPicture.asset("assets/icons/chat.svg"),
+                                  child: SvgPicture.asset(isDarkMode
+                                      ? "assets/icons/chat2.svg"
+                                      : "assets/icons/chat.svg"),
                                 ),
                               ),
                             ),
@@ -166,8 +183,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 decoration: const BoxDecoration(
                                     color: whiteColor, shape: BoxShape.circle),
                                 child: Center(
-                                  child: SvgPicture.asset(
-                                      "assets/icons/receive.svg"),
+                                  child: SvgPicture.asset(isDarkMode
+                                      ? "assets/icons/receive2.svg"
+                                      : "assets/icons/receive.svg"),
                                 ),
                               ),
                               SizedBox(
@@ -196,8 +214,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 decoration: const BoxDecoration(
                                     color: whiteColor, shape: BoxShape.circle),
                                 child: Center(
-                                  child:
-                                      SvgPicture.asset("assets/icons/cart.svg"),
+                                  child: SvgPicture.asset(isDarkMode
+                                      ? "assets/icons/cart2.svg"
+                                      : "assets/icons/cart.svg"),
                                 ),
                               ),
                               SizedBox(
@@ -213,30 +232,36 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             ],
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 60.h,
-                              width: 60.w,
-                              decoration: const BoxDecoration(
-                                  color: whiteColor, shape: BoxShape.circle),
-                              child: Center(
-                                child:
-                                    SvgPicture.asset("assets/icons/Swap.svg"),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => SwapView());
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 60.h,
+                                width: 60.w,
+                                decoration: const BoxDecoration(
+                                    color: whiteColor, shape: BoxShape.circle),
+                                child: Center(
+                                  child: SvgPicture.asset(isDarkMode
+                                      ? "assets/icons/Swap2.svg"
+                                      : "assets/icons/Swap.svg"),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Text(
-                              "Swap",
-                              style: GoogleFonts.urbanist(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: whiteColor),
-                            )
-                          ],
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Text(
+                                "Swap",
+                                style: GoogleFonts.urbanist(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: whiteColor),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     )
@@ -248,7 +273,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
             // Remaining content below the image
             Expanded(
               child: Container(
-                color: whiteColor, // Rest of the screen's background color
+                color: theme
+                    .scaffoldBackgroundColor, // Rest of the screen's background color
                 child: Center(
                     child: Padding(
                   padding:
@@ -258,7 +284,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     children: [
                       TabBar(
                         dividerHeight: 2,
-                        dividerColor: lightBlack,
+                        dividerColor: isDarkMode ? lightBlackColor : lightBlack,
                         padding: EdgeInsets.zero,
                         indicatorPadding: EdgeInsets.zero,
                         labelPadding: EdgeInsets.zero,
@@ -266,15 +292,20 @@ class _HomeScreenViewState extends State<HomeScreenView>
                         indicatorColor: orange3, // Set indicator color
                         indicatorWeight: 4.0, // Set thickness of indicator line
                         indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(color: orange3, width: 3.5.w),
+                          borderSide: BorderSide(
+                              color: isDarkMode ? lightGreenColor : orange3,
+                              width: 3.5.w),
                           borderRadius: BorderRadius.circular(100.r),
                           insets: EdgeInsets.symmetric(
                               horizontal: Get.width /
                                   3.5), // Half of screen width for each tab
                         ),
-                        labelColor: orange3, // Active tab text color
-                        unselectedLabelColor:
-                            greyColor2, // Inactive tab text color
+                        labelColor: isDarkMode
+                            ? lightGreenColor
+                            : orange3, // Active tab text color
+                        unselectedLabelColor: isDarkMode
+                            ? greyColor3
+                            : greyColor2, // Inactive tab text color
                         labelStyle: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
@@ -301,117 +332,134 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          // height: 80.h,
-                                          width: double.infinity,
-                                          decoration: const BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                                      color: lightBlack))),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 15.h),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  height: 45.h,
-                                                  width: 35.w,
-                                                  child: Center(
-                                                    child: Image.asset(
-                                                      tokenIconList[index],
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Get.to(TokenDetailsScreen(
+                                              coinIconPath: tokenIconList[index],
+                                              coinName: tokenList[index],
+                                              tokenPrice:    tokenCoinndolorPriceWithPercentage[
+                                                                index],
+                                              percentage:  tokenPercentage[
+                                                                index],
+                                              prceInTokenshortWord:   tokenCoinPrice[index],
+                                              priceDolor: tokenCoinndolorPrice[index],
+                                            ));
+                                          },
+                                          child: Container(
+                                            // height: 80.h,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    bottom: BorderSide(
+                                                        color: isDarkMode
+                                                            ? lightBlackColor
+                                                            : lightBlack))),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 15.h),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 45.h,
+                                                    width: 35.w,
+                                                    child: Center(
+                                                      child: Image.asset(
+                                                        tokenIconList[index],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      tokenList[index],
-                                                      style:
-                                                          GoogleFonts.urbanist(
-                                                              fontSize: 20.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              color:
-                                                                  blackColor2),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          tokenCoinndolorPriceWithPercentage[
-                                                              index],
-                                                          style: GoogleFonts
-                                                              .urbanist(
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                  color:
-                                                                      greyColor3),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10.w,
-                                                        ),
-                                                        Text(
-                                                          tokenPercentage[
-                                                              index],
-                                                          style: GoogleFonts.urbanist(
-                                                              fontSize: 12.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: tokenPercentage[
-                                                                          index]
-                                                                      .startsWith(
-                                                                          '-')
-                                                                  ? pinkColor
-                                                                  : orange3),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                const Spacer(),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      tokenCoinPrice[index],
-                                                      style:
-                                                          GoogleFonts.urbanist(
-                                                              fontSize: 18.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              color:
-                                                                  blackColor2),
-                                                    ),
-                                                    Text(
-                                                      tokenCoinndolorPrice[
-                                                          index],
-                                                      style:
-                                                          GoogleFonts.urbanist(
-                                                              fontSize: 14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  greyColor3),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
+                                                  SizedBox(
+                                                    width: 15.w,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        tokenList[index],
+                                                        style: GoogleFonts.urbanist(
+                                                            fontSize: 20.sp,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: isDarkMode
+                                                                ? whiteColor
+                                                                : blackColor2),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            tokenCoinndolorPriceWithPercentage[
+                                                                index],
+                                                            style: GoogleFonts.urbanist(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: isDarkMode
+                                                                    ? greyColor
+                                                                    : greyColor3),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10.w,
+                                                          ),
+                                                          Text(
+                                                            tokenPercentage[
+                                                                index],
+                                                            style: GoogleFonts
+                                                                .urbanist(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: tokenPercentage[index]
+                                                                            .startsWith('-')
+                                                                        ? pinkColor
+                                                                        : isDarkMode
+                                                                            ? lightGreenColor
+                                                                            : orange3),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        tokenCoinPrice[index],
+                                                        style: GoogleFonts.urbanist(
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: isDarkMode
+                                                                ? whiteColor
+                                                                : blackColor2),
+                                                      ),
+                                                      Text(
+                                                        tokenCoinndolorPrice[
+                                                            index],
+                                                        style: GoogleFonts
+                                                            .urbanist(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: isDarkMode
+                                                                    ? greyColor
+                                                                    : greyColor3),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         );
@@ -425,7 +473,10 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100.r),
-                                        border: Border.all(color: orange3)),
+                                        border: Border.all(
+                                            color: isDarkMode
+                                                ? lightGreenColor
+                                                : orange3)),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -435,7 +486,13 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                             height: 20.w,
                                             child: Center(
                                                 child: SvgPicture.asset(
-                                                    "assets/icons/plusIcon.svg"))),
+                                              "assets/icons/plusIcon.svg",
+                                              colorFilter: ColorFilter.mode(
+                                                  isDarkMode
+                                                      ? lightGreenColor
+                                                      : orange3,
+                                                  BlendMode.srcIn),
+                                            ))),
                                         SizedBox(
                                           width: 2.w,
                                         ),
@@ -444,7 +501,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                           style: GoogleFonts.urbanist(
                                               fontSize: 18.sp,
                                               fontWeight: FontWeight.w700,
-                                              color: orange3),
+                                              color: isDarkMode
+                                                  ? lightGreenColor
+                                                  : orange3),
                                         )
                                       ],
                                     ),

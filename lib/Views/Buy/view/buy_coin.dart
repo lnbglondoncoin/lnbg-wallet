@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/uy_coin_contrller.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Buy/view/elect_currency_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_currency_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_provider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
@@ -20,8 +20,11 @@ class BuyCoinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-        backgroundColor: whiteColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         appBar: CustomAppBar(
           title: "Buy $coinCode",
           iconPath: 'assets/icons/search.svg',
@@ -40,7 +43,7 @@ class BuyCoinScreen extends StatelessWidget {
                     height: 45.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100.r),
-                        border: Border.all(color: orange3)),
+                        border: Border.all(color:isDarkMode?lightGreenColor: orange3)),
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -51,10 +54,12 @@ class BuyCoinScreen extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: orange3),
+                                  color:isDarkMode?lightGreenColor: orange3),
                             );
                           }),
-                          SvgPicture.asset("assets/icons/diamond.svg")
+                          SvgPicture.asset("assets/icons/diamond.svg",colorFilter: ColorFilter.mode(isDarkMode?
+                          lightGreenColor:orange3
+                          , BlendMode.srcIn),)
                         ],
                       ),
                     ),
@@ -76,7 +81,7 @@ class BuyCoinScreen extends StatelessWidget {
             hintStyle: GoogleFonts.urbanist(
               fontSize: 58.sp,
               fontWeight: FontWeight.w700,
-              color: orange3,
+              color:isDarkMode?lightGreenColor:  orange3,
             ),
           ),
           keyboardType: TextInputType.number,
@@ -84,9 +89,9 @@ class BuyCoinScreen extends StatelessWidget {
           style: GoogleFonts.urbanist(
             fontSize: 58.sp,
             fontWeight: FontWeight.w700,
-            color: orange3,
+            color:isDarkMode?lightGreenColor:  orange3,
           ),
-          cursorColor: orange3,
+          cursorColor:isDarkMode?lightGreenColor:  orange3,
           textAlign: TextAlign.center,
           onChanged: (value) {
             controller.amount.value = value.isEmpty ? "0" : value;
@@ -106,7 +111,7 @@ class BuyCoinScreen extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: greyColor3),
+                      color:isDarkMode?greyColor: greyColor3),
                 );
               }),
               SizedBox(
@@ -125,7 +130,7 @@ class BuyCoinScreen extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.r),
-                      border: Border.all(color: lightBlack)),
+                      border: Border.all(color:isDarkMode?lightBlackColor: lightBlack)),
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -141,10 +146,11 @@ class BuyCoinScreen extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color: blackColor2),
+                              color:isDarkMode?whiteColor: blackColor2),
                         ),
                         trailing:
-                            SvgPicture.asset("assets/icons/arrowRight.svg"),
+                            SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
+                            ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
                       ),
                     ),
                   ),
@@ -156,7 +162,11 @@ class BuyCoinScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
             padding: EdgeInsets.all(20.h),
-            child: CustomButton(
+            child: isDarkMode?CustomGreenButton(
+                buttonText: "Continue",
+                onPressed: () {
+                  _showSuccesPopup(context);
+                }):CustomButton(
                 buttonText: "Continue",
                 onPressed: () {
                   _showSuccesPopup(context);

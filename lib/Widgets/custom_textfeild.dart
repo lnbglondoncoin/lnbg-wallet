@@ -223,6 +223,9 @@
   
     @override
     Widget build(BuildContext context) {
+         var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,11 +234,11 @@
             style: GoogleFonts.poppins(
               fontSize: 20.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor2,
+              color:isDarkMode?whiteColor: blackColor2,
             ),
           ),
           SizedBox(height: 8.h),
-          TextFormField(
+          TextFormField(cursorColor: isDarkMode?whiteColor:blackColor2,
  keyboardType: widget.isNumber?TextInputType.number:TextInputType.text,
             controller: widget.controller,
 
@@ -248,52 +251,52 @@
               ):null,
               focusedBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color:isDarkMode?lightBlackColor2: lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               errorBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               enabledBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color:isDarkMode?lightBlackColor2: lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               disabledBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color:isDarkMode?lightBlackColor2: lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               focusedErrorBorder:  OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color: isDarkMode?lightBlackColor2:lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               border: OutlineInputBorder(
                  borderSide: BorderSide(
-                color: lightWhiteColor
+                color:isDarkMode?lightBlackColor2: lightWhiteColor
               ),
                 borderRadius: BorderRadius.circular(18.r),
               ),
             
-              focusColor: lightWhiteColor,
+              focusColor:isDarkMode?lightBlackColor2: lightWhiteColor,
               filled: true,
               
               hintText: widget.hintText,
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: blackColor2,
+                color:isDarkMode?whiteColor: blackColor2,
               ),
-              fillColor: lightWhiteColor,
-             
+              fillColor:isDarkMode?lightBlackColor2: lightWhiteColor,
+            
               contentPadding: EdgeInsets.only(
                 top:  13.h ,
                 left:  15.w,
@@ -309,7 +312,7 @@
             style: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: blackColor2,
+                color: isDarkMode?whiteColor: blackColor2,
               ),
           ),
         ],

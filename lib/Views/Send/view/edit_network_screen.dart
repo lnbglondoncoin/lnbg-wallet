@@ -15,8 +15,11 @@ class EditNetworkScreen extends StatelessWidget {
   final controlelr = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(
         title: "Edit Network Fee",
         iconPath: 'assets/icons/search.svg',
@@ -33,7 +36,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color: blackColor2),
+                    color: isDarkMode?whiteColor: blackColor2),
               ),
               SizedBox(
                 height: 10.h,
@@ -43,7 +46,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
-                    color: darkGreyColor),
+                    color:isDarkMode?whiteColor: darkGreyColor),
               ),
               SizedBox(
                 height: 15.h,
@@ -68,8 +71,8 @@ class EditNetworkScreen extends StatelessWidget {
                                   border: Border.all(
                                       color: index ==
                                               controlelr.selectedSpeed.value
-                                          ? orange3
-                                          : greyColor,
+                                          ?isDarkMode?lightGreenColor: orange3
+                                          :isDarkMode?lightBlackColor: greyColor,
                                       width: 1)),
                               child: Padding(
                                 padding: EdgeInsets.all(15.h),
@@ -83,7 +86,7 @@ class EditNetworkScreen extends StatelessWidget {
                                       style: GoogleFonts.urbanist(
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w700,
-                                          color: blackColor2),
+                                          color:isDarkMode?whiteColor: blackColor2),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -94,14 +97,14 @@ class EditNetworkScreen extends StatelessWidget {
                                           style: GoogleFonts.urbanist(
                                               fontSize: 20.sp,
                                               fontWeight: FontWeight.w700,
-                                              color: blackColor2),
+                                              color:isDarkMode?whiteColor: blackColor2),
                                         ),
                                         Text(
                                           networkSpeedpriceInDolors[index],
                                           style: GoogleFonts.urbanist(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: greyColor3),
+                                              color:isDarkMode?greyColor: greyColor3),
                                         ),
                                       ],
                                     )
@@ -124,7 +127,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color: blackColor2),
+                    color:isDarkMode?whiteColor: blackColor2),
               ),
               SizedBox(
                 height: 20.h,
@@ -140,7 +143,7 @@ class EditNetworkScreen extends StatelessWidget {
                         height: 58.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: lightWhiteColor,
+                            color:isDarkMode?lightBlackColor2: lightWhiteColor,
                             borderRadius: BorderRadius.circular(18.r)),
                         child: Padding(
                           padding: EdgeInsets.all(15.h),
@@ -165,7 +168,7 @@ class EditNetworkScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(20.h),
-        child: CustomButton(buttonText: "Ok", onPressed: () {}),
+        child: isDarkMode? CustomGreenButton(buttonText: "Ok", onPressed: () {}): CustomButton(buttonText: "Ok", onPressed: () {})
       ),
     );
   }

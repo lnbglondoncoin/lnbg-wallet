@@ -10,7 +10,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/view/splash_scree
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 
 void main() async {
-   Get.put(SplashController());
+   //Get.put(SplashController());
   Get.put(WalletCreatingController());
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeController.isDark.value ? ThemeMode.dark : ThemeMode.light,
-            home: SplashScreen(),
+            // home: SplashScreen(),
+              home: BottomNavBar(),
           );
         },
       );

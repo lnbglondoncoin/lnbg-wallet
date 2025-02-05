@@ -15,8 +15,11 @@ class SelectProviderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+     backgroundColor: theme.scaffoldBackgroundColor,
         appBar: CustomAppBar(
         title: "Providers",
         iconPath: 'assets/icons/search.svg',
@@ -35,7 +38,7 @@ class SelectProviderScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 
                 border: Border(bottom: BorderSide(
-                  color: lightBlack
+                  color:isDarkMode?lightBlackColor: lightBlack
                 ))
               ),
               child: Center(
@@ -47,13 +50,13 @@ class SelectProviderScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w800,
-                  color: blackColor2
+                  color:isDarkMode?whiteColor: blackColor2
                 ),),
                 trailing: Text(providersprice[index],
                 style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor2
+                  color:isDarkMode?whiteColor: blackColor2
                 ),),
                 ),
               ),

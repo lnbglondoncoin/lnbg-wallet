@@ -30,13 +30,16 @@ class CurrencySelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: AppBar(
-      backgroundColor: whiteColor,
-      shadowColor: whiteColor,
-      foregroundColor: whiteColor,
-      surfaceTintColor: whiteColor,
+      backgroundColor:  theme.scaffoldBackgroundColor,
+      shadowColor:  theme.scaffoldBackgroundColor,
+      foregroundColor:  theme.scaffoldBackgroundColor,
+      surfaceTintColor:  theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         title: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 10.w),
@@ -48,11 +51,11 @@ class CurrencySelectionScreen extends StatelessWidget {
                   Get.back();
                 },
                 child: Icon(Icons.close, size: 20.sp,
-                          color: blackColor2,),
+                          color:isDarkMode?whiteColor: blackColor2,),
               ),
               SizedBox(width: 10.w,),
               Text('Currency', style: GoogleFonts.urbanist(fontSize: 24.sp, fontWeight: FontWeight.w700,
-              color: blackColor2)),
+              color:isDarkMode?whiteColor: blackColor2)),
             ],
           ),
         ),
@@ -65,25 +68,28 @@ class CurrencySelectionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Popular', style: GoogleFonts.urbanist(fontSize: 18.sp, fontWeight: FontWeight.w800,
-            color: darkGreyColor)),
+            color:isDarkMode?greyColor: darkGreyColor)),
             SizedBox(height: 20.h),
             SizedBox(
              // height: 500.h,
               width: double.infinity,
-              child: _buildCurrencyList(popularCurrencies)),
+              child: _buildCurrencyList(popularCurrencies,context)),
             CustomDivider(),
              SizedBox(height: 20.h),
             Text('All Currency', style:  GoogleFonts.urbanist(fontSize: 18.sp, fontWeight: FontWeight.w800,
-            color: darkGreyColor)),
+            color: isDarkMode?greyColor:darkGreyColor)),
             SizedBox(height: 20.h),
-            Expanded(child: _buildCurrencyList(allCurrencies)),
+            Expanded(child: _buildCurrencyList(allCurrencies,context)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCurrencyList(List<Map<String, String>> currencies) {
+  Widget _buildCurrencyList(List<Map<String, String>> currencies,BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
@@ -107,15 +113,15 @@ class CurrencySelectionScreen extends StatelessWidget {
                         children: [
                            Text('${currency['code']}  -  ${currency['name']}',
                             style: GoogleFonts.urbanist(fontSize: 20.sp, fontWeight: FontWeight.w700,
-                            color: blackColor2)),
+                            color:isDarkMode?whiteColor: blackColor2)),
                              Obx((){
                               return  SizedBox(
-                                
+                                  
                                 height: 24.h,
                                 width: 24.w,
                                 child: Center(child: 
                                 SvgPicture.asset("assets/icons/tick.svg",
-                                colorFilter: ColorFilter.mode( controller.selectedCurrency.value == currency['code'] ? Colors.amber:whiteColor,BlendMode.srcIn),)));
+                                colorFilter: ColorFilter.mode( controller.selectedCurrency.value == currency['code'] ?isDarkMode?lightGreenColor: Colors.amber:isDarkMode?theme.scaffoldBackgroundColor: whiteColor,BlendMode.srcIn),)));
                              })
                         
                         ],

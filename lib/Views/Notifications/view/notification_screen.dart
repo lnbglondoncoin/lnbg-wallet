@@ -11,14 +11,19 @@ class NotificationScreen extends StatelessWidget {
   final NotificationController controller = Get.put(NotificationController());
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(
+        isSuffix: true,
         title: "Notifications",
         iconPath: 'assets/icons/msg.svg',
       ),
       body: Obx(() {
-        return controller.notifications.isEmpty
+        return controller.notifications.isNotEmpty
             ? ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 itemCount: controller.notifications.length,
@@ -27,7 +32,7 @@ class NotificationScreen extends StatelessWidget {
                   return Container(
                     padding: EdgeInsets.all(8.w),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: theme.scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Column(
@@ -52,7 +57,7 @@ class NotificationScreen extends StatelessWidget {
                                     style: GoogleFonts.urbanist(
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: blackColor2,
+                                      color:isDarkMode?whiteColor: blackColor2,
                                     ),
                                   ),
                                   SizedBox(height: 4.h),
@@ -60,7 +65,7 @@ class NotificationScreen extends StatelessWidget {
                                     notification.dateTime,
                                     style: GoogleFonts.urbanist(
                                         fontSize: 14.sp,
-                                        color: greyColor3,
+                                        color:isDarkMode?greyColor: greyColor3,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ],
@@ -71,7 +76,7 @@ class NotificationScreen extends StatelessWidget {
                                 width: 41.w,
                                 height: 24.h,
                                 decoration: BoxDecoration(
-                                  color: orange4,
+                                  color:isDarkMode?lightGreenColor: orange4,
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
                                 child: Center(
@@ -112,7 +117,7 @@ class NotificationScreen extends StatelessWidget {
                     ),
                     Center(
                         child: Image.asset(
-                      "assets/images/not.png",
+                      isDarkMode?"assets/images/not2.png":"assets/images/not.png",
                       height: 300.h,
                       width: 300.w,
                     )),
@@ -124,14 +129,14 @@ class NotificationScreen extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,
-                          color: blackColor2),
+                          color:isDarkMode?whiteColor: blackColor2),
                     ),
                     Text(
                       "You don't have any notifications at this time",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w400,
-                          color: blackColor2),
+                          color:isDarkMode?whiteColor: blackColor2),
                     )
                   ],
                 ),

@@ -27,8 +27,12 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+         var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           walletCreatingController.indexes.clear();
@@ -78,7 +82,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color:isDarkMode?whiteColor: darkGreyColor,
                     ),
                   ),
                   SizedBox(
@@ -147,7 +151,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(40.r),
-                                          color: whiteColor,
+                                          color: theme.scaffoldBackgroundColor,
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.all(20.h),
@@ -189,7 +193,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                                                   .contains(
                                                                       index)
                                                               ? orange3
-                                                              : greyColor4,
+                                                              :  isDarkMode?lightBlackColor: greyColor4,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20),
@@ -206,7 +210,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                                                       .contains(
                                                                           index)
                                                                   ? whiteColor
-                                                                  : darkGreyColor,
+                                                                  : isDarkMode?whiteColor:darkGreyColor,
                                                           fontWeight:
                                                               FontWeight.w700,
                                                         ),
@@ -289,6 +293,10 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
   }
 
   void _showPopup(BuildContext context) {
+         var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -297,11 +305,17 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: whiteColor,
+          backgroundColor: isDarkMode?lightBlackColor2:whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
-          icon: Image.asset(
+          icon:
+          isDarkMode? Image.asset(
+            "assets/images/success3.png",
+            height: 180.h,
+            width: 186.w,
+          ):
+          Image.asset(
             "assets/images/success.png",
             height: 180.h,
             width: 186.w,
@@ -316,7 +330,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: blackColor2)),
+                  color: isDarkMode?whiteColor:blackColor2)),
           actions: [
             GestureDetector(
               onTap: () {
@@ -346,7 +360,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,
-                    color: blackColor2),
+                    color: isDarkMode?whiteColor:blackColor2),
               ),
             )
           ],

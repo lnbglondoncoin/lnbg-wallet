@@ -18,3 +18,20 @@ class CustomDivider extends StatelessWidget {
     );
   }
 }
+
+class CustomDivider2 extends StatelessWidget {
+
+  const CustomDivider2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
+    return Container(
+      height: 1.h,
+      color: isDarkMode?greyColor:greyColor,
+    );
+  }
+}

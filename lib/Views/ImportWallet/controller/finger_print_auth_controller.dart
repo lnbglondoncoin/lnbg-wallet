@@ -50,6 +50,10 @@ class FingerPrintScanController extends GetxController {
   }
 
   void showPopup(BuildContext context) {
+         var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -58,11 +62,15 @@ class FingerPrintScanController extends GetxController {
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: whiteColor,
+          backgroundColor:isDarkMode?lightBlackColor2:whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
-          icon: Image.asset(
+          icon:isDarkMode? Image.asset(
+            "assets/images/suucess4.png",
+            height: 180.h,
+            width: 186.w,
+          ): Image.asset(
             "assets/images/success.png",
             height: 180.h,
             width: 186.w,
@@ -78,7 +86,7 @@ class FingerPrintScanController extends GetxController {
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: blackColor2)),
+                  color: isDarkMode?whiteColor:blackColor2)),
           actions: [
             ShaderMask(
               shaderCallback: (Rect bounds) {

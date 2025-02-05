@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -12,8 +13,11 @@ class AddNewCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+         var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor: theme.scaffoldBackgroundColor,
         appBar: CustomAppBar(
         title: "Add New Card",
         iconPath: scanIcon,
@@ -43,10 +47,86 @@ class AddNewCardScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:Padding(
         padding:  EdgeInsets.all(20.h),
-        child: CustomButton(buttonText: "Continue", onPressed: (){
-         
+        child: isDarkMode?CustomGreenButton(buttonText: "Continue", onPressed: (){
+          _showSuccesPopup(context);
+        }):
+        CustomButton(buttonText: "Continue", onPressed: (){
+         _showSuccesPopup(context);
         }),
       ),
     );
   }
+   void _showSuccesPopup(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+          actionsPadding:
+              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
+          backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(48.r),
+          ),
+          icon: Image.asset(
+           isDarkMode? "assets/images/buysuccess2.png": "assets/images/buysuccess3.png",
+            height: 180.h,
+            width: 186.w,
+          ),
+          title: Text(
+            "Successful Purchase!",
+            style: GoogleFonts.urbanist(
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?lightGreenColor:orange3),
+          ),
+          content: Text(
+              textAlign: TextAlign.center,
+              "Purchase Success! Crypto has been added to your wallet.",
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                  color: isDarkMode?whiteColor: blackColor2)),
+          actions: [
+         isDarkMode?CustomGreenButton(buttonText: "View Details", onPressed: (){
+          Navigator.pop(context);
+         }):
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 58.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.r),
+                    gradient: const LinearGradient(colors: [orange2, orange1])),
+                child: Center(
+                  child: Text(
+                    "View Details",
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        color: whiteColor),
+                  ),
+                ),
+              ),
+            ),
+           
+          SizedBox(
+              height: 15.h,
+            ),
+            CustomLightGreenButton(
+                buttonText: "Cancel",
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
+        );
+      },
+    );
+  }
+
 }

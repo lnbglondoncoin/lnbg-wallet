@@ -56,13 +56,17 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
        
         padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 25.w),
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: isDarkMode?lightBlackColor2:whiteColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(49.r),
           topRight: Radius.circular(49.r)),
         ),
@@ -75,7 +79,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 width: 38.w,
                 height: 3.h,
                 decoration: BoxDecoration(
-                  color: greyColor,
+                  color:isDarkMode?lightBlackColor: greyColor,
                   borderRadius: BorderRadius.circular(100.r),
                 ),
               ),
@@ -87,7 +91,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 "What is a “Seed phrase”?",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w700,
                 fontSize: 24.sp,
-                color: blackColor2
+                color:isDarkMode?whiteColor: blackColor2
               ),),
             ),
             SizedBox(height: 20.h,),
@@ -97,21 +101,21 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w500,
                 fontSize: 18.sp,
-                color: darkGreyColor
+                color: isDarkMode?whiteColor:darkGreyColor
               ),),
               SizedBox(height: 20.h,),
             Text(
                 "You must keep your seed phrase secret and safe. If someone gets your seed phrase, they'll gain control over your accounts.",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w500,
                 fontSize: 18.sp,
-                color: darkGreyColor
+                color:isDarkMode?whiteColor: darkGreyColor
               ),),
               SizedBox(height: 20.h,),
                Text(
                 "Save it in a place where only you can access it. If you lose it, not even LNBG Wallet can help you recover it.",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w500,
                 fontSize: 18.sp,
-                color: darkGreyColor
+                color:isDarkMode?whiteColor: darkGreyColor
               ),),
               SizedBox(height: 20.h,),
               const CustomDivider(),
@@ -170,13 +174,17 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
        
         padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 25.w),
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: isDarkMode?lightBlackColor2:whiteColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(49.r),
           topRight: Radius.circular(49.r)),
         ),
@@ -189,7 +197,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 width: 38.w,
                 height: 3.h,
                 decoration: BoxDecoration(
-                  color: greyColor,
+                  color:isDarkMode?lightBlackColor: greyColor,
                   borderRadius: BorderRadius.circular(100.r),
                 ),
               ),
@@ -201,7 +209,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 "Skip Account Security?",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w700,
                 fontSize: 24.sp,
-                color: blackColor2
+                color: isDarkMode?whiteColor: blackColor2
               ),),
             ),
             SizedBox(height: 20.h,),
@@ -224,7 +232,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                       "I understand that if i lose my seed phrase i will not be able to access my wallet.",style: GoogleFonts.urbanist(
                       fontWeight: FontWeight.w800,
                       fontSize: 18.sp,
-                      color: darkGreyColor,
+                      color:  isDarkMode?whiteColor: darkGreyColor,
                       height: 1.3.h
                     ),),
                 ),

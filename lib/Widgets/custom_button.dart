@@ -103,3 +103,64 @@ class CustomLightGreenButton extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+class CustomGreenButton extends StatelessWidget {
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  const CustomGreenButton({
+    super.key,
+    required this.buttonText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [lightGreenColor, greenColor2],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(100.r),
+        boxShadow: [
+          BoxShadow(
+            color: lightGreenColor
+                .withOpacity(0.25), // Light green shadow with transparency
+            blurRadius: 24, // Blur size
+            spreadRadius: 0, // No spread
+            offset: const Offset(4, 9), // Moves shadow 4px right, 9px down
+          ),
+        ],
+      ),
+      height: 59.h,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent, // Transparent to show gradient
+          shadowColor: Colors.transparent, // Removes default shadow
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100.r),
+          ),
+        ),
+        child: Text(
+          buttonText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.urbanist(
+              color: whiteColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              height: 1.2.h),
+        ),
+      ),
+    );
+  }
+}

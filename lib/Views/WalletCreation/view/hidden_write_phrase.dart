@@ -92,7 +92,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(10.h),
-                          child: GridViewBuilderExample(),
+                          child: GridViewBuilderWidget(),
                         ),
                       ),
                     ),
@@ -188,28 +188,17 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
 
 }
 
+class GridViewBuilderWidget extends StatelessWidget {
+  //final StepController controller = Get.put(StepController());
+  final walletCreatingController = Get.find<WalletCreatingController>();
 
-
-class GridViewBuilderExample extends StatelessWidget {
-  final List<String> items = [
-    '1. material',
-    '7. space',
-    '2. wristn',
-    '8. bench',
-    '3. option',
-    '9. payment',
-    '4. skate',
-    '10. bomb',
-    '5. harbor',
-    '11. hint',
-    '6. peart',
-    '12. maze'
-  ];
-
-   GridViewBuilderExample({super.key});
-
+  GridViewBuilderWidget({super.key});
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -220,17 +209,35 @@ class GridViewBuilderExample extends StatelessWidget {
           mainAxisSpacing: 10,
           childAspectRatio: 3, // Width to height ratio
         ),
-        itemCount: items.length,
+        itemCount: walletCreatingController.mnemonicWords.length,
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: greyColor4,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                items[index],
-                style: GoogleFonts.urbanist(fontSize: 18.sp,color: darkGreyColor,fontWeight: FontWeight.w700),
+          return GestureDetector(
+            onTap: () {},
+            child: Container(
+              decoration: BoxDecoration(
+                color:isDarkMode?lightBlackColor: greyColor4,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${(index + 1).toString()} ",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 18.sp,
+                          color:isDarkMode?whiteColor: darkGreyColor,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      walletCreatingController.mnemonicWords[index],
+                      style: GoogleFonts.urbanist(
+                          fontSize: 18.sp,
+                          color: isDarkMode?whiteColor:darkGreyColor,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

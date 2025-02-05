@@ -26,8 +26,12 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           controller.decreseIndexValue(2);
@@ -74,7 +78,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: darkGreyColor,
+                      color:isDarkMode?whiteColor: darkGreyColor,
                     ),
                   ),
                   SizedBox(height: 25.h),
@@ -136,7 +140,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(40.r),
-                                        color: whiteColor,
+                                        color: theme.scaffoldBackgroundColor,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(20.h),
@@ -174,7 +178,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                                                 .indexes
                                                                 .contains(index)
                                                             ? orange3
-                                                            : greyColor4,
+                                                            : isDarkMode?lightBlackColor: greyColor4,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
@@ -191,7 +195,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                                                     .contains(
                                                                         index)
                                                                 ? whiteColor
-                                                                : darkGreyColor,
+                                                                : isDarkMode?whiteColor:darkGreyColor,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                       ),

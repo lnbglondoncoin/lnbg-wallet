@@ -12,8 +12,11 @@ class ReceiveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:  theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(
         title: "Receive",
         iconPath: 'assets/icons/search.svg',
@@ -46,9 +49,10 @@ class ReceiveView extends StatelessWidget {
                     child: Container(
                       // height: 80.h,
                       width: double.infinity,
-                      decoration: const BoxDecoration(
+                      decoration:  BoxDecoration(
                           border:
-                              Border(bottom: BorderSide(color: lightBlack))),
+                              Border(bottom: BorderSide(color: 
+                             isDarkMode?lightBlackColor: lightBlack))),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5.h),
                         child: Row(
@@ -71,7 +75,7 @@ class ReceiveView extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: blackColor2),
+                                  color:isDarkMode?whiteColor: blackColor2),
                             ),
                             const Spacer(),
                             Column(
@@ -82,14 +86,14 @@ class ReceiveView extends StatelessWidget {
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: blackColor2),
+                                      color:isDarkMode?whiteColor: blackColor2),
                                 ),
                                 Text(
                                   coinndolorPrice[index],
                                   style: GoogleFonts.urbanist(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w800,
-                                      color: greyColor3),
+                                      color:isDarkMode?greyColor: greyColor3),
                                 ),
                               ],
                             )

@@ -35,6 +35,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       backgroundColor: blackColor2,
       appBar: AppBar(
@@ -96,7 +99,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                             ),
                             Positioned.fill(
                               child: Image.asset(
-                                "assets/images/scanImage.png",
+                               isDarkMode? "assets/images/scanImage2.png": "assets/images/scanImage.png",
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -128,7 +131,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                                         Radius.circular(40.r),
                                                     topRight:
                                                         Radius.circular(40.r)),
-                                                color: orange2.withOpacity(
+                                                color:isDarkMode?lightGreenColor.withOpacity(0.3): orange2.withOpacity(
                                                     0.3), // Adjust opacity as needed
                                               ),
                                               height: linePosition,
@@ -144,7 +147,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                             height: 4.h,
                                             color:
                                                 qrController.isMovingDown.value
-                                                    ? orange2
+                                                    ?isDarkMode?lightGreenColor: orange2
                                                     : Colors.white,
                                           ),
                                         ),
@@ -172,16 +175,16 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                 : Container(
                     height: 380.h,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/images/scanImage.png"),
+                            image: AssetImage(  isDarkMode? "assets/images/scanImage2.png": "assets/images/scanImage.png",),
                             fit: BoxFit.fill)),
                   )),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildIconButton("assets/icons/gallery.svg"),
+                _buildIconButton(isDarkMode?"assets/icons/gallery2.svg":"assets/icons/gallery.svg"),
                 SizedBox(
                   width: 20.w,
                 ),
@@ -192,9 +195,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                   child: Container(
                     height: 100.h,
                     width: 100.w,
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(colors: [orange2, orange1]),
+                      gradient: LinearGradient(colors: [isDarkMode?lightGreenColor: orange2,isDarkMode?greenColor2: orange1]),
                     ),
                     child: Center(
                       child: SvgPicture.asset("assets/icons/scanner.svg"),
@@ -204,7 +207,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                 SizedBox(
                   width: 20.w,
                 ),
-                _buildIconButton("assets/icons/file.svg"),
+                _buildIconButton(isDarkMode?"assets/icons/file2.svg":"assets/icons/file.svg"),
               ],
             ),
             SizedBox(height: 20.h),

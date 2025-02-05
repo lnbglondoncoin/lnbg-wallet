@@ -33,20 +33,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Obx(() => _pages[controller.currentIndex.value]),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
         child: BottomAppBar(
           height: 64.h,
           padding: EdgeInsets.zero,
-          color: whiteColor,
+          color: theme.scaffoldBackgroundColor,
           elevation: 0,
           child: Container(
             height: 64.h,
             decoration: BoxDecoration(
-              color: whiteColor,
+              color: theme.scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(20.r),
             ),
             margin: EdgeInsets.symmetric(horizontal: 24.w),
@@ -66,6 +70,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   GestureDetector buildNavItem(int index, String iconPath, String label) {
+       var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return GestureDetector(
       onTap: () {
         controller.updateIndex(index);
@@ -79,6 +87,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               isSelected ? iconPath.replaceFirst('.svg', '2.svg') : iconPath,
               width: 24.w,
               height: 24.h,
+             
             ),
             SizedBox(width: 15.w),
             Text(
@@ -86,7 +95,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               style: GoogleFonts.urbanist(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w700,
-                  color: isSelected ? orange3 : greyColor2),
+                  color: isSelected ?isDarkMode?lightGreenColor: orange3 : greyColor2),
             )
           ],
         );
