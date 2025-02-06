@@ -1,6 +1,7 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 
 class ChartScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class ChartScreen extends StatelessWidget {
       body:       SizedBox(
            // height: 2,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:  EdgeInsets.symmetric(vertical: 16.h),
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: false),

@@ -27,3 +27,4 @@ const greenColor2=Color(0xFF46D375);
 const lightBlackColor2=Color(0xFF1F222A);
 const lightBlackColor3=Color(0xFF181A20);
 const skyColor = Color(0xFF07BD74);
+const grey2=Color(0xFFBDBDBD);

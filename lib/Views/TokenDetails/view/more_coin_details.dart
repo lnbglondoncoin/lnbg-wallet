@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/controller/token_details_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/coin_chart.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 
 class MoreCoinDetails extends StatelessWidget {
     final String coinName;
@@ -16,6 +20,7 @@ class MoreCoinDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller=Get.put(TokenDetailsController());
      var theme = Theme.of(context);
     var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
@@ -23,10 +28,10 @@ class MoreCoinDetails extends StatelessWidget {
 backgroundColor:whiteColor,
         appBar: CustomAppBar(
           isSuffix: true,
-          title:"Transfer" ,
-          iconPath: 'assets/icons/chat2.svg',
+          title:"$coinName Graph" ,
+          iconPath: 'assets/icons/chat10.svg',
         ),
-        body: Padding(
+        body: SingleChildScrollView(
           padding:  EdgeInsets.all(20.h),
           child: Column(
             children: [
@@ -69,7 +74,179 @@ backgroundColor:whiteColor,
             height: 284.h,
             width: double.infinity,
             child:  ChartScreen(),
-           )
+           ),
+           SizedBox(
+            height:20.h
+           ),
+           Container(
+            height: 172.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusDirectional.circular(24.r),
+              border: Border.all(
+                color: lightBlack
+              )
+              
+            ),
+            child: Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 15.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                    "Price Alerts",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                 CustomSwitch(isSwitched: controller.isSwitched1),
+                    ],
+                  ),
+                  CustomDivider2(),
+                   Row(
+                   
+                    children: [
+                      Text(
+                    "Website",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Spacer(),
+                  Text(
+                    "ethereum.org",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(width: 10.w,),
+                  SvgPicture.asset("assets/icons/arrowRight.svg")
+                    ],
+                  ),
+                  CustomDivider2(),
+                    Row(
+                   
+                    children: [
+                      Text(
+                    "Explorer",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Spacer(),
+                  Text(
+                    "etherscan.io",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(width: 10.w,),
+                  SvgPicture.asset("assets/icons/arrowRight.svg")
+                    ],
+                  ),
+                 
+                ],
+              ),
+            ),
+           ),
+            SizedBox(
+            height:20.h
+           ),
+           Container(
+            height: 172.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusDirectional.circular(24.r),
+              border: Border.all(
+                color: lightBlack
+              )
+              
+            ),
+            child: Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 15.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                    "Market Cap",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                
+                  Text(
+                    "\$164,387,883,628",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                 
+                    ],
+                  ),
+                  CustomDivider2(),
+                   Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                    "Volume (24h)",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                
+                  Text(
+                    "\$13,634,523,467",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                 
+                    ],
+                  ),
+                  CustomDivider2(),
+                    Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                    "Circulating Supply",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                
+                  Text(
+                    "122,587,625.50 ETH",
+                    style: GoogleFonts.urbanist(
+                        color: darkGreyColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                 
+                    ],
+                  ),
+                 
+                ],
+              ),
+            ),
+           ),
+           SizedBox(height: 30.h,)
+         
             ],
           ),
         ),

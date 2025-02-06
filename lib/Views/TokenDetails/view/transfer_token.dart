@@ -33,7 +33,7 @@ class TransferToken extends StatelessWidget {
       appBar: CustomAppBar(
         isSuffix: true,
         title: "Transfer",
-        iconPath: 'assets/icons/chat2.svg',
+        iconPath: 'assets/icons/chat10.svg',
       ),
       body: Padding(
         padding: EdgeInsets.all(20.h),

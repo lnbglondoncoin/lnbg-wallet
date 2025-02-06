@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
@@ -467,45 +468,50 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   SizedBox(
                                     height: 25.h,
                                   ),
-                                  Container(
-                                    height: 45.h,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100.r),
-                                        border: Border.all(
-                                            color: isDarkMode
-                                                ? lightGreenColor
-                                                : orange3)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                            width: 20.h,
-                                            height: 20.w,
-                                            child: Center(
-                                                child: SvgPicture.asset(
-                                              "assets/icons/plusIcon.svg",
-                                              colorFilter: ColorFilter.mode(
-                                                  isDarkMode
-                                                      ? lightGreenColor
-                                                      : orange3,
-                                                  BlendMode.srcIn),
-                                            ))),
-                                        SizedBox(
-                                          width: 2.w,
-                                        ),
-                                        Text(
-                                          "Add Token",
-                                          style: GoogleFonts.urbanist(
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w700,
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.to(()=>AddTokenScreen());
+                                    },
+                                    child: Container(
+                                      height: 45.h,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100.r),
+                                          border: Border.all(
                                               color: isDarkMode
                                                   ? lightGreenColor
-                                                  : orange3),
-                                        )
-                                      ],
+                                                  : orange3)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 20.h,
+                                              height: 20.w,
+                                              child: Center(
+                                                  child: SvgPicture.asset(
+                                                "assets/icons/plusIcon.svg",
+                                                colorFilter: ColorFilter.mode(
+                                                    isDarkMode
+                                                        ? lightGreenColor
+                                                        : orange3,
+                                                    BlendMode.srcIn),
+                                              ))),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          Text(
+                                            "Add Token",
+                                            style: GoogleFonts.urbanist(
+                                                fontSize: 18.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: isDarkMode
+                                                    ? lightGreenColor
+                                                    : orange3),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   )
                                 ],
