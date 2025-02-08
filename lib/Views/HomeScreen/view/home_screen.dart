@@ -9,6 +9,7 @@ import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
+import 'package:lnbg_crypto_wallet_app/Views/NFT/view/import_nft.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
@@ -337,7 +338,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                           onTap: () {
                                             Get.to(TokenDetailsScreen(
                                               coinIconPath: tokenIconList[index],
-                                              coinName: tokenList[index],
+                                              coinName: tokennameList[index],
                                               tokenPrice:    tokenCoinndolorPriceWithPercentage[
                                                                 index],
                                               percentage:  tokenPercentage[
@@ -382,7 +383,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        tokenList[index],
+                                                        tokennameList[index],
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 20.sp,
                                                             fontWeight:
@@ -517,7 +518,31 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 ],
                               ),
                             ),
-                            const Center(child: Text('NFTs Content')),
+                           Column(
+                            children: [
+                              Image.asset("assets/images/NFT.png",height: 180.h,
+                              width: 180.w,),
+                              SizedBox(height: 20.h,),
+                              Text("No NFTs Yet",
+                                            style: GoogleFonts.urbanist(
+                                                fontSize: 24.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color:darkGreyColor),
+                                          ),
+                                           SizedBox(height: 10.h,),
+                              GestureDetector(
+                                onTap: (){
+                                  Get.to(()=>ImportNFTScreen());
+                                },
+                                child: Text("Import NFTs",
+                                              style: GoogleFonts.urbanist(
+                                                  fontSize: 20.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color:orange3),
+                                            ),
+                              )
+                            ],
+                           )
                           ],
                         ),
                       ),

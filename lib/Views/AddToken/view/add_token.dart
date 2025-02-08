@@ -1,5 +1,6 @@
   import 'package:flutter/material.dart';
   import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
   import 'package:flutter_svg/svg.dart';
   import 'package:get/get.dart';
   import 'package:get/get_core/src/get_main.dart';
@@ -7,6 +8,7 @@
   import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
   import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
   import 'package:lnbg_crypto_wallet_app/Views/AddToken/controller/add_token_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart';
   import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
   import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 
@@ -51,8 +53,9 @@
                         ),
                         child:  TextFormField(
                           
-                          controller: controller.ammountController,
+                          controller:controller.searchController,
                           onChanged: (value) {
+                             controller.filterTokens(value);
                             controller
                                 .updateAmount(); // Call this method to update the reactive value
                           },
@@ -81,7 +84,11 @@
           
           Padding(
             padding:  EdgeInsets.only(right: 20.w),
-            child: SvgPicture.asset("assets/icons/plusIcon.svg",colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),),
+            child: GestureDetector(
+              onTap: (){
+                Get.to(()=>AddCustomToken());
+              },
+              child: SvgPicture.asset("assets/icons/plusIcon.svg",colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))
           )
       ], 
     elevation: 1.0,         
@@ -91,12 +98,53 @@
     height: Get.height,
     width: double.infinity,
     child: Padding(
-      padding:  EdgeInsets.all(20),
-      child: ListView.builder(
-        itemCount: tokenIconList.length,
+      padding:  EdgeInsets.symmetric(horizontal: 20.w),
+      child:  Obx((){
+        return  controller.isLoading.value?Center(
+        child: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return const LinearGradient(
+                  colors: [orange1, orange2], // Gradient colors
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds);
+              },
+              child: SpinKitCircle(
+                color: Colors.white, // Set a neutral color for blending
+                size: 50.h,
+              ),
+            )
+      ):
+   controller.tokenList.isEmpty?Center(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/images/searchImage.png",height: 300.h,width: 300.w,),
+            Text(
+               textAlign: TextAlign.center,
+              "Not Found",style: GoogleFonts.urbanist(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: blackColor2
+            ),),
+             Text(
+              textAlign: TextAlign.center,
+              "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",style: GoogleFonts.urbanist(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w400,
+              color: blackColor2
+            ),)
+          ],
+        ),
+      ),
+    )
+      :ListView.builder(
+        itemCount: controller.tokenList.length,
         itemBuilder: (context,index){
         return Padding(
-          padding:  EdgeInsets.only(bottom: index==tokenIconList.length-1?80.h:0.h),
+          padding:  EdgeInsets.only(bottom: index== controller.tokenList.length-1?80.h:0.h),
           child: Container(
             height: 70.h,
             width: double.infinity,
@@ -114,13 +162,13 @@
                                                           width: 35.w,
                                                           child: Center(
                                                             child: Image.asset(
-                                                              tokenIconList[index],
+                                                             controller.tokenIcons[index],
                                                             ),
                                                           ),
                                                         ),
                                                         SizedBox(width: 30.w,),
                                                         Text(
-                                                              tokenList[index],
+                                                             controller.tokenList[index],
                                                               style: GoogleFonts.urbanist(
                                                                   fontSize: 20.sp,
                                                                   fontWeight:
@@ -138,7 +186,8 @@
             ), 
           ),
         );
-      }),
+      });
+      })
     ),
   ),
   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

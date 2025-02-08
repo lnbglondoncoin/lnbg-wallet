@@ -18,7 +18,7 @@ const tokenIconList=[
   "assets/icons/ava.png",
 
 ];
-const tokenList=[
+const tokennameList=[
   "Ethereum",
   "LNBG Coin",
   "Bitcoin",
