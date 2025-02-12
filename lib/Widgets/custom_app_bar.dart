@@ -10,23 +10,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isSuffix;
   final String title;
   final String iconPath;
-  const CustomAppBar(
-      {super.key,
-      required this.title,
-      required this.iconPath,
-      this.isSuffix = false});
+  final VoidCallback? onSuffixTap; // Optional function
+
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    required this.iconPath,
+    this.isSuffix = false,
+    this.onSuffixTap, // Accept the function
+  });
 
   @override
   Widget build(BuildContext context) {
-
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return AppBar(
       backgroundColor: theme.scaffoldBackgroundColor,
       shadowColor: theme.scaffoldBackgroundColor,
       foregroundColor: theme.scaffoldBackgroundColor,
-      surfaceTintColor:theme.scaffoldBackgroundColor,
+      surfaceTintColor: theme.scaffoldBackgroundColor,
       elevation: 0.0,
       centerTitle: false,
       leading: Padding(
@@ -36,30 +40,50 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Get.back();
           },
           child: SizedBox(
-              height: 28.h,
-              width: 28.w,
-              child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
+            height: 28.h,
+            width: 28.w,
+            child: Center(
+              child: SvgPicture.asset(
+                arrowLeft,
+                colorFilter: ColorFilter.mode(
+                  isDarkMode ? whiteColor : blackColor2,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
       title: Text(
         title,
         style: GoogleFonts.urbanist(
-            fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?whiteColor:blackColor2),
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w700,
+          color: isDarkMode ? whiteColor : blackColor2,
+        ),
       ),
       actions: [
         Padding(
-            padding: EdgeInsets.only(right: 20.w),
-            child: isSuffix == true
-                ? GestureDetector(
-                    onTap: () {
-                      // Get.to(()=>FingerPrintScanScreen());
-                    },
-                    child: SizedBox(
-                        height: 28.h,
-                        width: 28.w,
-                        child: Center(child: SvgPicture.asset(iconPath,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))),
-                  )
-                : const SizedBox())
+          padding: EdgeInsets.only(right: 20.w),
+          child: isSuffix
+              ? GestureDetector(
+                  onTap: onSuffixTap, // Call the provided function if available
+                  child: SizedBox(
+                    height: 20.h,
+                    width: 20.w,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        iconPath,
+                        colorFilter: ColorFilter.mode(
+                          isDarkMode ? whiteColor : blackColor2,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+        )
       ],
     );
   }

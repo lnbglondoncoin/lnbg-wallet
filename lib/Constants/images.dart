@@ -10,3 +10,4 @@ const scanIcon="assets/icons/scanIcon.svg";
 const topYellow="assets/images/topYellow.png";
 const eyeShowIcon="assets/icons/eyeShow.svg";
 const notification="assets/icons/Notification.svg";
+const logo="assets/icons/logo.png";

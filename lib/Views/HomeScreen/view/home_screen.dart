@@ -9,7 +9,9 @@ import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
+import 'package:lnbg_crypto_wallet_app/Views/NFT/controller/nft_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/NFT/view/import_nft.dart';
+import 'package:lnbg_crypto_wallet_app/Views/NFT/view/nft_gridview.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
@@ -28,6 +30,7 @@ class HomeScreenView extends StatefulWidget {
 class _HomeScreenViewState extends State<HomeScreenView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final nftController=Get.put(NftController());
   @override
   void initState() {
     super.initState();
@@ -518,7 +521,10 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 ],
                               ),
                             ),
-                           Column(
+                     Obx((){
+                      return    
+                      nftController.nftList.isEmpty?
+                         Column(
                             children: [
                               Image.asset("assets/images/NFT.png",height: 180.h,
                               width: 180.w,),
@@ -542,8 +548,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                             ),
                               )
                             ],
-                           )
-                          ],
+                           ):NftGridView();
+                          
+                     })],
                         ),
                       ),
                     ],
