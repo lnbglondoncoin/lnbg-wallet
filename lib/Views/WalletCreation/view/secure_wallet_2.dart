@@ -20,7 +20,7 @@ class SecureWallet2 extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor: theme.scaffoldBackgroundColor,
+       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back();
@@ -281,7 +281,7 @@ class SecureWallet2 extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.only(
                 left: 15.w, top: 20.h, right: 15.w, bottom: 10.h),
-            child: CustomButton(
+            child: CustomOrangeButton(
                 buttonText: "Start",
                 onPressed: () {
                   Get.to(() => HiddenWriteSeedPhraseScreen());

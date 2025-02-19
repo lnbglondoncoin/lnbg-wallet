@@ -14,10 +14,13 @@ class InviteFriend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
-        title: "Contacts",
+        title: "Invite Friends",
         iconPath: "assets/icons/plusIcon.svg",
        
       ),
@@ -42,7 +45,7 @@ class InviteFriend extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 18.sp,
-                    color: blackColor2,
+                    color:isDarkMode?whiteColor: blackColor2,
                   ),
                 ),
                 subtitle: Text(
@@ -52,7 +55,7 @@ class InviteFriend extends StatelessWidget {
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w500,
                     fontSize: 18.sp,
-                    color: greyColor3,
+                    color:isDarkMode?greyColor: greyColor3,
                   ),
                 ),
                 trailing: GestureDetector(
@@ -63,12 +66,12 @@ class InviteFriend extends StatelessWidget {
                     width: 89.w,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: orange3,
+                        color:isDarkMode?lightGreenColor: orange3,
                         width: 2.h
                       ),
                       borderRadius: BorderRadius.circular(100.r),
 
-                      color:controller.selectedIndices.contains(index) ? whiteColor : orange3,
+                      color:controller.selectedIndices.contains(index) ? Colors.transparent : isDarkMode?lightGreenColor: orange3,
                     ),
                     child: Center(
                       child: Text(
@@ -76,7 +79,7 @@ class InviteFriend extends StatelessWidget {
                         style: GoogleFonts.urbanist(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w800,
-                          color: controller.selectedIndices.contains(index)?orange3:whiteColor,
+                          color: controller.selectedIndices.contains(index)?isDarkMode?lightGreenColor:  orange3:whiteColor,
                         ),
                       ),
                     ),

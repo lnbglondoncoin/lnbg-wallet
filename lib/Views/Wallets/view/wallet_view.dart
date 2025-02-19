@@ -15,8 +15,13 @@ class WalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+      var textTheme = theme.textTheme;
+      bool isDarkMode =
+          theme.brightness == Brightness.dark; // Check if dark mode is active
+    
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "Wallets", iconPath: "assets/icons/plusIcon.svg", isSuffix: true),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -36,21 +41,21 @@ class WalletScreen extends StatelessWidget {
                     leading: Image.asset(controller.walletIcons[index], width: 48.w, height: 48.h),
                     title: Text(controller.walletTitles[index],
                         style: GoogleFonts.urbanist(
-                            fontWeight: FontWeight.w700, fontSize: 20.sp, color: blackColor2)),
+                            fontWeight: FontWeight.w700, fontSize: 20.sp, color:isDarkMode?whiteColor: blackColor2)),
                     subtitle: Text(controller.walletSubTitles[index],
                         style: GoogleFonts.urbanist(
-                            fontWeight: FontWeight.w800, fontSize: 14.sp, color: greyColor3)),
+                            fontWeight: FontWeight.w800, fontSize: 14.sp, color:isDarkMode?greyColor: greyColor3)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset("assets/icons/tick.svg",
-                              colorFilter: ColorFilter.mode(index==controller.selectedWallwt.value?lightGreenColor:whiteColor, BlendMode.srcIn),),
+                              colorFilter: ColorFilter.mode(index==controller.selectedWallwt.value?lightGreenColor:isDarkMode?lightBlackColor3:  whiteColor, BlendMode.srcIn),),
                               
                           
                           
                           SizedBox(width: 10.w,),
                         PopupMenuButton<String>(
-                          color: whiteColor,
+                          color:isDarkMode?lightBlackColor3: whiteColor,
                           onSelected: (value) {
                              controller.changeSelectedWallet(index);
                             if (value == 'Edit') {
@@ -62,7 +67,7 @@ class WalletScreen extends StatelessWidget {
                           },
                           icon: SvgPicture.asset(
                             "assets/icons/threeDots.svg",
-                            colorFilter: ColorFilter.mode(blackColor2, BlendMode.srcIn),
+                            colorFilter: ColorFilter.mode(isDarkMode?whiteColor:  blackColor2, BlendMode.srcIn),
                           ),
                           itemBuilder: (context) => [
                             PopupMenuItem(
@@ -74,11 +79,11 @@ class WalletScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       SvgPicture.asset("assets/icons/Edit.svg",
-                                      colorFilter: ColorFilter.mode(blackColor2, BlendMode.srcIn),),
+                                      colorFilter: ColorFilter.mode(isDarkMode?whiteColor:  blackColor2, BlendMode.srcIn),),
                                       SizedBox(width: 20.w,),
                                       Text('Edit',
                                           style: GoogleFonts.urbanist(
-                                            color: blackColor2,
+                                            color:isDarkMode?whiteColor: blackColor2,
                                               fontWeight: FontWeight.w800, fontSize: 18.sp)),
                                     ],
                                   ),
@@ -98,13 +103,15 @@ class WalletScreen extends StatelessWidget {
                                         width: 20.w,
                                         child: Center(
                                           child: SvgPicture.asset("assets/icons/eye.svg",
+
+                                          colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),
                                         ),
                                         ),
                                       ),
                                       SizedBox(width: 20.w,),
                                       Text('Show Secret Phrase',
                                           style: GoogleFonts.urbanist(
-                                            color: blackColor2,
+                                            color:isDarkMode?whiteColor: blackColor2,
                                               fontWeight: FontWeight.w800, fontSize: 18.sp)),
                                     ],
                                   ),

@@ -30,10 +30,9 @@ final String priceDolor;
   @override
   Widget build(BuildContext context) {
         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-backgroundColor:whiteColor,
+backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           isSuffix: true,
           title:"$coinName (${prceInTokenshortWord.split(' ').last})" ,
@@ -48,13 +47,13 @@ backgroundColor:whiteColor,
                 Row(
                   children: [
                     Text("Coin",style: GoogleFonts.urbanist(
-                      color: darkGreyColor,
+                      color:isDarkMode?greyColor: darkGreyColor,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
                     ),),
                     Spacer(),
                      Text(priceDolor,style: GoogleFonts.urbanist(
-                      color: blackColor2,
+                      color:isDarkMode?whiteColor: blackColor2,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
                     ),),
@@ -71,20 +70,20 @@ backgroundColor:whiteColor,
                   SizedBox(height: 10.h,),
                    Center(
                      child: Text(tokenPrice,style: GoogleFonts.urbanist(
-                        color: blackColor2,
+                        color:isDarkMode?whiteColor: blackColor2,
                         fontSize: 48.sp,
                         fontWeight: FontWeight.w700
                       ),),
                    ), 
                      Center(
                        child: Text(priceDolor,style: GoogleFonts.urbanist(
-                        color: blackColor2,
+                        color:isDarkMode?whiteColor: blackColor2,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w800
                                          ),),
                      ),
                     SizedBox(height: 20.h,),
-                    CustomDivider2() ,
+                    CustomDivider() ,
                     SizedBox(height: 20.h,),
                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +99,7 @@ backgroundColor:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/chat2.svg"
@@ -116,7 +115,7 @@ backgroundColor:whiteColor,
                                 style: GoogleFonts.urbanist(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w700,
-                                    color: darkGreyColor),
+                                       color:isDarkMode?lightWhiteColor: darkGreyColor),
                               )
                             ],
                           ),
@@ -131,7 +130,7 @@ backgroundColor:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/receive2.svg"
@@ -146,7 +145,7 @@ backgroundColor:whiteColor,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                         color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -162,7 +161,7 @@ backgroundColor:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/cart2.svg"
@@ -177,7 +176,7 @@ backgroundColor:whiteColor,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                       color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -193,7 +192,7 @@ backgroundColor:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor:  lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/Swap2.svg"
@@ -208,7 +207,7 @@ backgroundColor:whiteColor,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -216,14 +215,14 @@ backgroundColor:whiteColor,
                         ],
                       ),
                  SizedBox(height: 20.h,),
-                    CustomDivider2() ,
+                    CustomDivider() ,
                     SizedBox(height: 20.h,), 
                      Text(
                                   "Today",
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w800,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?greyColor: darkGreyColor),
                                 )  ,
                                 SizedBox(height: 20.h,),
                ListView.builder(
@@ -237,41 +236,51 @@ backgroundColor:whiteColor,
                       Get.to(()=>TransferToken(tokenPrice: tokenPrice, priceDolor: priceDolor, tokenSuffix: '${prceInTokenshortWord.split(' ').last}', percentage: percentage, coinName: coinName,));
                     }
                   },
-                  child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: Container(
-                                    height: 48.h,
-                                    width: 48.w,
-                                    decoration:  BoxDecoration(
-                                        color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
-                                    child: Center(
-                                      child: SvgPicture.asset(isDarkMode
-                                          ? optionImageList[index]
-                                          : optionImageList2[index]),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                        color: isDarkMode?lightBlackColor:lightBlack,
+                        )
+                      )
+                    ),
+                    child: ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: Container(
+                                      height: 48.h,
+                                      width: 48.w,
+                                      decoration:  BoxDecoration(
+                                        
+                                          color:isDarkMode?lightBlackColor2: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      child: Center(
+                                        child: SvgPicture.asset(isDarkMode
+                                            ? optionImageList[index]
+                                            : optionImageList2[index]),
+                                      ),
+                                    ) ,
+                                    title:Text(
+                                      options[index],
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color:isDarkMode?whiteColor: blackColor2),
+                                    ) ,
+                                    subtitle: Text(
+                                      index==2?"Address: ${optionsSubtitles[2]}":"To: ${optionsSubtitles[index]}",
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w800,
+                                          color:isDarkMode?greyColor: greyColor3),
                                     ),
-                                  ) ,
-                                  title:Text(
-                                    options[index],
-                                    style: GoogleFonts.urbanist(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: blackColor2),
-                                  ) ,
-                                  subtitle: Text(
-                                    index==2?"Address: ${optionsSubtitles[2]}":"To: ${optionsSubtitles[index]}",
-                                    style: GoogleFonts.urbanist(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w800,
-                                        color: greyColor3),
-                                  ),
-                                  trailing: Text(
-                                   "${optionsPrice[index]} ${prceInTokenshortWord.split(' ').last}",
-                                    style: GoogleFonts.urbanist(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: blackColor2),
-                                  ),
-                                  ),
+                                    trailing: Text(
+                                     "${optionsPrice[index]} ${prceInTokenshortWord.split(' ').last}",
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color:isDarkMode?greyColor: blackColor2),
+                                    ),
+                                    ),
+                  ),
                 );   
                  
                }),

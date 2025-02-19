@@ -19,7 +19,7 @@ class WalkThroughScreen extends StatelessWidget {
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       body: PageView.builder(
         controller: controller.pageController,
         itemCount: controller.walkthroughData.length,
@@ -73,7 +73,7 @@ class WalkThroughPage extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              color: theme.scaffoldBackgroundColor,
+              color: isDarkMode?lightBlackColor3:whiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(80.r),
                 topRight: Radius.circular(80.r),
@@ -141,7 +141,7 @@ class WalkThroughPage extends StatelessWidget {
                       }),
                     ),
                   ),
-                  CustomButton(
+                  CustomOrangeButton(
                     buttonText: isLastPage ? 'Get Started' : 'Next',
                     onPressed:  onNext
                     

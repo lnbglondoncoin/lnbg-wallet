@@ -16,7 +16,7 @@ class AddContact extends StatelessWidget {
     var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "Add Contact", iconPath: ""),
       body: SingleChildScrollView(
         child: Padding(

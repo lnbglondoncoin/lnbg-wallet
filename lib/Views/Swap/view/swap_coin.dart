@@ -13,10 +13,10 @@ class SwapCoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
+
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-       backgroundColor: theme.scaffoldBackgroundColor,
+       backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           title: "Swap",
           iconPath: 'assets/icons/search.svg',
@@ -41,7 +41,7 @@ class SwapCoinScreen extends StatelessWidget {
                     color:isDarkMode?whiteColor: blackColor2
                   ),),
                   subtitle:  Text("TRC20",style: GoogleFonts.urbanist(
-                    fontSize: 24.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color:isDarkMode?greyColor: blackColor2
                   ),),
@@ -70,7 +70,7 @@ class SwapCoinScreen extends StatelessWidget {
                     color:isDarkMode?whiteColor: blackColor2
                   ),),
                   subtitle:  Text("TRC20",style: GoogleFonts.urbanist(
-                    fontSize: 24.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color:isDarkMode?greyColor: blackColor2
                   ),),

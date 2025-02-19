@@ -16,10 +16,9 @@ class SwapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
           var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
+        backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           title: "Swap",
           iconPath: 'assets/icons/search.svg',
@@ -56,7 +55,7 @@ class SwapView extends StatelessWidget {
                           child: TextField(
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "|Enter balance",
+                              hintText: "Enter balance",
                               hintStyle: GoogleFonts.urbanist(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w700,

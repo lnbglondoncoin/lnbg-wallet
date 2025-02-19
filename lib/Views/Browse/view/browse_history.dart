@@ -13,8 +13,12 @@ class BrowseHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+      var textTheme = theme.textTheme;
+      bool isDarkMode =
+          theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+         backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "History", iconPath: "assets/icons/delete.svg",isSuffix: true, onSuffixTap: () {
   _showCustomBottomSheet(context);
    
@@ -31,8 +35,8 @@ class BrowseHistoryScreen extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: Image.asset(item.imagePath, width: 48.w, height: 48.h),
-                  title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color: blackColor2)),
-                  subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color: greyColor3),),
+                  title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color:isDarkMode?whiteColor: blackColor2)),
+                  subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color:isDarkMode?greyColor: greyColor3),),
                   onTap: () {
                     // Handle tap if needed
                   },

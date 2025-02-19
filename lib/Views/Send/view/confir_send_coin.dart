@@ -24,178 +24,189 @@ class ConfirmSendCoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
         title: "Confirm",
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                "$ammount $coinCode",
-                style: GoogleFonts.urbanist(
-                    fontSize: 48.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?lightGreenColor: orange3),
-              ),
-            ),
-            Center(
-              child: Text(
-                "\$2,107.11 USD",
-                style: GoogleFonts.urbanist(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3),
-              ),
-            ),
-            SizedBox(
-              height: 25.h,
-            ),
-            const CustomDivider(),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              "From",
-              style: GoogleFonts.urbanist(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                  color:isDarkMode?whiteColor: blackColor2),
-            ),
-            Text(
-              address==""?"Adress":address,
-              style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w500,
-                  color: isDarkMode?whiteColor: blackColor2),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              "To",
-              style: GoogleFonts.urbanist(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                  color:isDarkMode?whiteColor: blackColor2),
-            ),
-            Row(
-              children: [
-                Flexible(
-                    child: TextFormField(
-                  controller: controller.recipientAddressController,
-                  enabled: controller.recipientAddressController.text == "" ||
-                          controller.isEditClicked.value == true
-                      ? true
-                      : false,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter address to send",
-                    hintStyle: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                        color: isDarkMode?whiteColor: greyColor2),
-                  ),
-                  style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: blackColor2),
-                )),
-                GestureDetector(
-                    onTap: () {
-                      controller.isEditClicked.value == true;
-                    },
-                    child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),))
-              ],
-            ),
-            const CustomDivider(),
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Network Fee",
-                  style: GoogleFonts.urbanist(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color:isDarkMode?whiteColor: blackColor2),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: Get.height,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        "$ammount $coinCode",
+                        style: GoogleFonts.urbanist(
+                            fontSize: 48.sp,
+                            fontWeight: FontWeight.w700,
+                            color:isDarkMode?lightGreenColor: orange3),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "\$2,107.11 USD",
+                        style: GoogleFonts.urbanist(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w500,
+                            color:isDarkMode?greyColor: greyColor3),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    const CustomDivider(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      "From",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color:isDarkMode?whiteColor: blackColor2),
+                    ),
+                    Text(
+                      address==""?"Adress":"fvjhgv",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w500,
+                          color: isDarkMode?whiteColor: blackColor2),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      "To",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color:isDarkMode?whiteColor: blackColor2),
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                            child: TextFormField(
+                          controller: controller.recipientAddressController,
+                          enabled: controller.recipientAddressController.text == "" ||
+                                  controller.isEditClicked.value == true
+                              ? true
+                              : false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter address to send",
+                            hintStyle: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                                color: isDarkMode?whiteColor: greyColor2),
+                          ),
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                              color:isDarkMode?whiteColor: blackColor2),
+                        )),
+                        GestureDetector(
+                            onTap: () {
+                              controller.isEditClicked.value == true;
+                            },
+                            child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),))
+                      ],
+                    ),
+                    const CustomDivider(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Network Fee",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w700,
+                              color:isDarkMode?whiteColor: blackColor2),
+                        ),
+                        const Spacer(),
+                        Flexible(
+                            child: TextFormField(
+                          controller: controller.recipientAddressController,
+                          enabled: controller.recipientAddressController.text == "" ||
+                                  controller.isEditClicked.value == true
+                              ? true
+                              : false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "0.02 ETH (\$26.35 USD)",
+                            hintStyle: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                                color:isDarkMode?whiteColor: greyColor2),
+                          ),
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                              color:isDarkMode?whiteColor: blackColor2),
+                        )),
+                        GestureDetector(
+                            onTap: () {
+                              Get.to(() => EditNetworkScreen(
+                                    coinCode: coinCode,
+                                  ));
+                            },
+                            child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn)))
+                      ],
+                    ),
+                    const CustomDivider(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Max Total",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w700,
+                              color:isDarkMode?whiteColor: blackColor2),
+                        ),
+                        const Spacer(),
+                        Flexible(
+                            child: TextFormField(
+                          controller: controller.recipientAddressController,
+                          enabled: controller.recipientAddressController.text == "" ||
+                                  controller.isEditClicked.value == true
+                              ? true
+                              : false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "0.02 ETH (\$26.35 USD)",
+                            hintStyle: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                                color:isDarkMode?whiteColor: greyColor2),
+                          ),
+                          style: GoogleFonts.urbanist(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                              color: blackColor2),
+                        )),
+                      ],
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Flexible(
-                    child: TextFormField(
-                  controller: controller.recipientAddressController,
-                  enabled: controller.recipientAddressController.text == "" ||
-                          controller.isEditClicked.value == true
-                      ? true
-                      : false,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "0.02 ETH (\$26.35 USD)",
-                    hintStyle: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                        color:isDarkMode?whiteColor: greyColor2),
-                  ),
-                  style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: blackColor2),
-                )),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(() => EditNetworkScreen(
-                            coinCode: coinCode,
-                          ));
-                    },
-                    child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn)))
-              ],
-            ),
-            const CustomDivider(),
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Max Total",
-                  style: GoogleFonts.urbanist(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color:isDarkMode?whiteColor: blackColor2),
-                ),
-                const Spacer(),
-                Flexible(
-                    child: TextFormField(
-                  controller: controller.recipientAddressController,
-                  enabled: controller.recipientAddressController.text == "" ||
-                          controller.isEditClicked.value == true
-                      ? true
-                      : false,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "0.02 ETH (\$26.35 USD)",
-                    hintStyle: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                        color:isDarkMode?whiteColor: greyColor2),
-                  ),
-                  style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w500,
-                      color: blackColor2),
-                )),
-              ],
-            ),
-          ],
+              ),
+             Spacer(),
+               CustomDivider(),
+               SizedBox(height: 200.h,)
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -41,19 +41,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       body: Obx(() => _pages[controller.currentIndex.value]),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
         child: BottomAppBar(
           height: 64.h,
           padding: EdgeInsets.zero,
-          color: theme.scaffoldBackgroundColor,
+          color: isDarkMode?lightBlackColor3:whiteColor,
           elevation: 0,
           child: Container(
             height: 64.h,
             decoration: BoxDecoration(
-              color: theme.scaffoldBackgroundColor,
+              color:  isDarkMode?lightBlackColor3:whiteColor,
               borderRadius: BorderRadius.circular(20.r),
             ),
             margin: EdgeInsets.symmetric(horizontal: 24.w),
@@ -86,13 +86,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              isSelected ? iconPath.replaceFirst('.svg', '2.svg') : iconPath,
-              width: 24.w,
-              height: 24.h,
-             
+            SizedBox(
+              width: 21.w,
+              height: 21.h,
+              child: Center(
+                child: SvgPicture.asset(
+                  isSelected ? iconPath.replaceFirst('.svg', isDarkMode?'4.svg': '2.svg') : iconPath,
+                  
+                 
+                ),
+              ),
             ),
-            SizedBox(width: 15.w),
+            SizedBox(height: 5.h),
             Text(
               label,
               style: GoogleFonts.urbanist(

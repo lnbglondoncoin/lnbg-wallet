@@ -250,13 +250,21 @@ const providersprice=[
   "0.078829 ETH"
 ];
 
-const providerIcons=[
+const providerIconLight=[
   "assets/icons/binance.svg",
   "assets/icons/moon.svg",
   "assets/icons/ramp.svg",
   "assets/icons/paypal.svg",
   "assets/icons/google.svg",
   "assets/icons/apple.svg"
+];
+const providerIconsDark=[
+  "assets/icons/binance.svg",
+  "assets/icons/moonDark.svg",
+  "assets/icons/ramp.svg",
+  "assets/icons/paypal.svg",
+  "assets/icons/google.svg",
+  "assets/icons/appleDark.svg"
 ];
 
 

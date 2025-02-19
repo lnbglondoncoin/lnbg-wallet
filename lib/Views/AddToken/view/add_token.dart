@@ -23,8 +23,12 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
           theme.brightness == Brightness.dark; // Check if dark mode is active
           final controller=Get.put(AddTokenController());
       return Scaffold(
-  backgroundColor: theme.scaffoldBackgroundColor,
+backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
   appBar: AppBar(
+    backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+    shadowColor: isDarkMode?lightBlackColor3:whiteColor,
+    foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
+    surfaceTintColor: isDarkMode?lightBlackColor3:whiteColor,
   leading:  GestureDetector(
             onTap: () {
               Get.back();
@@ -32,7 +36,9 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
             child: SizedBox(
               height: 28.h,
               width: 28.w,
-              child: Center(child: SvgPicture.asset("assets/icons/leading.svg")),
+              child: Center(child: SvgPicture.asset("assets/icons/leading.svg",
+              colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),
+              )),
             ),
           ),
           title:     
@@ -48,7 +54,7 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
                           border: Border.all(
                             color: controller.isAmountEmpty.value
                                 ? isDarkMode?lightBlackColor2:lightWhiteColor
-                                : orange3,
+                                :isDarkMode?lightGreenColor: orange3,
                           ),
                         ),
                         child:  TextFormField(
@@ -64,7 +70,7 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
                               height: 16.h,
                               width: 16.w,
                               child: Center(child: SvgPicture.asset("assets/icons/search2.svg",colorFilter: 
-                              ColorFilter.mode(controller.isAmountEmpty.value?grey2:orange3, BlendMode.srcIn),))),
+                              ColorFilter.mode(controller.isAmountEmpty.value?grey2:isDarkMode?lightGreenColor: orange3, BlendMode.srcIn),))),
                             border: InputBorder.none,
                             hintText: "Search Tokens",
                             hintStyle: GoogleFonts.urbanist(
@@ -96,15 +102,16 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
   body: 
   Container(
     height: Get.height,
+    color: isDarkMode?lightBlackColor3:whiteColor,
     width: double.infinity,
     child: Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 20.w),
+      padding:  EdgeInsets.all( 20.h),
       child:  Obx((){
         return  controller.isLoading.value?Center(
         child: ShaderMask(
               shaderCallback: (Rect bounds) {
-                return const LinearGradient(
-                  colors: [orange1, orange2], // Gradient colors
+                return  LinearGradient(
+                  colors: [isDarkMode?greenColor2:  orange1,isDarkMode?lightGreenColor: orange2], // Gradient colors
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ).createShader(bounds);
@@ -121,20 +128,24 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/searchImage.png",height: 300.h,width: 300.w,),
+            Image.asset(
+              isDarkMode?"assets/images/searchImage2.png":
+              "assets/images/searchImage.png",height: 300.h,width: 300.w,
+            
+            ),
             Text(
                textAlign: TextAlign.center,
               "Not Found",style: GoogleFonts.urbanist(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor2
+              color:isDarkMode?whiteColor: blackColor2
             ),),
              Text(
               textAlign: TextAlign.center,
               "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",style: GoogleFonts.urbanist(
               fontSize: 18.sp,
               fontWeight: FontWeight.w400,
-              color: blackColor2
+              color:isDarkMode?whiteColor: blackColor2
             ),)
           ],
         ),
@@ -147,10 +158,14 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
           padding:  EdgeInsets.only(bottom: index== controller.tokenList.length-1?80.h:0.h),
           child: Container(
             height: 70.h,
+            
             width: double.infinity,
             decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(
-                color: lightBlack
+              border: Border(
+                top:  BorderSide(
+                color:index!=0? Colors.transparent: isDarkMode?lightBlackColor:whiteColor,),
+                bottom: BorderSide(
+                color: isDarkMode?lightBlackColor:whiteColor,
               ))
             ),
             child: Padding(
@@ -191,11 +206,14 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
     ),
   ),
   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-  floatingActionButton: Padding(
-    padding:  EdgeInsets.symmetric(horizontal: 20.w),
-    child: CustomButton(buttonText: "Ok", onPressed: (){
-      
-    }),
+  floatingActionButton: Visibility(
+    visible:  controller.tokenList.isNotEmpty&&controller.isLoading.value==false,
+    child: Padding(
+      padding:  EdgeInsets.all( 20.h),
+      child: CustomButton(buttonText: "Ok", onPressed: (){
+        
+      }),
+    ),
   ),
       );
     } 

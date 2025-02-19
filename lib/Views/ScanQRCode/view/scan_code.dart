@@ -36,12 +36,11 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: blackColor2,
+      backgroundColor: lightBlackColor3,
       appBar: AppBar(
-        backgroundColor: blackColor2,
+        backgroundColor: lightBlackColor3,
         automaticallyImplyLeading: true,
         leading: GestureDetector(
           onTap: () {
@@ -66,7 +65,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                 color: whiteColor,
               ),
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: 20.h),
             Text(
               "Please point the camera at the QR Code",
               style: GoogleFonts.urbanist(

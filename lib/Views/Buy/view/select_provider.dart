@@ -16,10 +16,9 @@ class SelectProviderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-     backgroundColor: theme.scaffoldBackgroundColor,
+     backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
         title: "Providers",
         iconPath: 'assets/icons/search.svg',
@@ -27,12 +26,12 @@ class SelectProviderScreen extends StatelessWidget {
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: 20.w),
         child: ListView.builder(
-          itemCount: providerIcons.length,
+          itemCount: providerIconsDark.length,
           shrinkWrap: true,
           physics: BouncingScrollPhysics(),
           itemBuilder: (context,index){
           return  Padding(
-            padding:  EdgeInsets.only(bottom: index==providerIcons.length-1?60.h:0),
+            padding:  EdgeInsets.only(bottom: index==providerIconsDark.length-1?60.h:0),
             child: Container(
               height: 75.h,
               decoration: BoxDecoration(
@@ -44,8 +43,9 @@ class SelectProviderScreen extends StatelessWidget {
               child: Center(
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: SvgPicture.asset(providerIcons[index],height: 44.h,
-                  width: 44.w,),
+                  leading: SvgPicture.asset( isDarkMode?providerIconsDark[index]: providerIconLight[index],height: 44.h,
+                  width: 44.w,
+                  ),
                 title: Text(providersTitles[index],
                 style: GoogleFonts.urbanist(
                   fontSize: 18.sp,

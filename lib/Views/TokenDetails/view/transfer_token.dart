@@ -29,11 +29,11 @@ class TransferToken extends StatelessWidget {
     var textTheme = theme.textTheme;
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
         isSuffix: true,
         title: "Transfer",
-        iconPath: 'assets/icons/chat10.svg',
+        iconPath: 'assets/icons/chat11.svg',
       ),
       body: Padding(
         padding: EdgeInsets.all(20.h),
@@ -43,7 +43,7 @@ class TransferToken extends StatelessWidget {
               child: Text(
                 "$tokenPrice $tokenSuffix",
                 style: GoogleFonts.urbanist(
-                    color: orange3,
+                    color:isDarkMode?lightGreenColor: orange3,
                     fontSize: 48.sp,
                     fontWeight: FontWeight.w700),
               ),
@@ -52,7 +52,7 @@ class TransferToken extends StatelessWidget {
               child: Text(
                 "$priceDolor USD",
                 style: GoogleFonts.urbanist(
-                    color: greyColor3,
+                    color:isDarkMode?greyColor: greyColor3,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500),
               ),
@@ -60,7 +60,7 @@ class TransferToken extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            CustomDivider2(),
+            CustomDivider(),
             SizedBox(
               height: 20.h,
             ),
@@ -131,7 +131,7 @@ class TransferToken extends StatelessWidget {
                           //height: 24.h,
                           // width: 72.w,
                           decoration: BoxDecoration(
-                              color: lightGreenColor.withOpacity(0.08),
+                              color:isDarkMode?lightGreenColor.withOpacity(0.08): lightGreenColor.withOpacity(0.08),
                               borderRadius: BorderRadius.circular(
                                 8.r,
                               )),
@@ -142,11 +142,16 @@ class TransferToken extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w800,
-                                  color: orange3),
+                                  color:isDarkMode?lightGreenColor: orange3),
                             ),
                           ),
                         )
                       ],
+                    ),
+                     Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: isDarkMode ? lightBlackColor : lightBlack,
                     ),
                     Row(
                       children: [
@@ -162,6 +167,7 @@ class TransferToken extends StatelessWidget {
                             ),
                           ],
                         ),
+                        
                         Spacer(),
                         Text(
                           "0x16dcc0e...bf7c61037",
@@ -171,6 +177,11 @@ class TransferToken extends StatelessWidget {
                               color: isDarkMode ? whiteColor : blackColor2),
                         ),
                       ],
+                    ),
+                     Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: isDarkMode ? lightBlackColor : lightBlack,
                     ),
                     Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +239,7 @@ class TransferToken extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
-                    color: orange3),
+                    color:isDarkMode?lightGreenColor: orange3),
               ),
             ),
           ],

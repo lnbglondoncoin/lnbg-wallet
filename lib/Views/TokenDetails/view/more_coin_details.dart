@@ -22,14 +22,14 @@ class MoreCoinDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller=Get.put(TokenDetailsController());
      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
+   
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-backgroundColor:whiteColor,
+backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           isSuffix: true,
           title:"$coinName Graph" ,
-          iconPath: 'assets/icons/chat10.svg',
+          iconPath: 'assets/icons/chat11.svg',
         ),
         body: SingleChildScrollView(
           padding:  EdgeInsets.all(20.h),
@@ -39,7 +39,7 @@ backgroundColor:whiteColor,
                 child: Text(
                   tokenPrice,
                   style: GoogleFonts.urbanist(
-                      color: orange3,
+                      color:isDarkMode?lightGreenColor: orange3,
                       fontSize: 48.sp,
                       fontWeight: FontWeight.w700),
                 ),
@@ -51,7 +51,7 @@ backgroundColor:whiteColor,
                     Text(
                       priceDolor,
                       style: GoogleFonts.urbanist(
-                          color: greyColor3,
+                          color:isDarkMode?greyColor: greyColor3,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500),
                     ),
@@ -59,7 +59,7 @@ backgroundColor:whiteColor,
                     Text(
                   percentage,
                   style: GoogleFonts.urbanist(
-                      color: orange5,
+                      color:isDarkMode?lightGreenColor: orange5,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500),
                 ),
@@ -68,10 +68,11 @@ backgroundColor:whiteColor,
                 
               ),
               SizedBox(height: 20.h,),
-              CustomDivider2(),
+              CustomDivider(),
               SizedBox(height: 20.h,),
            SizedBox(
             height: 284.h,
+          
             width: double.infinity,
             child:  ChartScreen(),
            ),
@@ -84,7 +85,7 @@ backgroundColor:whiteColor,
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(24.r),
               border: Border.all(
-                color: lightBlack
+                color:isDarkMode?lightBlackColor: lightBlack
               )
               
             ),
@@ -99,21 +100,21 @@ backgroundColor:whiteColor,
                       Text(
                     "Price Alerts",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
                  CustomSwitch(isSwitched: controller.isSwitched1),
                     ],
                   ),
-                  CustomDivider2(),
+                  CustomDivider(),
                    Row(
                    
                     children: [
                       Text(
                     "Website",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -121,22 +122,23 @@ backgroundColor:whiteColor,
                   Text(
                     "ethereum.org",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 10.w,),
-                  SvgPicture.asset("assets/icons/arrowRight.svg")
+                  SvgPicture.asset("assets/icons/arrowRight.svg",
+                     colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn))
                     ],
                   ),
-                  CustomDivider2(),
+                  CustomDivider(),
                     Row(
                    
                     children: [
                       Text(
                     "Explorer",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -144,12 +146,14 @@ backgroundColor:whiteColor,
                   Text(
                     "etherscan.io",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 10.w,),
-                  SvgPicture.asset("assets/icons/arrowRight.svg")
+                  SvgPicture.asset("assets/icons/arrowRight.svg",
+                  colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),
+                  )
                     ],
                   ),
                  
@@ -166,7 +170,7 @@ backgroundColor:whiteColor,
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(24.r),
               border: Border.all(
-                color: lightBlack
+             color:isDarkMode?lightBlackColor: lightBlack
               )
               
             ),
@@ -181,7 +185,7 @@ backgroundColor:whiteColor,
                       Text(
                     "Market Cap",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -189,21 +193,21 @@ backgroundColor:whiteColor,
                   Text(
                     "\$164,387,883,628",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color: isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
                  
                     ],
                   ),
-                  CustomDivider2(),
+                  CustomDivider(),
                    Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                     "Volume (24h)",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -211,21 +215,21 @@ backgroundColor:whiteColor,
                   Text(
                     "\$13,634,523,467",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
                  
                     ],
                   ),
-                  CustomDivider2(),
+                  CustomDivider(),
                     Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                     "Circulating Supply",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -233,7 +237,7 @@ backgroundColor:whiteColor,
                   Text(
                     "122,587,625.50 ETH",
                     style: GoogleFonts.urbanist(
-                        color: darkGreyColor,
+                        color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),

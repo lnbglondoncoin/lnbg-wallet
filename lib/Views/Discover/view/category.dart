@@ -15,8 +15,13 @@ class CoinsCategoryScreen extends StatelessWidget {
  final DiscoverController controller = Get.put(DiscoverController());
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: category, iconPath: "assets/icons/search.svg",isSuffix: true,),
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: 20.w),
@@ -35,7 +40,7 @@ class CoinsCategoryScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: greyColor
+                        color:isDarkMode?lightBlackColor: greyColor
                       )
                     )
                   ),
@@ -55,14 +60,14 @@ class CoinsCategoryScreen extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w700,
-                                color: blackColor2,
+                                color:isDarkMode?whiteColor: blackColor2,
                               ),
                             ),Row(
                             children: [
                               Text("APR:",style: GoogleFonts.urbanist(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
-                                color: greyColor3
+                                color:isDarkMode?greyColor: greyColor3
                               ),),
                               SizedBox(width: 5.w,),
                                Text(
@@ -82,7 +87,7 @@ class CoinsCategoryScreen extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
-                            color: blackColor2,
+                            color:isDarkMode?whiteColor: blackColor2,
                           ),
                         ),
                                
@@ -96,7 +101,7 @@ class CoinsCategoryScreen extends StatelessWidget {
                                     Text("\$${crypto.price.toStringAsFixed(2)}",style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: blackColor2
+                                  color:isDarkMode?whiteColor: blackColor2
                                 ),),
                                      Text( "${crypto.percentage}%",style: GoogleFonts.urbanist(
                                   fontSize: 12.sp,

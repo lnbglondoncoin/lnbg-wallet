@@ -12,6 +12,11 @@ class NftGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Column(
         children: [
          ListTile(
@@ -23,9 +28,11 @@ class NftGridView extends StatelessWidget {
         title: Text("Nekochimin",style: GoogleFonts.urbanist(
           fontSize: 20.sp,
           fontWeight: FontWeight.w700,
-          color: whiteColor 
+          color:isDarkMode? whiteColor :blackColor2
         ),), 
-        trailing: SvgPicture.asset("assets/icons/arrowUp.svg"),
+        trailing: SvgPicture.asset("assets/icons/arrowUp.svg",
+        colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),
+        ),
          ),
           Expanded(
             child: Padding(
@@ -42,7 +49,7 @@ class NftGridView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     var nft = controller.nftList[index];
                     return Card(
-                      color: whiteColor,
+                      color:isDarkMode?lightBlackColor2: whiteColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28.r),
                       ),
@@ -60,7 +67,7 @@ class NftGridView extends StatelessWidget {
                             //const SizedBox(height: 10),
                             Text(
                               "${nft.name} #${nft.id}",
-                              style: GoogleFonts.urbanist(color: blackColor2,
+                              style: GoogleFonts.urbanist(color:isDarkMode?whiteColor: blackColor2,
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w700,),
                             ),
@@ -69,7 +76,7 @@ class NftGridView extends StatelessWidget {
                               children: [
                                  Text(
                                   "Nekochimin",
-                                  style: GoogleFonts.urbanist(color: greyColor3,
+                                  style: GoogleFonts.urbanist(color:isDarkMode?greyColor: greyColor3,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,),
                                 ),

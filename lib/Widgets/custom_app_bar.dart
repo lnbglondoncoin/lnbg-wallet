@@ -27,10 +27,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return AppBar(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      shadowColor: theme.scaffoldBackgroundColor,
-      foregroundColor: theme.scaffoldBackgroundColor,
-      surfaceTintColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      shadowColor: isDarkMode?lightBlackColor3:whiteColor,
+      foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      surfaceTintColor:isDarkMode?lightBlackColor3:whiteColor,
       elevation: 0.0,
       centerTitle: false,
       leading: Padding(

@@ -36,3 +36,5 @@ const pinkColor2=Color(0xFFEA1E61);
 const orangeColor=Color(0xFFFF4500);
 const redColor2=Color(0xffEE2E24);
 const lightblackColor=Color(0xFF04060F);
+const lightSkyColor=Color(0xFFA4DEB7);
+const grey5=Color(0xFF757575);

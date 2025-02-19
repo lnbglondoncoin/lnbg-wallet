@@ -16,8 +16,14 @@ class DiscoverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     final DiscoverController controller = Get.put(DiscoverController());
     return Scaffold(
+          backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
     body: Padding(
       padding:  EdgeInsets.only(top: 60.h,left: 20.w,right: 20.w),
       child: Column(
@@ -26,15 +32,22 @@ class DiscoverView extends StatelessWidget {
            
            Row(
             children: [
-Image.asset(logo, height: 28.h,width: 28.w,),
+Image.asset(isDarkMode?"assets/images/discoverd.png": logo, height: 28.h,width: 28.w,),
   SizedBox(width: 10.w,),
            Text("Discover",style: GoogleFonts.poppins(
             fontSize: 24.sp,
             fontWeight: FontWeight.w700,
-            color: blackColor2
+            color:isDarkMode?whiteColor: blackColor2
            ),),
            Spacer(),
-           SvgPicture.asset("assets/icons/search.svg", height: 28.h,width: 28.w,)
+           SizedBox(
+             height: 25.h,width: 25.w,
+             child: Center(
+               child: SvgPicture.asset("assets/icons/search.svg",
+               colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),
+               ),
+             ),
+           )
             ],
            ),
         
@@ -76,7 +89,7 @@ Image.asset(logo, height: 28.h,width: 28.w,),
                     style: GoogleFonts.poppins(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                      color: blackColor2,
+                      color:isDarkMode?whiteColor: blackColor2,
                     ),
                   ),
                   GestureDetector(
@@ -88,7 +101,7 @@ Image.asset(logo, height: 28.h,width: 28.w,),
                       style: GoogleFonts.poppins(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
-                        color: orange3,
+                        color:isDarkMode?lightGreenColor: orange3,
                       ),
                     ),
                   ),
@@ -106,7 +119,7 @@ Image.asset(logo, height: 28.h,width: 28.w,),
                 
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: greyColor)),
+                    border: Border(bottom: BorderSide(color:isDarkMode?lightBlackColor: greyColor)),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -124,14 +137,14 @@ Image.asset(logo, height: 28.h,width: 28.w,),
                             style: GoogleFonts.urbanist(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
-                              color: blackColor2,
+                              color:isDarkMode?whiteColor: blackColor2,
                             ),
                           ),Row(
                           children: [
                             Text("APR:",style: GoogleFonts.urbanist(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w800,
-                              color: greyColor3
+                              color:isDarkMode?greyColor3: greyColor3
                             ),),
                             SizedBox(width: 5.w,),
                              Text(
@@ -151,12 +164,12 @@ Image.asset(logo, height: 28.h,width: 28.w,),
                         style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
-                          color: blackColor2,
+                          color:isDarkMode?whiteColor: blackColor2,
                         ),
                       ),
                      
                       trailing: Visibility(
-                        visible: index!=0,
+                        visible: index!=0&&index!=controller.categories.length-1,
                         child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,

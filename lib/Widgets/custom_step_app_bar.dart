@@ -30,10 +30,10 @@ class CustomStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       },
       child: AppBar(
         centerTitle: true,
-        backgroundColor:theme.scaffoldBackgroundColor,
-        shadowColor: theme.scaffoldBackgroundColor,
-        foregroundColor: theme.scaffoldBackgroundColor,
-        surfaceTintColor: theme.scaffoldBackgroundColor,
+        backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
+        shadowColor: isDarkMode?lightBlackColor3:whiteColor,
+        foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
+        surfaceTintColor: isDarkMode?lightBlackColor3:whiteColor,
         elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 5.w),

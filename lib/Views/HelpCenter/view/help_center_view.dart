@@ -13,10 +13,13 @@ class HelpCenterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       appBar: CustomAppBar(
           isSuffix: true, title: "Help Center", iconPath: "assets/icons/msg2.svg"),
-      backgroundColor: whiteColor,
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.h),
         child: Column(
@@ -42,10 +45,10 @@ class HelpCenterScreen extends StatelessWidget {
                                     horizontal: 12.w, vertical: 6.h),
                                 decoration: BoxDecoration(
                                   color: controller.selectedTab.value == index
-                                      ? orange3
+                                      ?isDarkMode?lightGreenColor: orange3
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(20.r),
-                                  border: Border.all(color: orange3, width: 2),
+                                  border: Border.all(color:isDarkMode?lightGreenColor: orange3, width: 2),
                                 ),
                                 child: Text(
                                   controller.tabs[index],
@@ -54,7 +57,7 @@ class HelpCenterScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w800,
                                     color: controller.selectedTab.value == index
                                         ? whiteColor
-                                        : orange3,
+                                        :isDarkMode?lightGreenColor: orange3,
                                   ),
                                 ),
                               );
@@ -72,17 +75,17 @@ class HelpCenterScreen extends StatelessWidget {
               child: Container(
                 height: 45.h,
                 decoration: BoxDecoration(
-                  color: greyColor4,
+                  color:isDarkMode?lightBlackColor2: greyColor4,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: TextField(
-                  cursorColor: orange3,
+                  cursorColor:isDarkMode?lightGreenColor: orange3,
                   decoration: InputDecoration(
                     hintText: 'Search',
                     hintStyle: GoogleFonts.urbanist(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w400,
-                        color: grey2),
+                        color:isDarkMode?grey5: grey2),
                     suffixIcon: SizedBox(
                         height: 20.h,
                         width: 20.w,
@@ -92,13 +95,14 @@ class HelpCenterScreen extends StatelessWidget {
                           height: 20.h,
                           width: 20.w,
                           colorFilter:
-                              ColorFilter.mode(orange3, BlendMode.srcIn),
+                              ColorFilter.mode(isDarkMode?lightGreenColor:  orange3, BlendMode.srcIn),
                         ))),
                     prefixIcon: SizedBox(
                         height: 20.h,
                         width: 20.w,
                         child: Center(
                             child: SvgPicture.asset("assets/icons/search2.svg",
+                            colorFilter: ColorFilter.mode(isDarkMode?grey5:grey2, BlendMode.srcIn),
                                 height: 20.h, width: 20.w))),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(top: 6.h),
@@ -118,81 +122,91 @@ class HelpCenterScreen extends StatelessWidget {
                   itemCount: controller.faqs.length,
                   itemBuilder: (context, index) {
                     var faq = controller.faqs[index];
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 15.h),
-                      decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(20.r),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 0,
-                                blurRadius: 80.r,
-                                color: lightblackColor.withOpacity(0.05))
-                          ]),
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          dividerColor: Colors.transparent,
-                        ),
-                        child: ExpansionTile(
-                          backgroundColor: whiteColor,
-                          collapsedBackgroundColor: whiteColor,
-                          
-                          trailing: Obx(() => SizedBox(
-                            height: 15.h,
-                            width: 15.w,
-                            child: Center(
-                              child: SvgPicture.asset(
-                                    controller.expandedIndex.value == index
-                                        ? "assets/icons/diamond.svg"
-                                        : "assets/icons/diamond.svg",
-                                    height: 20.h,
-                                    width: 20.w,
-                                  ),
-                            ),
-                          )),
-                          onExpansionChanged: (isExpanded) {
-                            controller.expandedIndex.value =
-                                isExpanded ? index : -1;
-                          },
-                          title: Text(
-                            faq['question']!,
-                            style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w700,
-                              color: blackColor2  ,
-                            ),
-                          ),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w, ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: lightBlack
-                                    )
-                                  )
-                                ),
-                                child: Padding(
-                                  padding:  EdgeInsets.only(top: 10.h),
-                                  child: Text(
-                                    faq['answer']!,
-                                    style: GoogleFonts.urbanist(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: darkGreyColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                    return  ClipRRect(
+  borderRadius: BorderRadius.circular(20.r), // Apply rounded borders
+  child: Container(
+    margin: EdgeInsets.only(bottom: 15.h),
+    decoration: BoxDecoration(
+      color: isDarkMode ? lightBlackColor2 : whiteColor,
+      borderRadius: BorderRadius.circular(20.r), // Ensure rounded corners
+      boxShadow: [
+        BoxShadow(
+          spreadRadius: 0,
+          blurRadius: 80.r,
+          color: lightblackColor.withOpacity(0.05),
+        )
+      ],
+    ),
+    child: Theme(
+      data: Theme.of(context).copyWith(
+        dividerColor: Colors.transparent,
+      ),
+      child: ExpansionTile(
+        backgroundColor: isDarkMode ? lightBlackColor2 : whiteColor,
+        collapsedBackgroundColor: isDarkMode ? lightBlackColor2 : whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r), // Ensure border rounding
+        ),
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r), // Ensure border rounding
+        ),
+        trailing: Obx(() => SizedBox(
+              height: 15.h,
+              width: 15.w,
+              child: Center(
+                child: SvgPicture.asset(
+                  controller.expandedIndex.value == index
+                      ? "assets/icons/diamond.svg"
+                      : "assets/icons/diamond.svg",
+                  height: 20.h,
+                  width: 20.w,
+                  colorFilter:
+                      ColorFilter.mode(isDarkMode ? lightGreenColor : orange3, BlendMode.srcIn),
+                ),
+              ),
+            )),
+        onExpansionChanged: (isExpanded) {
+          controller.expandedIndex.value = isExpanded ? index : -1;
+        },
+        title: Text(
+          faq['question']!,
+          style: GoogleFonts.urbanist(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+            color: isDarkMode ? whiteColor : blackColor2,
+          ),
+        ),
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: isDarkMode ? lightBlackColor : lightBlack,
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Text(
+                  faq['answer']!,
+                  style: GoogleFonts.urbanist(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: isDarkMode ? greyColor : darkGreyColor,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+  ),
+);
+     },
                 ),
               ),
             )

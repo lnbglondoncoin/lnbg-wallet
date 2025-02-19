@@ -69,7 +69,7 @@ class _CustomDescriptionTextFieldState
           style: GoogleFonts.poppins(
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
-            color: blackColor2,
+            color:isDarkMode?whiteColor: blackColor2,
           ),
         ),
         SizedBox(height: 8.h),
@@ -128,7 +128,7 @@ class _CustomDescriptionTextFieldState
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
-                color: isDarkMode?whiteColor: greyColor2,
+                color:  greyColor2,
               ),
               prefixIcon: widget.prefixIconPath != null
                   ? SizedBox(

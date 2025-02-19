@@ -74,7 +74,7 @@
           ),
           SizedBox(height: 8.h),
           TextFormField(
-            
+            cursorColor: isDarkMode?lightGreenColor:orange3,
             focusNode: _focusNode, // Attach focus node
             controller: widget.controller,
             obscureText: isObscured,
@@ -137,7 +137,7 @@
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
-                color: isDarkMode?whiteColor: greyColor2,
+                color: isDarkMode?greyColor2: greyColor2,
               ),
               fillColor: isDarkMode?lightBlackColor2:lightWhiteColor,
               suffixIcon: widget.suffixIcoPath != null
@@ -293,7 +293,7 @@
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color:isDarkMode?whiteColor: blackColor2,
+                color:isDarkMode?greyColor2: blackColor2,
               ),
               fillColor:isDarkMode?lightBlackColor2: lightWhiteColor,
             

@@ -22,6 +22,7 @@ class BrowseScreen extends StatelessWidget {
           theme.brightness == Brightness.dark; // Check if dark mode is active
           final controller=Get.put(BrowseController());
     return Scaffold(
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       body: SingleChildScrollView(
         child: Padding(
           padding:  EdgeInsets.only(top: 60.h,left: 20.w,right: 20.w),
@@ -29,15 +30,17 @@ class BrowseScreen extends StatelessWidget {
             children: [
                     Row(
                 children: [
-          Image.asset(logo, height: 28.h,width: 28.w,),
+          Image.asset(isDarkMode?"assets/images/discoverd.png": logo, height: 28.h,width: 28.w,),
             SizedBox(width: 10.w,),
                Text("Browser",style: GoogleFonts.poppins(
                 fontSize: 24.sp,
                 fontWeight: FontWeight.w700,
-                color: blackColor2
+                color:isDarkMode?whiteColor: blackColor2
                ),),
                Spacer(),
-               SvgPicture.asset("assets/icons/msg2.svg", height: 28.h,width: 28.w,)
+               SvgPicture.asset("assets/icons/msg2.svg", height: 28.h,width: 28.w,
+            colorFilter: ColorFilter.mode( isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),
+               )
                 ],
                ),
                SizedBox(height: 20.h,),
@@ -53,7 +56,7 @@ class BrowseScreen extends StatelessWidget {
                             border: Border.all(
                               color: controller.isAmountEmpty.value
                                   ? isDarkMode?lightBlackColor2:lightWhiteColor
-                                  : orange3,
+                                  :isDarkMode?lightGreenColor: orange3,
                             ),
                           ),
                           child:  TextFormField(
@@ -69,13 +72,15 @@ class BrowseScreen extends StatelessWidget {
                                 height: 20.h,
                                 width: 20.w,
                                 child: Center(
-                                child: SvgPicture.asset("assets/icons/Voice.svg"),
+                                child: SvgPicture.asset("assets/icons/Voice.svg",
+                                colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor: orange3, BlendMode.srcIn),
+                                ),
                               ),),
                               prefixIcon: SizedBox(
                                 height: 16.h,
                                 width: 16.w,
                                 child: Center(child: SvgPicture.asset("assets/icons/search2.svg",colorFilter: 
-                                ColorFilter.mode(controller.isAmountEmpty.value?grey2:orange3, BlendMode.srcIn),))),
+                                ColorFilter.mode(controller.isAmountEmpty.value?grey2:isDarkMode?lightGreenColor:  orange3, BlendMode.srcIn),))),
                               border: InputBorder.none,
                               hintText: "Search or enter address",
                               hintStyle: GoogleFonts.urbanist(
@@ -113,7 +118,10 @@ class BrowseScreen extends StatelessWidget {
                                            const SizedBox(height: 5),
                                            Text(
                         item.name,
-                        style: const TextStyle(fontSize: 12),
+                        style:  GoogleFonts.urbanist(fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: isDarkMode?whiteColor:blackColor2
+                        ),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                                            ),
@@ -130,7 +138,7 @@ class BrowseScreen extends StatelessWidget {
               Text("History",style: GoogleFonts.poppins(
               fontSize: 20.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor2
+              color:isDarkMode?whiteColor: blackColor2
             ),),
              GestureDetector(
               onTap: (){
@@ -139,7 +147,7 @@ class BrowseScreen extends StatelessWidget {
                child: Text("See All",style: GoogleFonts.poppins(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
-                color: orange3
+                color:isDarkMode?lightGreenColor: orange3
                            ),),
              )
             ],
@@ -173,8 +181,8 @@ class BrowseScreen extends StatelessWidget {
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: Image.asset(item.imagePath, width: 48.w, height: 48.h),
-                        title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color: blackColor2)),
-                        subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color: greyColor3),),
+                        title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color:isDarkMode?whiteColor: blackColor2)),
+                        subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color:isDarkMode?greyColor: greyColor3),),
                         onTap: () {
                           // Handle tap if needed
                         },
@@ -199,12 +207,12 @@ class BrowseScreen extends StatelessWidget {
               Text("Popular",style: GoogleFonts.poppins(
               fontSize: 20.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor2
+              color:isDarkMode?whiteColor: blackColor2
             ),),
              Text("See All",style: GoogleFonts.poppins(
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              color: orange3
+              color:isDarkMode?lightGreenColor: orange3
             ),)
             ],
           ),
@@ -237,8 +245,8 @@ class BrowseScreen extends StatelessWidget {
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: Image.asset(item.imagePath, width: 48.w, height: 48.h),
-                        title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color: blackColor2)),
-                        subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color: greyColor3),),
+                        title: Text(item.name, style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color:isDarkMode?whiteColor: blackColor2)),
+                        subtitle: Text(item.description, overflow: TextOverflow.ellipsis,style: GoogleFonts.urbanist(fontWeight: FontWeight.w800,fontSize: 14.sp,color:isDarkMode?greyColor: greyColor3),),
                         onTap: () {
                           // Handle tap if needed
                         },

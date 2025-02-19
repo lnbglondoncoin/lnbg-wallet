@@ -13,11 +13,11 @@ class ReceiveView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor:  theme.scaffoldBackgroundColor,
+      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
+        isSuffix: true,
         title: "Receive",
         iconPath: 'assets/icons/search.svg',
       ),
@@ -54,7 +54,7 @@ class ReceiveView extends StatelessWidget {
                               Border(bottom: BorderSide(color: 
                              isDarkMode?lightBlackColor: lightBlack))),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

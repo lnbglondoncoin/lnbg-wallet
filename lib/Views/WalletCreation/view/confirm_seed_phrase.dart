@@ -31,7 +31,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor:  theme.scaffoldBackgroundColor,
+      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           controller.decreseIndexValue(2);
@@ -140,7 +140,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(40.r),
-                                        color: theme.scaffoldBackgroundColor,
+                                        color: isDarkMode?lightBlackColor3:whiteColor,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(20.h),
@@ -264,7 +264,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding:
             EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
-        child: CustomButton(
+        child: CustomOrangeButton(
             buttonText: "Next",
             onPressed: () {
               if (listEquals(walletCreatingController.firstHalfOfMnemonic,

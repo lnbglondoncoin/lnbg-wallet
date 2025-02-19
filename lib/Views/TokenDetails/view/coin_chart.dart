@@ -2,13 +2,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 
 class ChartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+         var theme = Theme.of(context);
+   
+       bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       body:       SizedBox(
            // height: 2,
             child: Padding(
@@ -21,21 +25,25 @@ class ChartScreen extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 40,
-                        getTitlesWidget: (value, meta) {
-                          if (value == 100 ||
-                              value == 250 ||
-                              value == 500 ||
-                              value == 750 ||
-                              value == 1000 ||
-                              value == 1500) {
-                            return Text(
-                              '\$${value ~/ 1}',
-                              style: TextStyle(
-                                  color: greyColor3, fontSize: 12),
-                            );
-                          }
-                          return Container();
-                        },
+                       getTitlesWidget: (value, meta) {
+  if (value == 100 ||
+      value == 250 ||
+      value == 500 ||
+      value == 750 ||
+      value == 1000 ||
+      value == 1500) {
+    String formattedValue = value >= 1000 ? "${(value / 1000).toStringAsFixed(1)}k" : "\$${value.toInt()}";
+    return Text(
+      formattedValue,
+      style: GoogleFonts.urbanist(
+          color: isDarkMode ? greyColor : greyColor3,
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500),
+    );
+  }
+  return Container();
+},
+
                         interval: 250
                       ),
                     ),
@@ -46,13 +54,14 @@ class ChartScreen extends StatelessWidget {
                           List<String> labels = ["1H", "1D", "1W", "1M", "1Y", "All"];
                           return Text(
                             labels[value.toInt()],
-                            style: TextStyle(
+                            style: GoogleFonts.urbanist(
+                              fontSize: 14.sp,
                                 color: value == 1
-                                    ? orange3
-                                    : greyColor3,
+                                    ?isDarkMode?lightGreenColor: orange3
+                                    :isDarkMode?greyColor: greyColor3,
                                 fontWeight: value == 1
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                                    ? FontWeight.w700
+                                    : FontWeight.w800),
                           );
                         },
                         reservedSize: 20,
@@ -80,7 +89,7 @@ class ChartScreen extends StatelessWidget {
                          FlSpot(7, 700),
                       ],
                       isCurved: true,
-                      color: orange3,
+                      color:isDarkMode?lightGreenColor: orange3,
                       barWidth: 4,
                       isStrokeCapRound: true,
                       belowBarData: BarAreaData(
@@ -88,7 +97,7 @@ class ChartScreen extends StatelessWidget {
                         gradient: LinearGradient(
                           colors: [
                             lightGreenColor.withOpacity(0.08),
-                            whiteColor
+                          isDarkMode?lightBlackColor3:  whiteColor
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,

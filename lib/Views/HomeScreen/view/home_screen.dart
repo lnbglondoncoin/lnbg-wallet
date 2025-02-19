@@ -51,7 +51,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
             Brightness.light, // Adjust icons for visibility
       ),
       child: Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
+        backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
         body: Column(
           children: [
             // Image covering only the top area (including the status bar)
@@ -138,7 +138,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     SizedBox(height: 5.h),
                     Container(
                       height: 1.h,
-                      color: whiteColor,
+                      color:isDarkMode?lightSkyColor: whiteColor,
                     ),
                     SizedBox(height: 5.h),
                     Row(
@@ -278,8 +278,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
             // Remaining content below the image
             Expanded(
               child: Container(
-                color: theme
-                    .scaffoldBackgroundColor, // Rest of the screen's background color
+                color:isDarkMode?lightBlackColor3:whiteColor, // Rest of the screen's background color
                 child: Center(
                     child: Padding(
                   padding:
@@ -333,13 +332,14 @@ class _HomeScreenViewState extends State<HomeScreenView>
                               child: Column(
                                 children: [
                                   ListView.builder(
+                                    padding: EdgeInsets.zero,
                                       itemCount: tokenIconList.length,
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         return GestureDetector(
                                           onTap: () {
-                                            Get.to(TokenDetailsScreen(
+                                            Get.to(()=>TokenDetailsScreen(
                                               coinIconPath: tokenIconList[index],
                                               coinName: tokennameList[index],
                                               tokenPrice:    tokenCoinndolorPriceWithPercentage[
@@ -526,14 +526,14 @@ class _HomeScreenViewState extends State<HomeScreenView>
                       nftController.nftList.isEmpty?
                          Column(
                             children: [
-                              Image.asset("assets/images/NFT.png",height: 180.h,
+                              Image.asset(isDarkMode?"assets/images/NFT8.png":"assets/images/NFT.png",height: 180.h,
                               width: 180.w,),
                               SizedBox(height: 20.h,),
                               Text("No NFTs Yet",
                                             style: GoogleFonts.urbanist(
                                                 fontSize: 24.sp,
                                                 fontWeight: FontWeight.w700,
-                                                color:darkGreyColor),
+                                                color:isDarkMode?greyColor: darkGreyColor),
                                           ),
                                            SizedBox(height: 10.h,),
                               GestureDetector(
@@ -544,7 +544,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                               style: GoogleFonts.urbanist(
                                                   fontSize: 20.sp,
                                                   fontWeight: FontWeight.w700,
-                                                  color:orange3),
+                                                  color:isDarkMode?lightGreenColor:  orange3),
                                             ),
                               )
                             ],

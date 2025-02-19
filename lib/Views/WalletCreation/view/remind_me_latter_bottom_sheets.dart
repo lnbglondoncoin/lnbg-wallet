@@ -120,7 +120,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               SizedBox(height: 20.h,),
               const CustomDivider(),
               SizedBox(height: 20.h,),
-           CustomButton(buttonText: "OK, I Got It", onPressed: (){
+           CustomOrangeButton(buttonText: "OK, I Got It", onPressed: (){
    Navigator.pop(context);
    _showCustomBottomSheet(context);
            }),
@@ -249,7 +249,7 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 Navigator.pop(context);
               })),
               SizedBox(width: 15.w,),
-               Flexible(child: CustomButton(buttonText: "Yes, Skip", onPressed: (){
+               Flexible(child: CustomOrangeButton(buttonText: "Yes, Skip", onPressed: (){
                controller.isChecked.value? Navigator.pop(context):Get.snackbar("Attention", "Click the box to confirm",
                backgroundColor: orange3,
                snackPosition: SnackPosition.TOP);

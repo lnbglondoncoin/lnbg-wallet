@@ -13,8 +13,11 @@ class NotificationSettingsView extends StatelessWidget {
 final controller=Get.put(NotificationSettingsController());
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+          backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "Notifications", iconPath: ""),
       body: Padding(
         padding:  EdgeInsets.all(20.h),
@@ -32,7 +35,7 @@ final controller=Get.put(NotificationSettingsController());
               Text(controller.tabs[index],style: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w800,
-                color: blackColor2
+                color:isDarkMode?whiteColor: blackColor2
               ),),
               CustomSwitch(
                         isSwitched: controller.switchStates[index],

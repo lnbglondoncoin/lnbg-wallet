@@ -17,8 +17,13 @@ class ContactsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      var theme = Theme.of(context);
+      var textTheme = theme.textTheme;
+      bool isDarkMode =
+          theme.brightness == Brightness.dark; // Check if dark mode is active
+    
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "Contacts", iconPath: "assets/icons/plusIcon.svg", isSuffix: true,
       onSuffixTap: (){
         Get.to(()=>AddContact());
@@ -38,13 +43,13 @@ class ContactsView extends StatelessWidget {
                     leading: Image.asset(contact.imageUrl, width: 48.w, height: 48.h),
                     title: Text(contact.name,
                         style: GoogleFonts.urbanist(
-                            fontWeight: FontWeight.w700, fontSize: 18.sp, color: blackColor2)),
+                            fontWeight: FontWeight.w700, fontSize: 18.sp, color:isDarkMode?whiteColor: blackColor2)),
                     subtitle: Text(
                       maxLines: 1,
                       contact.id,
                       overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.urbanist(
-                            fontWeight: FontWeight.w500, fontSize: 18.sp, color: greyColor3)),
+                            fontWeight: FontWeight.w500, fontSize: 18.sp, color:isDarkMode?greyColor: greyColor3)),
                );
           },
         )),

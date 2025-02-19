@@ -10,8 +10,13 @@ class ImportNFTScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: whiteColor,
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "Import NFT", iconPath: ""),
       body: SingleChildScrollView(
         child: Padding(
@@ -20,7 +25,7 @@ class ImportNFTScreen extends StatelessWidget {
             children: [
               CustomTextField(hintText: "0x7131CA84856767f3126a2C75468d48f8E696", controller: TextEditingController(), labelText: "Address"),
               SizedBox(height: 20.h,),
-                        CustomTextField(hintText: "0x7131CA84856767f3126a2C75468d48f8E696", controller: TextEditingController(), labelText: "Address")
+                        CustomTextField(hintText: "Enter the Collectible ID", controller: TextEditingController(), labelText: "ID")
           
           
             ],
@@ -30,10 +35,10 @@ class ImportNFTScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:Container(
         decoration: BoxDecoration(
-          color: whiteColor,
+          color:isDarkMode?lightBlackColor3:whiteColor,
           border: Border(
             top: BorderSide(
-              color: greyColor4
+              color:isDarkMode?lightBlackColor: greyColor4
             )
             
           )
@@ -42,7 +47,7 @@ class ImportNFTScreen extends StatelessWidget {
           padding:  EdgeInsets.all(20.h),
           child: Row(
             children: [
-              Flexible(child: CustomGreenButton(buttonText: "Cancel", onPressed: (){})),
+              Flexible(child: CustomLightGreenButton(buttonText: "Cancel", onPressed: (){})),
               SizedBox(width: 10.w,),
               Flexible(child: CustomButton(buttonText: "Import", onPressed: (){}))
             ],

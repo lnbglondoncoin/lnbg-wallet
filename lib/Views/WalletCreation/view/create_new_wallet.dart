@@ -24,7 +24,7 @@ class CreateNewWallet extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back(); // Your custom back functionality
@@ -126,7 +126,7 @@ class CreateNewWallet extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color:isDarkMode?whiteColor: blackColor2),
                         ),
-                        CustomSwitch(isSwitched: controller.isSwitched1),
+                        CustomOrangeSwitch(isSwitched: controller.isSwitched1),
                       ],
                     ),
                     SizedBox(
@@ -142,7 +142,7 @@ class CreateNewWallet extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color:isDarkMode?whiteColor: blackColor2),
                         ),
-                        CustomSwitch(isSwitched: controller.isSwitched2),
+                        CustomOrangeSwitch(isSwitched: controller.isSwitched2),
                       ],
                     ),
                     SizedBox(
@@ -209,7 +209,7 @@ class CreateNewWallet extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
-        child: CustomButton(
+        child: CustomOrangeButton(
             buttonText: "Create Password",
             onPressed: () {
               controller.isChecked.value

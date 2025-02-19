@@ -27,12 +27,12 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-     backgroundColor:  theme.scaffoldBackgroundColor,
+     backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: AppBar(
-        backgroundColor:  theme.scaffoldBackgroundColor,
-        shadowColor:  theme.scaffoldBackgroundColor,
-        foregroundColor:  theme.scaffoldBackgroundColor,
-        surfaceTintColor:  theme.scaffoldBackgroundColor,
+        backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
+        shadowColor:  isDarkMode?lightBlackColor3:whiteColor,
+        foregroundColor:  isDarkMode?lightBlackColor3:whiteColor,
+        surfaceTintColor: isDarkMode?lightBlackColor3:whiteColor,
         elevation: 0.0,
         centerTitle: true,
         leading: Padding(
@@ -52,7 +52,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.w),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => FingerPrintScanScreen());
+                controller.authenticate(context);
               },
               child: SizedBox(
                   height: 28.h,
@@ -156,7 +156,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color:isDarkMode?whiteColor: blackColor2),
                         ),
-                        CustomSwitch(isSwitched: controller.isSwitched1),
+                        CustomOrangeSwitch(isSwitched: controller.isSwitched1),
                       ],
                     ),
                     SizedBox(
@@ -172,7 +172,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color:isDarkMode?whiteColor: blackColor2),
                         ),
-                        CustomSwitch(isSwitched: controller.isSwitched2),
+                        CustomOrangeSwitch(isSwitched: controller.isSwitched2),
                       ],
                     ),
                     SizedBox(
@@ -241,7 +241,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
-        child: CustomButton(
+        child: CustomOrangeButton(
             buttonText: "Import",
             onPressed: () {
               controller.isChecked.value

@@ -34,12 +34,12 @@ class CurrencySelectionScreen extends StatelessWidget {
     var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor:  theme.scaffoldBackgroundColor,
+      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
       appBar: AppBar(
-      backgroundColor:  theme.scaffoldBackgroundColor,
-      shadowColor:  theme.scaffoldBackgroundColor,
-      foregroundColor:  theme.scaffoldBackgroundColor,
-      surfaceTintColor:  theme.scaffoldBackgroundColor,
+      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
+      shadowColor:  isDarkMode?lightBlackColor3:whiteColor,
+      foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      surfaceTintColor:  isDarkMode?lightBlackColor3:whiteColor,
         automaticallyImplyLeading: false,
         title: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 10.w),

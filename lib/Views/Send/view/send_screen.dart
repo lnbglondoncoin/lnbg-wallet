@@ -13,10 +13,9 @@ class SendScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
         isSuffix: true,
         title: "Send",
@@ -53,7 +52,7 @@ class SendScreen extends StatelessWidget {
                           border:
                               Border(bottom: BorderSide(color:isDarkMode?lightBlackColor: lightBlack))),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

@@ -22,7 +22,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
    appBar: CustomStepAppBar(
         onBackTap: () {
         
@@ -172,7 +172,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
  floatingActionButton:
     Padding(
             padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
-            child: CustomButton(buttonText: "Next", onPressed: ()async{
+            child: CustomOrangeButton(buttonText: "Next", onPressed: ()async{
    final mnemonic=walletCreatingController.generateMnemonic();
    final privateKey=await walletCreatingController.getPrivateKey(mnemonic);
    final publicKey= await walletCreatingController.getPublicKey(privateKey);

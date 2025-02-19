@@ -16,10 +16,9 @@ class EditNetworkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+     backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
         title: "Edit Network Fee",
         iconPath: 'assets/icons/search.svg',
@@ -145,16 +144,30 @@ class EditNetworkScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:isDarkMode?lightBlackColor2: lightWhiteColor,
                             borderRadius: BorderRadius.circular(18.r)),
-                        child: Padding(
-                          padding: EdgeInsets.all(15.h),
-                          child: Text(
-                            networkAdvance[index],
-                            style: GoogleFonts.urbanist(
+                        child:
+                        TextField(
+                        cursorColor: isDarkMode?lightGreenColor:orange3,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
+                        
+                          border: InputBorder.none,
+                          hintText: networkAdvance[index],
+                          hintStyle: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w400,
                                 color: greyColor2),
-                          ),
-                        ),
+                         
+                        ))
+                        //  Padding(
+                        //   padding: EdgeInsets.all(15.h),
+                        //   child: Text(
+                        //     networkAdvance[index],
+                        //     style: GoogleFonts.urbanist(
+                        //         fontSize: 18.sp,
+                        //         fontWeight: FontWeight.w400,
+                        //         color: greyColor2),
+                        //   ),
+                        // ),
                       ),
                     );
                   }),

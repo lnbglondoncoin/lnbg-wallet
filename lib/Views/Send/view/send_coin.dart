@@ -19,206 +19,215 @@ class SendCoin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
         title: "Send $coinName",
         isSuffix: true,
         iconPath: 'assets/icons/msg.svg',
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20.h),
+        child: SizedBox(
+          height: Get.height,
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color:isDarkMode?lightBlackColor2: lightWhiteColor,
-                    borderRadius: BorderRadius.circular(18.r)),
-                child: Row(
+              Padding(
+                padding: EdgeInsets.all(20.h),
+                child: Column(
                   children: [
-                    Flexible(
-                      child: TextFormField(
-                        controller: controller.addressController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Recipient Address",
-                            hintStyle: GoogleFonts.urbanist(
-                                fontWeight: FontWeight.w400,
-                                color: greyColor2,
-                                fontSize: 18.sp),
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 15.w)),
-                        style: GoogleFonts.urbanist(
-                            fontWeight: FontWeight.w400,
-                            color:isDarkMode?whiteColor: blackColor2,
-                            fontSize: 18.sp),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color:isDarkMode?lightBlackColor2: lightWhiteColor,
+                          borderRadius: BorderRadius.circular(18.r)),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: TextFormField(
+                              controller: controller.addressController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Recipient Address",
+                                  hintStyle: GoogleFonts.urbanist(
+                                      fontWeight: FontWeight.w400,
+                                      color: greyColor2,
+                                      fontSize: 18.sp),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 15.w)),
+                              style: GoogleFonts.urbanist(
+                                  fontWeight: FontWeight.w400,
+                                  color:isDarkMode?whiteColor: blackColor2,
+                                  fontSize: 18.sp),
+                            ),
+                          ),
+                          Text(
+                            "Paste",
+                            style: GoogleFonts.urbanist(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w800,
+                                color:isDarkMode?lightGreenColor: orange4),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: SizedBox(
+                                height: 20.h,
+                                width: 20.w,
+                                child: SvgPicture.asset(
+                                  "assets/icons/scan2.svg",
+                                  colorFilter:  ColorFilter.mode(
+                                     isDarkMode?lightGreenColor: orange4, BlendMode.srcIn),
+                                )),
+                          )
+                        ],
                       ),
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Obx(() {
+                      return Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: controller.isAmountEmpty.value
+                              ?isDarkMode?lightBlackColor2: lightWhiteColor
+                              : lightGreenColor.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(18.r),
+                          border: Border.all(
+                            color: controller.isAmountEmpty.value
+                                ? isDarkMode?lightBlackColor2:lightWhiteColor
+                                :isDarkMode?lightGreenColor: orange3,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: TextFormField(
+                                controller: controller.ammountController,
+                                onChanged: (value) {
+                                  controller
+                                      .updateAmount(); // Call this method to update the reactive value
+                                },
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Amount $coinCode",
+                                  hintStyle: GoogleFonts.urbanist(
+                                    fontWeight: FontWeight.w400,
+                                    color: greyColor2,
+                                    fontSize: 18.sp,
+                                  ),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 15.w),
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(10),
+                                ],
+                                enableInteractiveSelection: false,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: Text(
+                                "Max",
+                                style: GoogleFonts.urbanist(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color:isDarkMode?lightGreenColor: orange4,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                    SizedBox(height: 30.h),
                     Text(
-                      "Paste",
+                      "Total Offer Amount: 0 ETH (0 USD)",
                       style: GoogleFonts.urbanist(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w800,
-                          color:isDarkMode?lightGreenColor: orange4),
+                          color:isDarkMode?greyColor: greyColor3),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: SizedBox(
-                          height: 20.h,
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    const CustomDivider(),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Recents",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w700,
+                              color:isDarkMode?whiteColor: blackColor2),
+                        ),
+                        Text(
+                          "Clear",
+                          style: GoogleFonts.urbanist(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w800,
+                              color:isDarkMode?lightGreenColor: orange4),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage("assets/images/g1.png"),
+                        ),
+                        SizedBox(
                           width: 20.w,
-                          child: SvgPicture.asset(
-                            "assets/icons/scan2.svg",
-                            colorFilter:  ColorFilter.mode(
-                               isDarkMode?lightGreenColor: orange4, BlendMode.srcIn),
-                          )),
-                    )
+                        ),
+                        Flexible(
+                          child: Text(
+                            "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
+                            style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w800,
+                                color:isDarkMode?grey2: darkGreyColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage("assets/images/g2.png"),
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Flexible(
+                          child: Text(
+                            "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
+                            style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w800,
+                                color:isDarkMode?grey2:  darkGreyColor),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Obx(() {
-                return Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: controller.isAmountEmpty.value
-                        ?isDarkMode?lightBlackColor2: lightWhiteColor
-                        : lightGreenColor.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(18.r),
-                    border: Border.all(
-                      color: controller.isAmountEmpty.value
-                          ? isDarkMode?lightBlackColor2:lightWhiteColor
-                          : orange3,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: TextFormField(
-                          controller: controller.ammountController,
-                          onChanged: (value) {
-                            controller
-                                .updateAmount(); // Call this method to update the reactive value
-                          },
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Amount $coinCode",
-                            hintStyle: GoogleFonts.urbanist(
-                              fontWeight: FontWeight.w400,
-                              color: greyColor2,
-                              fontSize: 18.sp,
-                            ),
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 15.w),
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10),
-                          ],
-                          enableInteractiveSelection: false,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: Text(
-                          "Max",
-                          style: GoogleFonts.urbanist(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w800,
-                            color:isDarkMode?lightGreenColor: orange4,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              SizedBox(height: 30.h),
-              Text(
-                "Total Offer Amount: 0 ETH (0 USD)",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w800,
-                    color:isDarkMode?greyColor: greyColor3),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              const CustomDivider(),
-              SizedBox(
-                height: 30.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Recents",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color:isDarkMode?whiteColor: blackColor2),
-                  ),
-                  Text(
-                    "Clear",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                        color:isDarkMode?lightGreenColor: orange4),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25.r,
-                    backgroundImage: const AssetImage("assets/images/g1.png"),
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Flexible(
-                    child: Text(
-                      "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
-                      style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w800,
-                          color:isDarkMode?greyColor: darkGreyColor),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25.r,
-                    backgroundImage: const AssetImage("assets/images/g2.png"),
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Flexible(
-                    child: Text(
-                      "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
-                      style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w800,
-                          color:isDarkMode?greyColor:  darkGreyColor),
-                    ),
-                  ),
-                ],
-              ),
+           Spacer(),
+           CustomDivider(),
+           SizedBox(height: 200.h,)
             ],
           ),
         ),

@@ -23,25 +23,26 @@ class CoinProperties extends StatelessWidget {
     var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: whiteColor,
+        backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title:crypto.name , iconPath: "assets/icons/graphIcon2.svg",isSuffix: true,),
       body: SingleChildScrollView(
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Text("Coin",style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w800,
-                    color: darkGreyColor  
+                    color:isDarkMode?greyColor: darkGreyColor  
                   ),),
                   Spacer(),
                    Text("32.75",style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w800,
-                    color: blackColor2  
+                    color:  isDarkMode?whiteColor: blackColor2  
                   ),),
                   SizedBox(width: 10.w,),
                    Text(crypto.percentage,style: GoogleFonts.urbanist(
@@ -56,21 +57,25 @@ class CoinProperties extends StatelessWidget {
               Center(
                 child: Image.asset(crypto.imageUrl,height: 80.h,width: 80.w,),
               ),
-               Text("256 ${crypto.symbol}",style: GoogleFonts.urbanist(
-                    fontSize: 48.sp,
-                    fontWeight: FontWeight.w700,
-                    color:blackColor2
-                  ),),
+               Center(
+                 child: Text("256 ${crypto.symbol}",style: GoogleFonts.urbanist(
+                      fontSize: 48.sp,
+                      fontWeight: FontWeight.w700,
+                      color:isDarkMode?whiteColor:  blackColor2
+                    ),),
+               ),
             
-                   Text("\$8,573.58",style: GoogleFonts.urbanist(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w800,
-                    color:blackColor2
-                  ),),
+                   Center(
+                     child: Text("\$8,573.58",style: GoogleFonts.urbanist(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w800,
+                      color: isDarkMode?whiteColor: blackColor2
+                                       ),),
+                   ),
 
 
 SizedBox(height: 20.h,),
-                   CustomDivider2() ,
+                   CustomDivider() ,
                     SizedBox(height: 20.h,),
                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +91,7 @@ SizedBox(height: 20.h,),
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/chat2.svg"
@@ -102,7 +107,7 @@ SizedBox(height: 20.h,),
                                 style: GoogleFonts.urbanist(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w700,
-                                    color: darkGreyColor),
+                                    color:isDarkMode?lightWhiteColor: darkGreyColor),
                               )
                             ],
                           ),
@@ -117,7 +122,7 @@ SizedBox(height: 20.h,),
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/receive2.svg"
@@ -132,7 +137,7 @@ SizedBox(height: 20.h,),
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -148,7 +153,7 @@ SizedBox(height: 20.h,),
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/cart2.svg"
@@ -163,7 +168,7 @@ SizedBox(height: 20.h,),
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -179,11 +184,11 @@ SizedBox(height: 20.h,),
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
-                                        ? "assets/icons/stake.svg"
-                                        : "assets/icons/stake.svg"),
+                                        ? "assets/icons/Swap2.svg"
+                                        : "assets/icons/Swap.svg"),
                                   ),
                                 ),
                                 SizedBox(
@@ -194,7 +199,7 @@ SizedBox(height: 20.h,),
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?lightWhiteColor: darkGreyColor),
                                 )
                               ],
                             ),
@@ -202,14 +207,14 @@ SizedBox(height: 20.h,),
                         ],
                       ),
                  SizedBox(height: 20.h,),
-                    CustomDivider2() ,
+                    CustomDivider() ,
                     SizedBox(height: 20.h,), 
                      Text(
                                   "Today",
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w800,
-                                      color: darkGreyColor),
+                                      color:isDarkMode?greyColor: darkGreyColor),
                                 )  ,
                                 SizedBox(height: 20.h,),
                ListView.builder(
@@ -229,7 +234,7 @@ SizedBox(height: 20.h,),
                                     height: 48.h,
                                     width: 48.w,
                                     decoration:  BoxDecoration(
-                                        color: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                        color:isDarkMode?lightBlackColor2: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                     child: Center(
                                       child: SvgPicture.asset(isDarkMode
                                           ? optionImageList[index]
@@ -241,21 +246,21 @@ SizedBox(height: 20.h,),
                                     style: GoogleFonts.urbanist(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: blackColor2),
+                                        color:isDarkMode?whiteColor: blackColor2),
                                   ) ,
                                   subtitle: Text(
                                     index==2?"Address: ${optionsSubtitles[2]}":"To: ${optionsSubtitles[index]}",
                                     style: GoogleFonts.urbanist(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w800,
-                                        color: greyColor3),
+                                        color:isDarkMode?greyColor: greyColor3),
                                   ),
                                   trailing: Text(
-                                   "${crypto.price}",
+                                   "${crypto.price} ${crypto.symbol}",
                                     style: GoogleFonts.urbanist(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: blackColor2),
+                                        color:isDarkMode?whiteColor: blackColor2),
                                   ),
                                   ),
                 );   

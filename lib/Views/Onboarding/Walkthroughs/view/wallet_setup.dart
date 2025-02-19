@@ -19,12 +19,12 @@ class WalletSetUpScreen extends StatelessWidget {
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor: theme.scaffoldBackgroundColor,
+       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: AppBar(
-        backgroundColor:  theme.scaffoldBackgroundColor,
-        shadowColor:  theme.scaffoldBackgroundColor,
-        foregroundColor:  theme.scaffoldBackgroundColor,
-        surfaceTintColor:  theme.scaffoldBackgroundColor,
+        backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+        shadowColor: isDarkMode?lightBlackColor3:whiteColor,
+        foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
+        surfaceTintColor:  isDarkMode?lightBlackColor3:whiteColor,
         elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 5.w),
@@ -80,7 +80,7 @@ class WalletSetUpScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40.h),
-                  CustomButton(
+                  CustomOrangeButton(
                     buttonText: "Create a New Wallet",
                     onPressed: () {
                     Get.to(()=>CreateNewWallet());

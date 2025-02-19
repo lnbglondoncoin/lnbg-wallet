@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor: theme.scaffoldBackgroundColor,
+       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       // backgroundColor: whiteColor,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 50.h),

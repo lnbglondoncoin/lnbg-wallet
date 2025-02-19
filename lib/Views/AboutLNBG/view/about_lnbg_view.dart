@@ -15,8 +15,11 @@ class AboutLNBG extends StatelessWidget {
 final controller=Get.put(AboutLNBGController());
   @override
   Widget build(BuildContext context) {
+          var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(title: "About LNBG Wallet", iconPath: ""),
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: 20.w),
@@ -30,12 +33,12 @@ final controller=Get.put(AboutLNBGController());
               child: Text("LNBG Wallet v1.4.0",style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w700,
                 fontSize: 24.sp,
-                color: blackColor2
+                color:isDarkMode?whiteColor: blackColor2
               ),),
             ),
             SizedBox(height: 20.h,),
             CustomDivider(),
-            SizedBox(height: 20.h,),
+            SizedBox(height: 30.h,),
            ListView.builder(
             itemCount: controller.aboutTabs.length,
             shrinkWrap: true,
@@ -49,14 +52,14 @@ final controller=Get.put(AboutLNBGController());
                 Text(controller.aboutTabs[index],style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w800,
-                  color: blackColor2
+                  color:isDarkMode?whiteColor: blackColor2
                 ),),
                 SizedBox(
                   height: 20.h,
                   width: 20.w,
                   child: Center(
                     child: SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: ColorFilter.mode(
-                      blackColor2, BlendMode.srcIn),),
+                   isDarkMode?whiteColor:   blackColor2, BlendMode.srcIn),),
                   ),
                 )
               ],),

@@ -21,10 +21,9 @@ class BuyCoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
+        backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           title: "Buy $coinCode",
           iconPath: 'assets/icons/search.svg',

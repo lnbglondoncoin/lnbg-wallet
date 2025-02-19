@@ -29,10 +29,9 @@ class ReceiveCoinQR extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor:  theme.scaffoldBackgroundColor,
+      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
         title: "Receive $coinCode",
         iconPath: 'assets/icons/search.svg',
@@ -62,6 +61,7 @@ class ReceiveCoinQR extends StatelessWidget {
                     data: "https://your-wallet-address-or-info.com/$coinCode",
                     version: QrVersions.auto,
                     // size: 380.h,
+                    foregroundColor:  isDarkMode?lightBlackColor3:whiteColor,
                     backgroundColor: whiteColor,
                     errorStateBuilder: (context, error) {
                       return Center(
