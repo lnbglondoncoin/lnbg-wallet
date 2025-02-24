@@ -190,12 +190,15 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                         fontWeight: FontWeight.w700),
                   ),
                 
-                  Text(
-                    "\$164,387,883,628",
-                    style: GoogleFonts.urbanist(
-                        color: isDarkMode?whiteColor: darkGreyColor,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700),
+                  Flexible(
+                    child: Text(
+                        textDirection:TextDirection.rtl,
+                      "\$164,387,883,628",
+                      style: GoogleFonts.urbanist(
+                          color: isDarkMode?whiteColor: darkGreyColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                  
                     ],
@@ -212,12 +215,15 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                         fontWeight: FontWeight.w700),
                   ),
                 
-                  Text(
-                    "\$13,634,523,467",
-                    style: GoogleFonts.urbanist(
-                        color:isDarkMode?whiteColor: darkGreyColor,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700),
+                  Flexible(
+                    child: Text(
+                        textDirection:TextDirection.rtl,
+                      "\$13,634,523,467",
+                      style: GoogleFonts.urbanist(
+                          color:isDarkMode?whiteColor: darkGreyColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                  
                     ],
@@ -234,12 +240,15 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                         fontWeight: FontWeight.w700),
                   ),
                 
-                  Text(
-                    "122,587,625.50 ETH",
-                    style: GoogleFonts.urbanist(
-                        color:isDarkMode?whiteColor: darkGreyColor,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700),
+                  Flexible(
+                    child: Text(
+                      textDirection:TextDirection.rtl,
+                      "122,587,625.50 ETH",
+                      style: GoogleFonts.urbanist(
+                          color:isDarkMode?whiteColor: darkGreyColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                  
                     ],

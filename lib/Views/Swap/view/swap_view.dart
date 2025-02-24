@@ -143,7 +143,7 @@ class SwapView extends StatelessWidget {
                        Text("0",style: GoogleFonts.urbanist(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w700,
-                                color: greyColor
+                                color:isDarkMode? greyColor:blackColor2
                               ),),
                         Spacer(),
                         SizedBox(

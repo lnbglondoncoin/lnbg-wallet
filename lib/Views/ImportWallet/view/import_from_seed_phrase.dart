@@ -245,7 +245,7 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
             buttonText: "Import",
             onPressed: () {
               controller.isChecked.value
-                  ? controller.import()
+                  ? controller.verfifyMnemonicAndImport()
                   : Get.snackbar(
                       backgroundColor: orange3,
                       snackPosition: SnackPosition.TOP,

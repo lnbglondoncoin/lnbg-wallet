@@ -28,10 +28,15 @@ class WalletSetUpScreen extends StatelessWidget {
         elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 5.w),
-          child: SizedBox(
-            height: 28.h,
-            width: 28.w,
-            child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),)),
+          child: GestureDetector(
+            onTap: (){
+              Get.back();
+            },
+            child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(child: SvgPicture.asset(arrowLeft,colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),)),
+            ),
           ),
         ),
       ),

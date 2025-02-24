@@ -146,12 +146,12 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             hintText: "0.02 ETH (\$26.35 USD)",
                             hintStyle: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color:isDarkMode?whiteColor: greyColor2),
+                                fontWeight: FontWeight.w800,
+                                color:isDarkMode?whiteColor: blackColor2),
                           ),
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                               color:isDarkMode?whiteColor: blackColor2),
                         )),
                         GestureDetector(
@@ -189,12 +189,12 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             hintText: "0.02 ETH (\$26.35 USD)",
                             hintStyle: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color:isDarkMode?whiteColor: greyColor2),
+                                fontWeight: FontWeight.w800,
+                                color:isDarkMode?whiteColor: blackColor2),
                           ),
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                               color: blackColor2),
                         )),
                       ],
@@ -219,7 +219,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
             }): CustomButton(
             buttonText: "Send",
             onPressed: () {
-              //  _showSuccesPopup(context);
+                _showSuccesPopup(context);
             }),
       ),
     );

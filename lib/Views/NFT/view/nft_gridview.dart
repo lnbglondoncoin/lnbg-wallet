@@ -39,9 +39,9 @@ class NftGridView extends StatelessWidget {
               padding:  EdgeInsets.symmetric(horizontal: 8.w),
               child:  GridView.builder(
                 padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Two columns
-                    childAspectRatio: 0.65, // Adjust as needed
+                    childAspectRatio: 0.64.h, // Adjust as needed
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
@@ -53,7 +53,8 @@ class NftGridView extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28.r),
                       ),
-                      elevation: 5,
+                      elevation: 8,
+                      shadowColor: lightBlackColor.withOpacity(0.3),
                       child: Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 10.w),
                         child: Column(

@@ -13,7 +13,7 @@ class CustomDivider extends StatelessWidget {
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Container(
-      height: 1.h,
+      height: 2.h,
       color: isDarkMode?lightBlackColor:lightBlack,
     );
   }

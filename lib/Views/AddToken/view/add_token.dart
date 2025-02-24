@@ -29,6 +29,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
     shadowColor: isDarkMode?lightBlackColor3:whiteColor,
     foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
     surfaceTintColor: isDarkMode?lightBlackColor3:whiteColor,
+    
   leading:  GestureDetector(
             onTap: () {
               Get.back();
@@ -45,6 +46,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
               Obx(() {
                       return Container(
                         width: double.infinity,
+                        height: 56.h,
                         decoration: BoxDecoration(
                           
                           color: controller.isAmountEmpty.value
@@ -97,7 +99,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
               child: SvgPicture.asset("assets/icons/plusIcon.svg",colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),))
           )
       ], 
-    elevation: 1.0,         
+    elevation: 0.0,         
   ),
   body: 
   Container(

@@ -249,7 +249,9 @@ SizedBox(height: 20.h,),
                                         color:isDarkMode?whiteColor: blackColor2),
                                   ) ,
                                   subtitle: Text(
+                                    maxLines: 1,
                                     index==2?"Address: ${optionsSubtitles[2]}":"To: ${optionsSubtitles[index]}",
+                                    overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.urbanist(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w800,

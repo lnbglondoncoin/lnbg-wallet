@@ -20,20 +20,20 @@ class ThemeController extends GetxController {
     super.onInit();
   }
 
-  void toggleTheme() {
-    themeMode.value = themeMode.value == ThemeMode.dark
-        ? ThemeMode.light
-        : ThemeMode.dark;
+    void toggleTheme() {
+      themeMode.value = themeMode.value == ThemeMode.dark
+          ? ThemeMode.light
+          : ThemeMode.dark;
 
-    Get.changeThemeMode(themeMode.value);
-    _storage.write(
-        'themeMode',
-        themeMode.value == ThemeMode.dark
-            ? 'dark'
-            : themeMode.value == ThemeMode.light
-                ? 'light'
-                : 'system');
-  }
+      Get.changeThemeMode(themeMode.value);
+      _storage.write(
+          'themeMode',
+          themeMode.value == ThemeMode.dark
+              ? 'dark'
+              : themeMode.value == ThemeMode.light
+                  ? 'light'
+                  : 'system');
+    }
 
   void setSystemTheme() {
     themeMode.value = ThemeMode.system;

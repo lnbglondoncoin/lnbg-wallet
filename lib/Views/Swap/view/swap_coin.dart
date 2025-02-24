@@ -52,7 +52,7 @@ class SwapCoinScreen extends StatelessWidget {
                 child: Center(
                   child: SvgPicture.asset("assets/icons/arrowDown.svg",
                   
-                  colorFilter: ColorFilter.mode(isDarkMode?whiteColor:greyColor, BlendMode.srcIn),),
+                  colorFilter: ColorFilter.mode(isDarkMode?whiteColor:blackColor2, BlendMode.srcIn),),
                 ),),
                   SizedBox(height: 10.h,),
                  ListTile(

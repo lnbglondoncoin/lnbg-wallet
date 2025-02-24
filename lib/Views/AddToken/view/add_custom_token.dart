@@ -269,8 +269,9 @@ class AddCustomToken extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: Get.width/2.5,vertical: 20.h),
+          padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
           child: CustomButton(buttonText: "Ok", onPressed: (){}),
         ),
     );

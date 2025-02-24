@@ -7,6 +7,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:local_auth/local_auth.dart';
 class ImportFromSeedController extends GetxController {
   var passController = TextEditingController();
@@ -35,11 +37,7 @@ class ImportFromSeedController extends GetxController {
     isChecked.value = value;
   }
 
-  import() {
-    if (!importSeedKey.currentState!.validate()) {
-      return;
-    } else {}
-  }
+  
 
 
 
@@ -141,4 +139,18 @@ class ImportFromSeedController extends GetxController {
       },
     );
   }
+
+ 
+
+   final walletCreatingController=Get.find<WalletCreatingController>();
+
+ void verfifyMnemonicAndImport() async {
+    if (!importSeedKey.currentState!.validate()) {
+      return;
+    } else {
+      final privateKey= await walletCreatingController.getPrivateKey(seedPhraseController.text);
+      Get.offAll(BottomNavBar());
+    }
+  }
+  
 }

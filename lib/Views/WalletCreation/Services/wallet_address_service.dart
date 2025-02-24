@@ -11,6 +11,7 @@ abstract class WalletAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
   Future<EthereumAddress> getPublicKey(String privateKey);
+   loadWaletData();
 }
 
 class WalletCreatingController extends GetxController
@@ -27,6 +28,7 @@ class WalletCreatingController extends GetxController
     mnemonicWords.value = mnemonic.split(' ');
     firstHalfOfMnemonic.value = mnemonicWords.sublist(0, 6);
     secondHalfofMnemonic.value = mnemonicWords.sublist(6, 12);
+    loadWaletData();
   }
 
   //variablr for private key
@@ -54,6 +56,7 @@ class WalletCreatingController extends GetxController
     final seed = bip39.mnemonicToSeed(mnemonic);
     final master = await ED25519_HD_KEY.getMasterKeyFromSeed(seed);
     final privateKey = HEX.encode(master.key);
+    await setPrivateKey(privateKey);
     return privateKey;
   }
 
@@ -102,4 +105,22 @@ class WalletCreatingController extends GetxController
   changeisTrue(value) {
     isTrue.value = value;
   }
+
+
+
+  var wallwtAddress=''.obs;
+var balance=''.obs;
+var pvKey=''.obs;
+@override //remove override if problem coes in persistent login
+  Future<void> loadWaletData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? privateKey=prefs.getString('privateKey');
+  if(privateKey!=null){
+  
+     await loadPrivateKey();
+     EthereumAddress address= await getPublicKey(privateKey);
+     wallwtAddress.value=address.hex;
+     pvKey.value=privateKey;
+  }
+}
 }

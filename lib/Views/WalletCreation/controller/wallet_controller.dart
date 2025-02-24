@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_vallet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web3dart/credentials.dart';
 
 class StepController extends GetxController {
+  @override
+  void onInit(){
+    super.onInit();
+    
+  }
   var currentIndex = 0.obs;
   var passController = TextEditingController();
   var confirmPasswordController = TextEditingController();
@@ -81,4 +89,8 @@ class StepController extends GetxController {
     'peart',
     'maze'
   ].obs;
+
+
+
+
 }

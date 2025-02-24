@@ -18,6 +18,7 @@ import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/token_details.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class HomeScreenView extends StatefulWidget {
@@ -31,6 +32,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final nftController=Get.put(NftController());
+  final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   void initState() {
     super.initState();

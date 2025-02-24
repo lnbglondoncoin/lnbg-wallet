@@ -49,7 +49,7 @@ class CreateNewWallet extends StatelessWidget {
                     
                     ),
                     SizedBox(
-                      height: 25.h,
+                      height: 15.h,
                     ),
                     Text(
                       "Create Password",
@@ -114,7 +114,7 @@ class CreateNewWallet extends StatelessWidget {
                     ),
                     const CustomDivider(),
                     SizedBox(
-                      height: 35.h,
+                      height: 25.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

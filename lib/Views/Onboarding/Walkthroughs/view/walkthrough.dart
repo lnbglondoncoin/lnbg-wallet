@@ -19,7 +19,7 @@ class WalkThroughScreen extends StatelessWidget {
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode?lightBlackColor3:lightWhiteColor,
       body: PageView.builder(
         controller: controller.pageController,
         itemCount: controller.walkthroughData.length,

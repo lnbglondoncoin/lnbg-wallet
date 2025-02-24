@@ -37,7 +37,11 @@ class SettingsController extends GetxController{
             "Invite Friends",
              "About LNBG Wallet",
  ];
- RxBool isSwitched=false.obs; 
+//   var theme = Theme.of(context);
+//    bool isDarkMode =
+//         theme.brightness == Brightness.dark; // Check if dark mode is active
+
+//  RxBool isSwitched=isDark false.obs; 
  settingActions(index){
   if(index==0){
     Get.to(()=>WalletScreen()); 

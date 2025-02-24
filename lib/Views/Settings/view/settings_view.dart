@@ -23,7 +23,7 @@ final controller=Get.put(SettingsController());
       var textTheme = theme.textTheme;
       bool isDarkMode =
           theme.brightness == Brightness.dark; // Check if dark mode is active
-    
+    RxBool swictched=isDarkMode?true.obs: false.obs;
     return Scaffold(
        backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
     
@@ -66,7 +66,7 @@ final controller=Get.put(SettingsController());
                         leading: Image.asset(controller.settingIcons[index], width: 56.w, height: 56.h),
                         title: Text(controller.settingLabels[index], style:  GoogleFonts.urbanist(fontWeight: FontWeight.w700,fontSize: 20.sp,color:isDarkMode?whiteColor: blackColor2)),
                       trailing:index==4? 
-                      CustomSwitch(isSwitched: controller.isSwitched, onChanged: () {
+                      CustomSwitch(isSwitched: swictched, onChanged: () {
            themeController.toggleTheme();
           },)
                       : SizedBox(

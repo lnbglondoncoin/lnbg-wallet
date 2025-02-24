@@ -62,7 +62,7 @@ class ReceiveCoinQR extends StatelessWidget {
                     version: QrVersions.auto,
                     // size: 380.h,
                     foregroundColor:  isDarkMode?lightBlackColor3:whiteColor,
-                    backgroundColor: whiteColor,
+                    backgroundColor:isDarkMode? whiteColor:blackColor2,
                     errorStateBuilder: (context, error) {
                       return Center(
                         child: Text(
