@@ -9,10 +9,10 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _startTimer();
+    startTimer();
   }
 
-  void _startTimer() {
+  void startTimer() {
     Timer(const Duration(seconds: 6), () {
       if(walletCreatingController.privateKey==null){
              Get.off(() => WalkThroughScreen());

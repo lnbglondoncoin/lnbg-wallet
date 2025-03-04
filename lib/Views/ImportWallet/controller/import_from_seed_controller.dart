@@ -10,6 +10,8 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:bip39/bip39.dart' as bip39;
+
 class ImportFromSeedController extends GetxController {
   var passController = TextEditingController();
   var confirmPasswordController = TextEditingController();
@@ -145,12 +147,28 @@ class ImportFromSeedController extends GetxController {
    final walletCreatingController=Get.find<WalletCreatingController>();
 
  void verfifyMnemonicAndImport() async {
-    if (!importSeedKey.currentState!.validate()) {
-      return;
-    } else {
-      final privateKey= await walletCreatingController.getPrivateKey(seedPhraseController.text);
-      Get.offAll(BottomNavBar());
-    }
+  if (!importSeedKey.currentState!.validate()) {
+    return;
   }
+
+  String seedPhrase = seedPhraseController.text.trim();
+
+  if (!bip39.validateMnemonic(seedPhrase)) {
+    Get.snackbar("Error", "Invalid seed phrase. Please check again.");
+    return;
+  }
+
+  final privateKey = await walletCreatingController.getPrivateKey(seedPhrase);
+  
+  if (privateKey.isNotEmpty) {
+    walletCreatingController.setPrivateKey(privateKey);
+    walletCreatingController.savePhraseToPrefs(seedPhrase);
+    walletCreatingController.savePassword(passController.text);
+    Get.offAll(BottomNavBar());
+  } else {
+    Get.snackbar("Error", "Failed to import wallet. Try again.");
+  }
+}
+
   
 }

@@ -5,6 +5,8 @@
   import 'package:get/get_core/src/get_main.dart';
   import 'package:google_fonts/google_fonts.dart';
   import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Settings/view/show_secret_phrase.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
   import 'package:lnbg_crypto_wallet_app/Views/Wallets/controller/wallet_controller.dart';
   import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
   import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -12,7 +14,7 @@
 class WalletScreen extends StatelessWidget {
    WalletScreen({super.key});
   final controller = Get.put(WalletController());
-
+final walletCreatingController = Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
      var theme = Theme.of(context);
@@ -109,10 +111,16 @@ class WalletScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 20.w,),
-                                      Text('Show Secret Phrase',
-                                          style: GoogleFonts.urbanist(
-                                            color:isDarkMode?whiteColor: blackColor2,
-                                              fontWeight: FontWeight.w800, fontSize: 18.sp)),
+                                      GestureDetector(
+                                        onTap: (){
+print(walletCreatingController.getSeedPhrase());
+ Get.to(()=>ShowSeedPhrase());
+                                        },
+                                        child: Text('Show Secret Phrase',
+                                            style: GoogleFonts.urbanist(
+                                              color:isDarkMode?whiteColor: blackColor2,
+                                                fontWeight: FontWeight.w800, fontSize: 18.sp)),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: 10.h,),

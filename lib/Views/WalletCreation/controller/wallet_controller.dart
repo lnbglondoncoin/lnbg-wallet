@@ -47,13 +47,15 @@ class StepController extends GetxController {
   void toggleCheckbox(bool value) {
     isChecked.value = value;
   }
-
+  final walletCreatingController = Get.find<WalletCreatingController>();
   createPassword() {
     if (!passwordKey.currentState!.validate()) {
       return;
     } else {
       updateIndex(1);
+        walletCreatingController.savePassword(passController.text);
       Get.to(() => SecureWalletScreen());
+     
     }
   }
 

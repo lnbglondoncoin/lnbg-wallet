@@ -278,6 +278,9 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                 walletCreatingController.changeisTrue(true);
                 if (listEquals(walletCreatingController.secondHalfofMnemonic,
                     walletCreatingController.orderList)) {
+
+walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.value);
+                     
                   _showPopup(context);
                 } else {
                   walletCreatingController.changeisTrue(false);
@@ -332,11 +335,16 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: isDarkMode?whiteColor:blackColor2)),
           actions: [
-            GestureDetector(
+           Obx((){
+            return   GestureDetector(
               onTap: () {
-                Get.offAll(() => const BottomNavBar());
+               walletCreatingController.fetchCoinData();
               },
-              child: Container(
+              child: walletCreatingController.isLoading.value?Center(
+                child: CircularProgressIndicator(
+                  color: orange3,
+                ),
+              ): Container(
                 height: 58.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -352,7 +360,8 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            );
+           }),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20.h),
               child: Text(
@@ -368,4 +377,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
       },
     );
   }
+
+
+
 }

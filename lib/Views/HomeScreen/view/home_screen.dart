@@ -330,15 +330,21 @@ class _HomeScreenViewState extends State<HomeScreenView>
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            SingleChildScrollView(
+              
+              Obx((){
+                return  
+                walletCreatingController.coins.isEmpty?
+                Center(child: CircularProgressIndicator()):
+                             SingleChildScrollView(
                               child: Column(
                                 children: [
                                   ListView.builder(
                                     padding: EdgeInsets.zero,
-                                      itemCount: tokenIconList.length,
+                                      itemCount: walletCreatingController.coins.length,
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       itemBuilder: (context, index) {
+                                        final coin = walletCreatingController.coins[index];
                                         return GestureDetector(
                                           onTap: () {
                                             Get.to(()=>TokenDetailsScreen(
@@ -372,9 +378,11 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     height: 45.h,
                                                     width: 35.w,
                                                     child: Center(
-                                                      child: Image.asset(
-                                                        tokenIconList[index],
-                                                      ),
+                                                      child:
+                                                      coin.logoUrl.isNotEmpty?
+                                                       Image.network(
+                                                        coin.logoUrl,
+                                                      ): Icon(Icons.currency_bitcoin),
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -388,7 +396,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        tokennameList[index],
+                                                       coin.name,
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 20.sp,
                                                             fontWeight:
@@ -400,8 +408,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                       Row(
                                                         children: [
                                                           Text(
-                                                            tokenCoinndolorPriceWithPercentage[
-                                                                index],
+                                                           coin.price.toString(),
                                                             style: GoogleFonts.urbanist(
                                                                 fontSize: 14.sp,
                                                                 fontWeight:
@@ -441,7 +448,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        tokenCoinPrice[index],
+                                                       coin.price.toStringAsFixed(2),
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 18.sp,
                                                             fontWeight:
@@ -451,8 +458,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                                 : blackColor2),
                                                       ),
                                                       Text(
-                                                        tokenCoinndolorPrice[
-                                                            index],
+                                                        coin.price.toStringAsFixed(2),
                                                         style: GoogleFonts
                                                             .urbanist(
                                                                 fontSize: 14.sp,
@@ -522,8 +528,10 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   )
                                 ],
                               ),
-                            ),
-                     Obx((){
+                            );
+                  
+              }),
+                 Obx((){
                       return    
                       nftController.nftList.isEmpty?
                          Column(
