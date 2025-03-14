@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/controller/send_controllr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/confir_send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -12,9 +13,8 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class SendCoin extends StatelessWidget {
-  final String coinCode;
-  final String coinName;
-  SendCoin({super.key, required this.coinName, required this.coinCode});
+  final TokenData token;
+  SendCoin({super.key, required this.token, });
   final controller = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class SendCoin extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
-        title: "Send $coinName",
+        title: "Send ${token.name}",
         isSuffix: true,
         iconPath: 'assets/icons/msg.svg',
       ),
@@ -105,12 +105,11 @@ class SendCoin extends StatelessWidget {
                               child: TextFormField(
                                 controller: controller.ammountController,
                                 onChanged: (value) {
-                                  controller
-                                      .updateAmount(); // Call this method to update the reactive value
+                                  controller.updateAmount(value, token.priceInUsd);
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Amount $coinCode",
+                                  hintText: "Amount ${token.symbol}",
                                   hintStyle: GoogleFonts.urbanist(
                                     fontWeight: FontWeight.w400,
                                     color: greyColor2,
@@ -119,9 +118,9 @@ class SendCoin extends StatelessWidget {
                                   contentPadding:
                                       EdgeInsets.symmetric(horizontal: 15.w),
                                 ),
-                                keyboardType: TextInputType.number,
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
+                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                                   LengthLimitingTextInputFormatter(10),
                                 ],
                                 enableInteractiveSelection: false,
@@ -142,14 +141,21 @@ class SendCoin extends StatelessWidget {
                         ),
                       );
                     }),
+                  
                     SizedBox(height: 30.h),
-                    Text(
-                      "Total Offer Amount: 0 ETH (0 USD)",
-                      style: GoogleFonts.urbanist(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w800,
-                          color:isDarkMode?greyColor: greyColor3),
-                    ),
+Obx(() {
+  return Center(
+    child: Text(
+      textAlign: TextAlign.center,
+      "Total Offer Amount: ${token.symbol} ${controller.ammountIncrypto.value.toStringAsFixed(10) } (${ controller.ammountInUSD.value.toStringAsFixed(10)} USD)",
+      style: GoogleFonts.urbanist(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w800,
+        color: isDarkMode ? greyColor : greyColor3,
+      ),
+    ),
+  );
+}),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -237,20 +243,25 @@ class SendCoin extends StatelessWidget {
         padding: EdgeInsets.all(20.h),
         child: isDarkMode? CustomGreenButton(
             buttonText: "Continue",
-            onPressed: () {
-              Get.to(() => ConfirmSendCoinScreen(
-                    ammount: controller.ammountController.text,
-                    address: controller.addressController.text,
-                    coinCode: coinCode,
-                  ));
+            onPressed: () async{
+if(controller.ammountController.text!="0"){
+await controller.calculateNetworkFee(controller.selectedNetworkSpeed.value,token,false);
+}
+else{
+  Get.snackbar("Error", "Amount cannot be zero");
+}
+  
+               
             }): CustomButton(
             buttonText: "Continue",
-            onPressed: () {
-              Get.to(() => ConfirmSendCoinScreen(
-                    ammount: controller.ammountController.text,
-                    address: controller.addressController.text,
-                    coinCode: coinCode,
-                  ));
+            onPressed: () async{
+        if(controller.ammountController.text!="0"){
+await controller.calculateNetworkFee(controller.selectedNetworkSpeed.value,token,false);
+}
+else{
+  Get.snackbar("Error", "Amount cannot be zero");
+}
+  
             }),
       ),
     );

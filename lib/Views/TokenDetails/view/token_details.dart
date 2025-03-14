@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
@@ -18,14 +19,9 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class TokenDetailsScreen extends StatelessWidget {
-final String coinIconPath;
-final String coinName;
-final String tokenPrice;
-final String percentage;
-final String prceInTokenshortWord;
-final String priceDolor;
+final TokenData token;
 
-  const TokenDetailsScreen({super.key, required this.coinIconPath, required this.coinName, required this.tokenPrice, required this.percentage, required this.prceInTokenshortWord, required this.priceDolor});
+  const TokenDetailsScreen({super.key, required this.token,});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +31,7 @@ final String priceDolor;
 backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           isSuffix: true,
-          title:"$coinName (${prceInTokenshortWord.split(' ').last})" ,
+          title:"${token.name} (${token.balance.toStringAsFixed(2)})" ,
           iconPath: 'assets/icons/graphIcon2.svg',
         ),
         body: SingleChildScrollView(
@@ -52,13 +48,13 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                       fontWeight: FontWeight.w800
                     ),),
                     Spacer(),
-                     Text(priceDolor,style: GoogleFonts.urbanist(
+                     Text("\$${token.priceInUsd.toStringAsFixed(2)}",style: GoogleFonts.urbanist(
                       color:isDarkMode?whiteColor: blackColor2,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
                     ),),
                     SizedBox(width: 10.w,),
-                     Text(percentage,style: GoogleFonts.urbanist(
+                     Text(token.trendPercentage.toStringAsFixed(2),style: GoogleFonts.urbanist(
                       color: skyColor,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
@@ -66,17 +62,17 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                   ],
                 ),
                   SizedBox(height: 20.h,),
-                  Center(child: Image.asset(coinIconPath,height: 80.h,width: 80.w,)),
+                  Center(child: Image.network(token.logoUrl,height: 80.h,width: 80.w,)),
                   SizedBox(height: 10.h,),
                    Center(
-                     child: Text(tokenPrice,style: GoogleFonts.urbanist(
+                     child: Text(token.balance.toStringAsFixed(2),style: GoogleFonts.urbanist(
                         color:isDarkMode?whiteColor: blackColor2,
                         fontSize: 48.sp,
                         fontWeight: FontWeight.w700
                       ),),
                    ), 
                      Center(
-                       child: Text(priceDolor,style: GoogleFonts.urbanist(
+                       child: Text("\$${token.priceInUsd.toStringAsFixed(2)}",style: GoogleFonts.urbanist(
                         color:isDarkMode?whiteColor: blackColor2,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w800
@@ -93,7 +89,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => const SendScreen());
+                                  Get.to(() =>  SendScreen());
                                 },
                                 child: Container(
                                   height: 60.h,
@@ -121,7 +117,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const ReceiveView());
+                              Get.to(() =>  ReceiveView());
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +148,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const BuyView());
+                              Get.to(() =>  BuyView());
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -233,7 +229,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                 return                          GestureDetector(
                   onTap: (){
                     if(index==3){
-                      Get.to(()=>TransferToken(tokenPrice: tokenPrice, priceDolor: priceDolor, tokenSuffix: '${prceInTokenshortWord.split(' ').last}', percentage: percentage, coinName: coinName,));
+                      Get.to(()=>TransferToken(tokenPrice: token.balance.toStringAsFixed(2), priceDolor: token.priceInUsd.toStringAsFixed(2), 
+                      tokenSuffix: token.symbol, percentage: token.trendPercentage.toStringAsFixed(2), coinName: token.name,));
                     }
                   },
                   child: Container(
@@ -275,7 +272,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                           color:isDarkMode?greyColor: greyColor3),
                                     ),
                                     trailing: Text(
-                                     "${optionsPrice[index]} ${prceInTokenshortWord.split(' ').last}",
+                                     "${optionsPrice[index]} ${token. balance.toStringAsFixed(2)}",
                                       style: GoogleFonts.urbanist(
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.w700,

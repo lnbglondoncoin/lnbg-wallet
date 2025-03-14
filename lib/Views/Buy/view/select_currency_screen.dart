@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/uy_coin_contrller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/buy_coin_contrller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 

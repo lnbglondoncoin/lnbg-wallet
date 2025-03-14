@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/app_constants.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_blnc_model.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +26,7 @@ class WalletCreatingController extends GetxController
   var mnemonicWords = [].obs;
   var firstHalfOfMnemonic = [].obs;
   var secondHalfofMnemonic = [].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -43,6 +47,7 @@ class WalletCreatingController extends GetxController
   }
 
   Future<void> setPrivateKey(String privateKey) async {
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('privateKey', privateKey);
     //reove both
@@ -77,6 +82,7 @@ String? password;
     final master = await ED25519_HD_KEY.getMasterKeyFromSeed(seed);
     final privateKey = HEX.encode(master.key);
     await setPrivateKey(privateKey);
+ // Get.log("privetekey is:$privateKey");
     return privateKey;
   }
 
@@ -132,17 +138,22 @@ String? password;
 var balance=''.obs;
 var pvKey=''.obs;
 @override //remove override if problem coes in persistent login
-  Future<void> loadWaletData() async {
+Future<void> loadWaletData() async {
+ 
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? privateKey=prefs.getString('privateKey');
-  if(privateKey!=null){
-  
-     await loadPrivateKey();
-     EthereumAddress address= await getPublicKey(privateKey);
-     wallwtAddress.value=address.hex;
-     pvKey.value=privateKey;
+  String? privateKey = prefs.getString('privateKey');
+ // print("Private Key Loaded: $privateKey");
+
+  if (privateKey != null) {
+    await loadPrivateKey();
+    EthereumAddress address = await getPublicKey(privateKey);
+    wallwtAddress.value = address.hex;
+    pvKey.value = privateKey;
+  } else {
+    print("No private key found in SharedPreferences");
   }
 }
+
 
 
 
@@ -168,9 +179,14 @@ var pvKey=''.obs;
   }
 
 
-   final String apiKey = "8f1b91d4-485e-4a9e-8db2-92b8b3f6c94d";
-  final RxList<Coin> coins = <Coin>[].obs;
+     String get cmcApiKey => dotenv.env['CMC_API_KEY'] ?? '';
+  
+  // final RxList<Coin> coins = <Coin>[].obs;
+  var slugs = <String>[].obs;
 var isLoading=false.obs;
+
+
+//Function without bitcoin...
 Future<void> fetchCoinData() async {
   const String baseUrl =
       "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5";
@@ -179,36 +195,20 @@ Future<void> fetchCoinData() async {
     isLoading(true);
     final response = await http.get(
       Uri.parse(baseUrl),
-      headers: {"X-CMC_PRO_API_KEY": apiKey},
+      headers: {"X-CMC_PRO_API_KEY": cmcApiKey},
     );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body)['data'] as List;
-      List<Coin> coinList = data.map((coin) => Coin.fromJson(coin)).toList();
+      print(json.decode(response.body)['data']);
 
-      // Fetch additional token data (logos)
-      final String detailsUrl =
-          "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
-      final ids = coinList.map((coin) => coin.id).join(",");
+      // Filter out objects where name == "Bitcoin"
+      final filteredData = data.where((coin) => coin['name'] != "Bitcoin").toList();
 
-      final detailResponse = await http.get(
-        Uri.parse("$detailsUrl?id=$ids"),
-        headers: {"X-CMC_PRO_API_KEY": apiKey},
-      );
-
-      if (detailResponse.statusCode == 200) {
-        final detailedData =
-            json.decode(detailResponse.body)['data'] as Map<String, dynamic>;
-
-        // Create a new list with updated logo URLs
-        List<Coin> updatedCoins = coinList.map((coin) {
-          return coin.copyWith(
-              logoUrl: detailedData[coin.id.toString()]['logo'] ?? "");
-        }).toList();
-
-        coins.assignAll(updatedCoins);
-        Get.offAll(() => const BottomNavBar());
-      }
+      // Extract slugs and store them in the observable list
+      slugs.assignAll(filteredData.map((coin) => coin['slug'].toString()).toList());
+await fetchWalletData(wallwtAddress.value);
+     
     }
   } catch (e) {
     print("Error fetching coin data: $e");
@@ -218,4 +218,251 @@ Future<void> fetchCoinData() async {
   }
 }
 
-}
+
+
+var tBlnc=''.obs;
+ Future<double> getNativeBalance(String walletAddress) async { 
+  Get.log("private key is $privateKey comes hereeee");
+
+  final Web3Client client = Web3Client("https://mainnet.infura.io/v3/${dotenv.env['INFURA_API_KEY']}", http.Client());
+   EthereumAddress address = EthereumAddress.fromHex(walletAddress); 
+   EtherAmount balance = await client.getBalance(address); 
+   double ethBalance = balance.getValueInUnit(EtherUnit.ether);
+   tBlnc.value=ethBalance.toString();
+   Get.offAll(() => const BottomNavBar());
+    return ethBalance;
+    
+     }
+
+
+
+
+ var tokenData = <TokenData>[].obs;
+
+
+  Future<void> fetchWalletData(String walletAddress) async {
+    isLoading(true);
+     String url =
+        "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/token-balances";
+
+    final Map<String, dynamic> requestBody = {
+      "tokens": slugs
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
+        print(data);
+        List<TokenData> tokens = [];
+
+        data.forEach((key, value) {
+          tokens.add(TokenData.fromJson(key, value));
+        });
+
+        tokenData.assignAll(tokens);
+        getNativeBalance(walletAddress);
+      } else {
+        Get.snackbar("Error", "Failed to load data");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    } finally {
+      isLoading(false);
+    }
+  }
+    }
+
+  //function with bitcoin
+// Future<void> fetchCoinData() async {
+  
+//   const String baseUrl =
+//       "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5";
+
+//   try {
+//     isLoading(true);
+//     final response = await http.get(
+//       Uri.parse(baseUrl),
+//       headers: {"X-CMC_PRO_API_KEY": apiKey},
+//     );
+
+//     if (response.statusCode == 200) {
+      
+//       final data = json.decode(response.body)['data'] as List;
+//       print(json.decode(response.body)['data']);
+//         // Extract slugs and store them in the observable list
+//       slugs.assignAll(data.map((coin) => coin['slug'].toString()).toList());
+
+//       List<Coin> coinList = data.map((coin) => Coin.fromJson(coin)).toList();
+      
+//       // Fetch additional token data (logos)
+//       final String detailsUrl =
+//           "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
+//       final ids = coinList.map((coin) => coin.id).join(",");
+
+//       final detailResponse = await http.get(
+//         Uri.parse("$detailsUrl?id=$ids"),
+//         headers: {"X-CMC_PRO_API_KEY": apiKey},
+//       );
+
+//       if (detailResponse.statusCode == 200) {
+        
+//         final detailedData =
+//             json.decode(detailResponse.body)['data'] as Map<String, dynamic>;
+
+//         // Create a new list with updated logo URLs
+//         List<Coin> updatedCoins = coinList.map((coin) {
+//           return coin.copyWith(
+//               logoUrl: detailedData[coin.id.toString()]['logo'] ?? "");
+//         }).toList();
+
+//         coins.assignAll(updatedCoins);
+//      // fetchBalances();
+//    print("slugs are:$slugs");
+  
+//   await fetchCoinBalance(wallwtAddress.value);
+       
+//       }
+//     }
+//   } catch (e) {
+//     print("Error fetching coin data: $e");
+//     Get.snackbar("Error", e.toString());
+//   } finally {
+//     isLoading(false);
+//   }
+// }
+
+
+
+// List<Coin> coinList = filteredData.map((coin) => Coin.fromJson(coin)).toList();
+
+      // Fetch additional token data (logos)
+      // final String detailsUrl =
+      //     "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
+    //  final ids = coinList.map((coin) => coin.id).join(",");
+
+      // final detailResponse = await http.get(
+      //   Uri.parse("$detailsUrl?id=$ids"),
+      //   headers: {"X-CMC_PRO_API_KEY": apiKey},
+      // );
+
+      // if (detailResponse.statusCode == 200) {
+      //   final detailedData =
+      //       json.decode(detailResponse.body)['data'] as Map<String, dynamic>;
+
+      //   // Create a new list with updated logo URLs
+      //   List<Coin> updatedCoins = coinList.map((coin) {
+      //     return coin.copyWith(
+      //         logoUrl: detailedData[coin.id.toString()]['logo'] ?? "");
+      //   }).toList();
+
+      //   coins.assignAll(updatedCoins);
+      //   print("Slugs are: $slugs");
+
+      //   
+      // }
+
+
+      
+//  final String infuraUrl = "https://mainnet.infura.io/v3/45bd97aab7504c318ccd3640b426d368"; // Replace with your Infura Project ID
+//   late Web3Client web3;
+  
+ // RxDouble totalBalanceUSD = 0.0.obs;
+
+
+// Future<double> getTokenBalance(String? contractAddress, String walletAddress, int decimals) async {
+//   if (contractAddress == null || contractAddress.isEmpty) {
+//     print("Contract address is null or empty. Returning 0.");
+//     return 0.0;
+//   }
+
+//   try {
+//     final contract = DeployedContract(
+//       ContractAbi.fromJson(
+//         '[{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]',
+//         'ERC20',
+//       ),
+//       EthereumAddress.fromHex(contractAddress),
+//     );
+
+//     final balanceFunction = contract.function('balanceOf');
+//     final balance = await web3.call(
+//       contract: contract,
+//       function: balanceFunction,
+//       params: [EthereumAddress.fromHex(walletAddress)],
+//     );
+
+//     final BigInt rawBalance = balance.first as BigInt;
+//     return rawBalance / BigInt.from(10).pow(decimals);
+//   } catch (e) {
+//     print("Error fetching token balance for $contractAddress: $e");
+//     return 0.0;
+//   }
+// }
+
+  // Future<void> fetchBalances() async {
+  //   double totalBalance = 0.0;
+
+  //   for (int i = 0; i < coins.length; i++) {
+  //     double balance = await getTokenBalance(coins[i].contractAddress, wallwtAddress.value, coins[i].decimals);
+  //     coins[i] = coins[i].copyWith(balance: balance);
+  //     totalBalance += balance * coins[i].price; // Convert token balance to USD
+  //   }
+
+  //   totalBalanceUSD.value = totalBalance;
+
+  //   update(); // Update UI
+  //    Get.offAll(() => const BottomNavBar());
+  // }
+
+
+  
+  // var coinBalances = <double>[].obs;
+  // var coinBalaneInUsd=<double>[].obs;
+
+  
+//  var coinBalances = <CoinBalanceModel>[].obs;
+
+//   Future<void> fetchCoinBalance(String walletAddress) async {
+   
+//     String url = "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/0x256822b9d3a2afd22b309745b7ddaeb9e99e88d9/token-balances";
+    
+//     print("Fetching balances for wallet: $walletAddress");
+
+//     final Map<String, dynamic> requestBody = {
+//       "tokens": slugs
+//     };
+
+//     try {
+//       final response = await http.post(
+//         Uri.parse(url),
+//         headers: {"Content-Type": "application/json"},
+//         body: jsonEncode(requestBody),
+//       );
+
+//     if (response.statusCode == 200) {
+//   final Map<String, dynamic> responseData = jsonDecode(response.body);
+//   Get.log("API Response: $responseData");
+
+//   List<CoinBalanceModel> balances = responseData.entries.map((entry) {
+//     return CoinBalanceModel.fromJson(entry.key, entry.value as Map<String, dynamic>);
+//   }).toList();
+
+//   // Update the observable list
+//   coinBalances.assignAll(balances);
+//   Get.snackbar("response is", "$walletAddress");
+//   getNativeBalance(walletAddress);
+// } else {
+//   Get.snackbar("Error: ${response.statusCode}", response.body);
+// }
+ 
+//     } catch (e) {
+//      Get.snackbar("Error:" ,e.toString());
+//     }
+//   }
+

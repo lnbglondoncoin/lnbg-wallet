@@ -18,7 +18,8 @@ class SplashController extends GetxController {
              Get.off(() => WalkThroughScreen());
       }
       else{
- Get.offAll(() => const BottomNavBar());
+//  Get.offAll(() => const BottomNavBar());
+walletCreatingController.fetchWalletData(walletCreatingController.wallwtAddress.value);
       }
      
     });

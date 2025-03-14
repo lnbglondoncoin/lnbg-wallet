@@ -1,12 +1,16 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/controller/receive_coin_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -15,17 +19,15 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReceiveCoinQR extends StatelessWidget {
-  final String coinIconPath;
-  final String coinCode;
-  final String coinFullName;
+  final TokenData token;
 
-  const ReceiveCoinQR({
+   ReceiveCoinQR({
     super.key,
-    required this.coinIconPath,
-    required this.coinCode,
-    required this.coinFullName,
+    required this.token
   });
-
+final walletCreatingController=Get.find<WalletCreatingController>();
+ final controller = Get.put(ReceiveCoinController());
+   final GlobalKey _qrKey = GlobalKey(); // Define GlobalKey
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
@@ -33,7 +35,7 @@ class ReceiveCoinQR extends StatelessWidget {
     return Scaffold(
       backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
       appBar: CustomAppBar(
-        title: "Receive $coinCode",
+        title: "Receive ${token.symbol}",
         iconPath: 'assets/icons/search.svg',
       ),
       body: SingleChildScrollView(
@@ -42,8 +44,8 @@ class ReceiveCoinQR extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: Image.asset(
-                  coinIconPath,
+                child: Image.network(
+                  token.logoUrl,
                   height: 100.h,
                   width: 100.w,
                 ),
@@ -56,29 +58,23 @@ class ReceiveCoinQR extends StatelessWidget {
                   height: 360.h,
                   width: double.infinity,
                   alignment: Alignment.center,
-                  child: QrImageView(
-                    padding: EdgeInsets.zero,
-                    data: "https://your-wallet-address-or-info.com/$coinCode",
-                    version: QrVersions.auto,
-                    // size: 380.h,
-                    foregroundColor:  isDarkMode?lightBlackColor3:whiteColor,
-                    backgroundColor:isDarkMode? whiteColor:blackColor2,
-                    errorStateBuilder: (context, error) {
-                      return Center(
-                        child: Text(
-                          "Oops! Something went wrong.",
-                          style: TextStyle(color: Colors.red, fontSize: 16.sp),
-                        ),
-                      );
-                    },
-                  ),
+                  child: RepaintBoundary(
+              key: _qrKey, // Attach GlobalKey here
+              child: QrImageView(
+                padding: EdgeInsets.zero,
+                data: walletCreatingController.wallwtAddress.value,
+                version: QrVersions.auto,
+                foregroundColor: isDarkMode ? Colors.white : Colors.black,
+                backgroundColor: isDarkMode ? Colors.black : Colors.white,
+              ),
+            ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Text(
+                child: SelectableText(
                   textAlign: TextAlign.center,
-                  "0x7131CA84856767fjfh8sjhqak8s88848f8E696",
+                  walletCreatingController.wallwtAddress.value,
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
@@ -122,16 +118,21 @@ class ReceiveCoinQR extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 60.h,
-                          width: 60.w,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: lightGreenColor.withOpacity(0.08)),
-                          child: Center(
-                              child: SvgPicture.asset("assets/icons/copy.svg",colorFilter: 
-                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
-                                    .srcIn),)),
+                        GestureDetector(
+                        onTap: (){
+                          controller.copyAddress(walletCreatingController.wallwtAddress.value);
+                        },
+                          child: Container(
+                            height: 60.h,
+                            width: 60.w,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: lightGreenColor.withOpacity(0.08)),
+                            child: Center(
+                                child: SvgPicture.asset("assets/icons/copy.svg",colorFilter: 
+                                      ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
+                                      .srcIn),)),
+                          ),
                         ),
                         Text(
                           "Copy",
@@ -220,48 +221,45 @@ class ReceiveCoinQR extends StatelessWidget {
       backgroundColor: Colors.transparent, // Transparent background
       builder: (context) {
         return AnimatedBottomSheet(
-          iconPath: coinIconPath,
+          iconPath: token.logoUrl,
         );
       },
     );
   }
-
-  void _shareQRCode() async {
+ Future<File?> _captureQRImage() async {
     try {
-      final qrImage = await _captureQRImage();
-      if (qrImage != null) {
-        await Share.shareXFiles([XFile(qrImage.path)],
-            text: 'Scan this QR code!');
-      }
-    } catch (e) {
-    //  print("Error sharing QR code: $e");
-    }
-  }
+      RenderRepaintBoundary? boundary =
+          _qrKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
-  Future<File?> _captureQRImage() async {
-    try {
-      final qrPainter = QrPainter(
-        data: "https://your-wallet-address-or-info.com/$coinCode",
-        version: QrVersions.auto,
-        gapless: false,
-      );
+      if (boundary == null) return null;
 
-      // Get the temporary directory to save the QR image
+      var image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      
+      if (byteData == null) return null;
+
       final tempDir = await getTemporaryDirectory();
       final qrFile = File('${tempDir.path}/qr_code.png');
 
-      // Convert the QR code into image data
-      final image = await qrPainter.toImageData(300);
-
-      // Write the image data to the file
-      await qrFile.writeAsBytes(image!.buffer.asUint8List());
+      await qrFile.writeAsBytes(byteData.buffer.asUint8List());
 
       return qrFile;
     } catch (e) {
-    //  print("Error capturing QR image: $e");
+      print("Error capturing QR image: $e");
       return null;
     }
   }
+
+  void _shareQRCode() async {
+    File? imageFile = await _captureQRImage();
+    if (imageFile != null) {
+      Share.shareXFiles([XFile(imageFile.path)], text: "Here is my QR code!");
+    } else {
+      print("Failed to capture QR Code image");
+    }
+  }
+
+
 }
 
 class AnimatedBottomSheet extends StatefulWidget {
@@ -353,7 +351,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               const CustomDivider(),
               SizedBox(height: 20.h),
               TextFormField(
-                controller: controller.ammountController,
+                controller: controller.amountController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(18.r),

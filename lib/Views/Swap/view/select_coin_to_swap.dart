@@ -4,25 +4,28 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_coin_qr.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Swap/controller/swap_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 
-class ReceiveView extends StatelessWidget {
-   ReceiveView({super.key});
+class SelectCoinToSwap extends StatelessWidget {
+  final bool firstCoin;
+   SelectCoinToSwap({super.key, required this.firstCoin});
+   final controller=Get.put(SwapController());
 final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
-       bool isDarkMode = theme.brightness == Brightness.dark;
+       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
         isSuffix: true,
-        title: "Receive",
+        title: "Select Coin",
         iconPath: 'assets/icons/search.svg',
       ),
-      body:  Obx((){
+      body: Obx((){
         return 
         
         SingleChildScrollView(
@@ -40,7 +43,12 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                       bottom: index == walletCreatingController.tokenData.length - 1 ? 50.h : 0),
                   child: GestureDetector(
                     onTap: () {
-                     Get.to(()=>ReceiveCoinQR(token: token,));
+                    if(firstCoin==true){
+                       controller.updateFirstToken(token);
+                    }
+                    else{
+                      controller.updateSecondToken(token);
+                    }
                     },
                     child: Container(
                       // height: 80.h,
@@ -102,6 +110,6 @@ final walletCreatingController=Get.find<WalletCreatingController>();
         ),
       );
       })
-   );
+    );
   }
 }

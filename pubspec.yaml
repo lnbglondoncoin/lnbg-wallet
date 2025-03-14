@@ -54,6 +54,8 @@ dependencies:
   get_storage: ^2.1.1
   fl_chart: ^0.68.0
   http: ^1.3.0
+  url_launcher: ^6.3.1
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +84,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/sounds/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

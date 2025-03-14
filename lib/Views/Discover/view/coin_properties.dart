@@ -113,7 +113,7 @@ SizedBox(height: 20.h,),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const ReceiveView());
+                              Get.to(() =>  ReceiveView());
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +144,7 @@ SizedBox(height: 20.h,),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const BuyView());
+                              Get.to(() =>  BuyView());
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,

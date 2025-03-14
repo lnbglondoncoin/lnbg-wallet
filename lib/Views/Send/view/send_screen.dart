@@ -5,11 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 
 class SendScreen extends StatelessWidget {
-  const SendScreen({super.key});
-
+   SendScreen({super.key});
+final walletCreatingController=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
       var theme = Theme.of(context);
@@ -21,28 +22,26 @@ class SendScreen extends StatelessWidget {
         title: "Send",
         iconPath: 'assets/icons/search.svg',
       ),
-      body: SingleChildScrollView(
+      body: Obx((){
+        return 
+        
+        SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: ListView.builder(
-              itemCount: coinIconList.length,
+              itemCount: walletCreatingController.tokenData.length,
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                String coinCode = coinPrice[index];
-                List<String> parts = coinCode.split(' ');
-                String currencyCode = parts.length > 1
-                    ? parts[1]
-                    : ''; // Getting the part after the space (BTC)
+                final token = walletCreatingController.tokenData[index];
 
                 return Padding(
                   padding: EdgeInsets.only(
-                      bottom: index == coinList.length - 1 ? 50.h : 0),
+                      bottom: index == walletCreatingController.tokenData.length - 1 ? 50.h : 0),
                   child: GestureDetector(
                     onTap: () {
                       Get.to(() => SendCoin(
-                            coinName: coinList[index],
-                            coinCode: currencyCode,
+                            token: token,
                           ));
                     },
                     child: Container(
@@ -60,8 +59,8 @@ class SendScreen extends StatelessWidget {
                               height: 45.h,
                               width: 35.w,
                               child: Center(
-                                child: Image.asset(
-                                  coinIconList[index],
+                                child: Image.network(
+                                  token.logoUrl,
                                 ),
                               ),
                             ),
@@ -69,7 +68,7 @@ class SendScreen extends StatelessWidget {
                               width: 15.w,
                             ),
                             Text(
-                              coinList[index],
+                              token.name,
                               style: GoogleFonts.urbanist(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
@@ -80,14 +79,14 @@ class SendScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  coinPrice[index],
+                                "\$${token.balance.toStringAsFixed(2)} ${token.symbol}",
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
                                       color: isDarkMode?whiteColor:blackColor2),
                                 ),
                                 Text(
-                                  coinndolorPrice[index],
+                                   "\$${ token.balanceInUsd.toStringAsFixed(2)}",
                                   style: GoogleFonts.urbanist(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w800,
@@ -103,7 +102,8 @@ class SendScreen extends StatelessWidget {
                 );
               }),
         ),
-      ),
+      );
+      })
     );
   }
 }

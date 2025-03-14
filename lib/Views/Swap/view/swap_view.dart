@@ -5,14 +5,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Swap/controller/swap_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Swap/view/select_coin_to_swap.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class SwapView extends StatelessWidget {
-  const SwapView({super.key});
-
+   SwapView({super.key});
+final controller=Get.put(SwapController());
   @override
   Widget build(BuildContext context) {
           var theme = Theme.of(context);
@@ -50,9 +52,15 @@ class SwapView extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color:isDarkMode?greyColor: darkGreyColor
                       ),),
-                      Row(children: [
+             
+             Obx((){
+              return          Row(children: [
                         Flexible(
                           child: TextField(
+                            controller: controller.balanceController,
+                            onChanged: (value) {
+                             controller.updateAmount(value,controller.firstToken.value.priceInUsd);
+                            },
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Enter balance",
@@ -74,31 +82,40 @@ class SwapView extends StatelessWidget {
                           height: 24.h,
                           width: 24.w,
                           child: Center(
-                            child: Image.asset("assets/icons/etg.png"),
+                            child: Image.network(controller.firstToken.value.logoUrl),
                           ),
                         ),
                          SizedBox(width: 5.w,),
-                        Text("ETH",style:GoogleFonts.urbanist(
+                        Text(controller.firstToken.value.symbol,style:GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
                           color:isDarkMode?whiteColor: blackColor2
                         ) ,),
                         SizedBox(width: 5.w,),
-                        SizedBox(
-                          height: 24.h,
-                          width: 24.w,
-                          child: Center(
-                            child: SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
-                                ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(()=>SelectCoinToSwap(firstCoin: true,));
+                          },
+                          child: SizedBox(
+                            height: 24.h,
+                            width: 24.w,
+                            child: Center(
+                              child: SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
+                                  ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
+                            ),
                           ),
                         ),
 
-                      ],),
-                      Text("Balance: 59.47 ETH",style: GoogleFonts.urbanist(
+                      ],);
+                 
+             }),
+                 Obx((){
+                      return  Text("Balance: ${controller.cryptoAmount.value} ${controller.firstToken.value.symbol}",style: GoogleFonts.urbanist(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color:isDarkMode?greyColor: darkGreyColor
-                      ),),
+                      ),);
+                     }),
                       SizedBox(height: 20.h,),
                     Row(
                       children: [
@@ -139,8 +156,9 @@ class SwapView extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                          color:isDarkMode?greyColor: darkGreyColor
                       ),),
-                      Row(children: [
-                       Text("0",style: GoogleFonts.urbanist(
+                      Obx((){
+                        return Row(children: [
+                       Text(controller.usdAmount2nd.value.toString(),style: GoogleFonts.urbanist(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w700,
                                 color:isDarkMode? greyColor:blackColor2
@@ -150,31 +168,39 @@ class SwapView extends StatelessWidget {
                           height: 24.h,
                           width: 24.w,
                           child: Center(
-                            child: Image.asset("assets/icons/tether.png"),
+                            child: Image.network(controller.secondToken.value.logoUrl),
                           ),
                         ),
                          SizedBox(width: 5.w,),
-                        Text("USDT",style:GoogleFonts.urbanist(
+                        Text(controller.secondToken.value.symbol,style:GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
                           color:isDarkMode?whiteColor: blackColor2
                         ) ,),
                         SizedBox(width: 5.w,),
-                        SizedBox(
-                          height: 24.h,
-                          width: 24.w,
-                          child: Center(
-                            child: SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
-                                ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
+                      GestureDetector(
+                        onTap: (){
+                           Get.to(()=>SelectCoinToSwap(firstCoin: false,));
+                        },
+                          child: SizedBox(
+                            height: 24.h,
+                            width: 24.w,
+                            child: Center(
+                              child: SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
+                                  ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
+                            ),
                           ),
                         ),
 
-                      ],),
-                      Text("Balance: 59.47 ETH",style: GoogleFonts.urbanist(
+                      ],);
+                      }),
+                     Obx((){
+                      return  Text("Balance: ${controller.cryptoAmount2nd.value} ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color:isDarkMode?greyColor: darkGreyColor
-                      ),),
+                      ),);
+                     })
              ],
                     ),
                   ),
@@ -252,11 +278,13 @@ class SwapView extends StatelessWidget {
                 ],
                ),
                SizedBox(height: 20.h,),
-                Text("1 ETH = \$1,334.2 USDT%",style: GoogleFonts.urbanist(
+              Obx((){
+                return   Text("1 ${controller.firstToken.value.symbol} = \$1,334.2 ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
                       color:isDarkMode?greyColor: darkGreyColor
-                                       ),),
+                                       ),);
+              })
               ],
             ),
           ),

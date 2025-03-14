@@ -241,7 +241,13 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
-        child: CustomOrangeButton(
+        child: Obx((){
+          return 
+          controller.walletCreatingController.isLoading.value? CircularProgressIndicator(
+            color: orange3,
+          )
+          :
+          CustomOrangeButton(
             buttonText: "Import",
             onPressed: () {
               controller.isChecked.value
@@ -251,7 +257,8 @@ class ImportFromSeedPhraseScreen extends StatelessWidget {
                       snackPosition: SnackPosition.TOP,
                       "Attention",
                       "Please accept terms and conditions");
-            }),
+            });
+        })
       ),
     );
   }

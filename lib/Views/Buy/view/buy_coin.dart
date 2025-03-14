@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/uy_coin_contrller.dart';
+import 'package:lnbg_crypto_wallet_app/Models/buy_request_model.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/buy_coin_contrller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_currency_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_provider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -14,8 +16,8 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class BuyCoinScreen extends StatelessWidget {
-  final String coinCode;
-  BuyCoinScreen({super.key, required this.coinCode});
+  final TokenData token;
+  BuyCoinScreen({super.key, required this.token});
   final CurrencyController controller = Get.put(CurrencyController());
 
   @override
@@ -25,7 +27,7 @@ class BuyCoinScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
-          title: "Buy $coinCode",
+          title: "Buy ${token.symbol}",
           iconPath: 'assets/icons/search.svg',
         ),
         body: SingleChildScrollView(
@@ -93,7 +95,9 @@ class BuyCoinScreen extends StatelessWidget {
           cursorColor:isDarkMode?lightGreenColor:  orange3,
           textAlign: TextAlign.center,
           onChanged: (value) {
-            controller.amount.value = value.isEmpty ? "0" : value;
+            controller.updateAmount(value, token.priceInUsd);
+              
+            // controller.amount.value ;
           },
         ),
       ),
@@ -106,7 +110,7 @@ class BuyCoinScreen extends StatelessWidget {
               ),
               Obx(() {
                 return Text(
-                  "~ ${controller.amount} ETH",
+                  "~ ${controller.cryptoAmount.value.toStringAsFixed(6)} ${token.symbol}",
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
@@ -133,15 +137,18 @@ class BuyCoinScreen extends StatelessWidget {
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: ListTile(
+                      child:Obx((){
+                        return  ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: SvgPicture.asset(
-                          "assets/icons/binance.svg",
+                          controller.providerImage.value==""?isDarkMode?
+  "assets/icons/binance.svg":  "assets/icons/binance.svg":
+                          controller.providerImage.value,
                           height: 44.h,
                           width: 44.w,
                         ),
                         title: Text(
-                          "Binance Connect",
+                          controller.selectedProvider.value,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
@@ -150,7 +157,8 @@ class BuyCoinScreen extends StatelessWidget {
                         trailing:
                             SvgPicture.asset("assets/icons/arrowRight.svg",colorFilter: 
                             ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),),
-                      ),
+                      );
+                      })
                     ),
                   ),
                 ),
@@ -161,80 +169,29 @@ class BuyCoinScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
             padding: EdgeInsets.all(20.h),
-            child: isDarkMode?CustomGreenButton(
+            child: 
+            Obx((){
+              return controller.isLoading.value?CircularProgressIndicator(
+                color: orange3,
+              ):
+              isDarkMode?CustomGreenButton(
                 buttonText: "Continue",
-                onPressed: () {
-                  _showSuccesPopup(context);
+                onPressed: () async{
+                   if(controller.selectedProvider.value=="MoonPay"){
+           await  controller.buyCrypto(token.symbol);
+           }
                 }):CustomButton(
                 buttonText: "Continue",
-                onPressed: () {
-                  _showSuccesPopup(context);
-                })));
+                onPressed: () async{
+           if(controller.selectedProvider.value=="MoonPay"){
+           await  controller.buyCrypto(token.symbol);
+           }
+              
+                });
+            })
+            
+            ));
   }
 
-  void _showSuccesPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
-          actionsPadding:
-              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: whiteColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(48.r),
-          ),
-          icon: Image.asset(
-            "assets/images/buySuccess.png",
-            height: 180.h,
-            width: 186.w,
-          ),
-          title: Text(
-            "Successful Purchase!",
-            style: GoogleFonts.urbanist(
-                fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
-          ),
-          content: Text(
-              textAlign: TextAlign.center,
-              "Purchase Success! Crypto has been added to your wallet.",
-              style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w400,
-                  color: blackColor2)),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 58.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.r),
-                    gradient: const LinearGradient(colors: [orange2, orange1])),
-                child: Center(
-                  child: Text(
-                    "View Details",
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.sp,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomLightGreenButton(
-                buttonText: "Cancel",
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
-        );
-      },
-    );
-  }
+
 }

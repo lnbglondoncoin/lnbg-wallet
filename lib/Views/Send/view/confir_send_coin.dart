@@ -5,22 +5,25 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/controller/send_controllr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/edit_network_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class ConfirmSendCoinScreen extends StatelessWidget {
-  final String ammount;
+  // final String ammount;
   final String address;
-  final String coinCode;
+  final TokenData token;
   ConfirmSendCoinScreen(
       {super.key,
-      required this.ammount,
+      // required this.ammount,
       required this.address,
-      required this.coinCode});
+      required this.token});
   final controller = Get.put(SendController());
+   final walletCreatingCotroller=Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -44,7 +47,8 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "$ammount $coinCode",
+                        textAlign: TextAlign.center,
+                        "${controller.ammountIncrypto.value.toStringAsFixed(8)} ${token.symbol}",
                         style: GoogleFonts.urbanist(
                             fontSize: 48.sp,
                             fontWeight: FontWeight.w700,
@@ -53,7 +57,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        "\$2,107.11 USD",
+                         "\$${  controller.ammountInUSD.value.toStringAsFixed(10)} USD",
                         style: GoogleFonts.urbanist(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
@@ -75,7 +79,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                           color:isDarkMode?whiteColor: blackColor2),
                     ),
                     Text(
-                      address==""?"Adress":"fvjhgv",
+                      walletCreatingCotroller.wallwtAddress.value,
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
@@ -96,13 +100,13 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                         Flexible(
                             child: TextFormField(
                           controller: controller.recipientAddressController,
-                          enabled: controller.recipientAddressController.text == "" ||
+                          enabled: controller.recipientAddressController.text == "" ||controller.recipientAddressController.text.isEmpty||
                                   controller.isEditClicked.value == true
                               ? true
                               : false,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter address to send",
+                            hintText: address==""?"Enter address to send":address,
                             hintStyle: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
@@ -125,42 +129,51 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Network Fee",
                           style: GoogleFonts.urbanist(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
-                              color:isDarkMode?whiteColor: blackColor2),
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: isDarkMode ? whiteColor : blackColor2,
+                          ),
                         ),
-                        const Spacer(),
-                        Flexible(
-                            child: TextFormField(
-                          controller: controller.recipientAddressController,
-                          enabled: controller.recipientAddressController.text == "" ||
-                                  controller.isEditClicked.value == true
-                              ? true
-                              : false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "0.02 ETH (\$26.35 USD)",
-                            hintStyle: GoogleFonts.urbanist(
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child:Obx((){
+                              return  Text(
+                              controller.selectedNetworkSpeed.value == "Slow"
+                                  ? "${controller.networkFee.value} ${token.symbol} (\$${controller.networkFeeUsd.value} USD)"
+                                  : controller.selectedNetworkSpeed.value == "Moderate"
+                                      ? "${controller.moderateNetworkFee.value} ${token.symbol} (\$${controller.moderateNetworkFeeUsd.value} USD)"
+                                      : "${controller.fastNetworkFee.value} ${token.symbol} (\$${controller.fastNetworkFeeUSD.value} USD)",
+                              style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w800,
-                                color:isDarkMode?whiteColor: blackColor2),
+                                color: isDarkMode ? whiteColor : blackColor2,
+                              ),
+                              softWrap: true,
+                              textAlign: TextAlign.right,
+                            );
+                            })
                           ),
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color:isDarkMode?whiteColor: blackColor2),
-                        )),
+                        ),
+                        SizedBox(width: 10.w),
                         GestureDetector(
-                            onTap: () {
-                              Get.to(() => EditNetworkScreen(
-                                    coinCode: coinCode,
-                                  ));
-                            },
-                            child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn)))
+                          onTap: () {
+                            Get.to(() => EditNetworkScreen(token: token));
+                          },
+                          child: SvgPicture.asset(
+                            "assets/icons/Edit.svg",
+                            colorFilter: ColorFilter.mode(
+                              isDarkMode ? lightGreenColor : orange3,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     const CustomDivider(),
@@ -168,35 +181,38 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Max Total",
                           style: GoogleFonts.urbanist(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
-                              color:isDarkMode?whiteColor: blackColor2),
-                        ),
-                        const Spacer(),
-                        Flexible(
-                            child: TextFormField(
-                          controller: controller.recipientAddressController,
-                          enabled: controller.recipientAddressController.text == "" ||
-                                  controller.isEditClicked.value == true
-                              ? true
-                              : false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "0.02 ETH (\$26.35 USD)",
-                            hintStyle: GoogleFonts.urbanist(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w800,
-                                color:isDarkMode?whiteColor: blackColor2),
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: isDarkMode ? whiteColor : blackColor2,
                           ),
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: blackColor2),
-                        )),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Obx(() {
+                            return Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                controller.selectedNetworkSpeed.value == "Slow"
+                                    ? "${controller.totalAmount.value} ${token.symbol} (\$${controller.totalAmountUsd.value} USD)"
+                                    : controller.selectedNetworkSpeed.value == "Moderate"
+                                        ? "${controller.totalAmountModerate.value} ${token.symbol} (\$${controller.totalAmountModerateUsd.value} USD)"
+                                        : "${controller.totalAmountFast.value} ${token.symbol} (\$${controller.totalAmountUsdFast} USD)",
+                                style: GoogleFonts.urbanist(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: isDarkMode ? whiteColor : blackColor2,
+                                ),
+                                softWrap: true,
+                                textAlign: TextAlign.right,
+                              ),
+                            );
+                          }),
+                        ),
                       ],
                     ),
                   ],
@@ -212,160 +228,24 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(25.h),
-        child:isDarkMode? CustomGreenButton(
+        child: Obx((){
+          return controller.isLoading.value?CircularProgressIndicator(
+            color: orange3,
+          ):isDarkMode? CustomGreenButton(
             buttonText: "Send",
-            onPressed: () {
-               _showFailPopup(context);
+            onPressed: () async{
+              await controller.sendCrypto(context);
+               
             }): CustomButton(
             buttonText: "Send",
-            onPressed: () {
-                _showSuccesPopup(context);
-            }),
+            onPressed: ()async {
+                await controller.sendCrypto(context);
+                
+            });
+        })
       ),
     );
   }
 
-  void _showSuccesPopup(BuildContext context) {
-      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
-          actionsPadding:
-              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(48.r),
-          ),
-          icon: Image.asset(
-           isDarkMode? "assets/images/success21.png": "assets/images/success2.png",
-            height: 180.h,
-            width: 186.w,
-          ),
-          title: Text(
-            "Successful Sent!",
-            style: GoogleFonts.urbanist(
-                fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?lightGreenColor:orange3),
-          ),
-          content: Text(
-              textAlign: TextAlign.center,
-              "Your crypto was sent successfully. You can view transaction below.",
-              style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w400,
-                  color: isDarkMode?whiteColor: blackColor2)),
-          actions: [
-         isDarkMode?CustomGreenButton(buttonText: "View Details", onPressed: (){
-          Navigator.pop(context);
-         }):
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 58.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.r),
-                    gradient: const LinearGradient(colors: [orange2, orange1])),
-                child: Center(
-                  child: Text(
-                    "View Details",
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.sp,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-            ),
-           
-          SizedBox(
-              height: 15.h,
-            ),
-            CustomLightGreenButton(
-                buttonText: "Cancel",
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
-        );
-      },
-    );
-  }
 
-  void _showFailPopup(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
-          actionsPadding:
-              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-           backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(48.r),
-          ),
-          icon: Image.asset(
-           isDarkMode? "assets/images/fail2.png": "assets/images/fail.png",
-            height: 180.h,
-            width: 186.w,
-          ),
-          title: Text(
-            "Oops.. .Failed!",
-            style: GoogleFonts.urbanist(
-                fontSize: 24.sp, fontWeight: FontWeight.w700, color: pinkColor),
-          ),
-          content: Text(
-              textAlign: TextAlign.center,
-              "Please check your internet connection, and then try again.",
-              style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w400,
-                   color: isDarkMode?whiteColor: blackColor2)),
-          actions: [
-            isDarkMode?CustomGreenButton(buttonText: "Try Again", onPressed: (){
-                Navigator.pop(context);
-            }):GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 58.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.r),
-                    gradient: const LinearGradient(colors: [orange2, orange1])),
-                child: Center(
-                  child: Text(
-                    "Try Again",
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.sp,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomLightGreenButton(
-                buttonText: "Cancel",
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
-        );
-      },
-    );
-  }
 }

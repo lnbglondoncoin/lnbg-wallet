@@ -162,9 +162,10 @@ class ImportFromSeedController extends GetxController {
   
   if (privateKey.isNotEmpty) {
     walletCreatingController.setPrivateKey(privateKey);
+     walletCreatingController.loadWaletData();
     walletCreatingController.savePhraseToPrefs(seedPhrase);
     walletCreatingController.savePassword(passController.text);
-    Get.offAll(BottomNavBar());
+  walletCreatingController.fetchCoinData();
   } else {
     Get.snackbar("Error", "Failed to import wallet. Try again.");
   }

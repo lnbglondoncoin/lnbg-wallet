@@ -337,8 +337,25 @@ walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.val
           actions: [
            Obx((){
             return   GestureDetector(
-              onTap: () {
-               walletCreatingController.fetchCoinData();
+              onTap: ()async {
+               
+                Get.log("response is hfmh");
+              //  walletCreatingController.savePhraseToPrefs(walletCreatingController.);
+                 final privateKey = await walletCreatingController.getPrivateKey(walletCreatingController.seedPhrase!);
+//Get.snackbar("private key is",privateKey);
+Get.log(privateKey);
+print(privateKey);
+  if (privateKey.isNotEmpty) {
+   await walletCreatingController.setPrivateKey(privateKey);
+  await walletCreatingController.loadWaletData();
+  await walletCreatingController.fetchCoinData();
+  // Get.log('gfnh');
+  //               Get.log("seed phrase is ${walletCreatingController.seedPhrase}");
+  
+  } else {
+    Get.snackbar("Error", "Failed to import wallet. Try again.");
+  }
+             //  walletCreatingController.fetchCoinData();
               },
               child: walletCreatingController.isLoading.value?Center(
                 child: CircularProgressIndicator(

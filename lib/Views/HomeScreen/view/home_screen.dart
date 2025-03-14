@@ -120,7 +120,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     // SizedBox(height: 30.h,),
                     Center(
                       child: Text(
-                        "\$99,677.55",
+                        "\$${walletCreatingController.tBlnc.value.toString()}",
+                      // walletCreatingController.totalBalanceUSD.value.toStringAsFixed(2),
                         style: GoogleFonts.urbanist(
                             fontSize: 48.sp,
                             fontWeight: FontWeight.w700,
@@ -151,7 +152,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => const SendScreen());
+                                Get.to(() =>  SendScreen());
                               },
                               child: Container(
                                 height: 60.h,
@@ -179,7 +180,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => const ReceiveView());
+                            Get.to(() =>  ReceiveView());
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,7 +211,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => const BuyView());
+                            Get.to(() =>  BuyView());
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -333,29 +334,25 @@ class _HomeScreenViewState extends State<HomeScreenView>
               
               Obx((){
                 return  
-                walletCreatingController.coins.isEmpty?
-                Center(child: CircularProgressIndicator()):
+                walletCreatingController.tokenData.isEmpty?
+                Center(child: CircularProgressIndicator(
+                  color:orange3,
+                )):
                              SingleChildScrollView(
                               child: Column(
                                 children: [
                                   ListView.builder(
                                     padding: EdgeInsets.zero,
-                                      itemCount: walletCreatingController.coins.length,
+                                      itemCount: walletCreatingController.tokenData.length,
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       itemBuilder: (context, index) {
-                                        final coin = walletCreatingController.coins[index];
+                                        final token = walletCreatingController.tokenData[index];
+                                       // final balances=walletCreatingController.coinBalances[index];
                                         return GestureDetector(
                                           onTap: () {
                                             Get.to(()=>TokenDetailsScreen(
-                                              coinIconPath: tokenIconList[index],
-                                              coinName: tokennameList[index],
-                                              tokenPrice:    tokenCoinndolorPriceWithPercentage[
-                                                                index],
-                                              percentage:  tokenPercentage[
-                                                                index],
-                                              prceInTokenshortWord:   tokenCoinPrice[index],
-                                              priceDolor: tokenCoinndolorPrice[index],
+                                              token: token,
                                             ));
                                           },
                                           child: Container(
@@ -379,10 +376,12 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     width: 35.w,
                                                     child: Center(
                                                       child:
-                                                      coin.logoUrl.isNotEmpty?
+                                                      token.logoUrl.isNotEmpty?
                                                        Image.network(
-                                                        coin.logoUrl,
-                                                      ): Icon(Icons.currency_bitcoin),
+                                                        token.logoUrl,
+                                                      ): 
+                                                      
+                                                      Icon(Icons.currency_bitcoin),
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -396,7 +395,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                       coin.name,
+                                                    token.name,
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 20.sp,
                                                             fontWeight:
@@ -408,7 +407,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                       Row(
                                                         children: [
                                                           Text(
-                                                           coin.price.toString(),
+                                                           "\$${token.priceInUsd.toStringAsFixed(2)}",
                                                             style: GoogleFonts.urbanist(
                                                                 fontSize: 14.sp,
                                                                 fontWeight:
@@ -422,16 +421,16 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                             width: 10.w,
                                                           ),
                                                           Text(
-                                                            tokenPercentage[
-                                                                index],
+                                                           // coin.contractAddress,
+                                                            token.trendPercentage.toStringAsFixed(2),
                                                             style: GoogleFonts
                                                                 .urbanist(
                                                                     fontSize:
-                                                                        12.sp,
+                                                                         12.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
-                                                                    color: tokenPercentage[index]
+                                                                    color: token.trendPercentage.toStringAsFixed(2)
                                                                             .startsWith('-')
                                                                         ? pinkColor
                                                                         : isDarkMode
@@ -448,7 +447,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                       coin.price.toStringAsFixed(2),
+                                                       "${token.balance} ${token.symbol}",
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 18.sp,
                                                             fontWeight:
@@ -458,7 +457,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                                 : blackColor2),
                                                       ),
                                                       Text(
-                                                        coin.price.toStringAsFixed(2),
+                                                       "\$${token.balanceInUsd.toStringAsFixed(2)}",
                                                         style: GoogleFonts
                                                             .urbanist(
                                                                 fontSize: 14.sp,
