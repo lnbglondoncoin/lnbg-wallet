@@ -158,7 +158,7 @@ final controller=Get.put(SwapController());
                       ),),
                       Obx((){
                         return Row(children: [
-                       Text(controller.usdAmount2nd.value.toString(),style: GoogleFonts.urbanist(
+                       Text(controller.usdAmount2nd.value.toStringAsFixed(5),style: GoogleFonts.urbanist(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w700,
                                 color:isDarkMode? greyColor:blackColor2
@@ -279,7 +279,7 @@ final controller=Get.put(SwapController());
                ),
                SizedBox(height: 20.h,),
               Obx((){
-                return   Text("1 ${controller.firstToken.value.symbol} = \$1,334.2 ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
+                return   Text("1 ${controller.firstToken.value.symbol} = \$${controller.oneFirstCoinEquelsSecondCoins.value} ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
                       color:isDarkMode?greyColor: darkGreyColor

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Swap/controller/swap_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class SwapCoinScreen extends StatelessWidget {
-  const SwapCoinScreen({super.key});
-
+   SwapCoinScreen({super.key});
+final controller=Get.put(SwapController());
   @override
   Widget build(BuildContext context) {
      var theme = Theme.of(context);
@@ -26,16 +30,17 @@ class SwapCoinScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                ListTile(
+      Obx((){
+return           ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: SizedBox(
                     height: 48.h,
                     width: 48.w,
-                    child: Image.asset("assets/icons/etg.png",height: 48.h,
+                    child: Image.network(controller.firstToken.value.logoUrl,height: 48.h,
                     width: 48.w,),
                   
                     ),
-                  title: Text("0.855 ETH",style: GoogleFonts.urbanist(
+                  title: Text("${controller.cryptoAmount.value} ${controller.firstToken.value.symbol}",style: GoogleFonts.urbanist(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
                     color:isDarkMode?whiteColor: blackColor2
@@ -46,8 +51,10 @@ class SwapCoinScreen extends StatelessWidget {
                     color:isDarkMode?greyColor: blackColor2
                   ),),
                     
-                ),
-                SizedBox(height: 10.h,),
+                );
+         
+      }),
+             SizedBox(height: 10.h,),
                 SizedBox(height: 24.h,width: 48.w,
                 child: Center(
                   child: SvgPicture.asset("assets/icons/arrowDown.svg",
@@ -60,11 +67,11 @@ class SwapCoinScreen extends StatelessWidget {
                   leading: SizedBox(
                     height: 48.h,
                     width: 48.w,
-                    child: Image.asset("assets/icons/tether.png",height: 48.h,
+                    child: Image.network(controller.secondToken.value.logoUrl,height: 48.h,
                     width: 48.w,),
                   
                     ),
-                  title: Text("0.855 ETH",style: GoogleFonts.urbanist(
+                  title: Text("${controller.cryptoAmount2nd.value} ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
                     color:isDarkMode?whiteColor: blackColor2
@@ -101,11 +108,11 @@ class SwapCoinScreen extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                       color:isDarkMode?greyColor: darkGreyColor
                     ),),
-                    Text("Wallet (0x7131C...f8E696)",style: GoogleFonts.urbanist(
+                    Text("Wallet (${controller.walletCreatingCotroller.wallwtAddress.value.substring(0, 6)}...${controller.walletCreatingCotroller.wallwtAddress.value.substring(controller.walletCreatingCotroller.wallwtAddress.value.length - 6)})",style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w400,
                       color:isDarkMode?whiteColor: blackColor2
-                    ),), 
+                    ),),
                           ],
                         ),
                         //SizedBox(height: 25.h,),
@@ -114,7 +121,7 @@ class SwapCoinScreen extends StatelessWidget {
                           width: double.infinity,
                           color:isDarkMode?lightBlackColor: lightBlack,
                         ),
-                         // SizedBox(height: 25.h,),
+                         // Sized Box(height: 25.h,),
                            Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -132,10 +139,13 @@ class SwapCoinScreen extends StatelessWidget {
                                                     child: Center(child: SvgPicture.asset("assets/icons/eyeButton.svg")))
                              ],
                            ),
-                    Text("1inch Network",style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                      color:isDarkMode?whiteColor: blackColor2
+                    Obx(() => Text(
+                      controller.formattedProvider,
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                        color: isDarkMode ? whiteColor : blackColor2
+                      ),
                     ),), 
                           ],
                         ),
@@ -157,18 +167,31 @@ class SwapCoinScreen extends StatelessWidget {
                              ],
                            ),
                            Spacer(),
-                             
-                    Text("2%",style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                      color:isDarkMode?whiteColor: blackColor2
+                    Obx(() => Text(
+                      controller.formattedSlippage,
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                        color: isDarkMode ? whiteColor : blackColor2
+                      ),
                     ),), 
                       SizedBox(width: 8.w,),
-                                                    SizedBox(
-                                                    height: 16.h,
-                                                    width: 16.w,
-                                                    child: Center(child: SvgPicture.asset("assets/icons/Edit.svg",colorFilter: 
-                                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),))),
+                                                    GestureDetector(
+                                                      onTap: () => _showSlippageDialog(context),
+                                                      child: SizedBox(
+                                                        height: 16.h,
+                                                        width: 16.w,
+                                                        child: Center(
+                                                          child: SvgPicture.asset(
+                                                            "assets/icons/Edit.svg",
+                                                            colorFilter: ColorFilter.mode(
+                                                              isDarkMode ? lightGreenColor : orange3,
+                                                              BlendMode.srcIn
+                                                            ),
+                                                          )
+                                                        )
+                                                      )
+                                                    ),
                           ],
                         ),
                          Row(
@@ -189,10 +212,13 @@ class SwapCoinScreen extends StatelessWidget {
                              ],
                            ),
                            Spacer(),
-                    Text("0.025 ETH",style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                      color:isDarkMode?whiteColor: blackColor2
+                    Obx(() => Text(
+                      controller.formattedNetworkFee,
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                        color: isDarkMode ? whiteColor : blackColor2
+                      ),
                     ),), 
                       SizedBox(width: 8.w,),
                                                     SizedBox(
@@ -220,11 +246,17 @@ class SwapCoinScreen extends StatelessWidget {
           ),
           child: Padding(
             padding:  EdgeInsets.all(20.h),
-            child:isDarkMode? CustomGreenButton(buttonText: "Confirm", onPressed: (){
-              _showSuccesPopup(context);
-            }): CustomButton(buttonText: "Confirm", onPressed: (){
-              _showSuccesPopup(context);
-            }),
+            child: Obx((){
+              return controller.isLoading.value?CircularProgressIndicator(
+                color: orange3,
+              ):isDarkMode? CustomGreenButton(buttonText: "Confirm", onPressed: ()async{
+         await     controller.executeSwap(context);
+             // _showSuccesPopup(context);
+            }): CustomButton(buttonText: "Confirm", onPressed: ()async{
+             // _showSuccesPopup(context);
+               await controller.executeSwap(context);
+            });
+            })
           ),
         ),
     );
@@ -302,4 +334,7 @@ class SwapCoinScreen extends StatelessWidget {
     );
   }
 
+  void _showSlippageDialog(BuildContext context) {
+    // Implementation of _showSlippageDialog method
+  }
 }

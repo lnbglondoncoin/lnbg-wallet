@@ -12,6 +12,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/view/splash_scree
 
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp
@@ -20,7 +21,6 @@ void main() async {
 Get.put(SplashController());
   
   await GetStorage.init();
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

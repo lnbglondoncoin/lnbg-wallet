@@ -36,7 +36,7 @@ class WalletCreatingController extends GetxController
     firstHalfOfMnemonic.value = mnemonicWords.sublist(0, 6);
     secondHalfofMnemonic.value = mnemonicWords.sublist(6, 12);
     loadWaletData();
-     fetchCoinData();
+   
   }
 
   //variablr for private key
@@ -149,6 +149,7 @@ Future<void> loadWaletData() async {
     EthereumAddress address = await getPublicKey(privateKey);
     wallwtAddress.value = address.hex;
     pvKey.value = privateKey;
+  await  fetchPreferences(wallwtAddress.value);
   } else {
     print("No private key found in SharedPreferences");
   }
@@ -186,13 +187,50 @@ Future<void> loadWaletData() async {
 var isLoading=false.obs;
 
 
+  Future<void> fetchPreferences(String walletAddress) async {
+    final String url = "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/preferences/$walletAddress";
+   
+ 
+    
+    try {
+         isLoading.value = true;
+      final response = await http.get(
+        Uri.parse(url),
+      
+      );
+
+      if (response.statusCode == 200) {
+                var data = jsonDecode(response.body);
+         List<String> tokens = List<String>.from(data["preferences"]["selectedTokens"]);
+        slugs.assignAll(tokens);
+        if(slugs.isEmpty){
+          fetchCoinData();
+        }
+        else{
+          
+await fetchWalletData(wallwtAddress.value);
+        }
+
+      } else {
+        Get.snackbar("Error", "Failed to fetch preferences: ${response.body}",
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      isLoading.value = true;
+      Get.snackbar("Errorrrr", "Something went wrong: $e",
+          snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 //Function without bitcoin...
 Future<void> fetchCoinData() async {
+  isLoading(true);
   const String baseUrl =
       "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5";
 
   try {
-    isLoading(true);
+    
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {"X-CMC_PRO_API_KEY": cmcApiKey},
@@ -211,6 +249,7 @@ await fetchWalletData(wallwtAddress.value);
      
     }
   } catch (e) {
+      isLoading(false);
     print("Error fetching coin data: $e");
     Get.snackbar("Error", e.toString());
   } finally {
@@ -219,29 +258,87 @@ await fetchWalletData(wallwtAddress.value);
 }
 
 
+//  Future<double> getNativeBalance(String walletAddress) async { 
+//   Web3Client? client; // Declare client outside try block
+  
+//   try {
+//     isLoading.value = true;
+//     Get.log("private key is $privateKey comes hereeee");
 
-var tBlnc=''.obs;
- Future<double> getNativeBalance(String walletAddress) async { 
-  Get.log("private key is $privateKey comes hereeee");
-
-  final Web3Client client = Web3Client("https://mainnet.infura.io/v3/${dotenv.env['INFURA_API_KEY']}", http.Client());
-   EthereumAddress address = EthereumAddress.fromHex(walletAddress); 
-   EtherAmount balance = await client.getBalance(address); 
-   double ethBalance = balance.getValueInUnit(EtherUnit.ether);
-   tBlnc.value=ethBalance.toString();
-   Get.offAll(() => const BottomNavBar());
-    return ethBalance;
+//     client = Web3Client(
+//       "https://mainnet.infura.io/v3/${dotenv.env['INFURA_API_KEY']}", 
+//       http.Client()
+//     );
     
-     }
+//     EthereumAddress address = EthereumAddress.fromHex(walletAddress); 
+//     EtherAmount balance = await client.getBalance(address); 
+//     double ethBalance = balance.getValueInUnit(EtherUnit.ether);
+//     tBlnc.value = ethBalance.toString();
+//     Get.offAll(() => const BottomNavBar());
+//     return ethBalance;
+//   } catch (e) {
+//     print('Error fetching balance: $e');
+//     Get.snackbar(
+//       'Error',
+//       'Failed to fetch balance',
+//       snackPosition: SnackPosition.BOTTOM,
+//     );
+//     return 0.0;
+//   } finally {
+//     client?.dispose(); // Now client is accessible here
+//     isLoading.value = false;
+//   }
+// }
+
+ 
+ 
+
+var tBlnc = ''.obs;
 
 
+Future<void> getNativeBalance(String walletAddress) async {
+  try {
+    isLoading.value = true;
+    
+    final response = await http.get(
+      Uri.parse("http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/balance")
+    );
 
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      tBlnc.value = data['balance'].toString();
+      Get.offAll(() => const BottomNavBar());
+      print('Balance fetched: ${tBlnc.value}');
+    } else {
+      print('Error fetching balance: ${response.statusCode}');
+      Get.snackbar(
+        'Error',
+        'Failed to fetch balance: ${response.statusCode}',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      tBlnc.value = '0';
+    }
+  } catch (e) {
+     isLoading.value = false;
+    print('Exception while fetching balance: $e');
+    Get.snackbar(
+      'Error',
+      'Failed to fetch balance',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+    tBlnc.value = '0';
+  } finally {
+    isLoading.value = false;
+  }
+}
 
+ 
+ 
  var tokenData = <TokenData>[].obs;
 
 
   Future<void> fetchWalletData(String walletAddress) async {
-    isLoading(true);
+     isLoading(true);
      String url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/token-balances";
 
@@ -250,6 +347,7 @@ var tBlnc=''.obs;
     };
 
     try {
+     
       final response = await http.post(
         Uri.parse(url),
         headers: {"Content-Type": "application/json"},
@@ -271,6 +369,7 @@ var tBlnc=''.obs;
         Get.snackbar("Error", "Failed to load data");
       }
     } catch (e) {
+         isLoading(false);
       Get.snackbar("Error", "Something went wrong");
     } finally {
       isLoading(false);

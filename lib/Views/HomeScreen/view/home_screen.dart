@@ -119,14 +119,18 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     ),
                     // SizedBox(height: 30.h,),
                     Center(
-                      child: Text(
+                      child: Obx((){
+                        return walletCreatingController.isLoading.value?CircularProgressIndicator(
+                          color: whiteColor,
+                        ):Text(
                         "\$${walletCreatingController.tBlnc.value.toString()}",
                       // walletCreatingController.totalBalanceUSD.value.toStringAsFixed(2),
                         style: GoogleFonts.urbanist(
                             fontSize: 48.sp,
                             fontWeight: FontWeight.w700,
                             color: whiteColor),
-                      ),
+                      );
+                      })
                     ),
                     // SizedBox(height: 30.h,),
                     Center(

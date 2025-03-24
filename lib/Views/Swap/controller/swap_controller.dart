@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
+import 'package:web3dart/crypto.dart';
 import 'dart:convert';
 import 'dart:async';
+
+import 'package:web3dart/web3dart.dart';
 
 class SwapController extends GetxController {
   final walletCreatingCotroller = Get.find<WalletCreatingController>();
   var balanceController = TextEditingController();
 
+  // Update constants for Sepolia testnet
+  static const int CHAIN_ID = 11155111; // Sepolia chain ID
+  static const String RPC_URL = 'https://sepolia.infura.io/v3/';
+  
   // 1inch API configuration
   static const String chainId = '1'; // Ethereum mainnet
   static const String oneInchUrl = 'https://api.1inch.io/v5.0';
@@ -35,6 +46,36 @@ class SwapController extends GetxController {
     !isLoading.value && 
     currentQuote.isNotEmpty && 
     cryptoAmount.value > 0;
+
+  // Add these new observable variables at the top of your controller
+  RxString provider = "0x Protocol".obs;
+  RxDouble maxSlippage = 0.0.obs;
+  RxString networkFeeInEth = "0.000".obs;
+
+  // Add getters for formatted display
+  String get formattedProvider => provider.value;
+  
+  String get formattedSlippage {
+    if (currentQuote.isEmpty) return "0.00%";
+    try {
+      double slippage = double.parse(currentQuote['slippagePercentage'] ?? '0.01') * 100;
+      return "${slippage.toStringAsFixed(2)}%";
+    } catch (e) {
+      return "1.00%"; // Default fallback
+    }
+  }
+  
+  String get formattedNetworkFee {
+    if (currentQuote.isEmpty) return "0.000 ETH";
+    try {
+      double estimatedGas = double.parse(currentQuote['estimatedGas']);
+      double gasPrice = double.parse(currentQuote['gasPrice']);
+      double fee = (estimatedGas * gasPrice) / 1e18;
+      return "${fee.toStringAsFixed(5)} ETH";
+    } catch (e) {
+      return "0.000 ETH";
+    }
+  }
 
   @override
   void onInit() {
@@ -61,7 +102,7 @@ class SwapController extends GetxController {
       
       if (cryptoAmount.value > 0) {
         Get.log(secondToken.value.contractAddress);
-        // getSwapQuote();
+         getSwapQuote();
       }
     } catch (e) {
       print('Error in updateAmount: $e');
@@ -75,23 +116,24 @@ class SwapController extends GetxController {
     try {
       isLoading(true);
 
-      // Format the amount with proper decimals (usually 18 for most tokens)
       String amount = (cryptoAmount.value * 1e18).toStringAsFixed(0);
       
+      // Use Sepolia API endpoint
       final url = Uri.parse(
-        '$oneInchUrl/$chainId/quote?'
-        'fromTokenAddress=${firstToken.value.contractAddress}'
-        '&toTokenAddress=${secondToken.value.contractAddress}'
-        '&amount=$amount'
+        'https://sepolia.api.0x.org/swap/v1/quote?'
+        'sellToken=ETH'
+        '&buyToken=0x68194a729C2450ad26072b3D33ADaCbcef39D574' // Sepolia DAI address
+        '&sellAmount=$amount'
+        '&chainId=$CHAIN_ID'
       );
 
-      print('Request URL: $url'); // Debug print
+      print('Request URL: $url');
 
       final response = await http.get(
         url,
         headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer $oneInchApiKey', // Add API key to headers
+          '0x-api-key': '9a827917-91ba-4739-87f9-23451d511ea6',
         },
       );
 
@@ -102,9 +144,16 @@ class SwapController extends GetxController {
         final quote = json.decode(response.body);
         currentQuote.value = quote;
 
+        // Update slippage from quote
+        maxSlippage.value = double.parse(quote['slippagePercentage'] ?? '0.01') * 100;
+
+        // Calculate network fee
+        networkFee.value = double.parse(quote['estimatedGas']) * 
+                          double.parse(quote['gasPrice']) / 1e18;
+
         // Calculate the exchange rate
-        double fromAmount = double.parse(quote['fromTokenAmount']) / 1e18;
-        double toAmount = double.parse(quote['toTokenAmount']) / 1e18;
+        double fromAmount = double.parse(quote['sellAmount']) / 1e18;  // ETH decimals
+        double toAmount = double.parse(quote['buyAmount']) / 1e6;     // USDT decimals
         
         swapRate.value = toAmount / fromAmount;
         
@@ -114,8 +163,7 @@ class SwapController extends GetxController {
 
         updateAmount2nd();
       } else {
-        print('Error response: ${response.body}');
-        throw Exception('Failed to get quote: ${response.statusCode}');
+        throw Exception('API Error: ${response.statusCode} - ${response.body}');
       }
     } catch (e) {
       print('Error in getSwapQuote: $e');
@@ -123,7 +171,6 @@ class SwapController extends GetxController {
         'Error',
         'Failed to get quote. Please try again.',
         duration: const Duration(seconds: 3),
-        snackPosition: SnackPosition.BOTTOM,
       );
     } finally {
       isLoading(false);
@@ -141,7 +188,8 @@ class SwapController extends GetxController {
   }
 
   // Execute swap
-  Future<void> executeSwap() async {
+  Future<void> executeSwap(BuildContext context) async {
+    debugPrintSwapDetails();
     try {
       isLoading(true);
       
@@ -149,29 +197,59 @@ class SwapController extends GetxController {
         throw Exception('No valid quote found');
       }
 
-      final response = await http.post(
-        Uri.parse('$oneInchUrl/$chainId/transactions'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $oneInchApiKey', // Add API key to headers
-        },
-        body: json.encode({
-          'quoteId': currentQuote['id'],
-          'walletAddress': walletCreatingCotroller.wallwtAddress.value,
-          'baseCurrencyAmount': cryptoAmount.value,
-          'quoteCurrencyAmount': cryptoAmount2nd.value,
-        }),
+      String amount = (cryptoAmount.value * 1e18).toStringAsFixed(0);
+      
+      final url = Uri.parse(
+        'https://api.0x.org/swap/v1/quote?'
+        'sellToken=ETH'
+        '&buyToken=USDT'
+        '&sellAmount=$amount'
+        '&slippagePercentage=0.01'
       );
 
+      print('Executing swap with URL: $url');
+
+      final response = await http.get(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          '0x-api-key': '9a827917-91ba-4739-87f9-23451d511ea6',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Swap executed successfully!');
+        final swapQuote = json.decode(response.body);
+        
+        if (!swapQuote.containsKey('to') || !swapQuote.containsKey('data')) {
+          print('Invalid quote format: $swapQuote');
+          throw Exception('Invalid quote format received');
+        }
+
+        await submitTransaction(swapQuote,context);
+        
         resetSwap();
         balanceController.clear();
+        
+        Get.snackbar(
+          'Success',
+          'Swap order created successfully',
+          duration: const Duration(seconds: 3),
+          snackPosition: SnackPosition.BOTTOM,
+        );
       } else {
-        throw Exception('Swap failed: ${response.body}');
+        throw Exception('Failed to get swap quote: ${response.body}');
       }
     } catch (e) {
-      Get.snackbar('Error', 'Swap failed: $e');
+      print('Full error details in executeSwap: $e');
+      Get.snackbar(
+        'Error',
+        'Swap failed: ${e.toString()}',
+        duration: const Duration(seconds: 3),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } finally {
       isLoading(false);
     }
@@ -235,9 +313,10 @@ class SwapController extends GetxController {
     }
     Get.back();
   }
-
+var oneFirstCoinEquelsSecondCoins=0.0.obs;
   void updateAmount2nd() {
     cryptoAmount2nd.value = usdAmount2nd.value / secondToken.value.priceInUsd;
+oneFirstCoinEquelsSecondCoins.value=  firstToken.value.priceInUsd/secondToken.value.priceInUsd;
   }
 
   // Calculate percentage of balance
@@ -252,5 +331,206 @@ class SwapController extends GetxController {
     // Update amounts using existing method
     updateAmount(calculatedUsdAmount.toString(), firstToken.value.priceInUsd);
   }
+  Future<void> submitTransaction(Map<String, dynamic> swapQuote,BuildContext context) async {
+    try {
+      // Use Sepolia testnet URL
+      final client = Web3Client(
+        "${RPC_URL}${dotenv.get('INFURA_API_KEY')}",
+        http.Client(),
+      );
+
+      try {
+        final credentials = EthPrivateKey.fromHex(walletCreatingCotroller.privateKey!);
+        
+        // Check balance first
+        final address = credentials.address;
+        final balance = await client.getBalance(address);
+        
+        final gasPrice = await client.getGasPrice();
+        final estimatedGas = BigInt.from(int.parse(swapQuote['gas'] ?? '150000'));
+        final value = BigInt.parse(swapQuote['value'] ?? '0');
+        
+        // Calculate total cost (value + gas)
+        final gasCost = gasPrice.getInWei * estimatedGas;
+        final totalCost = value + gasCost;
+
+        // Check if user has enough balance
+        if (balance.getInWei < totalCost) {
+          throw Exception('''
+Insufficient balance!
+Required: ${EtherAmount.fromBigInt(EtherUnit.wei, totalCost).getValueInUnit(EtherUnit.ether)} ETH
+Available: ${balance.getValueInUnit(EtherUnit.ether)} ETH
+          ''');
+        }
+
+        final transaction = Transaction(
+          to: EthereumAddress.fromHex(swapQuote['to']),
+          value: EtherAmount.inWei(value),
+          data: hexToBytes(swapQuote['data']),
+          maxGas: int.parse(swapQuote['gas'] ?? '150000'),
+          gasPrice: gasPrice,
+          nonce: await client.getTransactionCount(address),
+        );
+
+        print('Submitting transaction on Sepolia testnet:');
+        print('Network: Sepolia');
+        print('From: ${credentials.address}');
+        print('To: ${transaction.to}');
+        print('Value: ${transaction.value?.getInWei}');
+        print('Balance: ${balance.getInWei}');
+        print('Gas Price: ${gasPrice.getInWei}');
+        print('Max Gas: ${transaction.maxGas}');
+        print('Total Cost: $totalCost wei');
+
+        // Send transaction with Sepolia chain ID
+        final txHash = await client.sendTransaction(
+          credentials,
+          transaction,
+          chainId: CHAIN_ID, // Sepolia chain ID
+        );
+
+        print('Transaction submitted! Hash: $txHash');
+
+        // Monitor transaction
+        bool confirmed = false;
+        int attempts = 0;
+        
+        while (!confirmed && attempts < 30) {
+          try {
+            final receipt = await client.getTransactionReceipt(txHash);
+            if (receipt != null) {
+              confirmed = true;
+              print('Transaction confirmed! Receipt: $receipt');
+              Get.snackbar(
+                'Success',
+                'Transaction confirmed! Hash: ${txHash.substring(0, 10)}...',
+                duration: const Duration(seconds: 3),
+                snackPosition: SnackPosition.BOTTOM,
+              );
+              _showSuccesPopup(context);
+              break;
+            }
+          } catch (e) {
+            print('Waiting for confirmation... Attempt ${attempts + 1}');
+          }
+          await Future.delayed(const Duration(seconds: 2));
+          attempts++;
+        }
+
+      } finally {
+        client.dispose();
+      }
+    } catch (e) {
+      print('Error in submitTransaction: $e');
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        duration: const Duration(seconds: 5),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      throw Exception('Transaction submission failed: $e');
+    }
+  }
+
+  // Add method to update slippage
+  void updateSlippage(double newSlippage) {
+    maxSlippage.value = newSlippage;
+    // Refresh quote with new slippage
+    if (cryptoAmount.value > 0) {
+      getSwapQuote();
+    }
+  }
+
+  // Add this method to help debug
+  void debugPrintSwapDetails() {
+    print('Debug Swap Details:');
+    print('Crypto Amount: ${cryptoAmount.value}');
+    print('USD Amount: ${usdAmount.value}');
+    print('First Token: ${firstToken.value.symbol}');
+    print('Second Token: ${secondToken.value.symbol}');
+    print('Current Quote: ${currentQuote}');
+  }
+
+       void _showSuccesPopup(BuildContext context) {
+      var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+       bool isDarkMode = theme.brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+          actionsPadding:
+              EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
+          backgroundColor:isDarkMode?lightBlackColor2: whiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(48.r),
+          ),
+          icon: Image.asset(
+           isDarkMode? "assets/images/swap_success2.png": "assets/images/swap_success.png",
+            height: 180.h,
+            width: 186.w,
+          ),
+          title: Text(
+            "Successful Swap!",
+            style: GoogleFonts.urbanist(
+                fontSize: 24.sp, fontWeight: FontWeight.w700, color: isDarkMode?lightGreenColor:orange3),
+          ),
+          content: Text(
+              textAlign: TextAlign.center,
+              "Your crypto was swap successfully. You can view more details below.",
+              style: GoogleFonts.urbanist(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                  color: isDarkMode?whiteColor: blackColor2)),
+          actions: [
+         isDarkMode?CustomGreenButton(buttonText: "View Details", onPressed: (){
+          Navigator.pop(context);
+         }):
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 58.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.r),
+                    gradient: const LinearGradient(colors: [orange2, orange1])),
+                child: Center(
+                  child: Text(
+                    "View Details",
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        color: whiteColor),
+                  ),
+                ),
+              ),
+            ),
+           
+          SizedBox(
+              height: 15.h,
+            ),
+            CustomLightGreenButton(
+                buttonText: "Cancel",
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
+        );
+      },
+    );
+  }
+
+
 }
+
+
+
+
+
+
+
 

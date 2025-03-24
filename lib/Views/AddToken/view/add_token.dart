@@ -178,7 +178,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                                                           height: 45.h,
                                                           width: 35.w,
                                                           child: Center(
-                                                            child: Image.asset(
+                                                            child: Image.network(
                                                              controller.tokenIcons[index],
                                                             ),
                                                           ),
@@ -196,7 +196,8 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                                                             ),
                                                             Spacer(),
                                                            Obx(() => CustomSwitch(
-                    isSwitched: controller.switchStates[index], // Now correctly passing RxBool
+                    isSwitched: controller.switchStates[index], 
+                      onChanged: () =>controller. selectedTokenNames.add(controller.tokenList[index])// Now correctly passing RxBool
                   )),
                 ],
               ),
@@ -212,8 +213,8 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
     visible:  controller.tokenList.isNotEmpty&&controller.isLoading.value==false,
     child: Padding(
       padding:  EdgeInsets.all( 20.h),
-      child: CustomButton(buttonText: "Ok", onPressed: (){
-        
+      child: CustomButton(buttonText: "Ok", onPressed: () async {
+        await controller.savePreferences();
       }),
     ),
   ),

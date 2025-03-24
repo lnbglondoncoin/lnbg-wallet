@@ -1,18 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
+import 'package:http/http.dart' as http;
 class AddTokenController extends GetxController {
   var isLoading = false.obs;
   var isAmountEmpty = true.obs;
   
   TextEditingController searchController = TextEditingController();
 
-  RxList<RxBool> switchStates = List.generate(tokenIconList.length, (index) => false.obs).obs;
+  RxList<RxBool> switchStates = List.generate(0, (index) => false.obs).obs;
 
-  void toggleSwitch(int index) {
-    switchStates[index].value = !switchStates[index].value;
-  }
 
+  // void toggleSwitch(int index,String name) {
+  //   if (index >= 0 && index < switchStates.length) {
+  //     selectedTokenNames.add(name);
+  //     // switchStates[index].value = !switchStates[index].value;
+
+  //     // Call your function here based on the switch state
+
+  //   }
+  // }
+
+ // 0x9bc19bf84a92340142fae1f7d7d1af938750c4cc
+
+final walletCreatingController=Get.find<WalletCreatingController>();
   var tokenList = <String>[].obs;
   var tokenIcons = <String>[].obs;
   var searchQuery = ''.obs;
@@ -21,9 +35,12 @@ class AddTokenController extends GetxController {
   void onInit() {
     super.onInit();
     // Populate initial data
-    tokenList.assignAll(tokennameList);
-    tokenIcons.assignAll(tokenIconList);
+    switchStates.assignAll(List.generate(walletCreatingController.tokenData.map((e)=>e.name).toList().length, (index)=>false.obs));
+    tokenList.assignAll(walletCreatingController.tokenData.map((e)=>e.name).toList());
+    tokenIcons.assignAll(walletCreatingController.tokenData.map((e)=>e.logoUrl).toList());
   }
+
+
 
   void updateAmount() {
     isAmountEmpty.value = searchController.text.isEmpty;
@@ -33,18 +50,18 @@ class AddTokenController extends GetxController {
     searchQuery.value = query;
 
     if (query.isEmpty) {
-      tokenList.assignAll(tokennameList);
-      tokenIcons.assignAll(tokenIconList);
-      switchStates.assignAll(List.generate(tokennameList.length, (index) => false.obs));
+       tokenList.assignAll(walletCreatingController.tokenData.map((e)=>e.name).toList());
+    tokenIcons.assignAll(walletCreatingController.tokenData.map((e)=>e.logoUrl).toList());
+      switchStates.assignAll(List.generate(walletCreatingController.tokenData.map((e)=>e.name).toList().length, (index) => false.obs));
     } else {
       var filteredTokens = <String>[];
       var filteredIcons = <String>[];
       var filteredSwitchStates = <RxBool>[];
 
-      for (int i = 0; i < tokennameList.length; i++) {
-        if (tokennameList[i].toLowerCase().contains(query.toLowerCase())) {
-          filteredTokens.add(tokennameList[i]);
-          filteredIcons.add(tokenIconList[i]);
+      for (int i = 0; i < walletCreatingController.tokenData.length; i++) {
+        if (walletCreatingController.tokenData.map((e)=>e.name).toList()[i].toLowerCase().contains(query.toLowerCase())) {
+          filteredTokens.add(walletCreatingController.tokenData.map((e)=>e.name).toList()[i]);
+          filteredIcons.add(walletCreatingController.tokenData.map((e)=>e.logoUrl).toList()[i]);
           filteredSwitchStates.add(switchStates[i]);
         }
       }
@@ -58,5 +75,41 @@ class AddTokenController extends GetxController {
   var selectedNetwork="Ethereum".obs;
   changeNetwork(value){
     selectedNetwork.value=value;
+  }
+
+List selectedTokenNames=[].obs;
+   Future<void> savePreferences() async {
+    const String url = "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/preferences/save";
+  
+    try {
+        isLoading.value = true;
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "walletAddress": walletCreatingController.wallwtAddress.value,
+          "selectedTokens": selectedTokenNames,
+        }),
+      );
+
+      if (response.statusCode == 200 ) {
+        print(walletCreatingController.wallwtAddress.value);
+         await walletCreatingController.fetchPreferences(walletCreatingController.wallwtAddress.value);
+        Get.snackbar("Success", "Preferences saved successfully!",
+            snackPosition: SnackPosition.TOP);
+      } else {
+        Get.snackbar("Error", "Failed to save preferences: ${response.body}",
+            snackPosition: SnackPosition.TOP);
+      }
+    } catch (e) {
+            isLoading.value = false;
+      Get.snackbar("Error", "Something went wrong: $e",
+          snackPosition: SnackPosition.TOP);
+    } finally {
+      isLoading.value = false;
+    }
   }
 }
