@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -26,11 +25,10 @@ class TransferToken extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         isSuffix: true,
         title: "Transfer",
         iconPath: 'assets/icons/chat11.svg',
@@ -60,7 +58,7 @@ class TransferToken extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            CustomDivider(),
+            const CustomDivider(),
             SizedBox(
               height: 20.h,
             ),
@@ -131,7 +129,7 @@ class TransferToken extends StatelessWidget {
                           //height: 24.h,
                           // width: 72.w,
                           decoration: BoxDecoration(
-                              color:isDarkMode?lightGreenColor.withOpacity(0.08): lightGreenColor.withOpacity(0.08),
+                              color:isDarkMode?lightGreenColor.withValues(alpha:0.08): lightGreenColor.withValues(alpha:0.08),
                               borderRadius: BorderRadius.circular(
                                 8.r,
                               )),
@@ -168,7 +166,7 @@ class TransferToken extends StatelessWidget {
                           ],
                         ),
                         
-                        Spacer(),
+                        const Spacer(),
                         Text(
                           "0x16dcc0e...bf7c61037",
                           style: GoogleFonts.urbanist(
@@ -207,7 +205,7 @@ class TransferToken extends StatelessWidget {
                                         "assets/icons/eyeButton.svg")))
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
                           "0.025 ETH",
                           style: GoogleFonts.urbanist(

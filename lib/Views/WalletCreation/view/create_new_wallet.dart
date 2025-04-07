@@ -19,20 +19,19 @@ class CreateNewWallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
-          Get.back(); // Your custom back functionality
+          Get.back();
         },
         currentIndex: controller.currentIndex,
         onWillPop: () {
-          Get.back(); // Your custom back functionality
-        }, // Pass the RxInt
+          Get.back();
+        },
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -45,9 +44,7 @@ class CreateNewWallet extends StatelessWidget {
                     top: 25.h, left: 18.w, right: 18.w, bottom: 20.h),
                 child: Column(
                   children: [
-                     CustomDivider(
-                    
-                    ),
+                    const CustomDivider(),
                     SizedBox(
                       height: 15.h,
                     ),
@@ -67,9 +64,7 @@ class CreateNewWallet extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          color:
-                          isDarkMode?whiteColor:
-                           darkGreyColor),
+                          color: isDarkMode ? whiteColor : darkGreyColor),
                     ),
                     SizedBox(
                       height: 15.h,
@@ -124,7 +119,7 @@ class CreateNewWallet extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color:isDarkMode?whiteColor: blackColor2),
+                              color: isDarkMode ? whiteColor : blackColor2),
                         ),
                         CustomOrangeSwitch(isSwitched: controller.isSwitched1),
                       ],
@@ -140,7 +135,7 @@ class CreateNewWallet extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
-                              color:isDarkMode?whiteColor: blackColor2),
+                              color: isDarkMode ? whiteColor : blackColor2),
                         ),
                         CustomOrangeSwitch(isSwitched: controller.isSwitched2),
                       ],
@@ -170,7 +165,8 @@ class CreateNewWallet extends StatelessWidget {
                                 text:
                                     "I understand that LNBG cannot recover this password for me. ",
                                 style: GoogleFonts.urbanist(
-                                    color: isDarkMode?whiteColor: blackColor2,
+                                    color:
+                                        isDarkMode ? whiteColor : blackColor2,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w800,
                                     height: 1.1.h),
@@ -197,7 +193,7 @@ class CreateNewWallet extends StatelessWidget {
                   ],
                 ),
               ),
-             CustomDivider(),
+              const CustomDivider(),
               SizedBox(
                 height: 200.h,
               )
@@ -205,21 +201,23 @@ class CreateNewWallet extends StatelessWidget {
           ),
         ),
       ),
-    
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
-        child: CustomOrangeButton(
-            buttonText: "Create Password",
-            onPressed: () {
-              controller.isChecked.value
-                  ? controller.createPassword()
-                  : Get.snackbar(
-                      backgroundColor: orange3,
-                      snackPosition: SnackPosition.TOP,
-                      "Attention",
-                      "Please accept terms and conditions");
-            }),
+      floatingActionButton: Container(
+        color: isDarkMode ? lightBlackColor3 : whiteColor ,
+        child: Padding(
+          padding: EdgeInsets.only(left: 15.w, right: 15.h,bottom: 8.h,top: 15.h),
+          child: CustomOrangeButton(
+              buttonText: "Create Password",
+              onPressed: () {
+                controller.isChecked.value
+                    ? controller.createPassword()
+                    : Get.snackbar(
+                        backgroundColor: orange3,
+                        snackPosition: SnackPosition.TOP,
+                        "Attention",
+                        "Please accept terms and conditions");
+              }),
+        ),
       ),
     );
   }

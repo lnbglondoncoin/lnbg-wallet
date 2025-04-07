@@ -3,10 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/animation_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
@@ -27,17 +25,15 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           walletCreatingController.indexes.clear();
-
-          /// walletCreatingController.shuffledList.clear();
           walletCreatingController.changeisTrue(true);
           walletCreatingController.orderList.clear();
           Get.back();
@@ -45,8 +41,6 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
         currentIndex: controller.currentIndex,
         onWillPop: () {
           walletCreatingController.indexes.clear();
-          walletCreatingController.changeisTrue(true);
-          // walletCreatingController.shuffledList.clear();
           walletCreatingController.orderList.clear();
           Get.back();
         }, // Pass the RxInt
@@ -82,7 +76,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: darkGreyColor,
+                      color: isDarkMode ? whiteColor : darkGreyColor,
                     ),
                   ),
                   SizedBox(
@@ -125,7 +119,6 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                       : Matrix4.rotationZ(
                                           0.1), // Rotate 30 degrees (0.1 radians)
                                   onEnd: () {
-                                    // Reset rotation after animation completes
                                     walletCreatingController.changeisTrue(true);
                                   },
                                   curve: Curves.easeInOut,
@@ -151,7 +144,9 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(40.r),
-                                          color: isDarkMode?lightBlackColor3:whiteColor,
+                                          color: isDarkMode
+                                              ? lightBlackColor3
+                                              : whiteColor,
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.all(20.h),
@@ -187,13 +182,13 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                                   child: Container(
                                                     height: 45.h,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          walletCreatingController
-                                                                  .indexes
-                                                                  .contains(
-                                                                      index)
-                                                              ? orange3
-                                                              :  isDarkMode?lightBlackColor: greyColor4,
+                                                      color: walletCreatingController
+                                                              .indexes
+                                                              .contains(index)
+                                                          ? orange3
+                                                          : isDarkMode
+                                                              ? lightBlackColor
+                                                              : greyColor4,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20),
@@ -204,13 +199,14 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                                                         style: GoogleFonts
                                                             .urbanist(
                                                           fontSize: 18.sp,
-                                                          color:
-                                                              walletCreatingController
-                                                                      .indexes
-                                                                      .contains(
-                                                                          index)
+                                                          color: walletCreatingController
+                                                                  .indexes
+                                                                  .contains(
+                                                                      index)
+                                                              ? whiteColor
+                                                              : isDarkMode
                                                                   ? whiteColor
-                                                                  : isDarkMode?whiteColor:darkGreyColor,
+                                                                  : darkGreyColor,
                                                           fontWeight:
                                                               FontWeight.w700,
                                                         ),
@@ -278,9 +274,9 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                 walletCreatingController.changeisTrue(true);
                 if (listEquals(walletCreatingController.secondHalfofMnemonic,
                     walletCreatingController.orderList)) {
+                  walletCreatingController.savePhraseToPrefs(
+                      walletCreatingController.mnemonic.value);
 
-walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.value);
-                     
                   _showPopup(context);
                 } else {
                   walletCreatingController.changeisTrue(false);
@@ -289,16 +285,14 @@ walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.val
                       backgroundColor: orange3,
                       snackPosition: SnackPosition.TOP);
                 }
-                // print("second mnemonic is :${walletCreatingController.secondHalfofMnemonic}");
-                // print("order list is :${walletCreatingController.orderList}");
               })),
     );
   }
 
   void _showPopup(BuildContext context) {
-         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     showDialog(
       context: context,
@@ -308,21 +302,21 @@ walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.val
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor: isDarkMode?lightBlackColor2:whiteColor,
+          backgroundColor: isDarkMode ? lightBlackColor2 : whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
-          icon:
-          isDarkMode? Image.asset(
-            "assets/images/success3.png",
-            height: 180.h,
-            width: 186.w,
-          ):
-          Image.asset(
-            "assets/images/success.png",
-            height: 180.h,
-            width: 186.w,
-          ),
+          icon: isDarkMode
+              ? Image.asset(
+                  "assets/images/success3.png",
+                  height: 180.h,
+                  width: 186.w,
+                )
+              : Image.asset(
+                  "assets/images/success.png",
+                  height: 180.h,
+                  width: 186.w,
+                ),
           title: Text(
             "Successful!",
             style: GoogleFonts.urbanist(
@@ -333,52 +327,52 @@ walletCreatingController.savePhraseToPrefs(walletCreatingController.mnemonic.val
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: isDarkMode?whiteColor:blackColor2)),
+                  color: isDarkMode ? whiteColor : blackColor2)),
           actions: [
-           Obx((){
-            return   GestureDetector(
-              onTap: ()async {
-               
-                Get.log("response is hfmh");
-              //  walletCreatingController.savePhraseToPrefs(walletCreatingController.);
-                 final privateKey = await walletCreatingController.getPrivateKey(walletCreatingController.seedPhrase!);
-//Get.snackbar("private key is",privateKey);
-Get.log(privateKey);
-print(privateKey);
-  if (privateKey.isNotEmpty) {
-   await walletCreatingController.setPrivateKey(privateKey);
-  await walletCreatingController.loadWaletData();
-  await walletCreatingController.fetchCoinData();
-  // Get.log('gfnh');
-  //               Get.log("seed phrase is ${walletCreatingController.seedPhrase}");
-  
-  } else {
-    Get.snackbar("Error", "Failed to import wallet. Try again.");
-  }
-             //  walletCreatingController.fetchCoinData();
-              },
-              child: walletCreatingController.isLoading.value?Center(
-                child: CircularProgressIndicator(
-                  color: orange3,
-                ),
-              ): Container(
-                height: 58.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.r),
-                    gradient: const LinearGradient(colors: [orange2, orange1])),
-                child: Center(
-                  child: Text(
-                    "OK",
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.sp,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-            );
-           }),
+            Obx(() {
+              return GestureDetector(
+                onTap: () async {
+                  Get.log("response is hfmh");
+
+                  final privateKey = await walletCreatingController
+                      .getPrivateKey(walletCreatingController.seedPhrase!);
+                  Get.log(privateKey);
+                  if (privateKey.isNotEmpty) {
+                    await walletCreatingController.setPrivateKey(privateKey);
+                    await walletCreatingController.loadWaletData();
+                    
+                   // await walletCreatingController.fetchCoinData(true);
+                  } else {
+                    Get.snackbar(
+                        "Error", "Failed to create wallet. Try again.");
+                  }
+                  //  walletCreatingController.fetchCoinData();
+                },
+                child: walletCreatingController.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: orange3,
+                        ),
+                      )
+                    : Container(
+                        height: 58.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100.r),
+                            gradient: const LinearGradient(
+                                colors: [orange2, orange1])),
+                        child: Center(
+                          child: Text(
+                            "OK",
+                            style: GoogleFonts.urbanist(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18.sp,
+                                color: whiteColor),
+                          ),
+                        ),
+                      ),
+              );
+            }),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20.h),
               child: Text(
@@ -386,7 +380,7 @@ print(privateKey);
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,
-                    color: isDarkMode?whiteColor:blackColor2),
+                    color: isDarkMode ? whiteColor : blackColor2),
               ),
             )
           ],
@@ -394,7 +388,4 @@ print(privateKey);
       },
     );
   }
-
-
-
 }

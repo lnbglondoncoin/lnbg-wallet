@@ -12,193 +12,204 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
 class HiddenWriteSeedPhraseScreen extends StatelessWidget {
-   HiddenWriteSeedPhraseScreen({super.key});
+  HiddenWriteSeedPhraseScreen({super.key});
   final StepController controller = Get.put(StepController());
-  final walletCreatingController=Get.find<WalletCreatingController>();
+  final walletCreatingController = Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
-       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-   appBar: CustomStepAppBar(
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      appBar: CustomStepAppBar(
         onBackTap: () {
-        
-              Get.back();
+          Get.back();
         },
-        currentIndex: controller.currentIndex, onWillPop: () { 
-           
-              Get.back();
-         }, // Pass the RxInt
+        currentIndex: controller.currentIndex,
+        onWillPop: () {
+          Get.back();
+        }, // Pass the RxInt
       ),
-    body: SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 25.w,vertical: 15.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomDivider(),
-                SizedBox(height: 10.h,),
-                Center(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "Write Down Your Seed Phrase",style: GoogleFonts.urbanist(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 32.sp,
-                    color: orange3
-                  ),),
-                ),
-                SizedBox(height: 10.h,),
-                Text(
-                  textAlign: TextAlign.center,
-                  "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",style: GoogleFonts.urbanist(
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w500,
-        color:isDarkMode?whiteColor: darkGreyColor,
-            ),),
-                
-  
-                 SizedBox(height: 25.h,),
-                const CustomDivider(),
-                SizedBox(height: 25.h,),
-
-                       Stack(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 15.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Yellow Gradient Container with GridView
-                  Container(
-                    height: 378.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                     color:isDarkMode?blackColor2:whiteColor,
-                      borderRadius: BorderRadius.circular(40.r),
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 10,
-                          blurRadius: 10,
-                          color:isDarkMode?orange4.withOpacity(0.1): Colors.pink.withOpacity(0.05)
-                        )
-                      ]
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(2.h),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: isDarkMode?blackColor2:whiteColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.h),
-                          child: GridViewBuilderWidget(),
-                        ),
-                      ),
+                  const CustomDivider(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Write Down Your Seed Phrase",
+                      style: GoogleFonts.urbanist(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 32.sp,
+                          color: orange3),
                     ),
                   ),
-
-                  // Blurred Overlay Limited to the Yellow Container
-                  Positioned.fill(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40.r), // Same border radius for alignment
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2.5, sigmaY:2.5),
-                        child: Container(
-                           color: isDarkMode?blackColor2.withOpacity(0.8):Colors.white.withOpacity(0.8), // Semi-transparent overlay
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Tap to reveal your seed phrase",
-                                  style: GoogleFonts.urbanist(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color:isDarkMode?whiteColor: blackColor2,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  "Make sure no one is watching your screen.",
-                                  style: GoogleFonts.urbanist(fontSize: 14.sp,fontWeight: FontWeight.w500,
-                                  color:isDarkMode?whiteColor: darkGreyColor),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 20.h),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: orange3,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.r),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                   Get.to(()=>WriteSeedPhraseScreen());
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.remove_red_eye,color: whiteColor,),
-                                      SizedBox(width: 8.w),
-                                      Text("View", style: GoogleFonts.urbanist(fontSize: 18.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: whiteColor)),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",
+                    style: GoogleFonts.urbanist(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? whiteColor : darkGreyColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25.h,
+                  ),
+                  const CustomDivider(),
+                  SizedBox(
+                    height: 25.h,
+                  ),
+                  Stack(
+                    children: [
+                      // Yellow Gradient Container with GridView
+                      Container(
+                        height: 378.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: isDarkMode ? blackColor2 : whiteColor,
+                            borderRadius: BorderRadius.circular(40.r),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 10,
+                                  blurRadius: 10,
+                                  color: isDarkMode
+                                      ? orange4.withValues(alpha: 0.1)
+                                      : Colors.pink.withValues(alpha: 0.05))
+                            ]),
+                        child: Padding(
+                          padding: EdgeInsets.all(2.h),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40.r),
+                              color: isDarkMode ? blackColor2 : whiteColor,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.h),
+                              child: GridViewBuilderWidget(),
                             ),
                           ),
                         ),
                       ),
-                    ),
+
+                      // Blurred Overlay Limited to the Yellow Container
+                      Positioned.fill(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                              40.r), // Same border radius for alignment
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+                            child: Container(
+                              color: isDarkMode
+                                  ? blackColor2.withValues(alpha: 0.8)
+                                  : Colors.white.withValues(
+                                      alpha: 0.8), // Semi-transparent overlay
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Tap to reveal your seed phrase",
+                                      style: GoogleFonts.urbanist(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: isDarkMode
+                                            ? whiteColor
+                                            : blackColor2,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    Text(
+                                      "Make sure no one is watching your screen.",
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: isDarkMode
+                                              ? whiteColor
+                                              : darkGreyColor),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 20.h),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: orange3,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.r),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Get.to(() => WriteSeedPhraseScreen());
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(
+                                            Icons.remove_red_eye,
+                                            color: whiteColor,
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Text("View",
+                                              style: GoogleFonts.urbanist(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: whiteColor)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 25.h,
                   ),
                 ],
               ),
-           SizedBox(height: 25.h,),
-          
-
-          ],
             ),
-          ),
-                const CustomDivider(),
-       SizedBox(height: 200.h,)
-        ],
+            const CustomDivider(),
+            SizedBox(
+              height: 200.h,
+            )
+          ],
+        ),
       ),
-    ),
-     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
- floatingActionButton:
-    Padding(
-            padding:  EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w,bottom: 10.h),
-            child: CustomOrangeButton(buttonText: "Next", onPressed: ()async{
-   final mnemonic=walletCreatingController.generateMnemonic();
-   final privateKey=await walletCreatingController.getPrivateKey(mnemonic);
-   final publicKey= await walletCreatingController.getPublicKey(privateKey);
- 
-            })
-          ),
-   
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+          padding:
+              EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
+          child: CustomOrangeButton(buttonText: "Next", onPressed: () {})),
     );
   }
-  
- 
-  
-
 }
 
 class GridViewBuilderWidget extends StatelessWidget {
-  //final StepController controller = Get.put(StepController());
   final walletCreatingController = Get.find<WalletCreatingController>();
-
   GridViewBuilderWidget({super.key});
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
-
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -215,7 +226,7 @@ class GridViewBuilderWidget extends StatelessWidget {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color:isDarkMode?lightBlackColor: greyColor4,
+                color: isDarkMode ? lightBlackColor : greyColor4,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -226,14 +237,14 @@ class GridViewBuilderWidget extends StatelessWidget {
                       "${(index + 1).toString()} ",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color:isDarkMode?whiteColor: darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       walletCreatingController.mnemonicWords[index],
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color: isDarkMode?whiteColor:darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                   ],

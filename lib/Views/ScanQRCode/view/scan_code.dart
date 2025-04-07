@@ -35,8 +35,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-      var theme = Theme.of(context);
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       backgroundColor: lightBlackColor3,
       appBar: AppBar(
@@ -98,7 +99,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                             ),
                             Positioned.fill(
                               child: Image.asset(
-                               isDarkMode? "assets/images/scanImage2.png": "assets/images/scanImage.png",
+                                isDarkMode
+                                    ? "assets/images/scanImage2.png"
+                                    : "assets/images/scanImage.png",
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -130,8 +133,12 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                                         Radius.circular(40.r),
                                                     topRight:
                                                         Radius.circular(40.r)),
-                                                color:isDarkMode?lightGreenColor.withOpacity(0.3): orange2.withOpacity(
-                                                    0.3), // Adjust opacity as needed
+                                                color: isDarkMode
+                                                    ? lightGreenColor
+                                                        .withValues(alpha: 0.3)
+                                                    : orange2.withValues(
+                                                        alpha:
+                                                            0.3), // Adjust opacity as needed
                                               ),
                                               height: linePosition,
                                             ),
@@ -146,7 +153,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                             height: 4.h,
                                             color:
                                                 qrController.isMovingDown.value
-                                                    ?isDarkMode?lightGreenColor: orange2
+                                                    ? isDarkMode
+                                                        ? lightGreenColor
+                                                        : orange2
                                                     : Colors.white,
                                           ),
                                         ),
@@ -174,16 +183,22 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                 : Container(
                     height: 380.h,
                     width: double.infinity,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(  isDarkMode? "assets/images/scanImage2.png": "assets/images/scanImage.png",),
+                            image: AssetImage(
+                              isDarkMode
+                                  ? "assets/images/scanImage2.png"
+                                  : "assets/images/scanImage.png",
+                            ),
                             fit: BoxFit.fill)),
                   )),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildIconButton(isDarkMode?"assets/icons/gallery2.svg":"assets/icons/gallery.svg"),
+                _buildIconButton(isDarkMode
+                    ? "assets/icons/gallery2.svg"
+                    : "assets/icons/gallery.svg"),
                 SizedBox(
                   width: 20.w,
                 ),
@@ -194,9 +209,12 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                   child: Container(
                     height: 100.h,
                     width: 100.w,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(colors: [isDarkMode?lightGreenColor: orange2,isDarkMode?greenColor2: orange1]),
+                      gradient: LinearGradient(colors: [
+                        isDarkMode ? lightGreenColor : orange2,
+                        isDarkMode ? greenColor2 : orange1
+                      ]),
                     ),
                     child: Center(
                       child: SvgPicture.asset("assets/icons/scanner.svg"),
@@ -206,7 +224,9 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                 SizedBox(
                   width: 20.w,
                 ),
-                _buildIconButton(isDarkMode?"assets/icons/file2.svg":"assets/icons/file.svg"),
+                _buildIconButton(isDarkMode
+                    ? "assets/icons/file2.svg"
+                    : "assets/icons/file.svg"),
               ],
             ),
             SizedBox(height: 20.h),
@@ -222,7 +242,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
       width: 58.w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: lightGreenColor.withOpacity(0.08),
+        color: lightGreenColor.withValues(alpha: 0.08),
       ),
       child: Center(
         child: SvgPicture.asset(asset),

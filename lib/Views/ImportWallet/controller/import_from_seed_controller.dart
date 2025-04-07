@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:bip39/bip39.dart' as bip39;
@@ -16,35 +13,24 @@ class ImportFromSeedController extends GetxController {
   var passController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var seedPhraseController = TextEditingController();
-
+  final walletCreatingController = Get.find<WalletCreatingController>();
   GlobalKey<FormState> importSeedKey = GlobalKey();
-
-  // Define two RxBool variables for the switches
   RxBool isSwitched1 = false.obs;
   RxBool isSwitched2 = true.obs;
-
-  // Method to toggle the first switch
+  final LocalAuthentication auth = LocalAuthentication();
+  var supportState = false.obs;
+  var isChecked = false.obs;
   void toggleSwitch1() {
     isSwitched1.value = !isSwitched1.value;
   }
 
-  // Method to toggle the second switch
   void toggleSwitch2() {
     isSwitched2.value = !isSwitched2.value;
   }
 
-  var isChecked = false.obs;
-
   void toggleCheckbox(bool value) {
     isChecked.value = value;
   }
-
-  
-
-
-
-   final LocalAuthentication auth = LocalAuthentication();
-  var supportState = false.obs;
 
   @override
   void onInit() {
@@ -55,13 +41,6 @@ class ImportFromSeedController extends GetxController {
   void checkDeviceSupport() async {
     supportState.value = await auth.isDeviceSupported();
   }
-
-  // Future<void> getAvailableBiometrics() async {
-
-  //   List<BiometricType> availableBiometrics =
-  //       await auth.getAvailableBiometrics();
-
-  // }
 
   Future<void> authenticate(BuildContext context) async {
     try {
@@ -85,9 +64,10 @@ class ImportFromSeedController extends GetxController {
   }
 
   void showPopup(BuildContext context) {
-         var theme = Theme.of(context);
+    var theme = Theme.of(context);
     var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     showDialog(
       context: context,
@@ -97,19 +77,21 @@ class ImportFromSeedController extends GetxController {
               EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           actionsPadding:
               EdgeInsets.only(left: 30.w, bottom: 20.h, right: 30.w, top: 10.h),
-          backgroundColor:isDarkMode?lightBlackColor2:whiteColor,
+          backgroundColor: isDarkMode ? lightBlackColor2 : whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(48.r),
           ),
-          icon:isDarkMode? Image.asset(
-            "assets/images/suucess4.png",
-            height: 180.h,
-            width: 186.w,
-          ): Image.asset(
-            "assets/images/success.png",
-            height: 180.h,
-            width: 186.w,
-          ),
+          icon: isDarkMode
+              ? Image.asset(
+                  "assets/images/suucess4.png",
+                  height: 180.h,
+                  width: 186.w,
+                )
+              : Image.asset(
+                  "assets/images/success.png",
+                  height: 180.h,
+                  width: 186.w,
+                ),
           title: Text(
             "Successful!",
             style: GoogleFonts.urbanist(
@@ -121,7 +103,7 @@ class ImportFromSeedController extends GetxController {
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
-                  color: isDarkMode?whiteColor:blackColor2)),
+                  color: isDarkMode ? whiteColor : blackColor2)),
           actions: [
             ShaderMask(
               shaderCallback: (Rect bounds) {
@@ -142,34 +124,28 @@ class ImportFromSeedController extends GetxController {
     );
   }
 
- 
+  void verfifyMnemonicAndImport() async {
+    if (!importSeedKey.currentState!.validate()) {
+      return;
+    }
 
-   final walletCreatingController=Get.find<WalletCreatingController>();
+    String seedPhrase = seedPhraseController.text.trim();
 
- void verfifyMnemonicAndImport() async {
-  if (!importSeedKey.currentState!.validate()) {
-    return;
+    if (!bip39.validateMnemonic(seedPhrase)) {
+      Get.snackbar("Error", "Invalid seed phrase. Please check again.");
+      return;
+    }
+
+    final privateKey = await walletCreatingController.getPrivateKey(seedPhrase);
+
+    if (privateKey.isNotEmpty) {
+      walletCreatingController.setPrivateKey(privateKey);
+   await   walletCreatingController.loadWaletData();
+   await   walletCreatingController.savePhraseToPrefs(seedPhrase);
+    await  walletCreatingController.savePassword(passController.text);
+   // await  walletCreatingController.fetchCoinData(true);
+    } else {
+      Get.snackbar("Error", "Failed to import wallet. Try again.");
+    }
   }
-
-  String seedPhrase = seedPhraseController.text.trim();
-
-  if (!bip39.validateMnemonic(seedPhrase)) {
-    Get.snackbar("Error", "Invalid seed phrase. Please check again.");
-    return;
-  }
-
-  final privateKey = await walletCreatingController.getPrivateKey(seedPhrase);
-  
-  if (privateKey.isNotEmpty) {
-    walletCreatingController.setPrivateKey(privateKey);
-     walletCreatingController.loadWaletData();
-    walletCreatingController.savePhraseToPrefs(seedPhrase);
-    walletCreatingController.savePassword(passController.text);
-  walletCreatingController.fetchCoinData();
-  } else {
-    Get.snackbar("Error", "Failed to import wallet. Try again.");
-  }
-}
-
-  
 }

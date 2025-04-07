@@ -68,13 +68,13 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                 
               ),
               SizedBox(height: 20.h,),
-              CustomDivider(),
+              const CustomDivider(),
               SizedBox(height: 20.h,),
            SizedBox(
             height: 284.h,
           
             width: double.infinity,
-            child:  ChartScreen(),
+            child:  const ChartScreen(),
            ),
            SizedBox(
             height:20.h
@@ -107,7 +107,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                  CustomSwitch(isSwitched: controller.isSwitched1),
                     ],
                   ),
-                  CustomDivider(),
+                  const CustomDivider(),
                    Row(
                    
                     children: [
@@ -118,7 +118,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     "ethereum.org",
                     style: GoogleFonts.urbanist(
@@ -131,7 +131,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                      colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn))
                     ],
                   ),
-                  CustomDivider(),
+                  const CustomDivider(),
                     Row(
                    
                     children: [
@@ -142,7 +142,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     "etherscan.io",
                     style: GoogleFonts.urbanist(
@@ -203,7 +203,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                  
                     ],
                   ),
-                  CustomDivider(),
+                  const CustomDivider(),
                    Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -228,7 +228,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                  
                     ],
                   ),
-                  CustomDivider(),
+                  const CustomDivider(),
                     Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AdvanceSettings/controller/advance_setting_cntroller.dart';
@@ -12,279 +11,346 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_textfeild.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/reuseable_dropdown.dart';
 
 class AdvanceSettingView extends StatelessWidget {
-   AdvanceSettingView({super.key});
-  final controller=Get.put(AdvanceSettingCntroller());
+  AdvanceSettingView({super.key});
+  final controller = Get.put(AdvanceSettingCntroller());
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-      var textTheme = theme.textTheme;
-      bool isDarkMode =
-          theme.brightness == Brightness.dark; // Check if dark mode is active
-    
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-       appBar: CustomAppBar(title: "Advanced", iconPath: ""),
-       body: SingleChildScrollView(
-        child: Padding(
-             padding:  EdgeInsets.all(20.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-              Text("State Logs",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
-              SizedBox(height: 10.h,),
-               Text("State logs contain your public account addresses and sent transactions.",style: GoogleFonts.urbanist(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color:isDarkMode?greyColor: greyColor3
-              ),),
-               SizedBox(height: 15.h,),
-               _buildSectionTitle("Download State Logs",context),
-               SizedBox(height: 30.h,),
-               Text("Sync with Dekstop",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
-              
-               SizedBox(height: 15.h,),
-               _buildSectionTitle("Sync with Dekstop",context),
-               SizedBox(height: 30.h,),
-               Text("State Logs",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
-              SizedBox(height: 10.h,),
-               Text("State logs contain your public account addresses and sent transactions.",style: GoogleFonts.urbanist(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color:isDarkMode?greyColor: greyColor3
-              ),),
-               SizedBox(height: 15.h,),
-               _buildSectionTitle("Download State Logs",context),
-               SizedBox(height: 30.h,),
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Advanced Gas Controls",style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2
-                  ),),
-                  CustomSwitch(isSwitched: controller.gasControl),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("Select this to show gas price and limit controls directly on the send and confirm screens.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                  SizedBox(height: 30.h,),
-                   
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Show Hex Data",style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2
-                  ),),
-                  CustomSwitch(isSwitched: controller.haxData),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("Select this to show the hex data field on the send screen.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                 SizedBox(height: 30.h,),
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Customize Transaction Nonce",style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2
-                  ),),
-                  CustomSwitch(isSwitched: controller.transaction),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("Turn this on to change the nonce (transaction number) on confirmation screens. This is an advanced feature, use cautiously.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                  SizedBox(height: 30.h,),
-                   // SizedBox(height: 40.h,),
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Sync Data with 3Box",style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2
-                  ),),
-                  CustomSwitch(isSwitched: controller.syncData),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("Turn on to have your settings backed up with 3Box. This feature is currently experimental; use at your own risk.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                   SizedBox(height: 30.h,),
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              Flexible(
-                    child: Text("Dismiss Secret Recovery Phrase Backup Reminder",
-                    maxLines: 2,
-                    style: GoogleFonts.urbanist(
-                    
+        backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+        appBar: const CustomAppBar(title: "Advanced", iconPath: ""),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "State Logs",
+                  style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                      color:isDarkMode?whiteColor: blackColor2
-                    ),),
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "State logs contain your public account addresses and sent transactions.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                _buildSectionTitle("Download State Logs", context),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Text(
+                  "Sync with Dekstop",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
+
+                SizedBox(
+                  height: 15.h,
+                ),
+                _buildSectionTitle("Sync with Dekstop", context),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Text(
+                  "State Logs",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "State logs contain your public account addresses and sent transactions.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                _buildSectionTitle("Download State Logs", context),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Advanced Gas Controls",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                    CustomSwitch(isSwitched: controller.gasControl),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "Select this to show gas price and limit controls directly on the send and confirm screens.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Show Hex Data",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                    CustomSwitch(isSwitched: controller.haxData),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "Select this to show the hex data field on the send screen.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Customize Transaction Nonce",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                    CustomSwitch(isSwitched: controller.transaction),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "Turn this on to change the nonce (transaction number) on confirmation screens. This is an advanced feature, use cautiously.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                // SizedBox(height: 40.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Sync Data with 3Box",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                    CustomSwitch(isSwitched: controller.syncData),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "Turn on to have your settings backed up with 3Box. This feature is currently experimental; use at your own risk.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "Dismiss Secret Recovery Phrase Backup Reminder",
+                        maxLines: 2,
+                        style: GoogleFonts.urbanist(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: isDarkMode ? whiteColor : blackColor2),
+                      ),
+                    ),
+                    CustomSwitch(isSwitched: controller.dismiss),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "Turn this on to dismiss the Secret Recovery Phrase backup reminder message. We highly recommend that you back up your Secret Recovery Phrase to avoid loss of funds.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Enhanced Token Detection",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                    CustomSwitch(isSwitched: controller.tokenDetection),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "We use third-party APIs to detect and display new tokens sent to your wallet. Turn off if you don’t want the app to pull data from those services.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+
+                Text(
+                  "IPFS Gateway",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  "Enter the URL of the IPFS CID gateway to use for ENS content resolution.",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? greyColor : greyColor3),
+                ),
+
+                CustomTextField(
+                    hintText: "dweb.link",
+                    controller: TextEditingController(),
+                    labelText: ""),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Text(
+                  "Preferred Ledger Connection Type",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
+                SizedBox(height: 10.h),
+
+                RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.urbanist(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: greyColor3,
+                    ),
+                    children: [
+                      TextSpan(
+                        text:
+                            "Customize how you connect your Ledger to LNBG Wallet. WebHID is recommended, but other options are available. Read more here: ",
+                        style: GoogleFonts.urbanist(
+                          color: isDarkMode ? greyColor : greyColor3,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Learn more",
+                        style: GoogleFonts.urbanist(
+                          color: isDarkMode ? lightGreenColor : orange3,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Handle "Learn more" tap here
+                          },
+                      ),
+                    ],
                   ),
-                  CustomSwitch(isSwitched: controller.dismiss),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("Turn this on to dismiss the Secret Recovery Phrase backup reminder message. We highly recommend that you back up your Secret Recovery Phrase to avoid loss of funds.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                    SizedBox(height: 30.h,),
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Enhanced Token Detection",style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2
-                  ),),
-                  CustomSwitch(isSwitched: controller.tokenDetection),
-                 
-                  
-      ],
-              ),
-              SizedBox(height: 10.h,),
-               Text("We use third-party APIs to detect and display new tokens sent to your wallet. Turn off if you don’t want the app to pull data from those services.",style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color:isDarkMode?greyColor: greyColor3
-                  ),),
-                  SizedBox(height: 30.h,),
-                   
-               Text("IPFS Gateway",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
-                 SizedBox(height: 10.h),
-                  Text("Enter the URL of the IPFS CID gateway to use for ENS content resolution.",style: GoogleFonts.urbanist(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color:isDarkMode?greyColor: greyColor3
-              ),),
-         
-             CustomTextField(hintText: "dweb.link", controller: TextEditingController(), labelText: ""),
-               SizedBox(height: 30.h,),
-               Text("Preferred Ledger Connection Type",style: GoogleFonts.urbanist(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
-                 SizedBox(height: 10.h),
-               
-               RichText(
-  text: TextSpan(
-    style: GoogleFonts.urbanist(
-      fontSize: 14.sp,
-      fontWeight: FontWeight.w500,
-      color: greyColor3,
-    ),
-    children: [
-       TextSpan(
-        text: "Customize how you connect your Ledger to LNBG Wallet. WebHID is recommended, but other options are available. Read more here: ",
-        style:  GoogleFonts.urbanist(
-          color: isDarkMode?greyColor:greyColor3,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      TextSpan(
-        text: "Learn more",
-        style: GoogleFonts.urbanist(
-          color:isDarkMode?lightGreenColor:  orange3,
-          fontWeight: FontWeight.bold,
-        ),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            // Handle "Learn more" tap here
-          },
-      ),
-    ],
-  ),
-)
-,
-              SizedBox(height: 15.h),
-              ReusableDropdown(
-                items: const ["WebHID", "WebHID2", "WebHID3"],
-                selectedValue: controller.selectedLegerConType,
-              ),
-              SizedBox(height: 20.h,)
-          ],
+                ),
+                SizedBox(height: 15.h),
+                ReusableDropdown(
+                  items: const ["WebHID", "WebHID2", "WebHID3"],
+                  selectedValue: controller.selectedLegerConType,
+                ),
+                SizedBox(
+                  height: 20.h,
+                )
+              ],
+            ),
           ),
-        ),
-       )
-    );
+        ));
   }
-    Widget _buildSectionTitle(String title,BuildContext context) {
-       var theme = Theme.of(context);
-      var textTheme = theme.textTheme;
-      bool isDarkMode =
-          theme.brightness == Brightness.dark; // Check if dark mode is active
-    
+
+  Widget _buildSectionTitle(String title, BuildContext context) {
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Container(
       height: 45.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(
-          color:isDarkMode?lightGreenColor: orange3,
-          width: 2.h
-        ),
-        borderRadius: BorderRadius.circular(
-          100.r
-        )
-      ),
+          color: Colors.transparent,
+          border: Border.all(
+              color: isDarkMode ? lightGreenColor : orange3, width: 2.h),
+          borderRadius: BorderRadius.circular(100.r)),
       child: Center(
-        child: Text(title,style: GoogleFonts.urbanist(
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w700,
-          color:isDarkMode?lightGreenColor: orange3
-        ),),
+        child: Text(
+          title,
+          style: GoogleFonts.urbanist(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              color: isDarkMode ? lightGreenColor : orange3),
+        ),
       ),
     );
   }
-
 }

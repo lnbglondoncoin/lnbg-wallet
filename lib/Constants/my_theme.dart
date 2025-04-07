@@ -11,8 +11,8 @@ class AppTheme {
       titleLarge: GoogleFonts.urbanist(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.orange),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(Colors.orange),
-      trackColor: MaterialStateProperty.all(Colors.orange.withOpacity(0.5)),
+      thumbColor: WidgetStateProperty.all(Colors.orange),
+      trackColor: WidgetStateProperty.all(Colors.orange.withValues(alpha:0.5)),
     ),
   );
 
@@ -25,8 +25,8 @@ class AppTheme {
       titleLarge: GoogleFonts.urbanist(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.orange),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(Colors.orange),
-      trackColor: MaterialStateProperty.all(Colors.orange.withOpacity(0.5)),
+      thumbColor: WidgetStateProperty.all(Colors.orange),
+      trackColor: WidgetStateProperty.all(Colors.orange.withValues(alpha:0.5)),
     ),
   );
 }

@@ -26,12 +26,11 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
-
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           controller.decreseIndexValue(2);
@@ -78,7 +77,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: darkGreyColor,
+                      color: isDarkMode ? whiteColor : darkGreyColor,
                     ),
                   ),
                   SizedBox(height: 25.h),
@@ -140,7 +139,9 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(40.r),
-                                        color: isDarkMode?lightBlackColor3:whiteColor,
+                                        color: isDarkMode
+                                            ? lightBlackColor3
+                                            : whiteColor,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(20.h),
@@ -178,7 +179,9 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                                                 .indexes
                                                                 .contains(index)
                                                             ? orange3
-                                                            : isDarkMode?lightBlackColor: greyColor4,
+                                                            : isDarkMode
+                                                                ? lightBlackColor
+                                                                : greyColor4,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
@@ -189,13 +192,13 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                                                       style:
                                                           GoogleFonts.urbanist(
                                                         fontSize: 18.sp,
-                                                        color:
-                                                            walletCreatingController
-                                                                    .indexes
-                                                                    .contains(
-                                                                        index)
+                                                        color: walletCreatingController
+                                                                .indexes
+                                                                .contains(index)
+                                                            ? whiteColor
+                                                            : isDarkMode
                                                                 ? whiteColor
-                                                                : isDarkMode?whiteColor:darkGreyColor,
+                                                                : darkGreyColor,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                       ),

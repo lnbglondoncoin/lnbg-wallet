@@ -10,27 +10,27 @@ class ReusableDropdown extends StatelessWidget {
   final List<String> items;
   final RxString selectedValue;
 
-  const ReusableDropdown({super.key, required this.items, required this.selectedValue});
+  const ReusableDropdown(
+      {super.key, required this.items, required this.selectedValue});
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-      var textTheme = theme.textTheme;
-      bool isDarkMode =
-          theme.brightness == Brightness.dark; // Check if dark mode is active
-    
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+
     return Obx(
       () => Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
-          color:isDarkMode?lightBlackColor2: lightWhiteColor,
-          border: Border.all(color:isDarkMode?lightBlackColor2: lightWhiteColor),
+          color: isDarkMode ? lightBlackColor2 : lightWhiteColor,
+          border: Border.all(
+              color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: DropdownButtonHideUnderline(
-        
           child: DropdownButton<String>(
-          dropdownColor:isDarkMode?lightBlackColor2: whiteColor,
+            dropdownColor: isDarkMode ? lightBlackColor2 : whiteColor,
             value: selectedValue.value,
             icon: SizedBox(
               height: 10.h,
@@ -40,19 +40,20 @@ class ReusableDropdown extends StatelessWidget {
                   'assets/icons/diamond.svg',
                   height: 20.h,
                   width: 20.w,
-                  colorFilter: ColorFilter.mode(isDarkMode?whiteColor:  blackColor2, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                      isDarkMode ? whiteColor : blackColor2, BlendMode.srcIn),
                 ),
               ),
             ),
             items: items.map((item) {
               return DropdownMenuItem(
-              
                 value: item,
                 child: Text(
                   item,
-                  style: GoogleFonts.urbanist(fontSize: 18.sp,
-                  fontWeight: FontWeight.w800,
-                  color:isDarkMode?whiteColor: blackColor2),
+                  style: GoogleFonts.urbanist(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w800,
+                      color: isDarkMode ? whiteColor : blackColor2),
                 ),
               );
             }).toList(),

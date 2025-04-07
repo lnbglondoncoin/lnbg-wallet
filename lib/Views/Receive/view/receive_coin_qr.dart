@@ -21,19 +21,16 @@ import 'package:share_plus/share_plus.dart';
 class ReceiveCoinQR extends StatelessWidget {
   final TokenData token;
 
-   ReceiveCoinQR({
-    super.key,
-    required this.token
-  });
-final walletCreatingController=Get.find<WalletCreatingController>();
- final controller = Get.put(ReceiveCoinController());
-   final GlobalKey _qrKey = GlobalKey(); // Define GlobalKey
+  ReceiveCoinQR({super.key, required this.token});
+  final walletCreatingController = Get.find<WalletCreatingController>();
+  final controller = Get.put(ReceiveCoinController());
+  final GlobalKey _qrKey = GlobalKey(); // Define GlobalKey
   @override
   Widget build(BuildContext context) {
-      var theme = Theme.of(context);
-       bool isDarkMode = theme.brightness == Brightness.dark;
+    var theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor:  isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomAppBar(
         title: "Receive ${token.symbol}",
         iconPath: 'assets/icons/search.svg',
@@ -59,15 +56,15 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                   width: double.infinity,
                   alignment: Alignment.center,
                   child: RepaintBoundary(
-              key: _qrKey, // Attach GlobalKey here
-              child: QrImageView(
-                padding: EdgeInsets.zero,
-                data: walletCreatingController.wallwtAddress.value,
-                version: QrVersions.auto,
-                foregroundColor: isDarkMode ? Colors.white : Colors.black,
-                backgroundColor: isDarkMode ? Colors.black : Colors.white,
-              ),
-            ),
+                    key: _qrKey, // Attach GlobalKey here
+                    child: QrImageView(
+                      padding: EdgeInsets.zero,
+                      data: walletCreatingController.wallwtAddress.value,
+                      version: QrVersions.auto,
+                      foregroundColor: isDarkMode ? Colors.white : Colors.black,
+                      backgroundColor: isDarkMode ? Colors.black : Colors.white,
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -78,7 +75,7 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                   style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
-                      color:isDarkMode?whiteColor: darkGreyColor),
+                      color: isDarkMode ? whiteColor : darkGreyColor),
                 ),
               ),
               SizedBox(
@@ -96,7 +93,7 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: darkGreyColor),
+                      color: isDarkMode ? whiteColor : darkGreyColor),
                 ),
               ),
               Padding(
@@ -107,7 +104,7 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color:isDarkMode?whiteColor: darkGreyColor),
+                      color: isDarkMode ? whiteColor : darkGreyColor),
                 ),
               ),
               Padding(
@@ -119,19 +116,23 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                        onTap: (){
-                          controller.copyAddress(walletCreatingController.wallwtAddress.value);
-                        },
+                          onTap: () {
+                            controller.copyAddress(
+                                walletCreatingController.wallwtAddress.value);
+                          },
                           child: Container(
                             height: 60.h,
                             width: 60.w,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: lightGreenColor.withOpacity(0.08)),
+                                color: lightGreenColor.withValues(alpha: 0.08)),
                             child: Center(
-                                child: SvgPicture.asset("assets/icons/copy.svg",colorFilter: 
-                                      ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
-                                      .srcIn),)),
+                                child: SvgPicture.asset(
+                              "assets/icons/copy.svg",
+                              colorFilter: ColorFilter.mode(
+                                  isDarkMode ? lightGreenColor : orange1,
+                                  BlendMode.srcIn),
+                            )),
                           ),
                         ),
                         Text(
@@ -139,7 +140,8 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color:isDarkMode?lightWhiteColor: darkGreyColor),
+                              color:
+                                  isDarkMode ? lightWhiteColor : darkGreyColor),
                         )
                       ],
                     ),
@@ -155,12 +157,14 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                             width: 60.w,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: lightGreenColor.withOpacity(0.08)),
+                                color: lightGreenColor.withValues(alpha: 0.08)),
                             child: Center(
-                                child:
-                                    SvgPicture.asset("assets/icons/set.svg",colorFilter: 
-                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
-                                    .srcIn),)),
+                                child: SvgPicture.asset(
+                              "assets/icons/set.svg",
+                              colorFilter: ColorFilter.mode(
+                                  isDarkMode ? lightGreenColor : orange1,
+                                  BlendMode.srcIn),
+                            )),
                           ),
                         ),
                         Text(
@@ -168,7 +172,8 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color:isDarkMode?lightWhiteColor: darkGreyColor),
+                              color:
+                                  isDarkMode ? lightWhiteColor : darkGreyColor),
                         )
                       ],
                     ),
@@ -184,19 +189,23 @@ final walletCreatingController=Get.find<WalletCreatingController>();
                             width: 60.w,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: lightGreenColor.withOpacity(0.08)),
+                                color: lightGreenColor.withValues(alpha: 0.08)),
                             child: Center(
-                                child:
-                                    SvgPicture.asset("assets/icons/share.svg",colorFilter: 
-                                    ColorFilter.mode(isDarkMode?lightGreenColor:orange1, BlendMode
-                                    .srcIn),)),
+                                child: SvgPicture.asset(
+                              "assets/icons/share.svg",
+                              colorFilter: ColorFilter.mode(
+                                  isDarkMode ? lightGreenColor : orange1,
+                                  BlendMode.srcIn),
+                            )),
                           ),
                           Text(
                             "Share",
                             style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w700,
-                                color:isDarkMode?lightWhiteColor: darkGreyColor),
+                                color: isDarkMode
+                                    ? lightWhiteColor
+                                    : darkGreyColor),
                           )
                         ],
                       ),
@@ -226,7 +235,8 @@ final walletCreatingController=Get.find<WalletCreatingController>();
       },
     );
   }
- Future<File?> _captureQRImage() async {
+
+  Future<File?> _captureQRImage() async {
     try {
       RenderRepaintBoundary? boundary =
           _qrKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
@@ -235,7 +245,7 @@ final walletCreatingController=Get.find<WalletCreatingController>();
 
       var image = await boundary.toImage(pixelRatio: 3.0);
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-      
+
       if (byteData == null) return null;
 
       final tempDir = await getTemporaryDirectory();
@@ -245,7 +255,6 @@ final walletCreatingController=Get.find<WalletCreatingController>();
 
       return qrFile;
     } catch (e) {
-      print("Error capturing QR image: $e");
       return null;
     }
   }
@@ -254,12 +263,8 @@ final walletCreatingController=Get.find<WalletCreatingController>();
     File? imageFile = await _captureQRImage();
     if (imageFile != null) {
       Share.shareXFiles([XFile(imageFile.path)], text: "Here is my QR code!");
-    } else {
-      print("Failed to capture QR Code image");
-    }
+    } else {}
   }
-
-
 }
 
 class AnimatedBottomSheet extends StatefulWidget {
@@ -301,9 +306,8 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark;
+    var theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
     return SlideTransition(
       position: _slideAnimation,
       child: SingleChildScrollView(
@@ -316,7 +320,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
             top: 10.h,
           ),
           decoration: BoxDecoration(
-            color:isDarkMode?lightBlackColor2: whiteColor,
+            color: isDarkMode ? lightBlackColor2 : whiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(49.r),
               topRight: Radius.circular(49.r),
@@ -331,7 +335,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   width: 38.w,
                   height: 3.h,
                   decoration: BoxDecoration(
-                    color:isDarkMode?lightBlackColor: greyColor,
+                    color: isDarkMode ? lightBlackColor : greyColor,
                     borderRadius: BorderRadius.circular(100.r),
                   ),
                 ),
@@ -343,7 +347,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
-                    color:isDarkMode?whiteColor: blackColor2,
+                    color: isDarkMode ? whiteColor : blackColor2,
                   ),
                 ),
               ),
@@ -360,7 +364,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   hintText: "Set amount",
                   hintStyle: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w400,
-                    color:isDarkMode?whiteColor: greyColor2,
+                    color: isDarkMode ? whiteColor : greyColor2,
                     fontSize: 18.sp,
                   ),
                   prefixIcon: Padding(
@@ -377,7 +381,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       ),
                     ),
                   ),
-                  fillColor:isDarkMode?lightBlackColor3: lightWhiteColor,
+                  fillColor: isDarkMode ? lightBlackColor3 : lightWhiteColor,
                   filled: true,
                   contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
                 ),
@@ -402,7 +406,8 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       height: 59.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color:isDarkMode?lightBlackColor: lightGreenColor2,
+                          color:
+                              isDarkMode ? lightBlackColor : lightGreenColor2,
                           borderRadius: BorderRadius.circular(100.r)),
                       child: Center(
                         child: Text(
@@ -410,7 +415,9 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
-                              color:isDarkMode?lightGreenColor: lightGreenColor),
+                              color: isDarkMode
+                                  ? lightGreenColor
+                                  : lightGreenColor),
                         ),
                       ),
                     ),
@@ -419,15 +426,17 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                     width: 10.w,
                   ),
                   Flexible(
-                    child: isDarkMode?CustomGreenButton(
-                        buttonText: "Confirm",
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }):CustomButton(
-                        buttonText: "Confirm",
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
+                    child: isDarkMode
+                        ? CustomGreenButton(
+                            buttonText: "Confirm",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                        : CustomButton(
+                            buttonText: "Confirm",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
                   ),
                 ],
               ),

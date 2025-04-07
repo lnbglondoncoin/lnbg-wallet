@@ -42,7 +42,8 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     _controller.dispose();
     super.dispose();
   }
-    void _showCustomBottomSheet(BuildContext context) {
+
+  void _showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows full-screen height
@@ -53,22 +54,20 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
-       
-        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 25.w),
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
         decoration: BoxDecoration(
-          color: isDarkMode?lightBlackColor2:whiteColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(49.r),
-          topRight: Radius.circular(49.r)),
+          color: isDarkMode ? lightBlackColor2 : whiteColor,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(49.r), topRight: Radius.circular(49.r)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -79,53 +78,74 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 width: 38.w,
                 height: 3.h,
                 decoration: BoxDecoration(
-                  color:isDarkMode?lightBlackColor: greyColor,
+                  color: isDarkMode ? lightBlackColor : greyColor,
                   borderRadius: BorderRadius.circular(100.r),
                 ),
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "What is a “Seed phrase”?",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w700,
-                fontSize: 24.sp,
-                color:isDarkMode?whiteColor: blackColor2
-              ),),
+                "What is a “Seed phrase”?",
+                style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.sp,
+                    color: isDarkMode ? whiteColor : blackColor2),
+              ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             const CustomDivider(),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
-                "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w500,
-                fontSize: 18.sp,
-                color: isDarkMode?whiteColor:darkGreyColor
-              ),),
-              SizedBox(height: 20.h,),
+              "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
+                  color: isDarkMode ? whiteColor : darkGreyColor),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
-                "You must keep your seed phrase secret and safe. If someone gets your seed phrase, they'll gain control over your accounts.",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w500,
-                fontSize: 18.sp,
-                color:isDarkMode?whiteColor: darkGreyColor
-              ),),
-              SizedBox(height: 20.h,),
-               Text(
-                "Save it in a place where only you can access it. If you lose it, not even LNBG Wallet can help you recover it.",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w500,
-                fontSize: 18.sp,
-                color:isDarkMode?whiteColor: darkGreyColor
-              ),),
-              SizedBox(height: 20.h,),
-              const CustomDivider(),
-              SizedBox(height: 20.h,),
-           CustomOrangeButton(buttonText: "OK, I Got It", onPressed: (){
-   Navigator.pop(context);
-   _showCustomBottomSheet(context);
-           }),
-           SizedBox(height: 25.h,)
-           
+              "You must keep your seed phrase secret and safe. If someone gets your seed phrase, they'll gain control over your accounts.",
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
+                  color: isDarkMode ? whiteColor : darkGreyColor),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Text(
+              "Save it in a place where only you can access it. If you lose it, not even LNBG Wallet can help you recover it.",
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
+                  color: isDarkMode ? whiteColor : darkGreyColor),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomOrangeButton(
+                buttonText: "OK, I Got It",
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showCustomBottomSheet(context);
+                }),
+            SizedBox(
+              height: 25.h,
+            )
           ],
         ),
       ),
@@ -133,22 +153,19 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
   }
 }
 
-
-
-
-
 class SkippedSecurityBottomSheet extends StatefulWidget {
   const SkippedSecurityBottomSheet({super.key});
 
   @override
-  _SkippedSecurityBottomSheetState createState() => _SkippedSecurityBottomSheetState();
+  SkippedSecurityBottomSheetState createState() =>
+      SkippedSecurityBottomSheetState();
 }
 
-class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
+class SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
-  final controller=Get.put(RemindMeLatterController());
+  final controller = Get.put(RemindMeLatterController());
   @override
   void initState() {
     super.initState();
@@ -174,19 +191,18 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
-       
-        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 25.w),
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
         decoration: BoxDecoration(
-          color: isDarkMode?lightBlackColor2:whiteColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(49.r),
-          topRight: Radius.circular(49.r)),
+          color: isDarkMode ? lightBlackColor2 : whiteColor,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(49.r), topRight: Radius.circular(49.r)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -197,67 +213,90 @@ class _SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 width: 38.w,
                 height: 3.h,
                 decoration: BoxDecoration(
-                  color:isDarkMode?lightBlackColor: greyColor,
+                  color: isDarkMode ? lightBlackColor : greyColor,
                   borderRadius: BorderRadius.circular(100.r),
                 ),
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "Skip Account Security?",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w700,
-                fontSize: 24.sp,
-                color: isDarkMode?whiteColor: blackColor2
-              ),),
+                "Skip Account Security?",
+                style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.sp,
+                    color: isDarkMode ? whiteColor : blackColor2),
+              ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             const CustomDivider(),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Row(
               children: [
-                Obx((){
-                  return  CustomCheckbox(
-  isChecked: controller.isChecked.value,
-  onChanged: (value) {
-   controller .toggleCheckbox(!controller.isChecked.value);
-  },
-);
+                Obx(() {
+                  return CustomCheckbox(
+                    isChecked: controller.isChecked.value,
+                    onChanged: (value) {
+                      controller.toggleCheckbox(!controller.isChecked.value);
+                    },
+                  );
                 }),
-                SizedBox(width: 15.w,),
+                SizedBox(
+                  width: 15.w,
+                ),
                 Flexible(
                   child: Text(
-                  
-                      "I understand that if i lose my seed phrase i will not be able to access my wallet.",style: GoogleFonts.urbanist(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18.sp,
-                      color:  isDarkMode?whiteColor: darkGreyColor,
-                      height: 1.3.h
-                    ),),
+                    "I understand that if i lose my seed phrase i will not be able to access my wallet.",
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18.sp,
+                        color: isDarkMode ? whiteColor : darkGreyColor,
+                        height: 1.3.h),
+                  ),
                 ),
               ],
             ),
-              
-               
-              SizedBox(height: 20.h,),
-              const CustomDivider(),
-              SizedBox(height: 20.h,),
-           Row(
-            children: [
-              Flexible(child: CustomLightGreenButton(buttonText: "No, Secure", onPressed: (){
-                Navigator.pop(context);
-              })),
-              SizedBox(width: 15.w,),
-               Flexible(child: CustomOrangeButton(buttonText: "Yes, Skip", onPressed: (){
-               controller.isChecked.value? Navigator.pop(context):Get.snackbar("Attention", "Click the box to confirm",
-               backgroundColor: orange3,
-               snackPosition: SnackPosition.TOP);
-               }))
-            ],
-           ),
-           SizedBox(height: 25.h,)
-           
+            SizedBox(
+              height: 20.h,
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              children: [
+                Flexible(
+                    child: CustomLightGreenButton(
+                        buttonText: "No, Secure",
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })),
+                SizedBox(
+                  width: 15.w,
+                ),
+                Flexible(
+                    child: CustomOrangeButton(
+                        buttonText: "Yes, Skip",
+                        onPressed: () {
+                          controller.isChecked.value
+                              ? Navigator.pop(context)
+                              : Get.snackbar(
+                                  "Attention", "Click the box to confirm",
+                                  backgroundColor: orange3,
+                                  snackPosition: SnackPosition.TOP);
+                        }))
+              ],
+            ),
+            SizedBox(
+              height: 25.h,
+            )
           ],
         ),
       ),

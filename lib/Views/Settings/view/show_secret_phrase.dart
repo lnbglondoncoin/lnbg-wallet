@@ -4,41 +4,33 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/confirm_seed_phrase.dart';
-import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
-import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
 
 class ShowSeedPhrase extends StatelessWidget {
   ShowSeedPhrase({super.key});
-  
- final walletCreatingController = Get.find<WalletCreatingController>();
+
+  final walletCreatingController = Get.find<WalletCreatingController>();
 
   @override
   Widget build(BuildContext context) {
-  
-      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    walletCreatingController.getSeedPhrase();
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-   body: SingleChildScrollView(
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      body: SingleChildScrollView(
         child: Column(
-         
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 50.h),
               child: Column(
-               
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                
                   Center(
                     child: GestureDetector(
-                      onTap: (){
-                        
+                      onTap: () {
                         print(walletCreatingController.password);
                       },
                       child: Text(
@@ -60,10 +52,9 @@ class ShowSeedPhrase extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: isDarkMode?whiteColor: darkGreyColor,
+                      color: isDarkMode ? whiteColor : darkGreyColor,
                     ),
                   ),
-
                   SizedBox(
                     height: 25.h,
                   ),
@@ -71,16 +62,19 @@ class ShowSeedPhrase extends StatelessWidget {
                   SizedBox(
                     height: 25.h,
                   ),
-
                   Container(
                     height: 378.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient:  LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            isDarkMode?Color(0XffFB9400):
-                            Color(0xFFFACC15),
-                              isDarkMode?Color(0xffFFAB38): Color(0xFFFFE580)],
+                            isDarkMode
+                                ? const Color(0XffFB9400)
+                                : const Color(0xFFFACC15),
+                            isDarkMode
+                                ? const Color(0xffFFAB38)
+                                : const Color(0xFFFFE580)
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(40.r)),
                     child: Padding(
@@ -88,7 +82,7 @@ class ShowSeedPhrase extends StatelessWidget {
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40.r),
-                            color:isDarkMode?lightBlackColor3:whiteColor,
+                            color: isDarkMode ? lightBlackColor3 : whiteColor,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(10.h),
@@ -99,18 +93,13 @@ class ShowSeedPhrase extends StatelessWidget {
                   SizedBox(
                     height: 25.h,
                   ),
-
-              ],
+                ],
               ),
             ),
-          
             const CustomDivider(),
-            
           ],
         ),
       ),
-  
-     
     );
   }
 }
@@ -122,11 +111,12 @@ class GridViewBuilderWidget extends StatelessWidget {
   GridViewBuilderWidget({super.key});
   @override
   Widget build(BuildContext context) {
-   
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
-var seedPhraseWords= walletCreatingController.seedPhrase?.split(' ');
+     walletCreatingController.getSeedPhrase();
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
+    var seedPhraseWords = walletCreatingController.seedPhrase?.split(' ');
+    print(seedPhraseWords);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -144,7 +134,7 @@ var seedPhraseWords= walletCreatingController.seedPhrase?.split(' ');
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color:isDarkMode?lightBlackColor: greyColor4,
+                color: isDarkMode ? lightBlackColor : greyColor4,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -155,14 +145,14 @@ var seedPhraseWords= walletCreatingController.seedPhrase?.split(' ');
                       "${(index + 1).toString()} ",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color:isDarkMode?whiteColor: darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       seedPhraseWords![index],
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color: isDarkMode?whiteColor:darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                   ],

@@ -1,30 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'dart:math';
-
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/app_constants.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Models/buy_request_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web3dart/web3dart.dart';
-import 'package:http/http.dart' as http;
 
 class CurrencyController extends GetxController {
   var selectedCurrency = 'USD'.obs;
   var amountController = TextEditingController();
   var amount = 0.0.obs;
- 
+
   RxString selectedProvider = "Binance Connect".obs;
-    RxString providerImage = "".obs;
-  
+  RxString providerImage = "".obs;
 
   @override
   void onInit() {
@@ -33,7 +22,6 @@ class CurrencyController extends GetxController {
     amountController.addListener(() {
       amount.value = amountController.text as double;
     });
-  
   }
 
   @override
@@ -42,83 +30,56 @@ class CurrencyController extends GetxController {
     super.onClose();
   }
 
-  final walletCreatingController=Get.find<WalletCreatingController>();
-
-
-
-   // MoonPay API Key
-  // final String moonPayApiKey = "pk_live_TUWCdKK7nE88Oej7HkW9uCKwyziIr73k";
-final String moonPayBaseUrl = "https://buy.moonpay.com";
- // final String moonPayBaseUrl = "https://sandbox.moonpay.com";
-  // Selected coin
-  // RxString selectedCoin = "ETH".obs; // Default is Ethereum
+  final walletCreatingController = Get.find<WalletCreatingController>();
+  final String moonPayBaseUrl = "https://buy.moonpay.com";
   RxDouble usdAmount = 0.0.obs;
   RxDouble cryptoAmount = 0.0.obs;
-  
-  // // Payment methods list
-  // List<String> paymentMethods = [
-  //   "MoonPay",
-  //   "Google Pay",
-  //   "Ramp",
-  //   "Credit/Debit Card",
-  //   "PayPal",
-  //   "Binance",
-  // ];
-  
-  // RxString selectedPaymentMethod = "MoonPay".obs;
+  var isLoading = false.obs;
 
-  // // User's wallet address (Replace this dynamically)
-  // final String walletAddress = "USER_WALLET_ADDRESS";
-
-  // Convert USD to Crypto using MoonPay API
-  var isLoading=false.obs;
-
- //   cryptoAmount.value = usdAmount.value / cryptoPrice;
-  void updateAmount(String value,double coinPrice,) {
- 
-          // Convert string to double safely
- usdAmount.value = double.tryParse(value) ?? 0.0;
-      cryptoAmount.value = usdAmount.value / coinPrice;
+  void updateAmount(
+    String value,
+    double coinPrice,
+  ) {
+    // Convert string to double safely
+    usdAmount.value = double.tryParse(value) ?? 0.0;
+    cryptoAmount.value = usdAmount.value / coinPrice;
   }
 
-  String get moonPayApiKey => const String.fromEnvironment('MOONPAY_API_KEY', defaultValue: '');
+  String get moonPayApiKey =>
+      const String.fromEnvironment('MOONPAY_API_KEY', defaultValue: '');
   // Open MoonPay Checkout
-Future<void> buyCrypto(String selectedCoin) async {
-  isLoading.value = true;
-  try {
-    // Construct the URL with all required parameters
-    final String moonPayUrl = Uri.https('buy.moonpay.com', '', {
-      'apiKey': moonPayApiKey,
-      'walletAddress': walletCreatingController.wallwtAddress.value,
-      'currencyCode': selectedCoin.toLowerCase(), // Make sure it's lowercase
-      'baseCurrencyCode': 'usd',
-      'baseCurrencyAmount': usdAmount.value.toStringAsFixed(2),
-      'showWalletAddressForm': 'false', // Prevent wallet address modification
-      'colorCode': '#F5841F', // Optional: customize the widget color
-    }).toString();
+  Future<void> buyCrypto(String selectedCoin) async {
+   
+    try {
+       isLoading.value = true;
+      // Construct the URL with all required parameters
+      final String moonPayUrl = Uri.https('buy.moonpay.com', '', {
+        'apiKey': moonPayApiKey,
+        'walletAddress': walletCreatingController.wallwtAddress.value,
+        'currencyCode': selectedCoin.toLowerCase(), // Make sure it's lowercase
+        'baseCurrencyCode': 'usd',
+        'baseCurrencyAmount': usdAmount.value.toStringAsFixed(2),
+        'showWalletAddressForm': 'false', // Prevent wallet address modification
+        'colorCode': '#F5841F', // Optional: customize the widget color
+      }).toString();
 
-    print('MoonPay URL: $moonPayUrl'); // Debug print
-
-    if (await canLaunchUrl(Uri.parse(moonPayUrl))) {
-      await launchUrl(
-        Uri.parse(moonPayUrl), 
-        mode: LaunchMode.externalApplication
-      );
-    } else {
-      Get.snackbar("Error", "Could not open MoonPay");
+      if (await canLaunchUrl(Uri.parse(moonPayUrl))) {
+        await launchUrl(Uri.parse(moonPayUrl),
+            mode: LaunchMode.externalApplication);
+            
+      } else {
+        Get.snackbar("Error", "Could not open MoonPay");
+      }
+    } catch (e) {
+            isLoading.value = false;
+      Get.snackbar("Error", "Failed to launch MoonPay: $e");
+    } finally {
+      isLoading.value = false;
     }
-  } catch (e) {
-    print('Error launching MoonPay: $e');
-    Get.snackbar("Error", "Failed to launch MoonPay: $e");
-  } finally {
-    isLoading.value = false;
   }
-}
-
-
 
 // "https://buy.moonpay.com/?apiKey=pk_live_TUWCdKK7nE88OeJ7HkW9uCKwyzilr73k&walletAddress=0x9bc19bf84a92340142fae1f7d7d1af938750c4cc&currencyCode=XRP&baseCurrencyCode=usd&baseCurrencyAmount=5.0";
-    void _showSuccesPopup(BuildContext context) {
+  void _showSuccesPopup(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -183,6 +144,4 @@ Future<void> buyCrypto(String selectedCoin) async {
       },
     );
   }
-
-
 }

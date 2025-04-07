@@ -6,95 +6,108 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/NFT/controller/nft_controller.dart';
 
-
 class NftGridView extends StatelessWidget {
   final NftController controller = Get.put(NftController());
 
+  NftGridView({super.key});
+
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
+    var theme = Theme.of(context);
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Column(
-        children: [
-         ListTile(
+      children: [
+        ListTile(
           contentPadding: EdgeInsets.zero,
-          leading:CircleAvatar(
+          leading: CircleAvatar(
             radius: 15.r,
-            backgroundImage: AssetImage("assets/images/nek.png"), // Change as needed
-          ) ,
-        title: Text("Nekochimin",style: GoogleFonts.urbanist(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w700,
-          color:isDarkMode? whiteColor :blackColor2
-        ),), 
-        trailing: SvgPicture.asset("assets/icons/arrowUp.svg",
-        colorFilter: ColorFilter.mode(isDarkMode?lightGreenColor:orange3, BlendMode.srcIn),
+            backgroundImage:
+                const AssetImage("assets/images/nek.png"), // Change as needed
+          ),
+          title: Text(
+            "Nekochimin",
+            style: GoogleFonts.urbanist(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w700,
+                color: isDarkMode ? whiteColor : blackColor2),
+          ),
+          trailing: SvgPicture.asset(
+            "assets/icons/arrowUp.svg",
+            colorFilter: ColorFilter.mode(
+                isDarkMode ? lightGreenColor : orange3, BlendMode.srcIn),
+          ),
         ),
-         ),
-          Expanded(
-            child: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 8.w),
-              child:  GridView.builder(
-                padding: EdgeInsets.zero,
-                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two columns
-                    childAspectRatio: 0.64.h, // Adjust as needed
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: GridView.builder(
+              padding: EdgeInsets.zero,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Two columns
+                childAspectRatio: 0.64.h, // Adjust as needed
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: controller.nftList.length,
+              itemBuilder: (context, index) {
+                var nft = controller.nftList[index];
+                return Card(
+                  color: isDarkMode ? lightBlackColor2 : whiteColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.r),
                   ),
-                  itemCount: controller.nftList.length,
-                  itemBuilder: (context, index) {
-                    var nft = controller.nftList[index];
-                    return Card(
-                      color:isDarkMode?lightBlackColor2: whiteColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28.r),
-                      ),
-                      elevation: 8,
-                      shadowColor: lightBlackColor.withOpacity(0.3),
-                      child: Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 10.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  elevation: 8,
+                  shadowColor: lightBlackColor.withValues(alpha: 0.3),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.r),
+                          child: Image.asset(nft.imageUrl,
+                              width: double.infinity, height: 154),
+                        ),
+                        //const SizedBox(height: 10),
+                        Text(
+                          "${nft.name} #${nft.id}",
+                          style: GoogleFonts.urbanist(
+                            color: isDarkMode ? whiteColor : blackColor2,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.r),
-                              child: Image.asset(nft.imageUrl, width: double.infinity, height: 154),
-                            ),
-                            //const SizedBox(height: 10),
                             Text(
-                              "${nft.name} #${nft.id}",
-                              style: GoogleFonts.urbanist(color:isDarkMode?whiteColor: blackColor2,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w700,),
+                              "Nekochimin",
+                              style: GoogleFonts.urbanist(
+                                color: isDarkMode ? greyColor : greyColor3,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                             SizedBox(height: 10.h),
-                            Row(
-                              children: [
-                                 Text(
-                                  "Nekochimin",
-                                  style: GoogleFonts.urbanist(color:isDarkMode?greyColor: greyColor3,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,),
-                                ),
-                                SizedBox(width: 10.w),
-                                SvgPicture.asset("assets/icons/approve.svg",height: 12.h,width: 13.w,)
-                              ],
-                            ),
+                            SizedBox(width: 10.w),
+                            SvgPicture.asset(
+                              "assets/icons/approve.svg",
+                              height: 12.h,
+                              width: 13.w,
+                            )
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-        ],
-      );
- 
+        ),
+      ],
+    );
   }
 }

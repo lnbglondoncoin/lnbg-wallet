@@ -34,7 +34,9 @@ class CustomSwitch extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100.r),
             color: isSwitched.value
-                ?isDarkMode?lightGreenColor: orange1
+                ? isDarkMode
+                    ? lightGreenColor
+                    : orange1
                 : isDarkMode
                     ? lightBlackColor
                     : lightBlack,
@@ -61,8 +63,6 @@ class CustomSwitch extends StatelessWidget {
   }
 }
 
-
-
 class CustomOrangeSwitch extends StatelessWidget {
   final RxBool isSwitched;
   final VoidCallback? onChanged; // Optional callback
@@ -75,7 +75,6 @@ class CustomOrangeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Obx(
       () => GestureDetector(
         onTap: () {
@@ -90,8 +89,7 @@ class CustomOrangeSwitch extends StatelessWidget {
           height: 24.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100.r),
-            color: isSwitched.value
-                ? orange1    : lightBlackColor,
+            color: isSwitched.value ? orange1 : lightBlackColor,
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 2.h),

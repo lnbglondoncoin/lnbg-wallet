@@ -1,4 +1,3 @@
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 
 class ChartScreen extends StatelessWidget {
+  const ChartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
          var theme = Theme.of(context);
@@ -19,7 +20,7 @@ class ChartScreen extends StatelessWidget {
               padding:  EdgeInsets.symmetric(vertical: 16.h),
               child: LineChart(
                 LineChartData(
-                  gridData: FlGridData(show: false),
+                  gridData: const FlGridData(show: false),
                   titlesData: FlTitlesData(
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
@@ -68,8 +69,8 @@ class ChartScreen extends StatelessWidget {
                         interval: 1,
                       ),
                     ),
-                    topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   ),
                   borderData: FlBorderData(show: false),
                   minX: 0,
@@ -79,14 +80,14 @@ class ChartScreen extends StatelessWidget {
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        FlSpot(0, 1500),
-                        FlSpot(1, 500),
-                        FlSpot(2, 1000),
-                        FlSpot(3, 700),
-                        FlSpot(4, 1200),
-                         FlSpot(5, 250),
-                        FlSpot(6, 1100),
-                         FlSpot(7, 700),
+                        const FlSpot(0, 1500),
+                        const FlSpot(1, 500),
+                        const FlSpot(2, 1000),
+                        const FlSpot(3, 700),
+                        const FlSpot(4, 1200),
+                         const FlSpot(5, 250),
+                        const FlSpot(6, 1100),
+                         const FlSpot(7, 700),
                       ],
                       isCurved: true,
                       color:isDarkMode?lightGreenColor: orange3,
@@ -103,7 +104,7 @@ class ChartScreen extends StatelessWidget {
                           end: Alignment.bottomCenter,
                         ),
                       ),
-                      dotData: FlDotData(show: false),
+                      dotData: const FlDotData(show: false),
                     ),
                   ],
                 ),

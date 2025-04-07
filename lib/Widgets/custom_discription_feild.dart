@@ -57,9 +57,9 @@ class _CustomDescriptionTextFieldState
 
   @override
   Widget build(BuildContext context) {
-       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-     bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +69,7 @@ class _CustomDescriptionTextFieldState
           style: GoogleFonts.poppins(
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
-            color:isDarkMode?whiteColor: blackColor2,
+            color: isDarkMode ? whiteColor : blackColor2,
           ),
         ),
         SizedBox(height: 8.h),
@@ -87,48 +87,43 @@ class _CustomDescriptionTextFieldState
             maxLines: null, // Allow multiline input
             expands: true, // Expand to fit the container
             decoration: InputDecoration(
-               focusedBorder:  OutlineInputBorder(
-              borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              errorBorder:  OutlineInputBorder(
-                 borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              enabledBorder:  OutlineInputBorder(
-                 borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              disabledBorder:  OutlineInputBorder(
-                 borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              focusedErrorBorder:  OutlineInputBorder(
-                 borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              border: OutlineInputBorder(   borderSide: BorderSide(
-                color: isDarkMode?lightBlackColor2:lightWhiteColor
-              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
                 borderRadius: BorderRadius.circular(18.r),
               ),
-              fillColor: isDarkMode?lightBlackColor2:lightWhiteColor,
+              fillColor: isDarkMode ? lightBlackColor2 : lightWhiteColor,
               filled: true,
               hintText: widget.hintText,
               hintStyle: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
-                color:  greyColor2,
+                color: greyColor2,
               ),
               prefixIcon: widget.prefixIconPath != null
                   ? SizedBox(
@@ -159,7 +154,7 @@ class _CustomDescriptionTextFieldState
             style: GoogleFonts.urbanist(
               fontSize: 18.sp,
               fontWeight: FontWeight.w800,
-              color: isDarkMode?whiteColor:  blackColor2,
+              color: isDarkMode ? whiteColor : blackColor2,
             ),
           ),
         ),

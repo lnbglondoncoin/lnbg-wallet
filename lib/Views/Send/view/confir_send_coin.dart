@@ -12,6 +12,8 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_addr
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_loading_spinner.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ConfirmSendCoinScreen extends StatelessWidget {
   // final String ammount;
@@ -35,7 +37,11 @@ class ConfirmSendCoinScreen extends StatelessWidget {
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       ),
-      body: SingleChildScrollView(
+      body: 
+      Obx((){
+        return controller.isLoading.value
+      ? _buildShimmerLayout(isDarkMode)
+      : SingleChildScrollView(
         child: SizedBox(
           height: Get.height,
           child: Column(
@@ -224,14 +230,15 @@ class ConfirmSendCoinScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      );
+      }),
+       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(25.h),
         child: Obx((){
-          return controller.isLoading.value?CircularProgressIndicator(
-            color: orange3,
-          ):isDarkMode? CustomGreenButton(
+          return controller.isLoading.value?
+        const  LoadingSpinner()
+          :isDarkMode? CustomGreenButton(
             buttonText: "Send",
             onPressed: () async{
               await controller.sendCrypto(context);
@@ -246,6 +253,176 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       ),
     );
   }
+Widget _buildShimmerLayout(bool isDarkMode) {
+  return Shimmer.fromColors(
+    baseColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+    highlightColor: isDarkMode ? Colors.grey[700]! : Colors.grey[100]!,
+    child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Amount Shimmer
+              Center(
+                child: Container(
+                  width: 250.w,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              // USD Amount Shimmer
+              Center(
+                child: Container(
+                   width: 150.w,
+                  height: 18.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+              ),
+              SizedBox(height: 25.h),
+              // Divider Shimmer
+              Container(
+                height: 1.h,
+                color: Colors.white,
+              ),
+              SizedBox(height: 20.h),
 
+              // From Section Shimmer
+              Container(
+                width: 60.w,
+                height: 20.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Container(
+                width: double.infinity,
+                 height: 18.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              SizedBox(height: 20.h),
 
+              // To Section Shimmer
+              Container(
+                width: 40.w,
+                height: 20.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+ SizedBox(width: 10.w),
+                  Container(
+                    width: 24.w,
+                    height: 24.h,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.h),
+              Container(
+                height: 1.h,
+                color: Colors.white,
+              ),
+              SizedBox(height: 10.h),
+
+              // Network Fee Section Shimmer
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 100.w,
+                    height: 20.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  ),
+                   SizedBox(width: 10.w),
+                  Expanded(
+                    child: Container(
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Container(
+                    width: 24.w,
+                    height: 24.h,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              Container(
+                height: 1.h,
+                color: Colors.white,
+              ),
+              SizedBox(height: 10.h),
+
+              // Max Total Section Shimmer
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Container(
+                    width: 80.w,
+                    height: 20.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: Container(
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const Spacer(),
+        // Bottom Divider Shimmer
+        Container(
+          height: 1.h,
+          color: Colors.white,
+        ),
+         SizedBox(height: 200.h),
+      ],
+    ),
+  );
+}
 }

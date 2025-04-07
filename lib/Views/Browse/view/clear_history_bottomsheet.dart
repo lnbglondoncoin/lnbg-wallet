@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/remind_me_latter_bottom_sheets.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
-
-
 
 class ClearHistoryBottomSheet extends StatefulWidget {
   const ClearHistoryBottomSheet({super.key});
@@ -45,19 +42,18 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
-       
-        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 25.w),
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
         decoration: BoxDecoration(
-          color: isDarkMode?lightBlackColor2:whiteColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(49.r),
-          topRight: Radius.circular(49.r)),
+          color: isDarkMode ? lightBlackColor2 : whiteColor,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(49.r), topRight: Radius.circular(49.r)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -68,32 +64,47 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
                 width: 38.w,
                 height: 3.h,
                 decoration: BoxDecoration(
-                  color:isDarkMode?lightBlackColor: greyColor,
+                  color: isDarkMode ? lightBlackColor : greyColor,
                   borderRadius: BorderRadius.circular(100.r),
                 ),
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "Clear Browsing Data?",style: GoogleFonts.urbanist(
-                fontWeight: FontWeight.w700,
-                fontSize: 24.sp,
-                color: isDarkMode?whiteColor: blackColor2
-              ),),
+                "Clear Browsing Data?",
+                style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.sp,
+                    color: isDarkMode ? whiteColor : blackColor2),
+              ),
             ),
-         SizedBox(height: 20.h,),
-         CustomDivider(),
-         SizedBox(height: 25.h,),
-         Row(
-          children: [
-            Flexible(child: CustomLightGreenButton(buttonText: "Cancel", onPressed: (){})),
-            SizedBox(width: 15.w,),
-             Flexible(child: CustomButton(buttonText: "Yes, Clear", onPressed: (){}))
-          ],
-         ),
-         SizedBox(height: 25.h,),
+            SizedBox(
+              height: 20.h,
+            ),
+            const CustomDivider(),
+            SizedBox(
+              height: 25.h,
+            ),
+            Row(
+              children: [
+                Flexible(
+                    child: CustomLightGreenButton(
+                        buttonText: "Cancel", onPressed: () {})),
+                SizedBox(
+                  width: 15.w,
+                ),
+                Flexible(
+                    child: CustomButton(
+                        buttonText: "Yes, Clear", onPressed: () {}))
+              ],
+            ),
+            SizedBox(
+              height: 25.h,
+            ),
           ],
         ),
       ),

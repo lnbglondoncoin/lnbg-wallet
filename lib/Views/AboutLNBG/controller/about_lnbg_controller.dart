@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class AboutLNBGController extends GetxController{
-  List aboutTabs=[
+class AboutLNBGController extends GetxController {
+  List aboutTabs = [
     "Privacy Policy",
     "Terms of Services",
     "Attributions",

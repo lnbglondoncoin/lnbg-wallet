@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
-import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Notifications/view/notification_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_coin_qr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
-import 'package:lnbg_crypto_wallet_app/Views/ScanQRCode/view/scan_code.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/transfer_token.dart';
@@ -31,7 +30,7 @@ final TokenData token;
 backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
           isSuffix: true,
-          title:"${token.name} (${token.balance.toStringAsFixed(2)})" ,
+          title:"${token.name} (${token.symbol})" ,
           iconPath: 'assets/icons/graphIcon2.svg',
         ),
         body: SingleChildScrollView(
@@ -47,7 +46,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
                     ),),
-                    Spacer(),
+                    const Spacer(),
                      Text("\$${token.priceInUsd.toStringAsFixed(2)}",style: GoogleFonts.urbanist(
                       color:isDarkMode?whiteColor: blackColor2,
                       fontSize: 18.sp,
@@ -79,7 +78,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                          ),),
                      ),
                     SizedBox(height: 20.h,),
-                    CustomDivider() ,
+                    const CustomDivider() ,
                     SizedBox(height: 20.h,),
                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,7 +88,10 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() =>  SendScreen());
+                                   Get.to(() => SendCoin(
+                                token: token,
+                              ));
+                                 // Get.to(() =>  SendScreen());
                                 },
                                 child: Container(
                                   height: 60.h,
@@ -117,7 +119,9 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() =>  ReceiveView());
+                               Get.to(() => ReceiveCoinQR(
+                                token: token,
+                              ));
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +152,9 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() =>  BuyView());
+                             Get.to(() => BuyCoinScreen(
+                                token: token,
+                              ));
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,7 +163,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color:isDarkMode?lightBlackColor: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor: lightGreenColor.withValues(alpha:0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/cart2.svg"
@@ -179,7 +185,10 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => SwapView());
+                              Get.to(() => SwapView(
+                                token: token,
+                                isFirstTokenSelected: true,
+                              ));
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,7 +197,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                   height: 60.h,
                                   width: 60.w,
                                   decoration:  BoxDecoration(
-                                      color:isDarkMode?lightBlackColor:  lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
+                                      color:isDarkMode?lightBlackColor:  lightGreenColor.withValues(alpha:0.08), shape: BoxShape.circle),
                                   child: Center(
                                     child: SvgPicture.asset(isDarkMode
                                         ? "assets/icons/Swap2.svg"
@@ -211,7 +220,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                         ],
                       ),
                  SizedBox(height: 20.h,),
-                    CustomDivider() ,
+                    const CustomDivider() ,
                     SizedBox(height: 20.h,), 
                      Text(
                                   "Today",
@@ -222,7 +231,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                 )  ,
                                 SizedBox(height: 20.h,),
                ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 4,
                 shrinkWrap: true,
                 itemBuilder: (context,index){

@@ -11,12 +11,13 @@ class NotificationScreen extends StatelessWidget {
   final NotificationController controller = Get.put(NotificationController());
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-   
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: const CustomAppBar(
         isSuffix: true,
         title: "Notifications",
@@ -30,11 +31,11 @@ class NotificationScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final notification = controller.notifications[index];
                   return Padding(
-                    padding:  EdgeInsets.only(bottom: 10.h),
+                    padding: EdgeInsets.only(bottom: 10.h),
                     child: Container(
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
-                        color: isDarkMode?lightBlackColor3:whiteColor,
+                        color: isDarkMode ? lightBlackColor3 : whiteColor,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Column(
@@ -45,7 +46,7 @@ class NotificationScreen extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 24.r,
-                                backgroundColor:Colors.transparent,
+                                backgroundColor: Colors.transparent,
                                 backgroundImage:
                                     AssetImage(notification.iconPath),
                               ),
@@ -59,7 +60,9 @@ class NotificationScreen extends StatelessWidget {
                                       style: GoogleFonts.urbanist(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w700,
-                                        color:isDarkMode?whiteColor: blackColor2,
+                                        color: isDarkMode
+                                            ? whiteColor
+                                            : blackColor2,
                                       ),
                                     ),
                                     SizedBox(height: 4.h),
@@ -67,7 +70,9 @@ class NotificationScreen extends StatelessWidget {
                                       notification.dateTime,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 14.sp,
-                                          color:isDarkMode?greyColor.withOpacity(0.5): greyColor3,
+                                          color: isDarkMode
+                                              ? greyColor.withOpacity(0.5)
+                                              : greyColor3,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
@@ -78,7 +83,8 @@ class NotificationScreen extends StatelessWidget {
                                   width: 41.w,
                                   height: 24.h,
                                   decoration: BoxDecoration(
-                                    color:isDarkMode?lightGreenColor: orange4,
+                                    color:
+                                        isDarkMode ? lightGreenColor : orange4,
                                     borderRadius: BorderRadius.circular(8.r),
                                   ),
                                   child: Center(
@@ -86,7 +92,9 @@ class NotificationScreen extends StatelessWidget {
                                       "New",
                                       style: GoogleFonts.urbanist(
                                         fontSize: 10.sp,
-                                        color:isDarkMode?whiteColor: whiteColor,
+                                        color: isDarkMode
+                                            ? whiteColor
+                                            : whiteColor,
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
@@ -101,8 +109,10 @@ class NotificationScreen extends StatelessWidget {
                             notification.description,
                             style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
-                              fontWeight: FontWeight.w400 ,
-                              color:isDarkMode?whiteColor.withOpacity(0.7): blackColor2,
+                              fontWeight: FontWeight.w400,
+                              color: isDarkMode
+                                  ? whiteColor.withOpacity(0.7)
+                                  : blackColor2,
                             ),
                           ),
                         ],
@@ -121,7 +131,9 @@ class NotificationScreen extends StatelessWidget {
                     ),
                     Center(
                         child: Image.asset(
-                      isDarkMode?"assets/images/not2.png":"assets/images/not.png",
+                      isDarkMode
+                          ? "assets/images/not2.png"
+                          : "assets/images/not.png",
                       height: 300.h,
                       width: 300.w,
                     )),
@@ -133,15 +145,17 @@ class NotificationScreen extends StatelessWidget {
                       style: GoogleFonts.urbanist(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,
-                          color:isDarkMode?whiteColor: blackColor2),
+                          color: isDarkMode ? whiteColor : blackColor2),
                     ),
-                    SizedBox(height: 5.h,),
+                    SizedBox(
+                      height: 5.h,
+                    ),
                     Text(
                       "You don't have any notifications at this time",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w400,
-                          color:isDarkMode?whiteColor: blackColor2),
+                          color: isDarkMode ? whiteColor : blackColor2),
                     )
                   ],
                 ),

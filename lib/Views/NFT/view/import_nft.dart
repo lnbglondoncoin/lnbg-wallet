@@ -10,46 +10,52 @@ class ImportNFTScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
+    var theme = Theme.of(context);
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-       backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
-      appBar: CustomAppBar(title: "Import NFT", iconPath: ""),
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      appBar: const CustomAppBar(title: "Import NFT", iconPath: ""),
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.all(20.h),
+          padding: EdgeInsets.all(20.h),
           child: Column(
             children: [
-              CustomTextField(hintText: "0x7131CA84856767f3126a2C75468d48f8E696", controller: TextEditingController(), labelText: "Address"),
-              SizedBox(height: 20.h,),
-                        CustomTextField(hintText: "Enter the Collectible ID", controller: TextEditingController(), labelText: "ID")
-          
-          
+              CustomTextField(
+                  hintText: "0x7131CA84856767f3126a2C75468d48f8E696",
+                  controller: TextEditingController(),
+                  labelText: "Address"),
+              SizedBox(
+                height: 20.h,
+              ),
+              CustomTextField(
+                  hintText: "Enter the Collectible ID",
+                  controller: TextEditingController(),
+                  labelText: "ID")
             ],
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:Container(
+      floatingActionButton: Container(
         decoration: BoxDecoration(
-          color:isDarkMode?lightBlackColor3:whiteColor,
-          border: Border(
-            top: BorderSide(
-              color:isDarkMode?lightBlackColor: greyColor4
-            )
-            
-          )
-        ),
+            color: isDarkMode ? lightBlackColor3 : whiteColor,
+            border: Border(
+                top: BorderSide(
+                    color: isDarkMode ? lightBlackColor : greyColor4))),
         child: Padding(
-          padding:  EdgeInsets.all(20.h),
+          padding: EdgeInsets.all(20.h),
           child: Row(
             children: [
-              Flexible(child: CustomLightGreenButton(buttonText: "Cancel", onPressed: (){})),
-              SizedBox(width: 10.w,),
-              Flexible(child: CustomButton(buttonText: "Import", onPressed: (){}))
+              Flexible(
+                  child: CustomLightGreenButton(
+                      buttonText: "Cancel", onPressed: () {})),
+              SizedBox(
+                width: 10.w,
+              ),
+              Flexible(
+                  child: CustomButton(buttonText: "Import", onPressed: () {}))
             ],
           ),
         ),

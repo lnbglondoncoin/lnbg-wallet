@@ -23,14 +23,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return AppBar(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-      shadowColor: isDarkMode?lightBlackColor3:whiteColor,
-      foregroundColor: isDarkMode?lightBlackColor3:whiteColor,
-      surfaceTintColor:isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      shadowColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      foregroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      surfaceTintColor: isDarkMode ? lightBlackColor3 : whiteColor,
       elevation: 0.0,
       centerTitle: false,
       leading: Padding(
@@ -55,7 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: Text(
-        title,
+        (title).capitalizeFirst!,
         style: GoogleFonts.urbanist(
           fontSize: 24.sp,
           fontWeight: FontWeight.w700,

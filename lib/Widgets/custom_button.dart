@@ -16,7 +16,6 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
        var theme = Theme.of(context);
-      var textTheme = theme.textTheme;
       bool isDarkMode =
           theme.brightness == Brightness.dark; // Check if dark mode is active
     return Container(
@@ -30,7 +29,7 @@ class CustomButton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: lightGreenColor
-                .withOpacity(0.25), // Light green shadow with transparency
+                .withValues(alpha:0.25), // Light green shadow with transparency
             blurRadius: 24, // Blur size
             spreadRadius: 0, // No spread
             offset: const Offset(4, 9), // Moves shadow 4px right, 9px down
@@ -75,7 +74,6 @@ class CustomLightGreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
      bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Container(
@@ -137,7 +135,7 @@ class CustomGreenButton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: lightGreenColor
-                .withOpacity(0.25), // Light green shadow with transparency
+                .withValues(alpha:0.25), // Light green shadow with transparency
             blurRadius: 24, // Blur size
             spreadRadius: 0, // No spread
             offset: const Offset(4, 9), // Moves shadow 4px right, 9px down
@@ -186,7 +184,7 @@ class CustomOrangeButton extends StatelessWidget {
        
     return Container(
       decoration: BoxDecoration(
-        gradient:  LinearGradient(
+        gradient:  const LinearGradient(
           colors: [ orange1, orange2],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -195,7 +193,7 @@ class CustomOrangeButton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: lightGreenColor
-                .withOpacity(0.25), // Light green shadow with transparency
+                .withValues(alpha:0.25), // Light green shadow with transparency
             blurRadius: 24, // Blur size
             spreadRadius: 0, // No spread
             offset: const Offset(4, 9), // Moves shadow 4px right, 9px down

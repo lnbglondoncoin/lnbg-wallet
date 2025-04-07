@@ -14,10 +14,7 @@ class CustomCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
-
+    var theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         onChanged(!isChecked);
@@ -28,7 +25,7 @@ class CustomCheckbox extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: orange3, width: 2),
           borderRadius: BorderRadius.circular(5),
-          color: isChecked ? orange3 :theme.scaffoldBackgroundColor,
+          color: isChecked ? orange3 : theme.scaffoldBackgroundColor,
         ),
         child:
             isChecked ? Icon(Icons.check, size: 12.h, color: whiteColor) : null,

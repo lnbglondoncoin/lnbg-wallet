@@ -16,10 +16,10 @@ class EditNetworkScreen extends StatelessWidget {
   final controller = Get.put(SendController());
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-       bool isDarkMode = theme.brightness == Brightness.dark;
+    var theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
-     backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: const CustomAppBar(
         title: "Edit Network Fee",
         iconPath: 'assets/icons/search.svg',
@@ -36,7 +36,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color: isDarkMode?whiteColor: blackColor2),
+                    color: isDarkMode ? whiteColor : blackColor2),
               ),
               SizedBox(
                 height: 10.h,
@@ -46,7 +46,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
-                    color:isDarkMode?whiteColor: darkGreyColor),
+                    color: isDarkMode ? whiteColor : darkGreyColor),
               ),
               SizedBox(
                 height: 15.h,
@@ -61,9 +61,8 @@ class EditNetworkScreen extends StatelessWidget {
                         child: Obx(() {
                           return GestureDetector(
                             onTap: () async {
-                            
-                              controller.changeSelectedSpeed(index,networkSpeedList[index],token);
-                              
+                              controller.changeSelectedSpeed(
+                                  index, networkSpeedList[index], token);
                             },
                             child: Container(
                               //height: 82.h,
@@ -73,8 +72,12 @@ class EditNetworkScreen extends StatelessWidget {
                                   border: Border.all(
                                       color: index ==
                                               controller.selectedSpeed.value
-                                          ?isDarkMode?lightGreenColor: orange3
-                                          :isDarkMode?lightBlackColor: greyColor,
+                                          ? isDarkMode
+                                              ? lightGreenColor
+                                              : orange3
+                                          : isDarkMode
+                                              ? lightBlackColor
+                                              : greyColor,
                                       width: 1)),
                               child: Padding(
                                 padding: EdgeInsets.all(15.h),
@@ -88,55 +91,64 @@ class EditNetworkScreen extends StatelessWidget {
                                       style: GoogleFonts.urbanist(
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w700,
-                                          color:isDarkMode?whiteColor: blackColor2),
+                                          color: isDarkMode
+                                              ? whiteColor
+                                              : blackColor2),
                                     ),
                                     Column(
-  crossAxisAlignment: CrossAxisAlignment.end,
-  children: [
-    /// Wrapping Fee Text with a fixed width
-    Container(
-      width: 100.w, // Adjust width as per your layout
-      child: Text(
-        index == 0
-            ? "${controller.networkFee.value} ${token.symbol}"
-            : index == 1
-                ? "${controller.moderateNetworkFee.value} ${token.symbol}"
-                : "${controller.fastNetworkFee.value} ${token.symbol}",
-        maxLines: 2,
-        overflow: TextOverflow.visible,
-        textAlign: TextAlign.right, // Ensures proper alignment
-        style: GoogleFonts.urbanist(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w700,
-          color: isDarkMode ? whiteColor : blackColor2,
-        ),
-      ),
-    ),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        /// Wrapping Fee Text with a fixed width
+                                        Container(
+                                          width: 100
+                                              .w, // Adjust width as per your layout
+                                          child: Text(
+                                            index == 0
+                                                ? "${controller.networkFee.value} ${token.symbol}"
+                                                : index == 1
+                                                    ? "${controller.moderateNetworkFee.value} ${token.symbol}"
+                                                    : "${controller.fastNetworkFee.value} ${token.symbol}",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.visible,
+                                            textAlign: TextAlign
+                                                .right, // Ensures proper alignment
+                                            style: GoogleFonts.urbanist(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: isDarkMode
+                                                  ? whiteColor
+                                                  : blackColor2,
+                                            ),
+                                          ),
+                                        ),
 
-    SizedBox(height: 5.h),
+                                        SizedBox(height: 5.h),
 
-    /// Wrapping USD Fee Text
-    Container(
-      width: 100.w, // Adjust width as needed
-      child: Text(
-        index == 0
-            ? "\$${controller.networkFeeUsd.value}"
-            : index == 1
-                ? "\$${controller.moderateNetworkFeeUsd.value}"
-                : "\$${controller.fastNetworkFeeUSD.value}",
-        maxLines: 2,
-        overflow: TextOverflow.visible,
-        textAlign: TextAlign.right,
-        style: GoogleFonts.urbanist(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w500,
-          color: isDarkMode ? greyColor : greyColor3,
-        ),
-      ),
-    ),
-  ],
-),
-
+                                        /// Wrapping USD Fee Text
+                                        Container(
+                                          width:
+                                              100.w, // Adjust width as needed
+                                          child: Text(
+                                            index == 0
+                                                ? "\$${controller.networkFeeUsd.value}"
+                                                : index == 1
+                                                    ? "\$${controller.moderateNetworkFeeUsd.value}"
+                                                    : "\$${controller.fastNetworkFeeUSD.value}",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.visible,
+                                            textAlign: TextAlign.right,
+                                            style: GoogleFonts.urbanist(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: isDarkMode
+                                                  ? greyColor
+                                                  : greyColor3,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -156,7 +168,7 @@ class EditNetworkScreen extends StatelessWidget {
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color:isDarkMode?whiteColor: blackColor2),
+                    color: isDarkMode ? whiteColor : blackColor2),
               ),
               SizedBox(
                 height: 20.h,
@@ -169,27 +181,28 @@ class EditNetworkScreen extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 15.h),
                       child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-                        decoration: BoxDecoration(
-                          color: isDarkMode ? lightBlackColor2 : lightWhiteColor,
-                          borderRadius: BorderRadius.circular(18.r),
-                        ),
-                        child: Obx((){
-                          return Text(
-                          index == 0 
-                            ? controller.maxFee.value 
-                            : index == 1 
-                              ? controller.gasLimit.value 
-                              : controller.nonce.value,
-                          style: GoogleFonts.urbanist(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
-                            color: isDarkMode ? whiteColor : blackColor2,
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15.w, vertical: 15.h),
+                          decoration: BoxDecoration(
+                            color:
+                                isDarkMode ? lightBlackColor2 : lightWhiteColor,
+                            borderRadius: BorderRadius.circular(18.r),
                           ),
-                        );
-                        })
-                      ),
+                          child: Obx(() {
+                            return Text(
+                              index == 0
+                                  ? controller.maxFee.value
+                                  : index == 1
+                                      ? controller.gasLimit.value
+                                      : controller.nonce.value,
+                              style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                color: isDarkMode ? whiteColor : blackColor2,
+                              ),
+                            );
+                          })),
                     );
                   }),
               SizedBox(
@@ -201,15 +214,19 @@ class EditNetworkScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(20.h),
-        child: isDarkMode? CustomGreenButton(buttonText: "Ok", onPressed: () {
-          Get.back();
-        }): CustomButton(buttonText: "Ok", onPressed: () async {
-       await controller. calculateNetworkFee(controller.selectedNetworkSpeed.value,token,true);
-
-        
-        })
-      ),
+          padding: EdgeInsets.all(20.h),
+          child: isDarkMode
+              ? CustomGreenButton(
+                  buttonText: "Ok",
+                  onPressed: () {
+                    Get.back();
+                  })
+              : CustomButton(
+                  buttonText: "Ok",
+                  onPressed: () async {
+                    await controller.calculateNetworkFee(
+                        controller.selectedNetworkSpeed.value, token, true);
+                  })),
     );
   }
 }

@@ -17,12 +17,12 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Scaffold(
-      backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomStepAppBar(
         onBackTap: () {
           Get.back();
@@ -63,10 +63,9 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      color: isDarkMode?whiteColor: darkGreyColor,
+                      color: isDarkMode ? whiteColor : darkGreyColor,
                     ),
                   ),
-
                   SizedBox(
                     height: 25.h,
                   ),
@@ -74,16 +73,19 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                   SizedBox(
                     height: 25.h,
                   ),
-
                   Container(
-                    height: 378.h,
+                  //  height: 378.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient:  LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            isDarkMode?Color(0XffFB9400):
-                            Color(0xFFFACC15),
-                              isDarkMode?Color(0xffFFAB38): Color(0xFFFFE580)],
+                            isDarkMode
+                                ? const Color(0XffFB9400)
+                                : const Color(0xFFFACC15),
+                            isDarkMode
+                                ? const Color(0xffFFAB38)
+                                : const Color(0xFFFFE580)
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(40.r)),
                     child: Padding(
@@ -91,7 +93,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40.r),
-                            color:isDarkMode?lightBlackColor3:whiteColor,
+                            color: isDarkMode ? lightBlackColor3 : whiteColor,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(10.h),
@@ -102,41 +104,6 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                   SizedBox(
                     height: 25.h,
                   ),
-
-// Container(
-//   height: 378.h,
-//   width: double.infinity,
-//   decoration: BoxDecoration(
-//     borderRadius: BorderRadius.circular(40.r),
-//     color: whiteColor,
-//   ),
-//   child: ShaderMask(
-//     shaderCallback: (Rect bounds) {
-//       return LinearGradient(
-//         colors: [Color(0xFFFACC15), Color(0xFFFFE580)],
-//       ).createShader(bounds);
-//     },
-//     child: Container(
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(40.r),
-//         border: Border.all(
-//           width: 3, // Border thickness
-//           color: Colors.white, // Base color
-//         ),
-//       ),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           color: Colors.grey, // Explicit background color for the child
-//           borderRadius: BorderRadius.circular(40.r), // Ensure border radius is consistent
-//         ),
-//         child: Padding(
-//           padding: EdgeInsets.all(10.h),
-//           child: GridViewBuilderExample(),
-//         ),
-//       ),
-//     ),
-//   ),
-// )
                 ],
               ),
             ),
@@ -164,19 +131,19 @@ class WriteSeedPhraseScreen extends StatelessWidget {
 }
 
 class GridViewBuilderWidget extends StatelessWidget {
-  //final StepController controller = Get.put(StepController());
   final walletCreatingController = Get.find<WalletCreatingController>();
 
   GridViewBuilderWidget({super.key});
   @override
   Widget build(BuildContext context) {
-        var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-       bool isDarkMode = theme.brightness == Brightness.dark; // Check if dark mode is active
+    var theme = Theme.of(context);
+    bool isDarkMode =
+        theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
+          shrinkWrap: true, // ADD THIS!
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // 2 columns
@@ -190,7 +157,7 @@ class GridViewBuilderWidget extends StatelessWidget {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color:isDarkMode?lightBlackColor: greyColor4,
+                color: isDarkMode ? lightBlackColor : greyColor4,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -201,14 +168,14 @@ class GridViewBuilderWidget extends StatelessWidget {
                       "${(index + 1).toString()} ",
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color:isDarkMode?whiteColor: darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       walletCreatingController.mnemonicWords[index],
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
-                          color: isDarkMode?whiteColor:darkGreyColor,
+                          color: isDarkMode ? whiteColor : darkGreyColor,
                           fontWeight: FontWeight.w700),
                     ),
                   ],
