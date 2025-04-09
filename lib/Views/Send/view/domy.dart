@@ -32,6 +32,13 @@ class SendController extends GetxController {
     updateConversion(coinPrice, ammountIncrypto.value);
   }
 
+// //   final String rpcUrlSepolia = "https://sepolia.infura.io/v3/${dotenv.env['INFURA_API_KEY']}";
+
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     client = Web3Client(rpcUrlSepolia, Client());
+//   }
 
   var enableTextFeild = false.obs;
   var isEditClicked = false.obs;
@@ -56,6 +63,21 @@ class SendController extends GetxController {
     ammountInUSD.value = cryptoAmmount * coinPrice;
   }
 
+//   var fastNetworkFee = "0.0".obs;
+//   var fastNetworkFeeUSD = "0.0".obs;
+//   var moderateNetworkFee = "0.0".obs;
+//   var moderateNetworkFeeUsd = "0.0".obs;
+//   var networkFee = "0.0".obs;
+//   var networkFeeUsd = "0.0".obs;
+
+//   var totalAmount = "0.0".obs;
+//   var totalAmountUsd = "0.0".obs;
+
+//   var totalAmountModerate = "0.0".obs;
+//   var totalAmountModerateUsd = "0.0".obs;
+
+//   var totalAmountFast = "0.0".obs;
+//   var totalAmountUsdFast = "0.0".obs;
 
   final sendFormKey = GlobalKey<FormState>();
 var isLoading=false.obs;
@@ -83,6 +105,158 @@ var isLoading=false.obs;
   bool validateForm() {
     return sendFormKey.currentState?.validate() ?? false;
   }
+
+//   Future<void> fetchTransactionParams(TokenData token, bool isOkClicked) async {
+//     try {
+//       final credentials = EthPrivateKey.fromHex(walletCreatingCotroller.privateKey!);
+//       final senderAddress = await credentials.extractAddress();
+
+//       // Get Base Gas Price
+//       EtherAmount baseGasPrice = await client!.getGasPrice();
+
+//       // Adjust gas price based on selected network speed
+//       EtherAmount adjustedGasPrice;
+//       BigInt baseGasLimit;
+
+//       // Get base gas limit estimation
+//       EthereumAddress recipient = EthereumAddress.fromHex(addressController.text);
+//       BigInt amountInCrypto = BigInt.from(ammountIncrypto.value);
+
+//       // Get base gas limit
+//       baseGasLimit = await client!.estimateGas(
+//         sender: senderAddress,
+//         to: recipient,
+//         value: EtherAmount.fromUnitAndValue(EtherUnit.ether, amountInCrypto),
+//       );
+
+//       // Adjust both gas price and gas limit based on network speed
+//       switch (selectedNetworkSpeed.value) {
+//         case "Moderate":
+//           adjustedGasPrice = EtherAmount.fromBigInt(EtherUnit.wei,
+//               (baseGasPrice.getInWei * BigInt.from(150)) ~/ BigInt.from(100));
+//           baseGasLimit = (baseGasLimit * BigInt.from(120)) ~/ BigInt.from(100);
+//           break;
+//         case "Fast":
+//           adjustedGasPrice = EtherAmount.fromBigInt(EtherUnit.wei, baseGasPrice.getInWei * BigInt.from(2));
+//           baseGasLimit = (baseGasLimit * BigInt.from(140)) ~/ BigInt.from(100);
+//           break;
+//         default: // "Slow"
+//           adjustedGasPrice = baseGasPrice;
+//           break;
+//       }
+
+//       maxFee.value = adjustedGasPrice.getValueInUnit(EtherUnit.gwei).toStringAsFixed(2);
+//       gasLimit.value = baseGasLimit.toString();
+
+//       // Fetch Nonce (Transaction Count)
+//       int txCount = await client!.getTransactionCount(senderAddress);
+//       nonce.value = txCount.toString();
+
+//       if (isOkClicked) {
+//         Get.to(() => ConfirmSendCoinScreen(
+//               address: addressController.text,
+//               token: token,
+//             ));
+//       }
+//     } catch (e) {
+//       Get.snackbar("Error", "Fetching transaction params failed: $e");
+//     }
+//   }
+
+// Future<void> calculateNetworkFee(
+//     String speed,
+//     TokenData token,
+//     bool isSpeedSelected,
+//   ) async {
+//     try {
+//       isLoading(true);
+
+//       // Get the base gas price for Ethereum (this can be adjusted based on the token you're using)
+//       EtherAmount baseGasPrice = await client!.getGasPrice();
+      
+//       // Standard estimated gas limit for Ethereum transactions (this is a common value)
+//       BigInt estimatedGasLimit = BigInt.from(21000); // Can be adjusted for specific token types
+
+//       // Calculate base fee in wei (Ethereum's smallest unit)
+//       BigInt baseFeeInWei = baseGasPrice.getInWei * estimatedGasLimit;
+
+//       // Convert the base fee from wei to the token unit (e.g., Chainlink or other ERC20 token)
+//       double tokenDecimalsFactor = 1 / (pow(10, 18)); // Adjusted for the token's decimals
+//       double baseFeeInToken = baseFeeInWei.toDouble() * tokenDecimalsFactor;
+
+//       // Convert base fee in token to USD using the token's current price
+//       double baseFeeInUsd = baseFeeInToken * token.priceInUsd;
+
+//       // Set network fee values based on the speed (slow, moderate, fast)
+//       // Slow (Base fee)
+//       networkFee.value = baseFeeInToken.toString();
+//       networkFeeUsd.value = baseFeeInUsd.toString();
+//       totalAmount.value = (ammountIncrypto.value + baseFeeInToken).toString();
+//       totalAmountUsd.value = (ammountInUSD.value + baseFeeInUsd).toString();
+
+//       // Moderate (1.5x of base fee)
+//       BigInt moderateFeeWei = (baseFeeInWei * BigInt.from(3)) ~/ BigInt.from(2);
+//       double moderateFeeToken = moderateFeeWei.toDouble() * tokenDecimalsFactor;
+//       double moderateFeeUsd = moderateFeeToken * token.priceInUsd;
+//       moderateNetworkFee.value = moderateFeeToken.toString();
+//       moderateNetworkFeeUsd.value = moderateFeeUsd.toString();
+//       totalAmountModerate.value = (ammountIncrypto.value + moderateFeeToken).toString();
+//       totalAmountModerateUsd.value = (ammountInUSD.value + moderateFeeUsd).toString();
+
+//       // Fast (2x of base fee)
+//       BigInt fastFeeWei = baseFeeInWei * BigInt.from(2);
+//       double fastFeeToken = fastFeeWei.toDouble() * tokenDecimalsFactor;
+//       double fastFeeUsd = fastFeeToken * token.priceInUsd;
+//       fastNetworkFee.value = fastFeeToken.toString();
+//       fastNetworkFeeUSD.value = fastFeeUsd.toString();
+//       totalAmountFast.value = (ammountIncrypto.value + fastFeeToken).toString();
+//       totalAmountUsdFast.value = (ammountInUSD.value + fastFeeUsd).toString();
+
+//       // If the speed is not selected, fetch transaction parameters and recalculate
+//       if (!isSpeedSelected) {
+//         await fetchTransactionParams(token, true);
+//       } else {
+//         Get.back();
+//       }
+//     } catch (e) {
+//       // Handle any errors that may occur during the calculation
+//       Get.snackbar("Error", "Calculating network fee failed: $e");
+//     } finally {
+//       isLoading(false);
+//     }
+//   }
+ 
+ 
+//  var isLoading = false.obs;
+//   Future<void> sendCrypto(BuildContext context) async {
+//     try {
+//       isLoading(true);
+//       final credentials = EthPrivateKey.fromHex(walletCreatingCotroller.privateKey!);
+//       final senderAddress = await credentials.extractAddress();
+//       final recipientAddress = EthereumAddress.fromHex(addressController.text);
+//       final amountInCrypto = EtherAmount.fromUnitAndValue(EtherUnit.ether, ammountIncrypto.value);
+//       final transaction = Transaction(
+//         to: recipientAddress,
+//         from: senderAddress,
+//         value: amountInCrypto,
+//       );
+//       await client!.sendTransaction(credentials, transaction);
+//       Get.snackbar("Success", "Transaction sent successfully!");
+//     } catch (e) {
+//       Get.snackbar("Error", "Sending transaction failed: $e");
+//     } finally {
+//       isLoading(false);
+//     }
+//   }
+
+
+
+
+
+
+  // // Observables
+  // var selectedCrypto = 'Chainlink'.obs;
+  // var cryptoPriceInUsd = 11.9.obs; // 1 Chainlink = $11.9
 
   var gasLimit = 22000.obs;
 var nonce="".obs;
@@ -151,172 +325,116 @@ var maxFeeCrypto = 0.0.obs;
 
 
   // Same variables from previous step...
-final Web3Client _client = Web3Client(
-   "https://mainnet.infura.io/v3/${dotenv.env['INFURA_API_KEY']}", // Ethereum Mainnet
+
+  final Web3Client _client = Web3Client(
+    "https://sepolia.infura.io/v3/${dotenv.env['INFURA_API_KEY']}", // replace for testnet or mainnet
     Client(),
   );
 
-
-Future<void> sendCoin({
+  // Send crypto function
+Future<void> sendCrypto({
   required BuildContext context,
+  required String senderPrivateKey,
   required String recipientAddress,
-  required double amountToSend, // in ETH
-  required String privateKey,
+  required double amountToSend, // in crypto (e.g., 0.45 LINK)
+  required int gasLimit,
+  required int gasPriceGwei,
+  required String contractAddress, // if using ERC20
+  bool isToken = false, // set true for ERC20 transfers
 }) async {
   try {
     isLoading(true);
-    final credentials = EthPrivateKey.fromHex(privateKey);
-    final myAddress = await credentials.extractAddress();
-    print('Sending from: $myAddress');
+    print(senderPrivateKey);
+    print(recipientAddress);
+    print(amountToSend);
+    print(gasLimit);
+    print(gasPriceGwei);
+    print(contractAddress);
 
-    final chainId = 1; // Goerli testnet
-    final gasPrice = await _client.getGasPrice();
-    const gasLimit = 21000;
+    final credentials = EthPrivateKey.fromHex(senderPrivateKey);
+    final senderAddress = await credentials.extractAddress();
+    final nonce = await _client.getTransactionCount(senderAddress);
+    final gasPrice = EtherAmount.inWei(BigInt.from(gasPriceGwei * 1e9)); // Gwei to Wei
 
-    // Convert ETH amount to Wei (BigInt)
-    final amountInWei = BigInt.from(amountToSend * 1e18);
+    if (isToken) {
+      // Sending ERC20 Token
+      final contract = DeployedContract(
+        ContractAbi.fromJson(_erc20Abi, 'ERC20'),
+        EthereumAddress.fromHex(contractAddress),
+      );
+      final transferFunction = contract.function('transfer');
 
-    final transaction = Transaction(
-      from: myAddress,
-      to: EthereumAddress.fromHex(recipientAddress),
-      gasPrice: gasPrice,
-      maxGas: gasLimit,
-      value: EtherAmount.inWei(amountInWei),
-    );
+      final tx = Transaction.callContract(
+        contract: contract,
+        function: transferFunction,
+        parameters: [
+          EthereumAddress.fromHex(recipientAddress),
+          BigInt.from(amountToSend * 1e18),
+        ],
+        maxGas: gasLimit,
+        gasPrice: gasPrice,
+        nonce: nonce,
+      );
 
-    final txHash = await _client.sendTransaction(
-      credentials,
-      transaction,
-      chainId: chainId,
-      fetchChainIdFromNetworkId: false,
-    );
+      await _client.sendTransaction(
+        credentials,
+        tx,
+        chainId: null,
+        fetchChainIdFromNetworkId: true,
+      );
 
-    print('Transaction sent! Hash: $txHash');
+    } else {
+      // Native crypto (e.g., ETH, BNB, MATIC)
+      final tx = Transaction(
+        to: EthereumAddress.fromHex(recipientAddress),
+        value: EtherAmount.fromUnitAndValue(EtherUnit.ether, amountToSend),
+        gasPrice: gasPrice,
+        maxGas: gasLimit,
+        nonce: nonce,
+      );
 
-    // Wait for confirmation
-    TransactionReceipt? receipt;
-    while (receipt == null) {
-      print('⏳ Waiting for confirmation...');
-      await Future.delayed(Duration(seconds: 5));
-      receipt = await _client.getTransactionReceipt(txHash);
+      await _client.sendTransaction(
+        credentials,
+        tx,
+        chainId: null,
+        fetchChainIdFromNetworkId: true,
+      );
     }
 
-    print('✅ Transaction confirmed in block ${receipt.blockNumber}');
-    walletCreatingCotroller.getBalanceInUSD(walletCreatingCotroller.wallwtAddress.value);
-    _showSuccesPopup(context);
+   _showSuccesPopup(context);
   } catch (e) {
     isLoading(false);
-    _showFailPopup(context, e.toString());
-    print('❌ Error sending transaction: $e');
-  }
-  finally{
+    _showFailPopup(context,e.toString());
+  } finally {
     isLoading(false);
   }
 }
+ static const String _erc20Abi = '''
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "type": "function"
+  }
+]
+''';
 
-//  Future<void> sendCrypto({
-//   required BuildContext context,
-//   required String senderPrivateKey,
-//   required String recipientAddress,
-//   required double amountToSend,
-//   required int gasLimit,
-//   required int gasPriceGwei,
-//   required String contractAddress,
-//   bool isToken = false,
-// }) async {
-//   try {
-//     isLoading(true);
-
-//     final credentials = EthPrivateKey.fromHex(senderPrivateKey);
-//     final senderAddress = await credentials.extractAddress();
-//     final nonce = await _client.getTransactionCount(senderAddress);
-//     final gasPrice = EtherAmount.inWei(BigInt.from(gasPriceGwei * 1e9));
-
-//     String txHash;
-
-//     if (isToken) {
-//       // For ERC20 Token Transfer
-//       final contract = DeployedContract(
-//         ContractAbi.fromJson(_erc20Abi, 'ERC20'),
-//         EthereumAddress.fromHex(contractAddress),
-//       );
-//       final transferFunction = contract.function('transfer');
-
-//       final tx = Transaction.callContract(
-//         contract: contract,
-//         function: transferFunction,
-//         parameters: [
-//           EthereumAddress.fromHex(recipientAddress),
-//           BigInt.from(amountToSend * pow(10, 18)), // Adjust decimals
-//         ],
-//         maxGas: gasLimit,
-//         gasPrice: gasPrice,
-//         nonce: nonce,
-//       );
-
-//       txHash = await _client.sendTransaction(
-//         credentials,
-//         tx,
-//         chainId: 1, // MAINNET (set your correct chainId)
-//         fetchChainIdFromNetworkId: false,
-//       );
-//     } else {
-//       // Native transfer (e.g., ETH)
-//       final tx = Transaction(
-//         to: EthereumAddress.fromHex(recipientAddress),
-//         value: EtherAmount.fromUnitAndValue(EtherUnit.ether, amountToSend),
-//         gasPrice: gasPrice,
-//         maxGas: gasLimit,
-//         nonce: nonce,
-//       );
-
-//       txHash = await _client.sendTransaction(
-//         credentials,
-//         tx,
-//         chainId: 1, // MAINNET
-//         fetchChainIdFromNetworkId: false,
-//       );
-//     }
-
-//     print("Transaction sent! Hash: $txHash");
-
-//     await walletCreatingCotroller.getBalanceInUSD(walletCreatingCotroller.wallwtAddress.value);
-
-//     _showSuccesPopup(context);
-//   } catch (e) {
-//     print("Error sending transaction: $e");
-//     _showFailPopup(context, e.toString());
-//   } finally {
-//     isLoading(false);
-//   }
-// }
-//  // ERC20 ABI (for token transfers)
- 
-  static const String _erc20Abi = '''
-  [
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "name": "transfer",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "type": "function"
-    }
-  ]
-  ''';
 
 
 

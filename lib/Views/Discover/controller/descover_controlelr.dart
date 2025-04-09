@@ -140,6 +140,8 @@ void onInit() {
   }
 }
 
+
+
 // void fetchAllTokensOfCategory(String category) async {
 //     try {
 //       Get.log(category);

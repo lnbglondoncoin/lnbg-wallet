@@ -438,18 +438,24 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Text(
-                                                                          token
-                                                                              .name,
-                                                                          style: GoogleFonts.urbanist(
-                                                                              fontSize: 20.sp,
-                                                                              fontWeight: FontWeight.w700,
-                                                                              color: isDarkMode ? whiteColor : blackColor2),
+                                                                        SizedBox(
+                                                                          width: Get.width/3,
+                                                                          child: Text(
+                                                                            token
+                                                                                .name,
+                                                                            style: GoogleFonts.urbanist(
+                                                                                fontSize: 20.sp,
+                                                                                fontWeight: FontWeight.w700,
+                                                                                color: isDarkMode ? whiteColor : blackColor2),
+                                                                                  maxLines: null,
+                                                                            //overflow: TextOverflow.visible, // or TextOverflow.visible
+                                                                            softWrap: true,
+                                                                          ),
                                                                         ),
                                                                         Row(
                                                                           children: [
                                                                             Text(
-                                                                              "\$${token.priceInUsd.toStringAsFixed(2)}",
+                                                                              "\$${token.priceInUsd.toStringAsFixed(8)}",
                                                                               style: GoogleFonts.urbanist(fontSize: 14.sp, fontWeight: FontWeight.w800, color: isDarkMode ? greyColor : greyColor3),
                                                                             ),
                                                                             SizedBox(
@@ -477,13 +483,22 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                                           CrossAxisAlignment
                                                                               .end,
                                                                       children: [
-                                                                        Text(
-                                                                          "${token.balance} ${token.symbol}",
+                                                                      SizedBox(
+                                                                        width: Get.width/3,
+                                                                        child: Text(
+                                                                        textAlign: TextAlign.end,
+                                                                                                                                         
+                                                                          
+                                                                          "${token.balance.toStringAsFixed(8)} ${token.symbol}",
                                                                           style: GoogleFonts.urbanist(
                                                                               fontSize: 18.sp,
                                                                               fontWeight: FontWeight.w700,
                                                                               color: isDarkMode ? whiteColor : blackColor2),
+                                                                                maxLines: null,
+                                                                          overflow: TextOverflow.visible, // or TextOverflow.visible
+                                                                          softWrap: true,
                                                                         ),
+                                                                      ),
                                                                         Text(
                                                                           "\$${token.balanceInUsd.toStringAsFixed(2)}",
                                                                           style: GoogleFonts.urbanist(

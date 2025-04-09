@@ -243,11 +243,17 @@ class SendCoin extends StatelessWidget {
                onPressed: () async {
                   if (controller.validateForm()) {
               // Then execute the network fee calculation
-              controller.calculateNetworkFee(
-                controller.selectedNetworkSpeed.value,
-                token,
-                false
-              );
+              // controller.calculateNetworkFee(
+              //   controller.selectedNetworkSpeed.value,
+              //   token,
+              //   false
+              // );
+              controller.calculateFees(
+  cryptoAmount: controller.ammountIncrypto.value,
+  cryptoAmountInUsd: controller.ammountInUSD.value,
+  nativeTokenPriceInUsd: 1563,
+    token: token
+);
             }
                 })
             : CustomButton(
@@ -255,11 +261,17 @@ class SendCoin extends StatelessWidget {
                 onPressed: () async {
                   if (controller.validateForm()) {
               // Then execute the network fee calculation
-              controller.calculateNetworkFee(
-                controller.selectedNetworkSpeed.value,
-                token,
-                false
-              );
+              // controller.calculateNetworkFee(
+              //   controller.selectedNetworkSpeed.value,
+              //   token,
+              //   false
+              // );
+               controller.calculateFees(
+  cryptoAmount: controller.ammountIncrypto.value,
+  cryptoAmountInUsd: controller.ammountInUSD.value,
+  nativeTokenPriceInUsd: 1484,
+  token: token
+);
             }
                 });
         })

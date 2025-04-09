@@ -151,11 +151,12 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child:Obx((){
                               return  Text(
-                              controller.selectedNetworkSpeed.value == "Slow"
-                                  ? "${controller.networkFee.value} ${token.symbol} (\$${controller.networkFeeUsd.value} USD)"
-                                  : controller.selectedNetworkSpeed.value == "Moderate"
-                                      ? "${controller.moderateNetworkFee.value} ${token.symbol} (\$${controller.moderateNetworkFeeUsd.value} USD)"
-                                      : "${controller.fastNetworkFee.value} ${token.symbol} (\$${controller.fastNetworkFeeUSD.value} USD)",
+                                controller.selectedNetworkSpeed.value=="Slow"?
+                             "${controller.networkFeeSlowCrypto.value} ${token.symbol} (\$${ controller.networkFeeSlowUsd.value.toString()} USD)":
+                               controller.selectedNetworkSpeed.value=="Moderate"?
+                                 "${controller.networkFeeModeratecrypto.value} ${token.symbol} (\$${ controller.networkFeeModerateUsd.value.toString()} USD)":
+                                "${controller.networkFeeFastcrypto.value} ${token.symbol} (\$${ controller.networkFeeFastUsd.value.toString()} USD)",
+                               
                               style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w800,
@@ -170,7 +171,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                         SizedBox(width: 10.w),
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => EditNetworkScreen(token: token));
+                           Get.to(() => EditNetworkScreen(token: token));
                           },
                           child: SvgPicture.asset(
                             "assets/icons/Edit.svg",
@@ -203,11 +204,13 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             return Container(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                controller.selectedNetworkSpeed.value == "Slow"
-                                    ? "${controller.totalAmount.value} ${token.symbol} (\$${controller.totalAmountUsd.value} USD)"
-                                    : controller.selectedNetworkSpeed.value == "Moderate"
-                                        ? "${controller.totalAmountModerate.value} ${token.symbol} (\$${controller.totalAmountModerateUsd.value} USD)"
-                                        : "${controller.totalAmountFast.value} ${token.symbol} (\$${controller.totalAmountUsdFast} USD)",
+                                
+                                controller.selectedNetworkSpeed.value=="Slow"?
+                                  "${controller.totalFeeSlowCrypto.value} ${token.symbol} (\$${ controller.totalFeeSlowUsd.value.toString()} USD)":
+                                   controller.selectedNetworkSpeed.value=="Moderate"?
+                                     "${controller.totalFeeModerateCrypto.value} ${token.symbol} (\$${ controller.totalFeeModerateUsd.value.toString()} USD)":
+                                      "${controller.totalFeeFastCrypto.value} ${token.symbol} (\$${ controller.totalFeeFastUsd.value.toString()} USD)",
+                                    
                                 style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w800,
@@ -241,12 +244,22 @@ class ConfirmSendCoinScreen extends StatelessWidget {
           :isDarkMode? CustomGreenButton(
             buttonText: "Send",
             onPressed: () async{
-              await controller.sendCrypto(context);
+           await controller. sendCoin(
+            context: context,
+  recipientAddress: controller.addressController.text,
+  amountToSend: controller.ammountIncrypto.value,
+  privateKey: controller.walletCreatingCotroller.privateKey!,
+);
                
             }): CustomButton(
             buttonText: "Send",
             onPressed: ()async {
-                await controller.sendCrypto(context);
+             await controller. sendCoin(
+               context: context,
+  recipientAddress: controller.addressController.text,
+  amountToSend: controller.ammountIncrypto.value,
+  privateKey: controller.walletCreatingCotroller.privateKey!,
+);
                 
             });
         })

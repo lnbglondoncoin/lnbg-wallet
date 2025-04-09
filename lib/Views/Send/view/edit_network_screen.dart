@@ -105,11 +105,11 @@ class EditNetworkScreen extends StatelessWidget {
                                               .w, // Adjust width as per your layout
                                           child: Text(
                                             index == 0
-                                                ? "${controller.networkFee.value} ${token.symbol}"
+                                                ? "${controller.networkFeeSlowCrypto.value} ${token.symbol}"
                                                 : index == 1
-                                                    ? "${controller.moderateNetworkFee.value} ${token.symbol}"
-                                                    : "${controller.fastNetworkFee.value} ${token.symbol}",
-                                            maxLines: 2,
+                                                    ? "${controller.networkFeeModeratecrypto.value} ${token.symbol}"
+                                                    : "${controller.networkFeeFastcrypto.value} ${token.symbol}",
+                                            maxLines: null,
                                             overflow: TextOverflow.visible,
                                             textAlign: TextAlign
                                                 .right, // Ensures proper alignment
@@ -131,10 +131,10 @@ class EditNetworkScreen extends StatelessWidget {
                                               100.w, // Adjust width as needed
                                           child: Text(
                                             index == 0
-                                                ? "\$${controller.networkFeeUsd.value}"
+                                                ? "\$${controller.networkFeeSlowUsd.value}"
                                                 : index == 1
-                                                    ? "\$${controller.moderateNetworkFeeUsd.value}"
-                                                    : "\$${controller.fastNetworkFeeUSD.value}",
+                                                    ? "\$${controller.networkFeeModerateUsd.value}"
+                                                    : "\$${controller.networkFeeFastUsd.value}",
                                             maxLines: 2,
                                             overflow: TextOverflow.visible,
                                             textAlign: TextAlign.right,
@@ -180,29 +180,49 @@ class EditNetworkScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 15.h),
-                      child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15.w, vertical: 15.h),
-                          decoration: BoxDecoration(
-                            color:
-                                isDarkMode ? lightBlackColor2 : lightWhiteColor,
-                            borderRadius: BorderRadius.circular(18.r),
-                          ),
-                          child: Obx(() {
+                      child: Column(
+
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                      Text(
+                index==0?"Max Fee (Gwei)":
+                index==1?"Gas Limit":
+                "Nonce",
+                style: GoogleFonts.urbanist(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: isDarkMode ? whiteColor : blackColor2),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15.w, vertical: 15.h),
+                              decoration: BoxDecoration(
+                                color:
+                                    isDarkMode ? lightBlackColor2 : lightWhiteColor,
+                                borderRadius: BorderRadius.circular(18.r),
+                              ),
+                              child: Obx(() {
                             return Text(
                               index == 0
-                                  ? controller.maxFee.value
+                                  ? controller.maxFeeUsd.value.toString()
                                   : index == 1
-                                      ? controller.gasLimit.value
-                                      : controller.nonce.value,
+                                      ? controller.gasLimit.value.toString()
+                                      : controller.nonce.value.toString(),
                               style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w400,
                                 color: isDarkMode ? whiteColor : blackColor2,
                               ),
                             );
-                          })),
+                          })
+                          ),
+                        ],
+                      ),
                     );
                   }),
               SizedBox(
@@ -219,13 +239,12 @@ class EditNetworkScreen extends StatelessWidget {
               ? CustomGreenButton(
                   buttonText: "Ok",
                   onPressed: () {
-                    Get.back();
+     Get.back();
                   })
               : CustomButton(
                   buttonText: "Ok",
-                  onPressed: () async {
-                    await controller.calculateNetworkFee(
-                        controller.selectedNetworkSpeed.value, token, true);
+                  onPressed: ()  {
+                             Get.back();
                   })),
     );
   }

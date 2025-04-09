@@ -92,36 +92,43 @@ final controller=Get.put(SwapController());
                Obx((){
                 return          Row(children: [
                           Flexible(
-                            child: TextFormField(
-                               validator: (value) => controller.validateBLance(value),
-                              controller: controller.balanceController,
-                              
-                              onChanged: (value) {
-                               controller.updateAmount(value,controller.firstToken.value.priceInUsd);
-                              },
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true), // Add this
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')), // Add this
-              LengthLimitingTextInputFormatter(10), // Optional: limit total length
-            ],
-           
-                              decoration: InputDecoration(
-                                
-                                border: InputBorder.none,
-                                hintText: "Enter balance",
-                                hintStyle: GoogleFonts.urbanist(
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color:isDarkMode?greyColor.withValues(alpha:0.5): greyColor
-                                )
-                              ),
-                              style: GoogleFonts.urbanist(
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color:isDarkMode?whiteColor: blackColor2
-                                ),
-                            ),
-                          ),
+               child: TextFormField(
+  controller: controller.balanceController,
+  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+  inputFormatters: [
+    FilteringTextInputFormatter.allow(RegExp(r'^\$?\d*\.?\d*')),
+    LengthLimitingTextInputFormatter(11), // one extra for $ sign
+  ],
+  onChanged: (value) {
+    if (!value.startsWith('\$')) {
+      final newValue = '\$${value.replaceAll('\$', '')}';
+      controller.balanceController.value = TextEditingValue(
+        text: newValue,
+        selection: TextSelection.collapsed(offset: newValue.length),
+      );
+    }
+    controller.updateAmount(
+      value.replaceAll('\$', ''), // send pure number for calculation
+      controller.firstToken.value.priceInUsd,
+    );
+  },
+  validator: (value) => controller.validateBLance(value),
+  decoration: InputDecoration(
+    border: InputBorder.none,
+    hintText: "Enter balance(\$)",
+    hintStyle: GoogleFonts.urbanist(
+      fontSize: 24.sp,
+      fontWeight: FontWeight.w700,
+      color: isDarkMode ? greyColor.withAlpha(125) : greyColor,
+    ),
+  ),
+  style: GoogleFonts.urbanist(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.w700,
+    color: isDarkMode ? whiteColor : blackColor2,
+  ),
+),
+      ),
                           //Spacer(),
                           SizedBox(
                             height: 24.h,
@@ -203,18 +210,24 @@ final controller=Get.put(SwapController());
                            color:isDarkMode?greyColor: darkGreyColor
                         ),),
                         Obx((){
-                          return Row(children: [
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
                          Flexible(
                            child: Text(
                          //   maxLines: 2,
-                            controller.usdAmount2nd.value.toStringAsFixed(5),style: GoogleFonts.urbanist(
+                           "\$${ controller.usdAmount.value}",style: GoogleFonts.urbanist(
                                     fontSize: 24.sp,
                                     fontWeight: FontWeight.w700,
                                     color:isDarkMode? greyColor:blackColor2
                                   ),),
                          ),
-                          const Spacer(),
-                          SizedBox(
+                          //const Spacer(),
+                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                             SizedBox(
                             height: 24.h,
                             width: 24.w,
                             child: Center(
@@ -241,9 +254,12 @@ final controller=Get.put(SwapController());
                               ),
                             ),
                           ),
+                          ],
+                         )
           
                         ],);
                         }),
+                        SizedBox(height: 10.h,),
                        Obx((){
                         return  Text("Balance: ${controller.cryptoAmount2nd.value} ${controller.secondToken.value.symbol}",style: GoogleFonts.urbanist(
                           fontSize: 14.sp,

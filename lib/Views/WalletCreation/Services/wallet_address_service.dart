@@ -290,6 +290,7 @@ print(url);
 
   Future<void> getBalanceInUSD(String walletAddress) async {
     try {
+      print('come here');
        isLoading.value = true; // Set loading to false only at the very end
       // Don't set isLoading here since it's already true
       final response = await http.get(Uri.parse(

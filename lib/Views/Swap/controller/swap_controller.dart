@@ -32,7 +32,7 @@ class SwapController extends GetxController {
   // Existing variables
   RxDouble usdAmount = 0.0.obs;
   RxDouble cryptoAmount = 0.0.obs;
-  RxDouble usdAmount2nd = 0.0.obs;
+  // RxDouble usdAmount2nd = 0.0.obs;
   RxDouble cryptoAmount2nd = 0.0.obs;
 
   // New variables for 1inch
@@ -92,7 +92,7 @@ class SwapController extends GetxController {
     if (value.isEmpty) {
       usdAmount.value = 0.0;
       cryptoAmount.value = 0.0;
-      usdAmount2nd.value = 0.0;
+      // usdAmount2nd.value = 0.0;
       cryptoAmount2nd.value = 0.0;
       return;
     }
@@ -100,7 +100,8 @@ class SwapController extends GetxController {
     try {
       usdAmount.value = double.tryParse(value) ?? 0.0;
       cryptoAmount.value = usdAmount.value / coinPrice;
-
+      //  usdAmount2nd.value = usdAmount.value*secondToken.value.priceInUsd;
+      cryptoAmount2nd.value =  usdAmount.value / secondToken.value.priceInUsd;
       if (cryptoAmount.value > 0) {
         Get.log(secondToken.value.contractAddress);
         getSwapQuote();
@@ -148,16 +149,16 @@ class SwapController extends GetxController {
             1e18;
 
         // Calculate the exchange rate
-        double fromAmount =
-            double.parse(quote['sellAmount']) / 1e18; // ETH decimals
-        double toAmount =
-            double.parse(quote['buyAmount']) / 1e6; // USDT decimals
+        // double fromAmount =
+        //     double.parse(quote['sellAmount']) / 1e18; // ETH decimals
+        // double toAmount =
+        //     double.parse(quote['buyAmount']) / 1e6; // USDT decimals
 
-        swapRate.value = toAmount / fromAmount;
+        // swapRate.value = toAmount / fromAmount;
 
-        // Update second token amounts
-        cryptoAmount2nd.value = toAmount;
-        usdAmount2nd.value = toAmount * secondToken.value.priceInUsd;
+        // // Update second token amounts
+        // cryptoAmount2nd.value = toAmount;
+        // usdAmount2nd.value = toAmount * secondToken.value.priceInUsd;
 
         updateAmount2nd();
       } else {
@@ -199,6 +200,15 @@ class SwapController extends GetxController {
   }
   // Execute swap
   Future<void> executeSwap(BuildContext context) async {
+    double totalRequired = cryptoAmount.value + networkFee.value;
+
+  if (firstToken.value.balance < totalRequired) {
+    // Show error: Not enough ETH to cover swap + fee
+    Get.snackbar('Insufficient Balance', 'You do not have enough ETH to cover the swap and network fee.');
+    _showFailPopup(context,'Insufficient Balance You do not have enough balance, Required: $totalRequired, Available: ${firstToken.value.balance}');
+ 
+    return;
+  }
     // debugPrintSwapDetails();
     try {
       isLoading(true);
@@ -264,7 +274,7 @@ _showFailPopup(context,e.toString().contains("INSUFFICIENT_ASSET_LIQUIDITY")?"IN
   void resetSwap() {
     usdAmount.value = 0.0;
     cryptoAmount.value = 0.0;
-    usdAmount2nd.value = 0.0;
+    // usdAmount2nd.value = 0.0;
     cryptoAmount2nd.value = 0.0;
     currentQuote.clear();
     quoteTimer?.cancel();
@@ -328,7 +338,7 @@ _showFailPopup(context,e.toString().contains("INSUFFICIENT_ASSET_LIQUIDITY")?"IN
 
   var oneFirstCoinEquelsSecondCoins = 0.0.obs;
   void updateAmount2nd() {
-    cryptoAmount2nd.value = usdAmount2nd.value / secondToken.value.priceInUsd;
+    cryptoAmount2nd.value = usdAmount.value / secondToken.value.priceInUsd;
     oneFirstCoinEquelsSecondCoins.value =
         firstToken.value.priceInUsd / secondToken.value.priceInUsd;
   }

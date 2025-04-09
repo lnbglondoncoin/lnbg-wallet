@@ -6,8 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/controller/browse_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Browse/view/all_popular_tokens.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/view/browse_history.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BrowseScreen extends StatelessWidget {
   const BrowseScreen({super.key});
@@ -15,6 +18,7 @@ class BrowseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+      final walletCreatingController = Get.find<WalletCreatingController>();
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
     final controller = Get.put(BrowseController());
@@ -23,7 +27,7 @@ class BrowseScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 20.w),
-          child: Column(
+          child:          Column(
             children: [
               Row(
                 children: [
@@ -123,7 +127,80 @@ class BrowseScreen extends StatelessWidget {
                   ),
                 );
               }),
-              Obx(() => SizedBox(
+             
+             Obx((){
+              return
+              
+controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
+ controller.searchResult!=[]&&controller.searchController.text!=""?
+           Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(height: 20.h),
+      Text(
+        "Search Result:",
+        style: GoogleFonts.poppins(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+            color: isDarkMode ? whiteColor : blackColor2),
+      ),
+      SizedBox(height: 10.h),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: ListView.builder(
+          shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: controller.searchResult.length,
+             physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = controller.searchResult[index];
+              return Obx((){
+                return  Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading:
+                        Image.network(item.logoUrl, width: 48.w, height: 48.h),
+                    title: Text(item.name,
+                        style: GoogleFonts.urbanist(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20.sp,
+                            color: isDarkMode ? whiteColor : blackColor2)),
+                    subtitle: Text(
+                      item.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.urbanist(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14.sp,
+                          color: isDarkMode ? greyColor : greyColor3),
+                    ),
+                    onTap: () {
+                      // Handle tap if needed
+                    },
+                  ),
+                  Visibility(
+                      visible: index != controller.searchResult.length - 1,
+                      child: CustomDivider())
+                ],
+              );
+              });
+            }),
+      ),
+  
+    ],
+  ):
+               Column(
+                children: [
+                  Obx((){
+             
+              return walletCreatingController.isLoading.value?Center(
+                child: CircularProgressIndicator(),
+              ):
+               walletCreatingController.hundredTokenData.isEmpty?
+              Center(
+                child: Text("No Tokens"),
+              ):
+               SizedBox(
                     height: 210.h,
                     width: double.infinity,
                     child: GridView.builder(
@@ -135,13 +212,13 @@ class BrowseScreen extends StatelessWidget {
                         mainAxisSpacing: 10,
                         childAspectRatio: 1,
                       ),
-                      itemCount: controller.cryptoList.length,
+                      itemCount:8,
                       itemBuilder: (context, index) {
-                        final item = controller.cryptoList[index];
+                        final item = walletCreatingController.hundredTokenData[index];
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(item.imagePath, width: 50, height: 50),
+                            Image.network(item.logoUrl, width: 50, height: 50),
                             const SizedBox(height: 5),
                             Text(
                               item.name,
@@ -156,12 +233,17 @@ class BrowseScreen extends StatelessWidget {
                         );
                       },
                     ),
-                  )),
+                  );
+             }),
               const CustomDivider(),
               SizedBox(
                 height: 20.h,
               ),
-              Row(
+       Obx((){
+        return controller.isLoading.value?CircularProgressIndicator():
+        controller.historyResults.isEmpty?SizedBox():    Column(
+            children: [
+                 Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -174,7 +256,7 @@ class BrowseScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Get.to(() => BrowseHistoryScreen(
-                            historyItems: controller.historyList,
+                          
                           ));
                     },
                     child: Text(
@@ -192,9 +274,9 @@ class BrowseScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     int crossAxisCount = 2; // Number of items per row
-                    int totalItems = controller.historyList.length >= 6
+                    int totalItems = controller.historyResults.length >= 6
                         ? 6
-                        : controller.historyList.length;
+                        : controller.historyResults.length;
                     int rowCount = (totalItems / crossAxisCount)
                         .ceil(); // Calculate the number of rows
 
@@ -215,11 +297,11 @@ class BrowseScreen extends StatelessWidget {
                                 endIndex - startIndex,
                                 (index) {
                                   final item = controller
-                                      .historyList[startIndex + index];
+                                      .historyResults[startIndex + index];
                                   return Expanded(
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
-                                      leading: Image.asset(item.imagePath,
+                                      leading: Image.network(item.logoUrl,
                                           width: 48.w, height: 48.h),
                                       title: Text(item.name,
                                           style: GoogleFonts.urbanist(
@@ -229,7 +311,7 @@ class BrowseScreen extends StatelessWidget {
                                                   ? whiteColor
                                                   : blackColor2)),
                                       subtitle: Text(
-                                        item.description,
+                                        "Discription",
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.urbanist(
                                             fontWeight: FontWeight.w800,
@@ -257,7 +339,10 @@ class BrowseScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              Row(
+            ],
+           );
+       }),
+           Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -267,12 +352,17 @@ class BrowseScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         color: isDarkMode ? whiteColor : blackColor2),
                   ),
-                  Text(
-                    "See All",
-                    style: GoogleFonts.poppins(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? lightGreenColor : orange3),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>AllPopularTokens());
+                    },
+                    child: Text(
+                      "See All",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                          color: isDarkMode ? lightGreenColor : orange3),
+                    ),
                   )
                 ],
               ),
@@ -281,9 +371,7 @@ class BrowseScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     int crossAxisCount = 2; // Number of items per row
-                    int totalItems = controller.historyList.length >= 6
-                        ? 6
-                        : controller.historyList.length;
+                    int totalItems = 6;
                     int rowCount = (totalItems / crossAxisCount)
                         .ceil(); // Calculate the number of rows
 
@@ -303,12 +391,12 @@ class BrowseScreen extends StatelessWidget {
                               children: List.generate(
                                 endIndex - startIndex,
                                 (index) {
-                                  final item = controller
-                                      .historyList[startIndex + index];
+                                  final item = walletCreatingController
+                                      .hundredTokenData[startIndex + index];
                                   return Expanded(
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
-                                      leading: Image.asset(item.imagePath,
+                                      leading: Image.network(item.logoUrl,
                                           width: 48.w, height: 48.h),
                                       title: Text(item.name,
                                           style: GoogleFonts.urbanist(
@@ -318,7 +406,7 @@ class BrowseScreen extends StatelessWidget {
                                                   ? whiteColor
                                                   : blackColor2)),
                                       subtitle: Text(
-                                        item.description,
+                                        "Discription",
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.urbanist(
                                             fontWeight: FontWeight.w800,
@@ -343,10 +431,86 @@ class BrowseScreen extends StatelessWidget {
                   },
                 ),
               ),
-            ],
-          ),
-        ),
+       
+                ],
+              );
+             })
+                  ],
+          )  ),
       ),
     );
   }
+
+  Widget shimmerSearchLoadingWidget(bool isDarkMode) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(height: 20.h),
+      Shimmer.fromColors(
+        baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+        highlightColor: isDarkMode ? Colors.grey[400]! : Colors.grey[100]!,
+        child: Container(
+          width: 150.w,
+          height: 20.h,
+          color: Colors.white,
+        ),
+      ),
+      SizedBox(height: 10.h),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          itemCount: 5, // Temporary item count for shimmer effect
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Shimmer.fromColors(
+                    baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                    highlightColor: isDarkMode ? Colors.grey[400]! : Colors.grey[100]!,
+                    child: Container(
+                      width: 48.w,
+                      height: 48.h,
+                      color: Colors.white,
+                    ),
+                  ),
+                  title: Shimmer.fromColors(
+                    baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                    highlightColor: isDarkMode ? Colors.grey[400]! : Colors.grey[100]!,
+                    child: Container(
+                      width: 150.w,
+                      height: 16.h,
+                      color: Colors.white,
+                    ),
+                  ),
+                  subtitle: Shimmer.fromColors(
+                    baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                    highlightColor: isDarkMode ? Colors.grey[400]! : Colors.grey[100]!,
+                    child: Container(
+                      width: 100.w,
+                      height: 12.h,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onTap: () {
+                    // Handle tap if needed
+                  },
+                ),
+                Visibility(
+                    visible: index != 4,
+                    child: Divider(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ))
+              ],
+            );
+          },
+        ),
+      ),
+    ],
+  );
 }
+}
+

@@ -4,39 +4,35 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
-import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
-import 'package:lnbg_crypto_wallet_app/Views/Browse/controller/browse_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/view/clear_history_bottomsheet.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
-class BrowseHistoryScreen extends StatelessWidget {
-  const BrowseHistoryScreen({super.key, });
+class AllPopularTokens extends StatelessWidget {
+  const AllPopularTokens({super.key});
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final controller = Get.put(BrowseController());
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
+          final walletCreatingController = Get.find<WalletCreatingController>();
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomAppBar(
-        title: "History",
+        title: "Popular Tokens",
         iconPath: "assets/icons/delete.svg",
-        isSuffix: true,
-        onSuffixTap: () {
-          _showCustomBottomSheet(context);
-        },
+      
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: ListView.builder(
+          physics: BouncingScrollPhysics(),
             padding: EdgeInsets.zero,
-            itemCount: controller.historyResults.length,
-             physics: BouncingScrollPhysics(),
+            itemCount: walletCreatingController.hundredTokenData.length,
             itemBuilder: (context, index) {
-              final item = controller.historyResults[index];
+              final item = walletCreatingController.hundredTokenData[index];
               return Column(
                 children: [
                   ListTile(
@@ -49,7 +45,7 @@ class BrowseHistoryScreen extends StatelessWidget {
                             fontSize: 20.sp,
                             color: isDarkMode ? whiteColor : blackColor2)),
                     subtitle: Text(
-                      "discription",
+                      "Description",
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w800,
@@ -61,7 +57,7 @@ class BrowseHistoryScreen extends StatelessWidget {
                     },
                   ),
                   Visibility(
-                      visible: index != controller.historyResults.length - 1,
+                      visible: index != walletCreatingController.hundredTokenData.length - 1,
                       child: CustomDivider())
                 ],
               );
@@ -70,14 +66,5 @@ class BrowseHistoryScreen extends StatelessWidget {
     );
   }
 
-  void _showCustomBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // Allows full-screen height
-      backgroundColor: Colors.transparent, // Transparent background
-      builder: (context) {
-        return const ClearHistoryBottomSheet();
-      },
-    );
-  }
+ 
 }

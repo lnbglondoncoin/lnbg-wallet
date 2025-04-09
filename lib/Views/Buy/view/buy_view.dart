@@ -20,7 +20,7 @@ class BuyView extends StatelessWidget {
         backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
            appBar: CustomAppBar(
         isSuffix: true,
-        title: "Receive",
+        title: "Buy",
         iconPath: 'assets/icons/search.svg',
         onSuffixTap: () {
           // Show search dialog on icon tap
