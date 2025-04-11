@@ -12,7 +12,7 @@ class CurrencyController extends GetxController {
   var amountController = TextEditingController();
   var amount = 0.0.obs;
 
-  RxString selectedProvider = "Binance Connect".obs;
+  RxString selectedProvider = "MoonPay".obs;
   RxString providerImage = "".obs;
 
   @override

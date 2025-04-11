@@ -37,7 +37,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-      if(walletCreatingController.hundredTokenData.isEmpty){
+      if(walletCreatingController.hundredTokenData.isEmpty||walletCreatingController.hundredslugs.isEmpty){
+        Get.log("Fetching slugs");
       walletCreatingController.fetchSlugs();
     }
   }
@@ -82,33 +83,34 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  SizedBox(
-                                    height: 28.h,
-                                    width: 28.w,
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        eyeShowIcon,
-                                        colorFilter: const ColorFilter.mode(
-                                            whiteColor, BlendMode.srcIn),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const ScanQRCodeScreen());
-                                    },
-                                    child: SizedBox(
-                                        height: 28.h,
-                                        width: 28.w,
-                                        child: Center(
-                                            child: SvgPicture.asset(scanIcon,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                        whiteColor,
-                                                        BlendMode.srcIn)))),
-                                  ),
+                                  // SizedBox(
+                                  //   height: 28.h,
+                                  //   width: 28.w,
+                                  //   child: Center(
+                                  //     child: SvgPicture.asset(
+                                  //       eyeShowIcon,
+                                  //       colorFilter: const ColorFilter.mode(
+                                  //           whiteColor, BlendMode.srcIn),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // const Spacer(),
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     Get.to(() => const ScanQRCodeScreen());
+                                  //   },
+                                  //   child: SizedBox(
+                                  //       height: 28.h,
+                                  //       width: 28.w,
+                                  //       child: Center(
+                                  //           child: SvgPicture.asset(scanIcon,
+                                  //               colorFilter:
+                                  //                   const ColorFilter.mode(
+                                  //                       whiteColor,
+                                  //                       BlendMode.srcIn)))),
+                                  // ),
                                   SizedBox(
                                     width: 15.w,
                                   ),
@@ -487,9 +489,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                                         width: Get.width/3,
                                                                         child: Text(
                                                                         textAlign: TextAlign.end,
-                                                                                                                                         
-                                                                          
-                                                                          "${token.balance.toStringAsFixed(8)} ${token.symbol}",
+                                                                           !token.balance.toString().startsWith("0.000")?                                                              
+                                                                          "${token.balance.toStringAsFixed(3)} ${token.symbol}":!token.balance.toString().startsWith("0.00000")?
+                                                                          "${token.balance.toStringAsFixed(6)} ${token.symbol}":  "${token.balance.toStringAsFixed(8)} ${token.symbol}",
                                                                           style: GoogleFonts.urbanist(
                                                                               fontSize: 18.sp,
                                                                               fontWeight: FontWeight.w700,
@@ -780,9 +782,11 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     // Token List Shimmer
                     Expanded(
                       child: ListView.builder(
+                        
                         padding: EdgeInsets.zero,
                         itemCount: 6, // Number of shimmer items
                         shrinkWrap: true,
+                        
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Container(
@@ -898,4 +902,5 @@ class _HomeScreenViewState extends State<HomeScreenView>
       ],
     );
   }
+
 }

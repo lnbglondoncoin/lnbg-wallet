@@ -8,7 +8,7 @@ class CustomTextFieldWithPaste extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final String hintText;
-  final String? iconPath;
+  // final String? iconPath;
   final bool isDarkMode;
   final Color lightColor;
   final Color darkColor;
@@ -19,7 +19,7 @@ class CustomTextFieldWithPaste extends StatelessWidget {
     required this.controller,
     required this.validator,
     required this.hintText,
-    this.iconPath,
+    // this.iconPath,
     required this.isDarkMode,
     required this.lightColor,
     required this.darkColor,
@@ -48,6 +48,7 @@ class CustomTextFieldWithPaste extends StatelessWidget {
             child: TextFormField(
                 controller: controller,
               validator: validator,
+              
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hintText,
@@ -55,12 +56,26 @@ class CustomTextFieldWithPaste extends StatelessWidget {
                 //   color: Colors.red,
                 //   fontSize: 14.sp,
                 // ),
+                suffixIcon: GestureDetector(
+            onTap: _pasteText,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.h),
+              child: Text(
+                "Paste",
+                style:  GoogleFonts.urbanist(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w800,
+                  color: accentColor,
+                ),
+              ),
+            ),
+          ),
                 hintStyle: GoogleFonts.urbanist(
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                   fontSize: 18.sp,
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
+                contentPadding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
               ),
               style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w400,
@@ -69,32 +84,22 @@ class CustomTextFieldWithPaste extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: _pasteText,
-            child: Text(
-              "Paste",
-              style:  GoogleFonts.urbanist(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w800,
-                color: accentColor,
-              ),
-            ),
-          ),
-          if (iconPath != null)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: SizedBox(
-                height: 20.h,
-                width: 20.w,
-                child: SvgPicture.asset(
-                  iconPath!,
-                  colorFilter: ColorFilter.mode(
-                    accentColor,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
+          
+          // if (iconPath != null)
+          //   Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //     child: SizedBox(
+          //       height: 20.h,
+          //       width: 20.w,
+          //       child: SvgPicture.asset(
+          //         iconPath!,
+          //         colorFilter: ColorFilter.mode(
+          //           accentColor,
+          //           BlendMode.srcIn,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );

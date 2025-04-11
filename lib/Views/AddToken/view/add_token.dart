@@ -10,6 +10,8 @@ import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/hundred_tokens_shimmer_loader.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AddTokenScreen extends StatelessWidget {
   AddTokenScreen({super.key});
@@ -26,171 +28,163 @@ class AddTokenScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: AppBar(
-        backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        shadowColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        foregroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        surfaceTintColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        leading: GestureDetector(
-          onTap: () => Get.back(),
-          child: SizedBox(
-            height: 28.h,
-            width: 28.w,
-            child: Center(
-              child: SvgPicture.asset(
-                "assets/icons/leading.svg",
-                colorFilter: ColorFilter.mode(
-                  isDarkMode ? whiteColor : blackColor2,
-                  BlendMode.srcIn,
+      appBar: PreferredSize(
+         preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Obx((){
+          return
+          walletCreatingController.isLoading.value||controller.isLoading.value?appBarShimmerLoader(isDarkMode):
+           AppBar(
+          backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+          shadowColor: isDarkMode ? lightBlackColor3 : whiteColor,
+          foregroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+          surfaceTintColor: isDarkMode ? lightBlackColor3 : whiteColor,
+          leading: GestureDetector(
+            onTap: () => Get.back(),
+            child: SizedBox(
+              height: 28.h,
+              width: 28.w,
+              child: Center(
+                child: SvgPicture.asset(
+                  "assets/icons/leading.svg",
+                  colorFilter: ColorFilter.mode(
+                    isDarkMode ? whiteColor : blackColor2,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        title: Obx(() {
-          return Container(
-            width: double.infinity,
-            height: 56.h,
-            decoration: BoxDecoration(
-              color: controller.isAmountEmpty.value
-                  ? isDarkMode
-                      ? lightBlackColor2
-                      : lightWhiteColor
-                  : lightGreenColor.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(18.r),
-              border: Border.all(
+          title: Obx(() {
+            return Container(
+              width: double.infinity,
+              height: 56.h,
+              decoration: BoxDecoration(
                 color: controller.isAmountEmpty.value
                     ? isDarkMode
                         ? lightBlackColor2
                         : lightWhiteColor
-                    : isDarkMode
-                        ? lightGreenColor
-                        : orange3,
+                    : lightGreenColor.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(18.r),
+                border: Border.all(
+                  color: controller.isAmountEmpty.value
+                      ? isDarkMode
+                          ? lightBlackColor2
+                          : lightWhiteColor
+                      : isDarkMode
+                          ? lightGreenColor
+                          : orange3,
+                ),
               ),
-            ),
-            child: TextFormField(
-              controller: searchController,
-              onChanged: (value) => searchQuery.value = value.trim().toLowerCase(),
-              decoration: InputDecoration(
-                prefixIcon: SizedBox(
-                  height: 16.h,
-                  width: 16.w,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/search2.svg",
-                      colorFilter: ColorFilter.mode(
-                        controller.isAmountEmpty.value
-                            ? grey2
-                            : isDarkMode
-                                ? lightGreenColor
-                                : orange3,
-                        BlendMode.srcIn,
+              child: TextFormField(
+                controller: searchController,
+                onChanged: (value) => searchQuery.value = value.trim().toLowerCase(),
+                decoration: InputDecoration(
+                  prefixIcon: SizedBox(
+                    height: 16.h,
+                    width: 16.w,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icons/search2.svg",
+                        colorFilter: ColorFilter.mode(
+                          controller.isAmountEmpty.value
+                              ? grey2
+                              : isDarkMode
+                                  ? lightGreenColor
+                                  : orange3,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ),
+                  border: InputBorder.none,
+                  hintText: "Search Tokens",
+                  hintStyle: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.w400,
+                    color: greyColor2,
+                    fontSize: 18.sp,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
                 ),
-                border: InputBorder.none,
-                hintText: "Search Tokens",
-                hintStyle: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w400,
-                  color: greyColor2,
-                  fontSize: 18.sp,
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
               ),
-            ),
-          );
+            );
+          }),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 20.w),
+              child: GestureDetector(
+                onTap: () => Get.to(() => const AddCustomToken()),
+                child: SvgPicture.asset(
+                  "assets/icons/plusIcon.svg",
+                  colorFilter: ColorFilter.mode(
+                    isDarkMode ? whiteColor : blackColor2,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            )
+          ],
+          elevation: 0.0,
+        );
         }),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.w),
-            child: GestureDetector(
-              onTap: () => Get.to(() => const AddCustomToken()),
-              child: SvgPicture.asset(
-                "assets/icons/plusIcon.svg",
-                colorFilter: ColorFilter.mode(
-                  isDarkMode ? whiteColor : blackColor2,
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          )
-        ],
-        elevation: 0.0,
-      ),
-      body: Container(
+      ) ,
+        body: Container(
         height: Get.height,
         width: double.infinity,
         color: isDarkMode ? lightBlackColor3 : whiteColor,
-        child: Padding(
-          padding: EdgeInsets.all(20.h),
-          child: Obx(() {
-            var filteredTokens = walletCreatingController.hundredTokenData
-                .where((token) =>
-                    token.name.toLowerCase().contains(searchQuery.value))
-                .toList();
-
-            if (controller.isLoading.value) {
-              return Center(
-                child: ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return LinearGradient(
-                      colors: [
-                        isDarkMode ? greenColor2 : orange1,
-                        isDarkMode ? lightGreenColor : orange2
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(bounds);
-                  },
-                  child: SpinKitCircle(
-                    color: Colors.white,
-                    size: 50.h,
-                  ),
-                ),
-              );
-            }
-
-            if (filteredTokens.isEmpty) {
-              return Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        isDarkMode
-                            ? "assets/images/searchImage2.png"
-                            : "assets/images/searchImage.png",
-                        height: 300.h,
-                        width: 300.w,
+        child: Obx(() {
+          var filteredTokens = walletCreatingController.hundredTokenData
+              .where((token) =>
+                  token.name.toLowerCase().contains(searchQuery.value))
+              .toList();
+        
+          if (controller.isLoading.value||walletCreatingController.isLoading.value) {
+            return TokenListShimmerWidget( isDarkMode: isDarkMode,);
+          }
+        
+          if (filteredTokens.isEmpty) {
+            return Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      isDarkMode
+                          ? "assets/images/searchImage2.png"
+                          : "assets/images/searchImage.png",
+                      height: 300.h,
+                      width: 300.w,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Not Found",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w700,
+                        color: isDarkMode ? whiteColor : blackColor2,
                       ),
-                      Text(
-                        textAlign: TextAlign.center,
-                        "Not Found",
-                        style: GoogleFonts.urbanist(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w700,
-                          color: isDarkMode ? whiteColor : blackColor2,
-                        ),
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                        color: isDarkMode ? whiteColor : blackColor2,
                       ),
-                      Text(
-                        textAlign: TextAlign.center,
-                        "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
-                        style: GoogleFonts.urbanist(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w400,
-                          color: isDarkMode ? whiteColor : blackColor2,
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              );
-            }
-
-            return ListView.builder(
+              ),
+            );
+          }
+        
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: ListView.builder(
               itemCount: filteredTokens.length,
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final token = filteredTokens[index];
                 return Padding(
@@ -248,9 +242,9 @@ class AddTokenScreen extends StatelessWidget {
                   ),
                 );
               },
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Obx(() {
@@ -275,4 +269,62 @@ class AddTokenScreen extends StatelessWidget {
       }),
     );
   }
+
+  Widget appBarShimmerLoader(bool isDarkMode) {
+  return Padding(
+    padding:  EdgeInsets.only(left: 20.w),
+    child: AppBar(
+      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      shadowColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      foregroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      surfaceTintColor: isDarkMode ? lightBlackColor3 : whiteColor,
+      leading: Padding(
+        padding: EdgeInsets.only(left: 10.w),
+        child: Shimmer.fromColors(
+          baseColor: isDarkMode ? lightBlackColor2 : Colors.grey[300]!,
+          highlightColor: isDarkMode ? lightBlackColor3 : Colors.grey[100]!,
+          child: Container(
+            height: 28.h,
+            width: 28.w,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+          ),
+        ),
+      ),
+      title: Shimmer.fromColors(
+        baseColor: isDarkMode ? lightBlackColor2 : Colors.grey[300]!,
+        highlightColor: isDarkMode ? lightBlackColor3 : Colors.grey[100]!,
+        child: Container(
+          width: double.infinity,
+          height: 56.h,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(18.r),
+          ),
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 20.w),
+          child: Shimmer.fromColors(
+            baseColor: isDarkMode ? lightBlackColor2 : Colors.grey[300]!,
+            highlightColor: isDarkMode ? lightBlackColor3 : Colors.grey[100]!,
+            child: Container(
+              height: 28.h,
+              width: 28.w,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+            ),
+          ),
+        )
+      ],
+      elevation: 0.0,
+    ),
+  );
+}
+
 }

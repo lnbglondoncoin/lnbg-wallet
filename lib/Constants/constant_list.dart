@@ -283,10 +283,10 @@ const optionImageList2=[
   
 ];
 const options=[
-   "Send",
+   "Transfer",
     "Receive",
     "Buy",
-  "Transfer",
+  "Swap",
   
 ];
 const optionsPrice=[

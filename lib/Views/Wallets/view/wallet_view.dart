@@ -25,7 +25,8 @@ class WalletScreen extends StatelessWidget {
       appBar: const CustomAppBar(
           title: "Wallets",
           iconPath: "assets/icons/plusIcon.svg",
-          isSuffix: true),
+          //isSuffix: true
+          ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Obx(() => ListView.builder(

@@ -29,7 +29,7 @@ final TokenData token;
     return Scaffold(
 backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
-          isSuffix: true,
+        //  isSuffix: true,
           title:"${token.name} (${token.symbol})" ,
           iconPath: 'assets/icons/graphIcon2.svg',
         ),
@@ -237,7 +237,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                 itemBuilder: (context,index){
                 return                          GestureDetector(
                   onTap: (){
-                    if(index==3){
+                    if(index==0){
                       Get.to(()=>TransferToken(tokenPrice: token.balance.toStringAsFixed(2), priceDolor: token.priceInUsd.toStringAsFixed(2), 
                       tokenSuffix: token.symbol, percentage: token.trendPercentage.toStringAsFixed(2), coinName: token.name,));
                     }

@@ -9,9 +9,10 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 class ReusableDropdown extends StatelessWidget {
   final List<String> items;
   final RxString selectedValue;
+   final Function(String)? onChanged;
 
   const ReusableDropdown(
-      {super.key, required this.items, required this.selectedValue});
+      {super.key, required this.items, required this.selectedValue,this.onChanged,});
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,8 @@ class ReusableDropdown extends StatelessWidget {
             onChanged: (value) {
               if (value != null) {
                 selectedValue.value = value;
+                              onChanged?.call(value);
+
               }
             },
             isExpanded: true,

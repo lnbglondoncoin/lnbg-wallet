@@ -19,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: const CustomAppBar(
-        isSuffix: true,
+       // isSuffix: true,
         title: "Notifications",
         iconPath: 'assets/icons/msg.svg',
       ),

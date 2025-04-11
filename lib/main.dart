@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/my_theme.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/theme_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/LockApp/controller/lock_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/controller/splash_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/view/splash_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -18,6 +19,7 @@ void main() async {
   Get.put(SplashController());
 
   await GetStorage.init();
+   Get.put(AppLockController()); // 🔒 To lock app automatically
   runApp(const MyApp());
 }
 
@@ -27,7 +29,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());
-
+// Set the status bar style based on the theme mode (light or dark)
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Make the status bar transparent (optional)
+      statusBarIconBrightness: themeController.themeMode.value == ThemeMode.dark 
+        ? Brightness.light 
+        : Brightness.dark, // Light icons for dark mode, dark icons for light mode
+      systemNavigationBarColor: Colors.black, // Optional: set system navigation bar color
+      systemNavigationBarIconBrightness: Brightness.light, // Optional: set nav bar icons to light
+    ));
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,

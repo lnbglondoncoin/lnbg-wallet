@@ -24,7 +24,6 @@ class SettingsController extends GetxController {
     "assets/icons/invite.png",
     "assets/icons/about.png",
     "assets/icons/about.png", //logout
-    "assets/icons/about.png", //DeleteWallet
   ];
 
   List settingLabels = [
@@ -39,7 +38,6 @@ class SettingsController extends GetxController {
     "Invite Friends",
     "About LNBG Wallet",
     "Logout",
-    "Delete Wallet"
   ];
 
   settingActions(index) {
@@ -64,7 +62,7 @@ class SettingsController extends GetxController {
       Get.to(() => AboutLNBG());
     } else if (index == 10) {
       logout();
-    } else if (index == 11) {}
+    } else {}
   }
 
   Future<void> logout() async {

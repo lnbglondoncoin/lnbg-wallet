@@ -84,7 +84,7 @@ var isLoading=false.obs;
     return sendFormKey.currentState?.validate() ?? false;
   }
 
-  var gasLimit = 22000.obs;
+  
 var nonce="".obs;
   var networkFeeSlowUsd = 0.0.obs;
   var networkFeeModerateUsd = 0.0.obs;
@@ -101,12 +101,77 @@ var totalFeeSlowCrypto = 0.0.obs;
   var maxFeeUsd = 0.0.obs;
 var maxFeeCrypto = 0.0.obs;
   // Function to calculate fees
-  void calculateFees({
-    required double cryptoAmount,       // e.g. 0.45
-    required double cryptoAmountInUsd, // e.g. 5.11
-    required double nativeTokenPriceInUsd, // e.g. 1 ETH = 1500 USD
-    required TokenData token,
-  }) {
+//   var gasLimit = 21000.obs;
+//   void calculateFees({
+//     required double cryptoAmount,       // e.g. 0.45
+//     required double cryptoAmountInUsd, // e.g. 5.11
+//     required double nativeTokenPriceInUsd, // e.g. 1 ETH = 1500 USD
+//     required TokenData token,
+//   }) {
+//     // Gas prices in Gwei
+//     const slowGasPriceGwei = 20;
+//     const moderateGasPriceGwei = 30;
+//     const fastGasPriceGwei = 50;
+
+//     // Convert Gwei to ETH
+//     double convertGweiToEth(int gwei) => gwei / 1e9;
+
+//     // Convert gas fees in crypto
+//     double calcNetworkFeeCrypto(int gasPriceGwei) {
+//       return convertGweiToEth(gasPriceGwei) * gasLimit.value;
+//     }
+
+//     // Calculate fees for slow
+//     final feeSlowCrypto = calcNetworkFeeCrypto(slowGasPriceGwei);
+//     networkFeeSlowUsd.value = feeSlowCrypto * nativeTokenPriceInUsd;
+//        networkFeeSlowCrypto.value = networkFeeSlowUsd.value / token.priceInUsd;
+//     totalFeeSlowUsd.value = cryptoAmountInUsd + networkFeeSlowUsd.value;
+//  totalFeeSlowCrypto.value =     totalFeeSlowUsd.value /token.priceInUsd;
+//     // Calculate fees for moderate
+//     final feeModerateCrypto = calcNetworkFeeCrypto(moderateGasPriceGwei);
+//     networkFeeModerateUsd.value = feeModerateCrypto * nativeTokenPriceInUsd;
+//      networkFeeModeratecrypto.value = networkFeeModerateUsd.value / token.priceInUsd;
+//     totalFeeModerateUsd.value = cryptoAmountInUsd + networkFeeModerateUsd.value;
+//  totalFeeModerateCrypto.value =     totalFeeModerateUsd.value /token.priceInUsd;
+//     // Calculate fees for fast
+//     final feeFastCrypto = calcNetworkFeeCrypto(fastGasPriceGwei);
+//     networkFeeFastUsd.value = feeFastCrypto * nativeTokenPriceInUsd;
+//         networkFeeFastcrypto.value = networkFeeFastUsd.value / token.priceInUsd;
+//     totalFeeFastUsd.value = cryptoAmountInUsd + networkFeeFastUsd.value;
+//  totalFeeFastCrypto.value =     totalFeeFastUsd.value /token.priceInUsd;
+//     // Max fee in USD based on fast gas
+//     maxFeeUsd.value = feeFastCrypto * nativeTokenPriceInUsd;
+
+//        Get.to(() => ConfirmSendCoinScreen(
+//               address: addressController.text,
+//               token: token,
+//             ));
+//   }
+var gasLimit = 21000.obs;
+Future<void> calculateFees({
+  required double cryptoAmount,       // e.g. 0.45
+  required double cryptoAmountInUsd, // e.g. 5.11
+  required double nativeTokenPriceInUsd, // e.g. 1 ETH = 1500 USD
+  required TokenData token,
+  required String senderAddress,
+  required String recipientAddress,
+}) async {
+  try {
+    final sender = EthereumAddress.fromHex(senderAddress);
+    final recipient = EthereumAddress.fromHex(recipientAddress);
+
+    final amountInWei = BigInt.from(cryptoAmount * 1e18);
+
+    // Estimate gas limit dynamically from client
+    final estimatedGas = await _client.estimateGas(
+      sender: sender,
+      to: recipient,
+      value: EtherAmount.inWei(amountInWei),
+    );
+
+    gasLimit.value = estimatedGas.toInt(); // ✅ dynamic gas limit now
+    print('Estimated Gas Limit: ${gasLimit.value}');
+
     // Gas prices in Gwei
     const slowGasPriceGwei = 20;
     const moderateGasPriceGwei = 30;
@@ -120,33 +185,39 @@ var maxFeeCrypto = 0.0.obs;
       return convertGweiToEth(gasPriceGwei) * gasLimit.value;
     }
 
-    // Calculate fees for slow
+    // SLOW
     final feeSlowCrypto = calcNetworkFeeCrypto(slowGasPriceGwei);
     networkFeeSlowUsd.value = feeSlowCrypto * nativeTokenPriceInUsd;
-       networkFeeSlowCrypto.value = networkFeeSlowUsd.value / token.priceInUsd;
+    networkFeeSlowCrypto.value = feeSlowCrypto;
     totalFeeSlowUsd.value = cryptoAmountInUsd + networkFeeSlowUsd.value;
- totalFeeSlowCrypto.value =     totalFeeSlowUsd.value /token.priceInUsd;
-    // Calculate fees for moderate
+    totalFeeSlowCrypto.value = cryptoAmount + feeSlowCrypto;
+
+    // MODERATE
     final feeModerateCrypto = calcNetworkFeeCrypto(moderateGasPriceGwei);
     networkFeeModerateUsd.value = feeModerateCrypto * nativeTokenPriceInUsd;
-     networkFeeModeratecrypto.value = networkFeeModerateUsd.value / token.priceInUsd;
+    networkFeeModeratecrypto.value = feeModerateCrypto;
     totalFeeModerateUsd.value = cryptoAmountInUsd + networkFeeModerateUsd.value;
- totalFeeModerateCrypto.value =     totalFeeModerateUsd.value /token.priceInUsd;
-    // Calculate fees for fast
+    totalFeeModerateCrypto.value = cryptoAmount + feeModerateCrypto;
+
+    // FAST
     final feeFastCrypto = calcNetworkFeeCrypto(fastGasPriceGwei);
     networkFeeFastUsd.value = feeFastCrypto * nativeTokenPriceInUsd;
-        networkFeeFastcrypto.value = networkFeeFastUsd.value / token.priceInUsd;
+    networkFeeFastcrypto.value = feeFastCrypto;
     totalFeeFastUsd.value = cryptoAmountInUsd + networkFeeFastUsd.value;
- totalFeeFastCrypto.value =     totalFeeFastUsd.value /token.priceInUsd;
-    // Max fee in USD based on fast gas
+    totalFeeFastCrypto.value = cryptoAmount + feeFastCrypto;
+
+    // Max fee
     maxFeeUsd.value = feeFastCrypto * nativeTokenPriceInUsd;
 
-       Get.to(() => ConfirmSendCoinScreen(
-              address: addressController.text,
-              token: token,
-            ));
+    Get.to(() => ConfirmSendCoinScreen(
+      address: addressController.text,
+      token: token,
+    ));
+  } catch (e) {
+    print('❌ Error estimating gas: $e');
+    // Handle error or show fallback fee?
   }
-
+}
 
 
 
@@ -156,6 +227,63 @@ final Web3Client _client = Web3Client(
     Client(),
   );
 
+//send that is working fine and i make transections also with it....but commenting to calculate gas limit dynamically instead of static 21000..
+// Future<void> sendCoin({
+//   required BuildContext context,
+//   required String recipientAddress,
+//   required double amountToSend, // in ETH
+//   required String privateKey,
+// }) async {
+//   try {
+//     isLoading(true);
+//     final credentials = EthPrivateKey.fromHex(privateKey);
+//     final myAddress = await credentials.extractAddress();
+//     print('Sending from: $myAddress');
+
+//     final chainId = 1; // Goerli testnet
+//     final gasPrice = await _client.getGasPrice();
+//     const gasLimit = 21000;
+
+//     // Convert ETH amount to Wei (BigInt)
+//     final amountInWei = BigInt.from(amountToSend * 1e18);
+
+//     final transaction = Transaction(
+//       from: myAddress,
+//       to: EthereumAddress.fromHex(recipientAddress),
+//       gasPrice: gasPrice,
+//       maxGas: gasLimit,
+//       value: EtherAmount.inWei(amountInWei),
+//     );
+
+//     final txHash = await _client.sendTransaction(
+//       credentials,
+//       transaction,
+//       chainId: chainId,
+//       fetchChainIdFromNetworkId: false,
+//     );
+
+//     print('Transaction sent! Hash: $txHash');
+
+//     // Wait for confirmation
+//     TransactionReceipt? receipt;
+//     while (receipt == null) {
+//       print('⏳ Waiting for confirmation...');
+//       await Future.delayed(Duration(seconds: 5));
+//       receipt = await _client.getTransactionReceipt(txHash);
+//     }
+
+//     print('✅ Transaction confirmed in block ${receipt.blockNumber}');
+//     walletCreatingCotroller.getBalanceInUSD(walletCreatingCotroller.wallwtAddress.value);
+//     _showSuccesPopup(context);
+//   } catch (e) {
+//     isLoading(false);
+//     _showFailPopup(context, e.toString());
+//     print('❌ Error sending transaction: $e');
+//   }
+//   finally{
+//     isLoading(false);
+//   }
+// }
 
 Future<void> sendCoin({
   required BuildContext context,
@@ -169,19 +297,32 @@ Future<void> sendCoin({
     final myAddress = await credentials.extractAddress();
     print('Sending from: $myAddress');
 
-    final chainId = 1; // Goerli testnet
+    final chainId = 1; // Mainnet = 1, Goerli = 5
     final gasPrice = await _client.getGasPrice();
-    const gasLimit = 21000;
 
-    // Convert ETH amount to Wei (BigInt)
+    // Convert ETH to Wei
     final amountInWei = BigInt.from(amountToSend * 1e18);
 
-    final transaction = Transaction(
+    // Create a draft transaction for gas estimation
+    final draftTransaction = Transaction(
       from: myAddress,
       to: EthereumAddress.fromHex(recipientAddress),
       gasPrice: gasPrice,
-      maxGas: gasLimit,
       value: EtherAmount.inWei(amountInWei),
+    );
+
+    // 🔍 Dynamically estimate gas limit
+    final estimatedGas = await _client.estimateGas(
+      sender: myAddress,
+      to: EthereumAddress.fromHex(recipientAddress),
+      value: EtherAmount.inWei(amountInWei),
+      data: draftTransaction.data,
+    );
+    print('⛽ Estimated Gas Limit: $estimatedGas');
+
+    // Create the final transaction with estimated gas
+    final transaction = draftTransaction.copyWith(
+      maxGas: estimatedGas.toInt(),
     );
 
     final txHash = await _client.sendTransaction(
@@ -191,7 +332,7 @@ Future<void> sendCoin({
       fetchChainIdFromNetworkId: false,
     );
 
-    print('Transaction sent! Hash: $txHash');
+    print('📤 Transaction sent! Hash: $txHash');
 
     // Wait for confirmation
     TransactionReceipt? receipt;
@@ -208,11 +349,14 @@ Future<void> sendCoin({
     isLoading(false);
     _showFailPopup(context, e.toString());
     print('❌ Error sending transaction: $e');
-  }
-  finally{
+  } finally {
     isLoading(false);
   }
 }
+
+
+
+
 
 //  Future<void> sendCrypto({
 //   required BuildContext context,
@@ -292,33 +436,7 @@ Future<void> sendCoin({
 // }
 //  // ERC20 ABI (for token transfers)
  
-  static const String _erc20Abi = '''
-  [
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "name": "transfer",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "type": "function"
-    }
-  ]
-  ''';
-
-
+ 
 
    void _showSuccesPopup(BuildContext context) {
     var theme = Theme.of(context);

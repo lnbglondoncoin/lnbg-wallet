@@ -46,21 +46,23 @@ class BrowseScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         color: isDarkMode ? whiteColor : blackColor2),
                   ),
-                  const Spacer(),
-                  SvgPicture.asset(
-                    "assets/icons/msg2.svg",
-                    height: 28.h,
-                    width: 28.w,
-                    colorFilter: ColorFilter.mode(
-                        isDarkMode ? whiteColor : blackColor2, BlendMode.srcIn),
-                  )
+                  // const Spacer(),
+                  // SvgPicture.asset(
+                  //   "assets/icons/msg2.svg",
+                  //   height: 28.h,
+                  //   width: 28.w,
+                  //   colorFilter: ColorFilter.mode(
+                  //       isDarkMode ? whiteColor : blackColor2, BlendMode.srcIn),
+                  // )
                 ],
               ),
               SizedBox(
                 height: 20.h,
               ),
               Obx(() {
-                return Container(
+                return 
+                controller.isLoading.value&&walletCreatingController.isLoading.value?shimmerSearchField(isDarkMode):
+                Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: controller.isAmountEmpty.value
@@ -83,23 +85,23 @@ class BrowseScreen extends StatelessWidget {
                     cursorColor: orange3,
                     controller: controller.searchController,
                     onChanged: (value) {
-                      // controller.filterTokens(value);
+                     
                       controller
                           .updateAmount(); // Call this method to update the reactive value
                     },
                     decoration: InputDecoration(
-                      suffixIcon: SizedBox(
-                        height: 20.h,
-                        width: 20.w,
-                        child: Center(
-                          child: SvgPicture.asset(
-                            "assets/icons/Voice.svg",
-                            colorFilter: ColorFilter.mode(
-                                isDarkMode ? lightGreenColor : orange3,
-                                BlendMode.srcIn),
-                          ),
-                        ),
-                      ),
+                      // suffixIcon: SizedBox(
+                      //   height: 20.h,
+                      //   width: 20.w,
+                      //   child: Center(
+                      //     child: SvgPicture.asset(
+                      //       "assets/icons/Voice.svg",
+                      //       colorFilter: ColorFilter.mode(
+                      //           isDarkMode ? lightGreenColor : orange3,
+                      //           BlendMode.srcIn),
+                      //     ),
+                      //   ),
+                      // ),
                       prefixIcon: SizedBox(
                           height: 16.h,
                           width: 16.w,
@@ -115,7 +117,7 @@ class BrowseScreen extends StatelessWidget {
                                 BlendMode.srcIn),
                           ))),
                       border: InputBorder.none,
-                      hintText: "Search or enter address",
+                      hintText: "Search",
                       hintStyle: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w400,
                         color: greyColor2,
@@ -131,7 +133,7 @@ class BrowseScreen extends StatelessWidget {
              Obx((){
               return
               
-controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
+controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
  controller.searchResult!=[]&&controller.searchController.text!=""?
            Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +195,7 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
                 children: [
                   Obx((){
              
-              return walletCreatingController.isLoading.value?Center(
+              return walletCreatingController.isLoading.value&&controller.isLoading.value?Center(
                 child: CircularProgressIndicator(),
               ):
                walletCreatingController.hundredTokenData.isEmpty?
@@ -240,7 +242,7 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
                 height: 20.h,
               ),
        Obx((){
-        return controller.isLoading.value?CircularProgressIndicator():
+        return walletCreatingController.isLoading.value&&controller.isLoading.value?shimmerLoadingHistoryLayout(isDarkMode):
         controller.historyResults.isEmpty?SizedBox():    Column(
             children: [
                  Row(
@@ -270,17 +272,18 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
                 ],
               ),
               SizedBox(
-                height: 250.h,
+               // height: 250.h,
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     int crossAxisCount = 2; // Number of items per row
-                    int totalItems = controller.historyResults.length >= 6
-                        ? 6
+                    int totalItems = controller.historyResults.length >= 8
+                        ? 8
                         : controller.historyResults.length;
                     int rowCount = (totalItems / crossAxisCount)
                         .ceil(); // Calculate the number of rows
 
                     return ListView.builder(
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
                       itemCount: rowCount,
@@ -342,7 +345,19 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
             ],
            );
        }),
-           Row(
+
+
+
+
+
+
+
+     Obx((){
+      return walletCreatingController.isLoading.value&&controller.isLoading.value?shimmerPopularLayout(isDarkMode):
+      walletCreatingController.hundredTokenData.isEmpty?SizedBox():
+      Column(
+        children: [
+                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -432,7 +447,10 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
                 ),
               ),
        
-                ],
+            
+        ],
+      );
+     })    ],
               );
              })
                   ],
@@ -512,5 +530,173 @@ controller.isLoading.value?shimmerSearchLoadingWidget(isDarkMode):
     ],
   );
 }
+
+Widget shimmerLoadingHistoryLayout(bool isDarkMode) {
+  return Column(
+    children: List.generate(3, (row) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.h),
+        child: Row(
+          children: List.generate(2, (index) {
+            return Expanded(
+              child: Shimmer.fromColors(
+                baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Container(
+                    width: 48.w,
+                    height: 48.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  title: Container(
+                    height: 16.h,
+                    color: Colors.white,
+                    margin: EdgeInsets.symmetric(vertical: 4.h),
+                  ),
+                  subtitle: Container(
+                    height: 12.h,
+                    color: Colors.white,
+                    margin: EdgeInsets.only(top: 4.h),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    }),
+  );
+}
+
+
+Widget shimmerPopularLayout(bool isDarkMode) {
+  return Column(
+    children: [
+      // Header shimmer
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Shimmer.fromColors(
+              baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+              highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+              child: Container(
+                height: 20.h,
+                width: 100.w,
+                color: Colors.white,
+              ),
+            ),
+            Shimmer.fromColors(
+              baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+              highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+              child: Container(
+                height: 20.h,
+                width: 60.w,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+      SizedBox(
+        height: 300.h,
+        child: Column(
+          children: List.generate(3, (row) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.h),
+              child: Row(
+                children: List.generate(2, (index) {
+                  return Expanded(
+                    child: Shimmer.fromColors(
+                      baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                      highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Container(
+                          width: 48.w,
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        title: Container(
+                          height: 16.h,
+                          width: double.infinity,
+                          color: Colors.white,
+                          margin: EdgeInsets.symmetric(vertical: 4.h),
+                        ),
+                        subtitle: Container(
+                          height: 12.h,
+                          width: double.infinity,
+                          color: Colors.white,
+                          margin: EdgeInsets.only(top: 4.h),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            );
+          }),
+        ),
+      ),
+    ],
+  );
+}
+
+
+Widget shimmerSearchField(bool isDarkMode) {
+  return Shimmer.fromColors(
+    baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+    highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+    child: Container(
+      width: double.infinity,
+      height: 60.h, // Adjust based on your actual text field height
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(
+          color: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+      child: Row(
+        children: [
+          Container(
+            width: 20.w,
+            height: 20.h,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Container(
+              height: 16.h,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Container(
+            width: 20.w,
+            height: 20.h,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 }
 

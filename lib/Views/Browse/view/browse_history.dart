@@ -9,6 +9,8 @@ import 'package:lnbg_crypto_wallet_app/Views/Browse/controller/browse_controller
 import 'package:lnbg_crypto_wallet_app/Views/Browse/view/clear_history_bottomsheet.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BrowseHistoryScreen extends StatelessWidget {
   const BrowseHistoryScreen({super.key, });
@@ -21,17 +23,29 @@ class BrowseHistoryScreen extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: CustomAppBar(
-        title: "History",
-        iconPath: "assets/icons/delete.svg",
-        isSuffix: true,
-        onSuffixTap: () {
-          _showCustomBottomSheet(context);
-        },
-      ),
+      appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(kToolbarHeight),
+  child: Obx(() {
+    return controller.isLoading.value
+        ? ShimmerAppBar(isDarkMode: isDarkMode)
+        : CustomAppBar(
+            title: "History",
+            iconPath: "assets/icons/delete.svg",
+            isSuffix: true,
+            onSuffixTap: () {
+              _showCustomBottomSheet(context);
+            },
+          );
+  }),
+),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: ListView.builder(
+        child:  Obx((){
+          return controller.isLoading.value?shimmerHistoryList(isDarkMode): 
+          controller.historyResults.isEmpty?Center(
+            child: Text("Your Search History is Empty"),
+          ):
+          ListView.builder(
             padding: EdgeInsets.zero,
             itemCount: controller.historyResults.length,
              physics: BouncingScrollPhysics(),
@@ -65,7 +79,8 @@ class BrowseHistoryScreen extends StatelessWidget {
                       child: CustomDivider())
                 ],
               );
-            }),
+            });
+        })
       ),
     );
   }
@@ -80,4 +95,46 @@ class BrowseHistoryScreen extends StatelessWidget {
       },
     );
   }
+
+  Widget shimmerHistoryList(bool isDarkMode) {
+  return ListView.builder(
+    padding: EdgeInsets.zero,
+    itemCount: 6, // Simulate 6 shimmer items (adjust as needed)
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return Column(
+        children: [
+          Shimmer.fromColors(
+            baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+            highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Container(
+                width: 48.w,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              title: Container(
+                width: double.infinity,
+                height: 16.h,
+                color: Colors.white,
+                margin: EdgeInsets.only(bottom: 6.h),
+              ),
+              subtitle: Container(
+                width: 100.w,
+                height: 14.h,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          if (index != 5) const CustomDivider(),
+        ],
+      );
+    },
+  );
+}
+
 }

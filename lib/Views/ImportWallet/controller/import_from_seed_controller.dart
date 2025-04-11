@@ -123,8 +123,9 @@ class ImportFromSeedController extends GetxController {
       },
     );
   }
-
+var isLoading=false.obs;
   void verfifyMnemonicAndImport() async {
+    isLoading(true);
     if (!importSeedKey.currentState!.validate()) {
       return;
     }
@@ -139,12 +140,16 @@ class ImportFromSeedController extends GetxController {
     final privateKey = await walletCreatingController.getPrivateKey(seedPhrase);
 
     if (privateKey.isNotEmpty) {
+      walletCreatingController.isAccountImporting.value=true;
       walletCreatingController.setPrivateKey(privateKey);
-   await   walletCreatingController.loadWaletData();
-   await   walletCreatingController.savePhraseToPrefs(seedPhrase);
+       await   walletCreatingController.savePhraseToPrefs(seedPhrase);
     await  walletCreatingController.savePassword(passController.text);
-   // await  walletCreatingController.fetchCoinData(true);
+    Get.log("Private key isss${walletCreatingController.privateKey}");
+    await   walletCreatingController.loadWaletData(true);
+  
+   // await  walletCreatingController.fetchCoinData(true,true);
     } else {
+      isLoading(false);
       Get.snackbar("Error", "Failed to import wallet. Try again.");
     }
   }

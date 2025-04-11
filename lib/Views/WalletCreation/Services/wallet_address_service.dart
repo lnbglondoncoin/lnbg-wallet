@@ -16,16 +16,18 @@ abstract class WalletAddressService {
   String generateMnemonic();
   Future<String> getPrivateKey(String mnemonic);
   Future<EthereumAddress> getPublicKey(String privateKey);
-  loadWaletData();
+  loadWaletData(bool isAccountImported);
 }
 
 class WalletCreatingController extends GetxController
     implements WalletAddressService {
+      var isAccountImporting=false.obs;
   var mnemonic = ''.obs;
   var mnemonicWords = [].obs;
   var firstHalfOfMnemonic = [].obs;
   var secondHalfofMnemonic = [].obs;
-  var tokenData = <TokenData>[].obs;
+   var tokenData = <TokenData>[].obs;
+   var ethereumData = <TokenData>[].obs;
   String? seedPhrase;
   String get cmcApiKey => dotenv.env['CMC_API_KEY'] ?? '';
   var slugs = <String>[].obs;
@@ -49,7 +51,9 @@ class WalletCreatingController extends GetxController
     mnemonicWords.value = mnemonic.split(' ');
     firstHalfOfMnemonic.value = mnemonicWords.sublist(0, 6);
     secondHalfofMnemonic.value = mnemonicWords.sublist(6, 12);
-    loadWaletData();
+  
+     
+   
   }
 
 
@@ -64,7 +68,7 @@ class WalletCreatingController extends GetxController
         hundredslugs.assignAll(List<String>.from(data['slugs']));
       await  fetchHundredTokens(wallwtAddress.value);
       } else {
-        Get.snackbar('Error', 'Failed to fetch data');
+        Get.snackbar('Error', 'Failed to fetch  100 Slugs');
       }
     } catch (e) {
       isLoading(false);
@@ -104,11 +108,11 @@ class WalletCreatingController extends GetxController
      
       } else {
         isLoading.value = false;
-        Get.snackbar("Error", "Failed to load data");
+        Get.snackbar("Error", "Failed to load 100 tokenData");
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error", "Something went wrong with 1000 tokens");
     }
   }
 
@@ -193,16 +197,18 @@ class WalletCreatingController extends GetxController
   }
 
   @override //remove override if problem coes in persistent login
-  Future<void> loadWaletData() async {
+  Future<void> loadWaletData(bool isAccountImported) async {
+    Get.log("Loading walletData");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? privateKey = prefs.getString('privateKey');
 
     if (privateKey != null) {
       await loadPrivateKey();
       EthereumAddress address = await getPublicKey(privateKey);
+      await getSeedPhrase();
       wallwtAddress.value = address.hex;
       pvKey.value = privateKey;
-      await fetchPreferences(wallwtAddress.value,privateKey != ""?false:true);
+      await fetchPreferences(wallwtAddress.value,false,isAccountImported);
     } else {}
   }
 
@@ -222,7 +228,7 @@ class WalletCreatingController extends GetxController
     seedPhrase = prefs.getString('seedPhrase');
   }
 
-  Future<void> fetchPreferences(String walletAddress,bool isAppStarting) async {
+  Future<void> fetchPreferences(String walletAddress,bool isAppStarting,bool isAccountImported) async {
     
     final String url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/preferences/$walletAddress";
@@ -240,9 +246,9 @@ print(url);
         slugs.assignAll(tokens);
        // print(slugs);
         if (slugs.isEmpty) {
-          await fetchCoinData(isAppStarting);
+          await fetchCoinData(isAppStarting,isAccountImported);
         } else {
-          await fetchWalletData(wallwtAddress.value,isAppStarting);
+          await fetchWalletData(wallwtAddress.value,isAppStarting,isAccountImported);
         }
       } else {
         Get.snackbar("Error", "Failed to fetch preferences: ${response.body}",
@@ -250,14 +256,14 @@ print(url);
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Errorrrr", "Something went wrong: $e",
+      Get.snackbar("Errorrrr", "Something went wrong with peferences: $e",
           snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> fetchCoinData(bool isAppStarting) async {
+  Future<void> fetchCoinData(bool isAppStarting,bool isAccountImported) async {
     const String baseUrl =
         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5";
 
@@ -278,11 +284,11 @@ print(url);
         // Extract slugs and store them in the observable list
         slugs.assignAll(
             filteredData.map((coin) => coin['slug'].toString()).toList());
-        await fetchWalletData(wallwtAddress.value,isAppStarting);
+        await fetchWalletData(wallwtAddress.value,isAppStarting,isAccountImported);
       }
     } catch (e) {
       isLoading(false);
-      Get.snackbar("Error", e.toString());
+      Get.snackbar("Error with CMC slug loading", e.toString());
     } finally {
       isLoading(false);
     }
@@ -320,11 +326,13 @@ print(url);
     }
   }
 
-  Future<void> fetchWalletData(String walletAddress,bool isAppStarting) async {
+  Future<void> fetchWalletData(String walletAddress,bool isAppStarting,bool isAccountImported) async {
+    print("slus are $slugs");
     String url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/token-balances";
 print(url);
-    final Map<String, dynamic> requestBody = {"tokens": slugs};print(requestBody);
+    final Map<String, dynamic> requestBody = {"tokens": slugs};
+
     try {
       isLoading.value = true; // Set loading to true at start
 
@@ -343,19 +351,22 @@ print(url);
         });
 
         tokenData.assignAll(tokens);
+        ethereumData.assign(tokens.first);
         await getBalanceInUSD(walletAddress);
-        if(isAppStarting){
+        if(isAppStarting||isAccountImported){
         Get.log("comes here $isAppStarting");
         await  fetchSlugs();
         }
+
         Get.offAll(() => const BottomNavBar());
+        isAccountImporting.value=false;
       } else {
      //   isLoading.value = false;
-        Get.snackbar("Errorrr", "Failed to load data");
+        Get.snackbar("Errorrr", "Failed to load all slgs tokens");
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error", "Something went wrong with all slugs tokens");
     }
     finally{
       isLoading(false);

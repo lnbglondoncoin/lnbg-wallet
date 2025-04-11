@@ -82,7 +82,19 @@ class AddTokenController extends GetxController {
   changeNetwork(value) {
     selectedNetwork.value = value;
   }
+   final addressController = TextEditingController();
+  final nameController = TextEditingController();
+  final symbolController = TextEditingController();
+  final decimalController = TextEditingController();
 
+   String? validateAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Recipient address is required';
+    } else if (!RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(value)) {
+      return "Invalid Ethereum address format";
+    }
+    return null;
+  }
   List selectedTokenNames = [].obs;
   Future<void> savePreferences() async {
     const String url =
@@ -105,7 +117,7 @@ class AddTokenController extends GetxController {
       if (response.statusCode == 200) {
         print(walletCreatingController.wallwtAddress.value);
         await walletCreatingController
-            .fetchPreferences(walletCreatingController.wallwtAddress.value,false);
+            .fetchPreferences(walletCreatingController.wallwtAddress.value,false,walletCreatingController.isAccountImporting.value);
         Get.snackbar("Success", "Preferences saved successfully!",
             snackPosition: SnackPosition.TOP);
       } else {

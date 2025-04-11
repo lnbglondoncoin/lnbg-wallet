@@ -10,7 +10,10 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/animation
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_loading_spinner.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_step_app_bar.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ConfirmSeedPhrase2Screen extends StatelessWidget {
   ConfirmSeedPhrase2Screen({super.key});
@@ -31,21 +34,32 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: CustomStepAppBar(
-        onBackTap: () {
-          walletCreatingController.indexes.clear();
-          walletCreatingController.changeisTrue(true);
-          walletCreatingController.orderList.clear();
-          Get.back();
-        },
-        currentIndex: controller.currentIndex,
-        onWillPop: () {
-          walletCreatingController.indexes.clear();
-          walletCreatingController.orderList.clear();
-          Get.back();
-        }, // Pass the RxInt
+      appBar: PreferredSize(
+         preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Obx((){
+          return 
+          walletCreatingController.isLoading.value?ShimmerAppBar(isDarkMode:isDarkMode):
+          CustomStepAppBar(
+          onBackTap: () {
+            walletCreatingController.indexes.clear();
+            walletCreatingController.changeisTrue(true);
+            walletCreatingController.orderList.clear();
+            Get.back();
+          },
+          currentIndex: controller.currentIndex,
+          onWillPop: () {
+            walletCreatingController.indexes.clear();
+            walletCreatingController.orderList.clear();
+            Get.back();
+          }, // Pass the RxInt
+        );
+        }),
       ),
-      body: SingleChildScrollView(
+          body: 
+      Obx((){
+          return 
+        walletCreatingController.isLoading.value?shimmerSeedPhraseScreen():
+      SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -263,12 +277,16 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
             )
           ],
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      );
+      }),
+         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
           padding:
               EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
-          child: CustomOrangeButton(
+          child: Obx((){
+            return walletCreatingController.isLoading.value?
+            shimmerLoadingWidget():
+            CustomOrangeButton(
               buttonText: "Next",
               onPressed: () {
                 walletCreatingController.changeisTrue(true);
@@ -285,9 +303,166 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                       backgroundColor: orange3,
                       snackPosition: SnackPosition.TOP);
                 }
-              })),
+              });
+          })
+          ),
     );
   }
+
+Widget shimmerLoadingWidget() {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Container(
+      width: double.infinity,
+      height: 50.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+  );
+}
+
+Widget shimmerSeedPhraseScreen() {
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 15.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CustomDivider(),
+              SizedBox(
+                height: 10.h,
+              ),
+              Center(
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: 200.w, // Adjust the width according to your need
+                    height: 32.sp,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: 250.w, // Adjust the width
+                  height: 18.sp,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              const CustomDivider(),
+              SizedBox(
+                height: 45.h,
+              ),
+              Center(
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: 100.w,
+                    height: 48.sp,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 45.h,
+              ),
+              Obx(() {
+                return GetBuilder<ShakeAnimationController>(
+                  builder: (controller) {
+                    return AnimatedBuilder(
+                      animation: controller.rotationAnimation,
+                      builder: (context, child) {
+                        return Transform.rotate(
+                          angle: controller.rotationAnimation.value,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            transform: walletCreatingController.isTrue.value
+                                ? Matrix4.identity()
+                                : Matrix4.rotationZ(0.1),
+                            onEnd: () {
+                             // walletCreatingController.changeisTrue(true);
+                            },
+                            curve: Curves.easeInOut,
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                width: double.infinity,
+                                height: 300.h, // Adjust height as necessary
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Colors.grey[300]!, Colors.grey[100]!],
+                                  ),
+                                  borderRadius: BorderRadius.circular(40.r),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              }),
+              SizedBox(
+                height: 70.h,
+              ),
+              SizedBox(
+                height: 3.h,
+                child: ListView.builder(
+                  itemCount: 12,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 3.w),
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          height: 3.h,
+                          width: 24.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.r),
+                            gradient: LinearGradient(
+                              colors: [Colors.grey[300]!, Colors.grey[100]!],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 50.h,
+        ),
+        const CustomDivider(),
+        SizedBox(
+          height: 200.h,
+        ),
+      ],
+    ),
+  );
+}
 
   void _showPopup(BuildContext context) {
     var theme = Theme.of(context);
@@ -339,7 +514,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   Get.log(privateKey);
                   if (privateKey.isNotEmpty) {
                     await walletCreatingController.setPrivateKey(privateKey);
-                    await walletCreatingController.loadWaletData();
+                    await walletCreatingController.loadWaletData(true);
                     
                    // await walletCreatingController.fetchCoinData(true);
                   } else {
@@ -350,9 +525,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                 },
                 child: walletCreatingController.isLoading.value
                     ? const Center(
-                        child: CircularProgressIndicator(
-                          color: orange3,
-                        ),
+                        child: LoadingSpinner()
                       )
                     : Container(
                         height: 58.h,

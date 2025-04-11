@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isSuffix;
@@ -90,4 +91,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+ 
+
 }

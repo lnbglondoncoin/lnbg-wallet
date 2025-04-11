@@ -107,45 +107,12 @@ class CreateNewWallet extends StatelessWidget {
                     SizedBox(
                       height: 35.h,
                     ),
-                    const CustomDivider(),
                     SizedBox(
-                      height: 25.h,
+                      height: 20.h,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Sign in with Face ID?",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: isDarkMode ? whiteColor : blackColor2),
-                        ),
-                        CustomOrangeSwitch(isSwitched: controller.isSwitched1),
-                      ],
-                    ),
+                    const CustomDivider(),
                     SizedBox(
                       height: 30.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Sign in with Biometrics?",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: isDarkMode ? whiteColor : blackColor2),
-                        ),
-                        CustomOrangeSwitch(isSwitched: controller.isSwitched2),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    const CustomDivider(),
-                    SizedBox(
-                      height: 20.h,
                     ),
                     Obx(
                       () => Row(

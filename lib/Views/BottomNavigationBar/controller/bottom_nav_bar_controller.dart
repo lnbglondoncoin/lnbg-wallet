@@ -3,12 +3,13 @@ import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_addr
 
 class BottomNavController extends GetxController {
    final walletCreatingController = Get.find<WalletCreatingController>();
- 
+   
 @override
   void onInit(){
   super.onInit();
   
-    if(walletCreatingController.hundredTokenData.isEmpty){
+    if(walletCreatingController.hundredTokenData.isEmpty||walletCreatingController.hundredslugs.isEmpty){
+      Get.log("Fetching slugs");
       walletCreatingController.fetchSlugs();
     }
 }

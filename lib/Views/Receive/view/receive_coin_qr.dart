@@ -145,38 +145,39 @@ class ReceiveCoinQR extends StatelessWidget {
                         )
                       ],
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            _showCustomBottomSheet(context);
-                          },
-                          child: Container(
-                            height: 60.h,
-                            width: 60.w,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: lightGreenColor.withValues(alpha: 0.08)),
-                            child: Center(
-                                child: SvgPicture.asset(
-                              "assets/icons/set.svg",
-                              colorFilter: ColorFilter.mode(
-                                  isDarkMode ? lightGreenColor : orange1,
-                                  BlendMode.srcIn),
-                            )),
-                          ),
-                        ),
-                        Text(
-                          "Set Amount",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w700,
-                              color:
-                                  isDarkMode ? lightWhiteColor : darkGreyColor),
-                        )
-                      ],
-                    ),
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     GestureDetector(
+                    //       onTap: () {
+                    //         _showCustomBottomSheet(context);
+                    //       },
+                    //       child: Container(
+                    //         height: 60.h,
+                    //         width: 60.w,
+                    //         decoration: BoxDecoration(
+                    //             shape: BoxShape.circle,
+                    //             color: lightGreenColor.withValues(alpha: 0.08)),
+                    //         child: Center(
+                    //             child: SvgPicture.asset(
+                    //           "assets/icons/set.svg",
+                    //           colorFilter: ColorFilter.mode(
+                    //               isDarkMode ? lightGreenColor : orange1,
+                    //               BlendMode.srcIn),
+                    //         )),
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       "Set Amount",
+                    //       style: GoogleFonts.urbanist(
+                    //           fontSize: 18.sp,
+                    //           fontWeight: FontWeight.w700,
+                    //           color:
+                    //               isDarkMode ? lightWhiteColor : darkGreyColor),
+                    //     )
+                    //   ],
+                    // ),
+              
                     GestureDetector(
                       onTap: () {
                         _shareQRCode();
@@ -351,6 +352,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   ),
                 ),
               ),
+         
               SizedBox(height: 20.h),
               const CustomDivider(),
               SizedBox(height: 20.h),

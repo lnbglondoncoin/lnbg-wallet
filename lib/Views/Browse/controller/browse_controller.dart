@@ -73,10 +73,11 @@ class BrowseController extends GetxController {
 
   var searchResult = <TokenData>[].obs;
 var isLoading = false.obs;
+var isSearching=false.obs;
 Future<void> fetchSearchData(String query, String address) async {
   // Clear previous search results before fetching new ones
   searchResult.value = [];
-  isLoading.value = true;
+  isSearching.value = true;
 
   final url =
       "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/browser/search?query=$query&address=$address";
@@ -105,12 +106,16 @@ Future<void> fetchSearchData(String query, String address) async {
       Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
     }
   } catch (e) {
+     isSearching.value = false;
     Get.snackbar("Error", "Something went wrong: $e");
     print("Fetch error: $e");
   } finally {
     // Ensure loading state is set to false once the data is fetched or if an error occurs
-    isLoading.value = false;
+    isSearching.value = false;
   }
+
+
+  
 }
 
 
@@ -148,6 +153,7 @@ Future<void> fetchHistoryOfAnAddress(String address) async {
       Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
     }
   } catch (e) {
+     isLoading.value = false;
     Get.snackbar("Error", "Something went wrong: $e");
     print("Fetch error: $e");
   } finally {
@@ -156,4 +162,27 @@ Future<void> fetchHistoryOfAnAddress(String address) async {
   }
 }
 
+
+ Future<void> clearHistory() async {
+    try {
+      isLoading.value = true;
+      final url = Uri.parse(
+          'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/browser/history/${walletCreatingController.wallwtAddress.value}/clear');
+      
+      final response = await http.delete(url);
+
+      if (response.statusCode == 200) {
+        historyResults.clear(); // clear local history
+        Get.back(); // close bottom sheet
+        Get.snackbar("Success", "Search history cleared successfully");
+      } else {
+        Get.snackbar("Error", "Failed to clear history: ${response.statusCode}");
+      }
+    } catch (e) {
+        isLoading.value = false;
+      Get.snackbar("Error", "Something went wrong: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

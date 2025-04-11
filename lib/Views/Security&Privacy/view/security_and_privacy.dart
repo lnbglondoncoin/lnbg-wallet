@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/change_password.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/show_private_key.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Settings/view/show_secret_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
@@ -47,7 +50,11 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Reveal Secret Recovery Phrase", context),
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>ShowSeedPhrase());
+                },
+                child: _buildSectionTitle("Reveal Secret Recovery Phrase", context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -71,7 +78,11 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Change Password", context),
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>ChangePasswordScreen());
+                },
+                child: _buildSectionTitle("Change Password", context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -98,6 +109,9 @@ class SecurityAndPrivacyView extends StatelessWidget {
                   "After 15 minutes"
                 ],
                 selectedValue: controller.selectedlocTime,
+                onChanged: (newValue) {
+    controller.setSelectedTime(newValue);
+  },
               ),
               SizedBox(
                 height: 40.h,
@@ -178,7 +192,11 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Show Private Key", context),
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>ShowPrivateKeyScreen());
+                },
+                child: _buildSectionTitle("Show Private Key", context)),
               SizedBox(height: 30.h),
               const CustomDivider(),
               SizedBox(height: 35.h),

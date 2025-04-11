@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Browse/controller/browse_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ClearHistoryBottomSheet extends StatefulWidget {
   const ClearHistoryBottomSheet({super.key});
@@ -16,7 +20,7 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
-
+ final controller = Get.put(BrowseController());
   @override
   void initState() {
     super.initState();
@@ -48,7 +52,9 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
 
     return SlideTransition(
       position: _slideAnimation,
-      child: Container(
+      child:Obx((){
+        return  controller.isLoading.value?shimmerLoaderSheet(context):
+        Container(
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
         decoration: BoxDecoration(
           color: isDarkMode ? lightBlackColor2 : whiteColor,
@@ -93,13 +99,17 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
               children: [
                 Flexible(
                     child: CustomLightGreenButton(
-                        buttonText: "Cancel", onPressed: () {})),
+                        buttonText: "Cancel", onPressed: () {
+                          Navigator.pop(context);
+                        })),
                 SizedBox(
                   width: 15.w,
                 ),
                 Flexible(
                     child: CustomButton(
-                        buttonText: "Yes, Clear", onPressed: () {}))
+                        buttonText: "Yes, Clear", onPressed: ()async {
+                       await   controller.clearHistory();
+                        }))
               ],
             ),
             SizedBox(
@@ -107,7 +117,91 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
             ),
           ],
         ),
-      ),
-    );
+      );
+      })  );
   }
+
+  
+Widget shimmerLoaderSheet(BuildContext context) {
+  var theme = Theme.of(context);
+  bool isDarkMode = theme.brightness == Brightness.dark;
+
+  return Container(
+    padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
+    decoration: BoxDecoration(
+      color: isDarkMode ? Colors.black.withOpacity(0.5) : Colors.white.withOpacity(0.5),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(49.r),
+        topRight: Radius.circular(49.r),
+      ),
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Container(
+            width: 38.w,
+            height: 3.h,
+            decoration: BoxDecoration(
+              color: isDarkMode ? Colors.white.withOpacity(0.4) : Colors.black.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(100.r),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20.h,
+        ),
+        Center(
+          child: Shimmer.fromColors(
+            baseColor: isDarkMode ? Colors.white.withOpacity(0.3) : Colors.black.withOpacity(0.2),
+            highlightColor: isDarkMode ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.4),
+            child: Container(
+              width: 200.w,
+              height: 24.h,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20.h,
+        ),
+        const Divider(),
+        SizedBox(
+          height: 25.h,
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: Shimmer.fromColors(
+                baseColor: isDarkMode ? Colors.white.withOpacity(0.3) : Colors.black.withOpacity(0.2),
+                highlightColor: isDarkMode ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.4),
+                child: Container(
+                  height: 45.h,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15.w,
+            ),
+            Flexible(
+              child: Shimmer.fromColors(
+                baseColor: isDarkMode ? Colors.white.withOpacity(0.3) : Colors.black.withOpacity(0.2),
+                highlightColor: isDarkMode ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.4),
+                child: Container(
+                  height: 45.h,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 25.h,
+        ),
+      ],
+    ),
+  );
+}
 }

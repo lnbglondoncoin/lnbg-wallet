@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Browse/view/browse.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Discover/view/discover.dart';
 import 'package:lnbg_crypto_wallet_app/Views/HomeScreen/view/home_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Settings/view/settings_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -40,32 +42,78 @@ class _BottomNavBarState extends State<BottomNavBar> {
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
 
-    return Scaffold(
-      backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      body: Obx(() => _pages[controller.currentIndex.value]),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 10.h),
-        child: BottomAppBar(
-          height: 64.h,
-          padding: EdgeInsets.zero,
-          color: isDarkMode ? lightBlackColor3 : whiteColor,
-          elevation: 0,
-          child: Container(
+    return  AnnotatedRegion<SystemUiOverlayStyle>(
+       value: isDarkMode
+      ? SystemUiOverlayStyle.light // White icons on dark background
+      : SystemUiOverlayStyle.dark, // Dark icons on light background
+      child: Scaffold(
+        backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+        body: Obx(() => _pages[controller.currentIndex.value]),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(bottom: 10.h),
+          child: BottomAppBar(
             height: 64.h,
-            decoration: BoxDecoration(
-              color: isDarkMode ? lightBlackColor3 : whiteColor,
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 24.w),
-            width: double.infinity,
+            padding: EdgeInsets.zero,
+            color: isDarkMode ? lightBlackColor3 : whiteColor,
+            elevation: 0,
+            child: Obx((){
+              return 
+              
+              controller.walletCreatingController.isLoading.value?
+              Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Shimmer.fromColors(
+             baseColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+              highlightColor:
+                    isDarkMode ? Colors.grey[700]! : Colors.grey[100]!,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: List.generate(
-                _icons.length,
-                (index) => buildNavItem(index, _icons[index], _labels[index]),
-              ),
+              children: List.generate(4, (index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 21.w,
+                      height: 21.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(height: 5.h),
+                    Container(
+                      width: 40.w,
+                      height: 10.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                    ),
+                  ],
+                );
+              }),
             ),
+          ),
+        
+      ):
+              Container(
+              height: 64.h,
+              decoration: BoxDecoration(
+                color: isDarkMode ? lightBlackColor3 : whiteColor,
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 24.w),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(
+                  _icons.length,
+                  (index) => buildNavItem(index, _icons[index], _labels[index]),
+                ),
+              ),
+            );
+            })
           ),
         ),
       ),

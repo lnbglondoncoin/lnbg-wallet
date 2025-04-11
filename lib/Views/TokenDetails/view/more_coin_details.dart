@@ -27,7 +27,7 @@ class MoreCoinDetails extends StatelessWidget {
     return Scaffold(
 backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
-          isSuffix: true,
+        //  isSuffix: true,
           title:"$coinName Graph" ,
           iconPath: 'assets/icons/chat11.svg',
         ),

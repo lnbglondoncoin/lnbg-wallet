@@ -128,7 +128,7 @@ class BuyCoinScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => SelectProviderScreen());
+                 // Get.to(() => SelectProviderScreen());
                 },
                 child: Container(
                   height: 80.h,
@@ -146,8 +146,8 @@ class BuyCoinScreen extends StatelessWidget {
                             leading: SvgPicture.asset(
                               controller.providerImage.value == ""
                                   ? isDarkMode
-                                      ? "assets/icons/binance.svg"
-                                      : "assets/icons/binance.svg"
+                                      ? "assets/icons/moonDark.svg":
+                                      "assets/icons/moon.svg"
                                   : controller.providerImage.value,
                               height: 44.h,
                               width: 44.w,
@@ -183,18 +183,30 @@ class BuyCoinScreen extends StatelessWidget {
                       ? CustomGreenButton(
                           buttonText: "Continue",
                           onPressed: () async {
-                            if (controller.selectedProvider.value ==
+                            if(controller.amountController.text==""||controller.amountController.text=="0"){
+                              Get.snackbar("Empty Ammount", "Amount cannot be zero");
+
+                            }
+                           else{
+                             if (controller.selectedProvider.value ==
                                 "MoonPay") {
                               await controller.buyCrypto(token.symbol);
                             }
+                           }
+                         
                           })
                       : CustomButton(
                           buttonText: "Continue",
                           onPressed: () async {
-                            if (controller.selectedProvider.value ==
+                            if(controller.amountController.text==""||controller.amountController.text=="0"){
+                              Get.snackbar("Empty Ammount", "Amount cannot be zero");
+                            }
+                            else{
+                             if (controller.selectedProvider.value ==
                                 "MoonPay") {
                               await controller.buyCrypto(token.symbol);
                             }
+                           }
                           });
             })));
   }

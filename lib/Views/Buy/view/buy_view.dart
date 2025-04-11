@@ -6,6 +6,8 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/hundred_tokens_shimmer_loader.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
 
 class BuyView extends StatelessWidget {
   BuyView({super.key});
@@ -18,48 +20,54 @@ class BuyView extends StatelessWidget {
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
         backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-           appBar: CustomAppBar(
-        isSuffix: true,
-        title: "Buy",
-        iconPath: 'assets/icons/search.svg',
-        onSuffixTap: () {
-          // Show search dialog on icon tap
-          Get.dialog(
-            AlertDialog(
-              backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-              title: Text(
-                "Search Token",
-                style: GoogleFonts.urbanist(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color: isDarkMode ? whiteColor : blackColor2,
-                ),
-              ),
-              content: TextField(
-                controller: searchController,
-                onChanged: (value) => searchQuery.value = value.toLowerCase(),
-                style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
-                decoration: InputDecoration(
-                  hintText: "Enter token name...",
-                  hintStyle: TextStyle(color: greyColor),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
+           appBar: PreferredSize(
+             preferredSize: const Size.fromHeight(kToolbarHeight),
+             child: Obx((){
+                           return walletCreatingController.isLoading.value?ShimmerAppBar(isDarkMode: isDarkMode):
+         CustomAppBar(
+                     isSuffix: true,
+                     title: "Buy",
+                     iconPath: 'assets/icons/search.svg',
+                     onSuffixTap: () {
+                       // Show search dialog on icon tap
+                       Get.dialog(
+              AlertDialog(
+                backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+                title: Text(
+                  "Search Token",
+                  style: GoogleFonts.urbanist(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: isDarkMode ? whiteColor : blackColor2,
                   ),
                 ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Get.back(),
-                  child: Text(
-                    "Close",
-                    style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
+                content: TextField(
+                  controller: searchController,
+                  onChanged: (value) => searchQuery.value = value.toLowerCase(),
+                  style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
+                  decoration: InputDecoration(
+                    hintText: "Enter token name...",
+                    hintStyle: TextStyle(color: greyColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: Text(
+                      "Close",
+                      style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                  ),
+                ],
+              ),
+                       );
+                     },
+                   );
+             }),
+           ),
      
         body: Obx(() {
            // Filter tokens based on search query
@@ -67,7 +75,51 @@ class BuyView extends StatelessWidget {
             .where((token) =>
                 token.name.toLowerCase().contains(searchQuery.value))
             .toList();
-          return SingleChildScrollView(
+              if (walletCreatingController.isLoading.value) {
+            return TokenListShimmerWidget( isDarkMode: isDarkMode,);
+          }
+        
+          if (filteredTokens.isEmpty) {
+            return Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      isDarkMode
+                          ? "assets/images/searchImage2.png"
+                          : "assets/images/searchImage.png",
+                      height: 300.h,
+                      width: 300.w,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Not Found",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w700,
+                        color: isDarkMode ? whiteColor : blackColor2,
+                      ),
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                        color: isDarkMode ? whiteColor : blackColor2,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
+        
+          return 
+          
+          SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.w),
               child: ListView.builder(

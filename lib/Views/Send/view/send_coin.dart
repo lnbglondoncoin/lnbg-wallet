@@ -29,7 +29,7 @@ class SendCoin extends StatelessWidget {
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomAppBar(
         title: "Send ${token.name}",
-        isSuffix: true,
+        //isSuffix: true,
         iconPath: 'assets/icons/msg.svg',
       ),
       body: 
@@ -53,7 +53,7 @@ class SendCoin extends StatelessWidget {
   controller: controller.addressController,
   validator: controller.validateAddress,
   hintText: "Recipient Address",
-  iconPath: "assets/icons/scan2.svg",
+  // iconPath: "assets/icons/scan2.svg",
   isDarkMode: isDarkMode,
   lightColor: lightWhiteColor,
   darkColor: lightBlackColor2,
@@ -248,11 +248,19 @@ class SendCoin extends StatelessWidget {
               //   token,
               //   false
               // );
-              controller.calculateFees(
+//               controller.calculateFees(
+//   cryptoAmount: controller.ammountIncrypto.value,
+//   cryptoAmountInUsd: controller.ammountInUSD.value,
+//   nativeTokenPriceInUsd: 1563,
+//     token: token
+// );
+await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd: 1563,
-    token: token
+  nativeTokenPriceInUsd: 1571.54100,
+  token: token,
+  senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
+  recipientAddress:controller.addressController.text,
 );
             }
                 })
@@ -266,11 +274,19 @@ class SendCoin extends StatelessWidget {
               //   token,
               //   false
               // );
-               controller.calculateFees(
+//                controller.calculateFees(
+//   cryptoAmount: controller.ammountIncrypto.value,
+//   cryptoAmountInUsd: controller.ammountInUSD.value,
+//   nativeTokenPriceInUsd: 1484,
+//   token: token
+// );
+await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd: 1484,
-  token: token
+  nativeTokenPriceInUsd: 1571.54100,
+  token: token,
+  senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
+  recipientAddress:controller.addressController.text,
 );
             }
                 });

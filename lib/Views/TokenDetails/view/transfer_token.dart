@@ -29,7 +29,7 @@ class TransferToken extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: const CustomAppBar(
-        isSuffix: true,
+       // isSuffix: true,
         title: "Transfer",
         iconPath: 'assets/icons/chat11.svg',
       ),

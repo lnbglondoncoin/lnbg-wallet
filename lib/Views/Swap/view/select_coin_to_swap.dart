@@ -6,12 +6,16 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/controller/swap_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/hundred_tokens_shimmer_loader.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
 
 class SelectCoinToSwap extends StatelessWidget {
   final bool firstCoin;
   SelectCoinToSwap({super.key, required this.firstCoin});
   final controller = Get.put(SwapController());
   final walletCreatingController = Get.find<WalletCreatingController>();
+  final TextEditingController searchController = TextEditingController();
+  final RxString searchQuery = ''.obs;
   @override
   Widget build(BuildContext context) {
     
@@ -20,26 +24,119 @@ class SelectCoinToSwap extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
         backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        appBar: const CustomAppBar(
-          isSuffix: true,
-          title: "Select Coin",
-          iconPath: 'assets/icons/search.svg',
+        appBar:  PreferredSize(
+             preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Obx((){
+            return 
+            walletCreatingController.isLoading.value
+        ? ShimmerAppBar(isDarkMode: isDarkMode):
+            CustomAppBar(
+            isSuffix: true,
+            title: "Select Coin",
+            iconPath: 'assets/icons/search.svg',
+                    onSuffixTap: () {
+            // Show a search bar when the icon is tapped
+            Get.dialog(
+              AlertDialog(
+                backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
+                title: Text(
+                  "Search Token",
+                  style: GoogleFonts.urbanist(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: isDarkMode ? whiteColor : blackColor2,
+                  ),
+                ),
+                content: TextField(
+                  controller: searchController,
+                  onChanged: (value) => searchQuery.value = value.toLowerCase(),
+                  style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
+                  decoration: InputDecoration(
+                    hintText: "Enter token name...",
+                    hintStyle: TextStyle(color: greyColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: Text(
+                      "Close",
+                      style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+      
+          );
+          }),
         ),
         body: Obx(() {
-          return SingleChildScrollView(
+            var filteredTokens = walletCreatingController.hundredTokenData
+            .where((token) =>
+                token.name.toLowerCase().contains(searchQuery.value))
+            .toList();
+                if (walletCreatingController.isLoading.value) {
+            return TokenListShimmerWidget( isDarkMode: isDarkMode,);
+          }
+        
+if (filteredTokens.isEmpty) {
+            return Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      isDarkMode
+                          ? "assets/images/searchImage2.png"
+                          : "assets/images/searchImage.png",
+                      height: 300.h,
+                      width: 300.w,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Not Found",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w700,
+                        color: isDarkMode ? whiteColor : blackColor2,
+                      ),
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
+                      style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                        color: isDarkMode ? whiteColor : blackColor2,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
+          return
+          
+           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.w),
               child: ListView.builder(
-                  itemCount: walletCreatingController.hundredTokenData.length,
+                  itemCount:filteredTokens.length,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final token = walletCreatingController.hundredTokenData[index];
+                    final token = filteredTokens[index];
 
                     return Padding(
                       padding: EdgeInsets.only(
                           bottom: index ==
-                                  walletCreatingController.hundredTokenData.length - 1
+                                 filteredTokens.length - 1
                               ? 50.h
                               : 0),
                       child: GestureDetector(
