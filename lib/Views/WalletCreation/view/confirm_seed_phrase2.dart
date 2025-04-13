@@ -515,7 +515,7 @@ Widget shimmerSeedPhraseScreen() {
                   if (privateKey.isNotEmpty) {
                     await walletCreatingController.setPrivateKey(privateKey);
                     await walletCreatingController.loadWaletData(true);
-                    
+                   // walletCreatingController.isNewAccountCraeting.value=true;
                    // await walletCreatingController.fetchCoinData(true);
                   } else {
                     Get.snackbar(

@@ -14,7 +14,9 @@ import 'package:lnbg_crypto_wallet_app/Widgets/reuseable_dropdown.dart';
 
 class SecurityAndPrivacyView extends StatelessWidget {
   SecurityAndPrivacyView({super.key});
-  final controller = Get.put(SecurityAndPrivacyController());
+    final SecurityAndPrivacyController controller =
+      Get.find<SecurityAndPrivacyController>();
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -129,22 +131,23 @@ class SecurityAndPrivacyView extends StatelessWidget {
                   CustomSwitch(isSwitched: controller.isBiometric),
                 ],
               ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Unlock with Face ID",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.isface),
-                ],
-              ),
+              // SizedBox(
+              //   height: 30.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Unlock with Face ID",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.isface),
+              //   ],
+              // ),
+           
               SizedBox(
                 height: 30.h,
               ),
@@ -230,7 +233,11 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Clear Privacy Data", context),
+              GestureDetector(
+                onTap: (){
+                  //function to clear privacy data..
+                },
+                child: _buildSectionTitle("Clear Privacy Data", context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -282,32 +289,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Privacy Mode",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.isPrivacy),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Websites mus request access to view account information again.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
+             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -438,12 +420,17 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              Text(
-                "Delete Wallet",
-                style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: isDarkMode ? whiteColor : blackColor2),
+              GestureDetector(
+                onTap: ()async{
+                await  controller.deleteWallet();
+                },
+                child: Text(
+                  "Delete Wallet",
+                  style: GoogleFonts.urbanist(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
               ),
               SizedBox(
                 height: 10.h,

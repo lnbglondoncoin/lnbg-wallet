@@ -18,7 +18,7 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_textfeild.dart';
 class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key});
   final SecurityAndPrivacyController controller =
-      Get.put(SecurityAndPrivacyController());
+      Get.find<SecurityAndPrivacyController>();
 
   @override
   Widget build(BuildContext context) {

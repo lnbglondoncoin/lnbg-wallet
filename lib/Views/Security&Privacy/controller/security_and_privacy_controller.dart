@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/walkthrough.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SecurityAndPrivacyController extends GetxController {
   var selectedlocTime = 'After 5 minutes'.obs;
@@ -22,7 +24,9 @@ class SecurityAndPrivacyController extends GetxController {
       void onInit(){
       super.onInit();
         loadSelectedTime();
+        
     }
+    // var rememberme=false.obs;
      void setSelectedTime(String time) async {
     selectedlocTime.value = time;
     final prefs = await SharedPreferences.getInstance();
@@ -36,4 +40,13 @@ class SecurityAndPrivacyController extends GetxController {
       selectedlocTime.value = time;
     }
   }
+
+    Future<void> deleteWallet() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    Get.offAll(() => WalkThroughScreen());
+  }
+  
+
 }

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/controller/send_controllr.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
@@ -20,6 +21,7 @@ class SendCoin extends StatelessWidget {
     required this.token,
   });
   final controller = Get.put(SendController());
+  final transactionController = Get.find<TransactionController>();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -153,70 +155,94 @@ class SendCoin extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Recents",
-                            style: GoogleFonts.urbanist(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w700,
-                                color: isDarkMode ? whiteColor : blackColor2),
-                          ),
-                          Text(
+                         Text(
+                              "Recents",
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: isDarkMode ? whiteColor : blackColor2),
+                            ),
+                         Obx((){
+                                final filteredTransactions = transactionController.sendTransactions
+    .where((transection) => transection.token == token.symbol.toUpperCase())
+    .toList();
+                          return 
+                                 transactionController.isLoading.value?Shimmer.fromColors(
+        baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+        highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+        child: Container(
+          height: 20.h,
+          width: 100.w,
+          color: Colors.white,
+        ),
+      ):
+                     filteredTransactions.isEmpty?
+    SizedBox():
+                           Text(
                             "Clear",
                             style: GoogleFonts.urbanist(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w800,
                                 color: isDarkMode ? lightGreenColor : orange4),
-                          ),
+                          );
+                         })
                         ],
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 25.r,
-                            backgroundImage:
-                                const AssetImage("assets/images/g1.png"),
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Flexible(
-                            child: Text(
-                              "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
-                              style: GoogleFonts.urbanist(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w800,
-                                  color: isDarkMode ? grey2 : darkGreyColor),
+                     
+                    Obx((){
+                      final filteredTransactions = transactionController.sendTransactions
+    .where((transection) => transection.token == token.symbol.toUpperCase())
+    .toList();
+                      return 
+                      transactionController.isLoading.value?shimmerTransactionLoader(isDarkMode):
+                     filteredTransactions.isEmpty
+    ? Padding(
+      padding:  EdgeInsets.only(top: Get.height/10),
+      child: Text(
+        textAlign: TextAlign.center,
+        "No Transactions for ${token.symbol.toUpperCase()}",
+       
+                                style: GoogleFonts.urbanist(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: isDarkMode ? whiteColor : blackColor2),),
+    )
+    :
+                      ListView.builder(
+                        itemCount:filteredTransactions.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context,index){
+                        var transection=filteredTransactions[index];
+                      return  Padding(
+                        padding:  EdgeInsets.only(bottom: 15.h),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 25.r,
+                              backgroundImage:
+                                  const AssetImage("assets/images/g1.png"),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 25.r,
-                            backgroundImage:
-                                const AssetImage("assets/images/g2.png"),
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Flexible(
-                            child: Text(
-                              "0x7131CA84856...68de58848f8Ed83zmjshd,aCDJ",
-                              style: GoogleFonts.urbanist(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w800,
-                                  color: isDarkMode ? grey2 : darkGreyColor),
+                            SizedBox(
+                              width: 20.w,
                             ),
-                          ),
-                        ],
-                      ),
+                            Flexible(
+                              child: Text(
+                                transection.to,
+                                style: GoogleFonts.urbanist(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w800,
+                                    color: isDarkMode ? grey2 : darkGreyColor),
+                              )
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+                    })
                     ],
                   ),
                 ),
@@ -257,7 +283,7 @@ class SendCoin extends StatelessWidget {
 await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd: 1571.54100,
+  nativeTokenPriceInUsd:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
   token: token,
   senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
   recipientAddress:controller.addressController.text,
@@ -283,7 +309,7 @@ await controller.calculateFees(
 await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd: 1571.54100,
+  nativeTokenPriceInUsd:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
   token: token,
   senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
   recipientAddress:controller.addressController.text,
@@ -294,6 +320,7 @@ await controller.calculateFees(
       ),
     );
   }
+
 
 
   Widget _buildShimmerLayout(bool isDarkMode) {
@@ -418,4 +445,44 @@ await controller.calculateFees(
     ),
   );
 }// Bottom Divider Shimmer
+
+
+
+Widget shimmerTransactionLoader(bool isDarkMode) {
+  return ListView.builder(
+    itemCount: 6,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return Padding(
+        padding: EdgeInsets.only(bottom: 15.h),
+        child: Row(
+          children: [
+            Shimmer.fromColors(
+              baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+              highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+              child: CircleAvatar(
+                radius: 25.r,
+                backgroundColor: Colors.white,
+              ),
+            ),
+            SizedBox(width: 20.w),
+            Expanded(
+              child: Shimmer.fromColors(
+                baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+                child: Container(
+                  height: 18.h,
+                  width: double.infinity,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 }

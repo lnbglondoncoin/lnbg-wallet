@@ -115,7 +115,7 @@ class AppLockController extends GetxController {
   RxBool isSwitched2 = false.obs;
   final walletCreatingController = Get.find<WalletCreatingController>();
   Timer? _lockTimer;
-  final securityController = Get.put(SecurityAndPrivacyController());
+  final securityController = Get.find<SecurityAndPrivacyController>();
   @override
   void onInit() {
     super.onInit();

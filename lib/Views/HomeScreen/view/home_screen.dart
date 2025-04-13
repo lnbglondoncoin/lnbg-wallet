@@ -37,6 +37,14 @@ class _HomeScreenViewState extends State<HomeScreenView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    
+    // Listen for tab changes
+    _tabController.addListener(() {
+      if (_tabController.index == 1) {
+        // If the NFT tab is selected, fetch the NFTs
+        nftController.fetchNFTs(walletCreatingController.wallwtAddress.value);
+      }
+    });
       if(walletCreatingController.hundredTokenData.isEmpty||walletCreatingController.hundredslugs.isEmpty){
         Get.log("Fetching slugs");
       walletCreatingController.fetchSlugs();
@@ -358,6 +366,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 SizedBox(height: 10.h),
                                 Expanded(
                                   child: TabBarView(
+
                                     controller: _tabController,
                                     children: [
                                       Obx(() {
@@ -579,7 +588,69 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                               );
                                       }),
                                       Obx(() {
-                                        return nftController.nftList.isEmpty
+                                        return
+                                        nftController.isLoading.value? Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: GridView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: 6, // Number of shimmer items
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.64.h,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemBuilder: (context, index) {
+            return Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(28.r),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 154,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      height: 18.h,
+                      width: 100.w,
+                      color: Colors.white,
+                    ),
+                    SizedBox(height: 10.h),
+                    Row(
+                      children: [
+                        Container(
+                          height: 12.h,
+                          width: 60.w,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 10.w),
+                        Container(
+                          height: 12.h,
+                          width: 13.w,
+                          color: Colors.white,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ):
+                                         nftController.showImportednfts.value==false
                                             ? Column(
                                                 children: [
                                                   Image.asset(
@@ -589,10 +660,15 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     height: 180.h,
                                                     width: 180.w,
                                                   ),
-                                                  SizedBox(
+                                                 Visibility(
+                                                   visible: nftController.nftList.isEmpty,
+                                                  child:  SizedBox(
                                                     height: 20.h,
-                                                  ),
-                                                  Text(
+                                                  ),),
+                                                 Obx((){
+                                                  return
+                                                  nftController.nftList.isEmpty?
+                                                   Text(
                                                     "No NFTs Yet",
                                                     style: GoogleFonts.urbanist(
                                                         fontSize: 24.sp,
@@ -601,14 +677,29 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                         color: isDarkMode
                                                             ? greyColor
                                                             : darkGreyColor),
-                                                  ),
+                                                  ):GestureDetector(
+                                                    onTap: (){
+                                                      nftController.showImportednfts.value=true;
+                                                    },
+                                                    child: Text(
+                                                      "Show imporetd NFTs",
+                                                      style: GoogleFonts.urbanist(
+                                                          fontSize: 24.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: isDarkMode
+                                                              ? greyColor
+                                                              : darkGreyColor),
+                                                    ),
+                                                  );
+                                                 }),
                                                   SizedBox(
                                                     height: 10.h,
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
                                                       Get.to(() =>
-                                                          const ImportNFTScreen());
+                                                           ImportNFTScreen());
                                                     },
                                                     child: Text(
                                                       "Import NFTs",

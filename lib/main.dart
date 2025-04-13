@@ -6,9 +6,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/my_theme.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/theme_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/LifeCycleWatcher/life_cycle_watcher.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/controller/lock_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/controller/splash_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/view/splash_screen.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 
 void main() async {
@@ -16,16 +19,29 @@ void main() async {
   await dotenv.load(fileName: ".env");
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Get.put(WalletCreatingController());
+  Get.put(TransactionController());
+   Get.put(SecurityAndPrivacyController());
   Get.put(SplashController());
 
   await GetStorage.init();
    Get.put(AppLockController()); // 🔒 To lock app automatically
+   LifecycleWatcher().init(); // 🔒 Initialize lifecycle observer
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void dispose() {
+    LifecycleWatcher().dispose(); // 👈 Dispose the observer here
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());

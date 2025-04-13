@@ -21,13 +21,15 @@ abstract class WalletAddressService {
 
 class WalletCreatingController extends GetxController
     implements WalletAddressService {
+     // var isNewAccountCraeting=false.obs;
       var isAccountImporting=false.obs;
   var mnemonic = ''.obs;
   var mnemonicWords = [].obs;
   var firstHalfOfMnemonic = [].obs;
   var secondHalfofMnemonic = [].obs;
    var tokenData = <TokenData>[].obs;
-   var ethereumData = <TokenData>[].obs;
+  // var ethereumData = <TokenData>{}.obs;
+   Rxn<TokenData> ethereumData = Rxn<TokenData>();
   String? seedPhrase;
   String get cmcApiKey => dotenv.env['CMC_API_KEY'] ?? '';
   var slugs = <String>[].obs;
@@ -351,7 +353,7 @@ print(url);
         });
 
         tokenData.assignAll(tokens);
-        ethereumData.assign(tokens.first);
+      ethereumData.value = tokens.first;
         await getBalanceInUSD(walletAddress);
         if(isAppStarting||isAccountImported){
         Get.log("comes here $isAppStarting");
@@ -360,6 +362,7 @@ print(url);
 
         Get.offAll(() => const BottomNavBar());
         isAccountImporting.value=false;
+        //isNewAccountCraeting.value=false;
       } else {
      //   isLoading.value = false;
         Get.snackbar("Errorrr", "Failed to load all slgs tokens");

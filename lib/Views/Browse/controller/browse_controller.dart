@@ -100,7 +100,7 @@ Future<void> fetchSearchData(String query, String address) async {
 
       // Set the searchResult to the new data
       searchResult.value = tokens;
-
+fetchHistoryOfAnAddress(address);
       print("Parsed tokens: $tokens");
     } else {
       Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
@@ -108,7 +108,7 @@ Future<void> fetchSearchData(String query, String address) async {
   } catch (e) {
      isSearching.value = false;
     Get.snackbar("Error", "Something went wrong: $e");
-    print("Fetch error: $e");
+    print("fetchSearchData: $e");
   } finally {
     // Ensure loading state is set to false once the data is fetched or if an error occurs
     isSearching.value = false;
@@ -122,8 +122,6 @@ Future<void> fetchSearchData(String query, String address) async {
 
   var historyResults = <TokenData>[].obs;
 Future<void> fetchHistoryOfAnAddress(String address) async {
-  // Clear previous search results before fetching new ones
-
   isLoading.value = true;
 
   final url =
@@ -135,33 +133,32 @@ Future<void> fetchHistoryOfAnAddress(String address) async {
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
+      final decoded = jsonDecode(response.body);
 
-      print("Raw response: $data");
+      if (decoded is List) {
+        final List<TokenData> tokens = decoded.map((item) {
+          final tokenMap = item as Map<String, dynamic>;
+          final tokenName = tokenMap["name"] ?? "";
+          return TokenData.fromJson(tokenName, tokenMap);
+        }).toList();
 
-      final List<TokenData> tokens = data.map((item) {
-        final tokenMap = item as Map<String, dynamic>;
-        final tokenName = tokenMap["name"] ?? "";
-        return TokenData.fromJson(tokenName, tokenMap);
-      }).toList();
-
-      // Set the searchResult to the new data
-      historyResults.value = tokens;
-
-      print("Parsed tokens: $tokens");
+        historyResults.value = tokens;
+        print("Parsed tokens: $tokens");
+      } else {
+        // Handle the case where the response is not a list (e.g., empty or error message)
+        print("API returned non-list response: $decoded");
+        historyResults.clear();
+      }
     } else {
       Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
     }
   } catch (e) {
-     isLoading.value = false;
     Get.snackbar("Error", "Something went wrong: $e");
-    print("Fetch error: $e");
+    print("fetchHistoryOfAnAddress: $e");
   } finally {
-    // Ensure loading state is set to false once the data is fetched or if an error occurs
     isLoading.value = false;
   }
 }
-
 
  Future<void> clearHistory() async {
     try {

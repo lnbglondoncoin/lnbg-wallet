@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/confir_send_coin.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:web3dart/web3dart.dart';
@@ -32,7 +33,11 @@ class SendController extends GetxController {
     updateConversion(coinPrice, ammountIncrypto.value);
   }
 
-
+@override
+  void onInit(){
+  super.onInit();
+transactionController. fetchTransactions(walletCreatingCotroller.wallwtAddress.value);
+}
   var enableTextFeild = false.obs;
   var isEditClicked = false.obs;
 
@@ -84,7 +89,7 @@ var isLoading=false.obs;
     return sendFormKey.currentState?.validate() ?? false;
   }
 
-  
+  final transactionController = Get.find<TransactionController>();
 var nonce="".obs;
   var networkFeeSlowUsd = 0.0.obs;
   var networkFeeModerateUsd = 0.0.obs;
@@ -157,6 +162,7 @@ Future<void> calculateFees({
   required String recipientAddress,
 }) async {
   try {
+    isLoading(true);
     final sender = EthereumAddress.fromHex(senderAddress);
     final recipient = EthereumAddress.fromHex(recipientAddress);
 
@@ -214,8 +220,12 @@ Future<void> calculateFees({
       token: token,
     ));
   } catch (e) {
+    isLoading(false);
     print('❌ Error estimating gas: $e');
     // Handle error or show fallback fee?
+  }
+  finally{
+    isLoading(false);
   }
 }
 
@@ -290,6 +300,7 @@ Future<void> sendCoin({
   required String recipientAddress,
   required double amountToSend, // in ETH
   required String privateKey,
+  required TokenData token
 }) async {
   try {
     isLoading(true);
@@ -345,6 +356,33 @@ Future<void> sendCoin({
     print('✅ Transaction confirmed in block ${receipt.blockNumber}');
     walletCreatingCotroller.getBalanceInUSD(walletCreatingCotroller.wallwtAddress.value);
     _showSuccesPopup(context);
+    print("txhas is $txHash");
+     print("method is send");
+      print("time is ${DateTime.now().toIso8601String()}");
+       print("from is ${walletCreatingCotroller.wallwtAddress.value}");
+        print("to is $recipientAddress");
+         print("amount is $amountToSend");
+          print("fee is ${EtherAmount.fromUnitAndValue(EtherUnit.ether, (networkFeeSlowCrypto.value * 1e18).toInt()).getValueInUnit(EtherUnit.ether)}");
+           print("token is ${ token.symbol.toUpperCase()}");
+            print("txhas is $txHash");
+             print("txhas is $txHash");
+    transactionController.postTransaction(
+  walletAddress: walletCreatingCotroller.wallwtAddress.value,
+  hash: txHash,
+  method: "send",
+  time: DateTime.now().toIso8601String(),
+  from: walletCreatingCotroller.wallwtAddress.value,
+  to: recipientAddress,
+  amount: amountToSend,
+ fee: selectedNetworkSpeed.value == 'Slow'?networkFeeSlowCrypto.value:selectedNetworkSpeed.value == 'Moderate'
+        ?networkFeeModeratecrypto.value:networkFeeFastcrypto.value,
+   
+  token: token.symbol.toUpperCase(),
+  fromToken: "",
+  toToken: "",
+);
+
+
   } catch (e) {
     isLoading(false);
     _showFailPopup(context, e.toString());
@@ -593,4 +631,22 @@ Future<void> sendCoin({
   }
 
 
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

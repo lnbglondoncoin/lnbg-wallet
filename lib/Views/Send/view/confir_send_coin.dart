@@ -239,12 +239,13 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.all(25.h),
         child: Obx((){
-          return controller.isLoading.value?
+          return controller.isLoading.value&&controller.transactionController.isLoading.value?
         const  LoadingSpinner()
           :isDarkMode? CustomGreenButton(
             buttonText: "Send",
             onPressed: () async{
            await controller. sendCoin(
+            token:token,
             context: context,
   recipientAddress: controller.addressController.text,
   amountToSend: controller.ammountIncrypto.value,
@@ -255,6 +256,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
             buttonText: "Send",
             onPressed: ()async {
              await controller. sendCoin(
+               token:token,
                context: context,
   recipientAddress: controller.addressController.text,
   amountToSend: controller.ammountIncrypto.value,

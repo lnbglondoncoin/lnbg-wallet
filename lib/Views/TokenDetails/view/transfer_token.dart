@@ -4,23 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
+import 'package:lnbg_crypto_wallet_app/Utils/app_utils.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/more_coin_details.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class TransferToken extends StatelessWidget {
-  final String coinName;
-  final String tokenPrice;
-  final String priceDolor;
-  final String tokenSuffix;
-  final String percentage;
+final TokenData token;
+final TransactionModel transection;
   const TransferToken(
-      {super.key,
-      required this.tokenPrice,
-      required this.priceDolor,
-      required this.tokenSuffix,
-      required this.percentage,
-      required this.coinName});
+      {super.key, required this.token, required this.transection,
+     });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,8 @@ class TransferToken extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "$tokenPrice $tokenSuffix",
+                textAlign: TextAlign.center,
+                "${transection.amount} ${transection.token}",
                 style: GoogleFonts.urbanist(
                     color:isDarkMode?lightGreenColor: orange3,
                     fontSize: 48.sp,
@@ -48,7 +45,7 @@ class TransferToken extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "$priceDolor USD",
+                "${transection.amount*token.priceInUsd} USD",
                 style: GoogleFonts.urbanist(
                     color:isDarkMode?greyColor: greyColor3,
                     fontSize: 18.sp,
@@ -63,7 +60,7 @@ class TransferToken extends StatelessWidget {
               height: 20.h,
             ),
             Container(
-              height: 224.h,
+            //  height: 224.h,
               width: double.infinity,
               decoration: BoxDecoration(
                   color: isDarkMode ? lightBlackColor2 : whiteColor,
@@ -85,22 +82,27 @@ class TransferToken extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color: isDarkMode ? greyColor : darkGreyColor),
                         ),
-                        Text(
-                          "Dec 24, 09:41 AM",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400,
-                              color: isDarkMode ? whiteColor : blackColor2),
+                        Flexible(
+                          child: Padding(
+                             padding:  EdgeInsets.only(left: 15.w),
+                            child: Text(
+                              formatDateTime("${transection.time}"),
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: isDarkMode ? whiteColor : blackColor2),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    //SizedBox(height: 25.h,),
+                    SizedBox(height: 10.h,),
                     Container(
                       height: 1,
                       width: double.infinity,
                       color: isDarkMode ? lightBlackColor : lightBlack,
                     ),
-                    // SizedBox(height: 25.h,),
+                    SizedBox(height: 10.h,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -125,33 +127,42 @@ class TransferToken extends StatelessWidget {
                                         "assets/icons/eyeButton.svg")))
                           ],
                         ),
-                        Container(
-                          //height: 24.h,
-                          // width: 72.w,
-                          decoration: BoxDecoration(
-                              color:isDarkMode?lightGreenColor.withValues(alpha:0.08): lightGreenColor.withValues(alpha:0.08),
-                              borderRadius: BorderRadius.circular(
-                                8.r,
-                              )),
+                        Flexible(
                           child: Padding(
-                            padding: EdgeInsets.all(8.h),
-                            child: Text(
-                              "Completed",
-                              style: GoogleFonts.urbanist(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w800,
-                                  color:isDarkMode?lightGreenColor: orange3),
+                               padding:  EdgeInsets.only(left: 15.w),
+                            child: Container(
+                              //height: 24.h,
+                              // width: 72.w,
+                              decoration: BoxDecoration(
+                                  color:isDarkMode?lightGreenColor.withValues(alpha:0.08): lightGreenColor.withValues(alpha:0.08),
+                                  borderRadius: BorderRadius.circular(
+                                    8.r,
+                                  )),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.h),
+                                child: Text(
+                                  "Completed",
+                                  style: GoogleFonts.urbanist(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w800,
+                                      color:isDarkMode?lightGreenColor: orange3),
+                                ),
+                              ),
                             ),
                           ),
                         )
                       ],
                     ),
+                      SizedBox(height: 10.h,),
                      Container(
                       height: 1,
                       width: double.infinity,
                       color: isDarkMode ? lightBlackColor : lightBlack,
                     ),
+                      SizedBox(height: 10.h,),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
@@ -166,23 +177,30 @@ class TransferToken extends StatelessWidget {
                           ],
                         ),
                         
-                        const Spacer(),
-                        Text(
-                          "0x16dcc0e...bf7c61037",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: isDarkMode ? whiteColor : blackColor2),
+                       // const Spacer(),
+                        Flexible(
+                          child: Padding(
+                                padding:  EdgeInsets.only(left: 15.w),
+                            child: Text(
+                              shortenAddress(transection.to),
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: isDarkMode ? whiteColor : blackColor2),
+                            ),
+                          ),
                         ),
                       ],
                     ),
+                      SizedBox(height: 10.h,),
                      Container(
                       height: 1,
                       width: double.infinity,
                       color: isDarkMode ? lightBlackColor : lightBlack,
                     ),
+                      SizedBox(height: 10.h,),
                     Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
@@ -205,13 +223,19 @@ class TransferToken extends StatelessWidget {
                                         "assets/icons/eyeButton.svg")))
                           ],
                         ),
-                        const Spacer(),
-                        Text(
-                          "0.025 ETH",
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: isDarkMode ? whiteColor : blackColor2),
+                       // const Spacer(),
+                        Flexible(
+                          child: Padding(
+                            padding:  EdgeInsets.only(left: 15.w),
+                            child: Text(
+                              textAlign: TextAlign.end,
+                              transection.fee.toString(),
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: isDarkMode ? whiteColor : blackColor2),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -225,11 +249,11 @@ class TransferToken extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Get.to(() => MoreCoinDetails(
-                      coinName: coinName,
-                      tokenPrice: tokenPrice,
-                      priceDolor: priceDolor,
-                      tokenSuffix: tokenSuffix,
-                      percentage: percentage,
+                      coinName: token.name,
+                      tokenPrice: token.balance.toString(),
+                      priceDolor: token.balanceInUsd.toString(),
+                      tokenSuffix: token.symbol,
+                      percentage: token.trendPercentage.toString(),
                     ));
               },
               child: Text(

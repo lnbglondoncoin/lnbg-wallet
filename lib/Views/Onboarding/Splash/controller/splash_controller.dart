@@ -2,11 +2,14 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/view/lock_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/walkthrough.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashController extends GetxController {
   final walletCreatingController = Get.find<WalletCreatingController>();
+  
+    final securityController =  Get.find<SecurityAndPrivacyController>();
   var isAppLock=false.obs;
 var privateKey="".obs;
   @override
@@ -32,7 +35,7 @@ void onInit() async {
       } else {
         // walletCreatingController.isLoading.value =
         //     true; // Set loading before fetch
-        await walletCreatingController.loadWaletData(walletCreatingController.isAccountImporting.value);
+await walletCreatingController.loadWaletData(walletCreatingController.isAccountImporting.value);
       }
      }
     });

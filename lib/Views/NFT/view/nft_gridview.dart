@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/NFT/controller/nft_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NftGridView extends StatelessWidget {
   final NftController controller = Get.put(NftController());
@@ -27,16 +28,21 @@ class NftGridView extends StatelessWidget {
                 const AssetImage("assets/images/nek.png"), // Change as needed
           ),
           title: Text(
-            "Nekochimin",
+            "NFTs",
             style: GoogleFonts.urbanist(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
                 color: isDarkMode ? whiteColor : blackColor2),
           ),
-          trailing: SvgPicture.asset(
-            "assets/icons/arrowUp.svg",
-            colorFilter: ColorFilter.mode(
-                isDarkMode ? lightGreenColor : orange3, BlendMode.srcIn),
+          trailing: GestureDetector(
+            onTap: (){
+              controller.showImportednfts.value=!controller.showImportednfts.value;
+            },
+            child: SvgPicture.asset(
+              "assets/icons/arrowUp.svg",
+              colorFilter: ColorFilter.mode(
+                  isDarkMode ? lightGreenColor : orange3, BlendMode.srcIn),
+            ),
           ),
         ),
         Expanded(
@@ -53,6 +59,9 @@ class NftGridView extends StatelessWidget {
               itemCount: controller.nftList.length,
               itemBuilder: (context, index) {
                 var nft = controller.nftList[index];
+                  // Convert IPFS URL to HTTP URL
+                String imageUrl = nft.image.replaceFirst("ipfs://", "https://ipfs.io/ipfs/");
+
                 return Card(
                   color: isDarkMode ? lightBlackColor2 : whiteColor,
                   shape: RoundedRectangleBorder(
@@ -66,14 +75,47 @@ class NftGridView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20.r),
-                          child: Image.asset(nft.imageUrl,
-                              width: double.infinity, height: 154),
-                        ),
+                      
+FutureBuilder<String>(
+  future: controller.getImageUrlFromIpfs(nft.image),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Container(
+          height: 154,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+        ),
+      );
+    } else if (snapshot.hasError) {
+      return Container(
+        height: 154,
+        width: double.infinity,
+        color: Colors.grey.shade300,
+        child: Center(child: Icon(Icons.error)),
+      );
+    } else {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20.r),
+        child: Image.network(
+          snapshot.data!,
+          width: double.infinity,
+          height: 154,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+  },
+),
+
                         //const SizedBox(height: 10),
                         Text(
-                          "${nft.name} #${nft.id}",
+                          "${nft.name} #${nft.collectibleId}",
                           style: GoogleFonts.urbanist(
                             color: isDarkMode ? whiteColor : blackColor2,
                             fontSize: 18.sp,
@@ -84,7 +126,7 @@ class NftGridView extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              "Nekochimin",
+                              "${nft.collectionName}",
                               style: GoogleFonts.urbanist(
                                 color: isDarkMode ? greyColor : greyColor3,
                                 fontSize: 12.sp,

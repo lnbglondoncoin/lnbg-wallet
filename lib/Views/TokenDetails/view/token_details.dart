@@ -14,13 +14,14 @@ import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/transfer_token.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 
 class TokenDetailsScreen extends StatelessWidget {
 final TokenData token;
-
-  const TokenDetailsScreen({super.key, required this.token,});
+ final transactionController = Get.find<TransactionController>();
+   TokenDetailsScreen({super.key, required this.token,});
 
   @override
   Widget build(BuildContext context) {
@@ -230,16 +231,37 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                       color:isDarkMode?greyColor: darkGreyColor),
                                 )  ,
                                 SizedBox(height: 20.h,),
-               ListView.builder(
+              Obx((){
+                               final allFilterTransactions = transactionController.transactions
+    .where((transection) => transection.token == token.symbol.toUpperCase()&&transection.time.split('T')[0]==DateTime.now().toIso8601String().split('T')[0])
+    .toList();
+                         final sendTransactions = allFilterTransactions
+    .where((transection) => transection.method == 'send')
+    .toList();
+                       final receiveTransections = allFilterTransactions
+    .where((transection) => transection.method == 'receive')
+    .toList();
+                       final buyTransactions = allFilterTransactions
+    .where((transection) => transection.method == 'buy')
+    .toList();
+                       final swapTransactions = allFilterTransactions
+    .where((transection) => transection.method == 'swap')
+    .toList();
+ // final totalItems=sendTransactions.length+receiveTransections.length+buyTransactions.length+swapTransactions.length;
+  final allTodayTransections =sendTransactions+buyTransactions+receiveTransections+swapTransactions;
+                return    
+                transactionController.isLoading.value?CircularProgressIndicator():
+                allTodayTransections.isEmpty?Text("No Transections Made Today"):
+                ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4,
+                itemCount: allTodayTransections.length,
                 shrinkWrap: true,
                 itemBuilder: (context,index){
+                  var transection=allTodayTransections[index];
                 return                          GestureDetector(
                   onTap: (){
-                    if(index==0){
-                      Get.to(()=>TransferToken(tokenPrice: token.balance.toStringAsFixed(2), priceDolor: token.priceInUsd.toStringAsFixed(2), 
-                      tokenSuffix: token.symbol, percentage: token.trendPercentage.toStringAsFixed(2), coinName: token.name,));
+                    if(transection.method=='send'){
+                      Get.to(()=>TransferToken(token: token,transection: transection,));
                     }
                   },
                   child: Container(
@@ -260,12 +282,22 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                           color:isDarkMode?lightBlackColor2: lightGreenColor.withOpacity(0.08), shape: BoxShape.circle),
                                       child: Center(
                                         child: SvgPicture.asset(isDarkMode
-                                            ? optionImageList[index]
-                                            : optionImageList2[index]),
+                                            ?
+                                            transection.method=="send"? optionImageList[0]:
+                                            transection.method=="receive"? optionImageList[1]:
+                                            transection.method=="buy"? optionImageList[2]:
+                                             optionImageList[3]
+                                            : 
+                                              transection.method=="send"? optionImageList2[0]:
+                                            transection.method=="receive"? optionImageList2[1]:
+                                            transection.method=="buy"? optionImageList2[2]:
+                                             optionImageList2[3]
+                                            
+                                           ),
                                       ),
                                     ) ,
                                     title:Text(
-                                      options[index],
+                                    transection.method.capitalizeFirst!,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w700,
@@ -273,7 +305,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                     ) ,
                                     subtitle: Text(
                                       maxLines: 1,
-                                      index==2?"Address: ${optionsSubtitles[2]}":"To: ${optionsSubtitles[index]}",
+                                     transection.method=="send"? "To: ${transection.to}": "From: ${transection.to}",
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 14.sp,
@@ -281,7 +313,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                           color:isDarkMode?greyColor: greyColor3),
                                     ),
                                     trailing: Text(
-                                     "${optionsPrice[index]} ${token. balance.toStringAsFixed(2)}",
+                                     "${transection.amount} ${transection.token}",
                                       style: GoogleFonts.urbanist(
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.w700,
@@ -291,7 +323,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                   ),
                 );   
                  
-               }),
+               });
+              }),
                SizedBox(height: 40.h,)     ],
             ),
           ),
