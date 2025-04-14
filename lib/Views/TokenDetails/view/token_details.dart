@@ -13,14 +13,17 @@ import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/send_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_view.dart';
+import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/controller/token_details_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/transfer_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TokenDetailsScreen extends StatelessWidget {
 final TokenData token;
- final transactionController = Get.find<TransactionController>();
+final transactionController = Get.put(TransactionController());
+ final controller=Get.put(TokenDetailsController());
    TokenDetailsScreen({super.key, required this.token,});
 
   @override
@@ -89,6 +92,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                             children: [
                               GestureDetector(
                                 onTap: () {
+                                  
                                    Get.to(() => SendCoin(
                                 token: token,
                               ));
@@ -224,7 +228,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                     const CustomDivider() ,
                     SizedBox(height: 20.h,), 
                      Text(
-                                  "Today",
+                                  "Recent",
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w800,
@@ -233,7 +237,9 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                 SizedBox(height: 20.h,),
               Obx((){
                                final allFilterTransactions = transactionController.transactions
-    .where((transection) => transection.token == token.symbol.toUpperCase()&&transection.time.split('T')[0]==DateTime.now().toIso8601String().split('T')[0])
+    .where((transection) => transection.token == token.symbol.toUpperCase()
+    // &&transection.time.split('T')[0]==DateTime.now().toIso8601String().split('T')[0]
+    )
     .toList();
                          final sendTransactions = allFilterTransactions
     .where((transection) => transection.method == 'send')
@@ -250,8 +256,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
  // final totalItems=sendTransactions.length+receiveTransections.length+buyTransactions.length+swapTransactions.length;
   final allTodayTransections =sendTransactions+buyTransactions+receiveTransections+swapTransactions;
                 return    
-                transactionController.isLoading.value?CircularProgressIndicator():
-                allTodayTransections.isEmpty?Text("No Transections Made Today"):
+                transactionController.isLoading.value?shimmerTransactionLoader(isDarkMode):
+                allTodayTransections.isEmpty?Center(child: Text("No Transections Made for ${token.symbol}")):
                 ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: allTodayTransections.length,
@@ -331,4 +337,38 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
         ),
     );
   }
+
+  Widget shimmerTransactionLoader(bool isDarkMode) {
+  return Shimmer.fromColors(
+    baseColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+    highlightColor: isDarkMode ? Colors.grey[700]! : Colors.grey[100]!,
+    child: Column(
+      children: List.generate(6, (index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 15.h),
+          child: Row(
+            children: [
+              Container(
+                width: 50.w,
+                height: 50.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(width: 20.w),
+              Expanded(
+                child: Container(
+                  height: 20.h,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    ),
+  );
+}
+
 }

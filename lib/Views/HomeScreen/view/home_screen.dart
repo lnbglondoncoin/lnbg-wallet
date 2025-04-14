@@ -151,13 +151,13 @@ class _HomeScreenViewState extends State<HomeScreenView>
                               )),
                               // SizedBox(height: 30.h,),
                               Center(
-                                child: Text(
-                                  "AndrewAinsley",
-                                  style: GoogleFonts.urbanist(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w800,
-                                      color: whiteColor),
-                                ),
+                                child:Text(
+                                    walletCreatingController.userName.value,
+                                    style: GoogleFonts.urbanist(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w800,
+                                        color: whiteColor),
+                                  ),
                               ),
                               SizedBox(height: 5.h),
                               Container(

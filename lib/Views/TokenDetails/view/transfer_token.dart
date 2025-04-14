@@ -8,16 +8,18 @@ import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
 import 'package:lnbg_crypto_wallet_app/Utils/app_utils.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/more_coin_details.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/custom_loading_spinner.dart';
 
 class TransferToken extends StatelessWidget {
 final TokenData token;
 final TransactionModel transection;
-  const TransferToken(
+   TransferToken(
       {super.key, required this.token, required this.transection,
      });
-
+ final transactionController = Get.put(TransactionController());
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -246,15 +248,12 @@ final TransactionModel transection;
             SizedBox(
               height: 20.h,
             ),
-            GestureDetector(
+           Obx((){
+            return
+        transactionController.isLoading.value?LoadingSpinner(): GestureDetector(
               onTap: () {
-                Get.to(() => MoreCoinDetails(
-                      coinName: token.name,
-                      tokenPrice: token.balance.toString(),
-                      priceDolor: token.balanceInUsd.toString(),
-                      tokenSuffix: token.symbol,
-                      percentage: token.trendPercentage.toString(),
-                    ));
+                transactionController.calculateAverageTransactionAmounts(transection.token,transection.method,token,transection);
+               
               },
               child: Text(
                 "View More Details",
@@ -263,7 +262,8 @@ final TransactionModel transection;
                     fontWeight: FontWeight.w700,
                     color:isDarkMode?lightGreenColor: orange3),
               ),
-            ),
+            );
+           })
           ],
         ),
       ),

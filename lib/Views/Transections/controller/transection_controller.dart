@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
+import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/more_coin_details.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 
 class TransactionController extends GetxController {
@@ -77,7 +79,12 @@ RxList<TransactionModel> sendTransactions = <TransactionModel>[].obs;
   RxList<TransactionModel> buyTransactions = <TransactionModel>[].obs;
   RxList<TransactionModel> receiveTransactions = <TransactionModel>[].obs;
   RxList<TransactionModel> swapTransactions = <TransactionModel>[].obs;
-
+RxDouble avg1Hour = 0.0.obs;
+RxDouble avg1Day = 0.0.obs;
+RxDouble avg1Week = 0.0.obs;
+RxDouble avg1Month = 0.0.obs;
+RxDouble avg1Year = 0.0.obs;
+RxDouble avgTotal = 0.0.obs;
  Future<void> fetchTransactions(String walletAddress) async {
     final url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/transactions/$walletAddress";
@@ -88,6 +95,7 @@ print(url);
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = jsonDecode(response.body);
+        print(response.body);
         transactions.value =
             jsonData.map((e) => TransactionModel.fromJson(e)).toList();
 
@@ -101,7 +109,7 @@ print(url);
         swapTransactions.value =
             transactions.where((tx) => tx.method == 'swap').toList();
       } else {
-        Get.snackbar("Error", "Failed to load transactions");
+        Get.snackbar("Error", "Failed to load transactions $walletAddress");
       }
     } catch (e) {
       isLoading.value = false;
@@ -110,4 +118,39 @@ print(url);
       isLoading.value = false;
     }
   }
+void calculateAverageTransactionAmounts(String tokenName, String method, TokenData token,TransactionModel transection) {
+ isLoading(true);
+  DateTime now = DateTime.now();
+
+  List<TransactionModel> filteredTxs = transactions.where((tx) =>
+      tx.method.toLowerCase() == method.toLowerCase() &&
+      tx.token.toLowerCase() == tokenName.toLowerCase()).toList();
+
+  // Helper to get average for time range
+  double _calculateAvg(DateTime cutoff) {
+    final rangeTxs = filteredTxs.where((tx) {
+      DateTime txTime = DateTime.tryParse(tx.time) ?? DateTime(1970);
+      return txTime.isAfter(cutoff);
+    }).toList();
+
+    if (rangeTxs.isEmpty) return 0.0;
+    double total = rangeTxs.fold(0.0, (sum, tx) => sum + tx.amount);
+    return total / rangeTxs.length;
+  }
+
+  avg1Hour.value = _calculateAvg(now.subtract(Duration(hours: 1)));
+  avg1Day.value = _calculateAvg(now.subtract(Duration(days: 1)));
+  avg1Week.value = _calculateAvg(now.subtract(Duration(days: 7)));
+  avg1Month.value = _calculateAvg(now.subtract(Duration(days: 30)));
+  avg1Year.value = _calculateAvg(now.subtract(Duration(days: 365)));
+  avgTotal.value=avg1Hour.value+avg1Day.value+avg1Week.value+avg1Month.value+avg1Year.value;
+  print("values are:$avg1Hour $avg1Day $avg1Day $avg1Week $avg1Month $avg1Year");
+   Get.to(() => MoreCoinDetails(
+                      token: token,
+                      transection: transection,
+                    ));
+                    isLoading(false);
+}
+
+
 }

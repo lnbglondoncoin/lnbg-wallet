@@ -104,6 +104,23 @@ class CreateNewWallet extends StatelessWidget {
                         return null;
                       },
                     ),
+                     SizedBox(
+                      height: 30.h,
+                    ),
+                    CustomTextField(
+                      //isPasswordField: true,
+                      hintText: "Name",
+                      controller: controller.walletCreatingController.nameController,
+                      labelText: "Enter Your Name",
+                     // suffixIcoPath: eyeIcon,
+                     // prefixIconPath: lockIcon,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Name cannot be empty";
+                        } 
+                        return null;
+                      },
+                    ),
                     SizedBox(
                       height: 35.h,
                     ),

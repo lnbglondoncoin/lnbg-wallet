@@ -89,7 +89,7 @@ var isLoading=false.obs;
     return sendFormKey.currentState?.validate() ?? false;
   }
 
-  final transactionController = Get.find<TransactionController>();
+final transactionController = Get.put(TransactionController());
 var nonce="".obs;
   var networkFeeSlowUsd = 0.0.obs;
   var networkFeeModerateUsd = 0.0.obs;

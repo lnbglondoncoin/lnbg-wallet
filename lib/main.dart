@@ -19,7 +19,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Get.put(WalletCreatingController());
-  Get.put(TransactionController());
+ // Get.put(TransactionController());
    Get.put(SecurityAndPrivacyController());
   Get.put(SplashController());
 

@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/controller/token_details_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/coin_chart.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -11,12 +13,9 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 
 class MoreCoinDetails extends StatelessWidget {
-    final String coinName;
-  final String tokenPrice;
-  final String priceDolor;
-  final String tokenSuffix;
-  final String percentage;
-  const MoreCoinDetails({super.key, required this.coinName, required this.tokenPrice, required this.priceDolor, required this.tokenSuffix, required this.percentage});
+  final TokenData token;
+  final TransactionModel transection;
+  const MoreCoinDetails({super.key, required this.token, required this.transection});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class MoreCoinDetails extends StatelessWidget {
 backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
         //  isSuffix: true,
-          title:"$coinName Graph" ,
+          title:"${transection.token} Graph" ,
           iconPath: 'assets/icons/chat11.svg',
         ),
         body: SingleChildScrollView(
@@ -37,7 +36,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
             children: [
                Center(
                 child: Text(
-                  tokenPrice,
+                  transection.amount.toString(),
                   style: GoogleFonts.urbanist(
                       color:isDarkMode?lightGreenColor: orange3,
                       fontSize: 48.sp,
@@ -49,7 +48,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      priceDolor,
+                     ( transection.amount*token.priceInUsd).toString(),
                       style: GoogleFonts.urbanist(
                           color:isDarkMode?greyColor: greyColor3,
                           fontSize: 18.sp,
@@ -57,7 +56,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                     ),
                     SizedBox(width: 10.w,),
                     Text(
-                  percentage,
+                  token.trendPercentage.toString(),
                   style: GoogleFonts.urbanist(
                       color:isDarkMode?lightGreenColor: orange5,
                       fontSize: 18.sp,
@@ -74,7 +73,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
             height: 284.h,
           
             width: double.infinity,
-            child:  const ChartScreen(),
+            child:   ChartScreen(),
            ),
            SizedBox(
             height:20.h

@@ -21,7 +21,7 @@ class SendCoin extends StatelessWidget {
     required this.token,
   });
   final controller = Get.put(SendController());
-  final transactionController = Get.find<TransactionController>();
+ final transactionController = Get.put(TransactionController());
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -43,25 +43,27 @@ class SendCoin extends StatelessWidget {
         Form(
         key:controller.sendFormKey,
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: Get.height,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+      minHeight: MediaQuery.of(context).size.height,
+    ),
             child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.all(20.h),
                   child: Column(
                     children: [
-           CustomTextFieldWithPaste(
-  controller: controller.addressController,
-  validator: controller.validateAddress,
-  hintText: "Recipient Address",
-  // iconPath: "assets/icons/scan2.svg",
-  isDarkMode: isDarkMode,
-  lightColor: lightWhiteColor,
-  darkColor: lightBlackColor2,
-  accentColor: isDarkMode ? lightGreenColor : orange4,
-),   
-  SizedBox(
+                         CustomTextFieldWithPaste(
+            controller: controller.addressController,
+            validator: controller.validateAddress,
+            hintText: "Recipient Address",
+            // iconPath: "assets/icons/scan2.svg",
+            isDarkMode: isDarkMode,
+            lightColor: lightWhiteColor,
+            darkColor: lightBlackColor2,
+            accentColor: isDarkMode ? lightGreenColor : orange4,
+                        ),   
+            SizedBox(
                         height: 20.h,
                       ),
                       Obx(() {
@@ -164,20 +166,20 @@ class SendCoin extends StatelessWidget {
                             ),
                          Obx((){
                                 final filteredTransactions = transactionController.sendTransactions
-    .where((transection) => transection.token == token.symbol.toUpperCase())
-    .toList();
+              .where((transection) => transection.token == token.symbol.toUpperCase())
+              .toList();
                           return 
                                  transactionController.isLoading.value?Shimmer.fromColors(
-        baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
-        highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
-        child: Container(
-          height: 20.h,
-          width: 100.w,
-          color: Colors.white,
-        ),
-      ):
+                  baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
+                  highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
+                  child: Container(
+                        height: 20.h,
+                        width: 100.w,
+                        color: Colors.white,
+                  ),
+                ):
                      filteredTransactions.isEmpty?
-    SizedBox():
+              SizedBox():
                            Text(
                             "Clear",
                             style: GoogleFonts.urbanist(
@@ -194,23 +196,23 @@ class SendCoin extends StatelessWidget {
                      
                     Obx((){
                       final filteredTransactions = transactionController.sendTransactions
-    .where((transection) => transection.token == token.symbol.toUpperCase())
-    .toList();
+              .where((transection) => transection.token == token.symbol.toUpperCase())
+              .toList();
                       return 
                       transactionController.isLoading.value?shimmerTransactionLoader(isDarkMode):
                      filteredTransactions.isEmpty
-    ? Padding(
-      padding:  EdgeInsets.only(top: Get.height/10),
-      child: Text(
-        textAlign: TextAlign.center,
-        "No Transactions for ${token.symbol.toUpperCase()}",
-       
+              ? Padding(
+                padding:  EdgeInsets.only(top: Get.height/10),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "No Transactions for ${token.symbol.toUpperCase()}",
+                 
                                 style: GoogleFonts.urbanist(
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w700,
                                     color: isDarkMode ? whiteColor : blackColor2),),
-    )
-    :
+              )
+              :
                       ListView.builder(
                         itemCount:filteredTransactions.length,
                         shrinkWrap: true,
@@ -246,7 +248,9 @@ class SendCoin extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
+               SizedBox(
+                  height: Get.height/8,
+                ),
                 const CustomDivider(),
                 SizedBox(
                   height: 200.h,
@@ -435,7 +439,7 @@ await controller.calculateFees(
             ],
           ),
         ),
-        const Spacer(),
+       // const Spacer(),
          Container(
           height: 1.h,
           color: Colors.white,
@@ -449,39 +453,35 @@ await controller.calculateFees(
 
 
 Widget shimmerTransactionLoader(bool isDarkMode) {
-  return ListView.builder(
-    itemCount: 6,
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    itemBuilder: (context, index) {
-      return Padding(
-        padding: EdgeInsets.only(bottom: 15.h),
-        child: Row(
-          children: [
-            Shimmer.fromColors(
-              baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
-              highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
-              child: CircleAvatar(
-                radius: 25.r,
-                backgroundColor: Colors.white,
-              ),
-            ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child: Shimmer.fromColors(
-                baseColor: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
-                highlightColor: isDarkMode ? Colors.grey[500]! : Colors.grey[100]!,
-                child: Container(
-                  height: 18.h,
-                  width: double.infinity,
+  return Shimmer.fromColors(
+    baseColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+    highlightColor: isDarkMode ? Colors.grey[700]! : Colors.grey[100]!,
+    child: Column(
+      children: List.generate(6, (index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 15.h),
+          child: Row(
+            children: [
+              Container(
+                width: 50.w,
+                height: 50.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
                   color: Colors.white,
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    },
+              SizedBox(width: 20.w),
+              Expanded(
+                child: Container(
+                  height: 20.h,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    ),
   );
 }
 

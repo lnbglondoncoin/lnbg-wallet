@@ -1,12 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 
 class ChartScreen extends StatelessWidget {
-  const ChartScreen({super.key});
-
+   ChartScreen({super.key});
+final transactionController = Get.put(TransactionController());
   @override
   Widget build(BuildContext context) {
          var theme = Theme.of(context);
@@ -80,14 +83,14 @@ class ChartScreen extends StatelessWidget {
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        const FlSpot(0, 1500),
-                        const FlSpot(1, 500),
-                        const FlSpot(2, 1000),
-                        const FlSpot(3, 700),
-                        const FlSpot(4, 1200),
-                         const FlSpot(5, 250),
-                        const FlSpot(6, 1100),
-                         const FlSpot(7, 700),
+                         FlSpot(0, transactionController.avg1Hour.value),
+                         FlSpot(1, transactionController.avg1Day.value),
+                         FlSpot(2, transactionController.avg1Week.value),
+                         FlSpot(3, transactionController.avg1Month.value),
+                         FlSpot(4, transactionController.avg1Year.value),
+                           FlSpot(5, transactionController.avgTotal.value),
+                        //  FlSpot(6, 1100),
+                        //   FlSpot(7, 700),
                       ],
                       isCurved: true,
                       color:isDarkMode?lightGreenColor: orange3,

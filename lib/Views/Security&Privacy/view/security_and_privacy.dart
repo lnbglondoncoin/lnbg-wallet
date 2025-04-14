@@ -7,16 +7,18 @@ import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/securit
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/change_password.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/show_private_key.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Settings/view/show_secret_phrase.dart';
+import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/reuseable_dropdown.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SecurityAndPrivacyView extends StatelessWidget {
   SecurityAndPrivacyView({super.key});
     final SecurityAndPrivacyController controller =
       Get.find<SecurityAndPrivacyController>();
-
+  final walletCreatingController = Get.find<WalletCreatingController>();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -177,21 +179,63 @@ class SecurityAndPrivacyView extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              Text(
-                "Show Private Key for “AndrewAinsley",
-                style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: isDarkMode ? whiteColor : blackColor2),
-              ),
+           
+
+// Inside your widget build method
+
+Obx(() {
+  if (walletCreatingController.isLoading.value) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        height: 24.sp, // Match text height
+        width: 250.w,  // Set to expected text width
+        color: Colors.white,
+      ),
+    );
+  } else {
+    return Text(
+      "Show Private Key for ${walletCreatingController.userName.value}",
+      style: GoogleFonts.urbanist(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w700,
+        color: isDarkMode ? whiteColor : blackColor2,
+      ),
+    );
+  }
+}),
+
               SizedBox(height: 10.h),
-              Text(
-                "This is the private key for the current selected wallet account: AndrewAinsley. Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
+              Obx(() {
+  if (walletCreatingController.isLoading.value) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(3, (index) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Container(
+            height: 14.sp,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        )),
+      ),
+    );
+  } else {
+    return Text(
+      "This is the private key for the current selected wallet account: ${walletCreatingController.userName.value}. Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.",
+      style: GoogleFonts.urbanist(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+        color: isDarkMode ? greyColor : greyColor3,
+      ),
+    );
+  }
+})
+,
               SizedBox(
                 height: 15.h,
               ),

@@ -115,7 +115,7 @@ class AppLockController extends GetxController {
   RxBool isSwitched2 = false.obs;
   final walletCreatingController = Get.find<WalletCreatingController>();
   Timer? _lockTimer;
-  final securityController = Get.find<SecurityAndPrivacyController>();
+ 
   @override
   void onInit() {
     super.onInit();
@@ -137,6 +137,8 @@ class AppLockController extends GetxController {
   void startLockTimer() async {
     final prefs = await SharedPreferences.getInstance();
     final timeTemp = prefs.getString('auto_lock_time');
+    
+      final privateKey = prefs.getString('privateKey') ?? '';
     int time = timeTemp == "After 5 minutes"
         ? 5
         : timeTemp == "After 10 minutes"
@@ -144,7 +146,11 @@ class AppLockController extends GetxController {
             : 15;
     stopLockTimer(); // clear any previous timer
     _lockTimer = Timer.periodic(Duration(minutes: time), (timer) {
+      
+      
+if (privateKey != null && privateKey != "" && privateKey.isNotEmpty) {
       _lockApp();
+}
     });
   }
 
@@ -158,7 +164,7 @@ class AppLockController extends GetxController {
     if (isAuthenticated.value) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final privateKey = prefs.getString('privateKey') ?? '';
-      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty) {
+      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty&&walletCreatingController.importngOrCreatingprocessCompletion.value) {
         Get.offAll(() => BottomNavBar());
        
         clearControllers();
@@ -174,7 +180,14 @@ class AppLockController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final privateKey = prefs.getString('privateKey') ?? '';
       if (privateKey != null && privateKey != "" && privateKey.isNotEmpty) {
-        Get.offAll(() => BottomNavBar());
+       if(walletCreatingController.tokenData.isNotEmpty&&walletCreatingController.hundredTokenData.isNotEmpty&&walletCreatingController.importngOrCreatingprocessCompletion.value){
+         Get.offAll(() => BottomNavBar());
+        
+        
+       }
+       else{
+        walletCreatingController.loadWaletData(true,);
+       }
       
         
         clearControllers();

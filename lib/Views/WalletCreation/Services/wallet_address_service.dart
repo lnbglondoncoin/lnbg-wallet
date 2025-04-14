@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
@@ -29,6 +30,7 @@ class WalletCreatingController extends GetxController
   var secondHalfofMnemonic = [].obs;
    var tokenData = <TokenData>[].obs;
   // var ethereumData = <TokenData>{}.obs;
+  var nameController=TextEditingController();
    Rxn<TokenData> ethereumData = Rxn<TokenData>();
   String? seedPhrase;
   String get cmcApiKey => dotenv.env['CMC_API_KEY'] ?? '';
@@ -295,7 +297,7 @@ print(url);
       isLoading(false);
     }
   }
-
+var importngOrCreatingprocessCompletion=false.obs;
   Future<void> getBalanceInUSD(String walletAddress) async {
     try {
       print('come here');
@@ -358,11 +360,17 @@ print(url);
         if(isAppStarting||isAccountImported){
         Get.log("comes here $isAppStarting");
         await  fetchSlugs();
-        }
+        if(isAcccontCreated.value){
+ await createUser(nameController.text, walletAddress);
+}
 
-        Get.offAll(() => const BottomNavBar());
+  
+        }
+        await fetchUserData(walletAddress);
+      Get.offAll(() => const BottomNavBar());
         isAccountImporting.value=false;
-        //isNewAccountCraeting.value=false;
+      isAcccontCreated.value=false;
+      importngOrCreatingprocessCompletion.value=true;
       } else {
      //   isLoading.value = false;
         Get.snackbar("Errorrr", "Failed to load all slgs tokens");
@@ -372,6 +380,66 @@ print(url);
       Get.snackbar("Error", "Something went wrong with all slugs tokens");
     }
     finally{
+      isLoading(false);
+    }
+  }
+var isAcccontCreated=false.obs;
+   // Define a function to call the API
+  Future<void> createUser(String name, String walletAddress) async {
+    isLoading(true);  // Set loading to true
+
+    try {
+      // API URL
+      final url = 'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/users';
+
+      // Prepare body
+      final Map<String, String> body = {
+        'name': name,
+        'walletAddress': walletAddress,
+      };
+
+      // Send POST request
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(body),
+      );
+
+      // Check the response status code
+      if (response.statusCode == 200) {
+       // await fetchUserData(walletAddress);
+      } else {
+       
+      }
+    } catch (e) {
+      isLoading(false);  // Set loading to false after request is done
+      Get.snackbar("Error ", "name not saved $e");
+    
+    } finally {
+      isLoading(false);  // Set loading to false after request is done
+    }
+  }
+
+ var userName = ''.obs;        // To store the returned string
+ Future<void> fetchUserData(String walletAddress) async {
+    isLoading(true);
+    
+    
+    final url = 'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/users/$walletAddress';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        userName.value = data['name'] ?? 'No name found';
+      } else {
+
+      }
+    } catch (e) {
+       isLoading(false);
+      Get.snackbar("Error", "Name not get $e");
+    } finally {
       isLoading(false);
     }
   }

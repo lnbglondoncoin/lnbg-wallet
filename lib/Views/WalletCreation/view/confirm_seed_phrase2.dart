@@ -513,6 +513,7 @@ Widget shimmerSeedPhraseScreen() {
                       .getPrivateKey(walletCreatingController.seedPhrase!);
                   Get.log(privateKey);
                   if (privateKey.isNotEmpty) {
+                    walletCreatingController.isAcccontCreated.value=true;
                     await walletCreatingController.setPrivateKey(privateKey);
                     await walletCreatingController.loadWaletData(true);
                    // walletCreatingController.isNewAccountCraeting.value=true;
