@@ -304,14 +304,14 @@ class SwapCoinScreen extends StatelessWidget {
                       ? CustomGreenButton(
                           buttonText: "Confirm",
                           onPressed: () async {
-                            await controller.executeSwap(context);
+                            await controller.executeSwap();
                             // _showSuccesPopup(context);
                           })
                       : CustomButton(
                           buttonText: "Confirm",
                           onPressed: () async {
                             // _showSuccesPopup(context);
-                            await controller.executeSwap(context);
+                            await controller.executeSwap();
                           });
             })),
       ),

@@ -36,16 +36,24 @@ var isLoading = false.obs;
       );
 
       final data = jsonDecode(response.body);
-      if (response.statusCode == 200 && data['success'] == true) {
+      if (response.statusCode == 200 ) {
+        print(response.body);
         importedNFT.value = NFTModel.fromJson(data['nft']);
+         Get.back();
+         Get.log("come here");
+           Get.snackbar("Success", "NFT imported" );
       await  fetchNFTs(walletAddress);
-        Get.back();
+       
+        
       } else {
+          Get.snackbar("Errorrr", "Fail to import" );
         errorMessage.value = data['message'] ?? 'Failed to import NFT';
       }
     } catch (e) {
         isLoading.value = false;
+        Get.snackbar("Error", "Fail to import $e" );
       errorMessage.value = 'Something went wrong: $e';
+      print(errorMessage);
     } finally {
       isLoading.value = false;
     }

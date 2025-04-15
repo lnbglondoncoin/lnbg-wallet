@@ -32,7 +32,7 @@ class AppLockController extends GetxController {
       );
       if (authenticated) {
         isAuthenticated(true);
-        Get.snackbar("Success", "Authenticated", backgroundColor: orange3);
+        Get.snackbar("Success", "Authenticated", );
         showPopup(context);
         unlockApp();
         isLoading(false);
@@ -133,26 +133,36 @@ class AppLockController extends GetxController {
        isLoading(false);
   }
 
-  RxInt screenLockTimer = 20.obs;
+ // RxInt screenLockTimer = 20.obs;
   void startLockTimer() async {
-    final prefs = await SharedPreferences.getInstance();
-    final timeTemp = prefs.getString('auto_lock_time');
-    
-      final privateKey = prefs.getString('privateKey') ?? '';
-    int time = timeTemp == "After 5 minutes"
-        ? 5
-        : timeTemp == "After 10 minutes"
-            ? 10
-            : 15;
-    stopLockTimer(); // clear any previous timer
-    _lockTimer = Timer.periodic(Duration(minutes: time), (timer) {
-      
-      
-if (privateKey != null && privateKey != "" && privateKey.isNotEmpty) {
-      _lockApp();
-}
-    });
+  final prefs = await SharedPreferences.getInstance();
+  String? timeTemp = prefs.getString('auto_lock_time');
+
+  // Set default value if not set
+  if (timeTemp == null) {
+    timeTemp = "After 5 minutes";
+    await prefs.setString('auto_lock_time', timeTemp);
   }
+
+  final privateKey = prefs.getString('privateKey') ?? '';
+
+  int time = timeTemp == "After 5 minutes"
+      ? 5
+      : timeTemp == "After 10 minutes"
+          ? 10
+          : 15;
+
+  Get.log("Auto-lock time set to: $time minutes");
+
+  stopLockTimer(); // clear any previous timer
+
+  _lockTimer = Timer.periodic(Duration(minutes: time), (timer) {
+    if (privateKey.isNotEmpty) {
+      _lockApp();
+    }
+  });
+}
+
 
   void _lockApp() {
     splashController.isAppLock.value = true;

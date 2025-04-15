@@ -1,4 +1,4 @@
-// import 'package:flutter/material.dart';
+// // import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:get/get.dart';
 // import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
@@ -56,6 +56,21 @@
 //       return "1.00%"; // Default fallback
 //     }
 //   }
+//      final swapFormKey = GlobalKey<FormState>();
+//    String? validateBLance(String? value) {
+//       if (value == null || value.isEmpty) {
+//         return 'Balance is required';
+//       }
+//   else if (value == "0") {
+//         return "Balance cannot be zero";
+//         }
+//       // Add additional address validation if needed
+//       return null;
+//     }
+//     bool validateForm() {
+//       return swapFormKey.currentState?.validate() ?? false;
+//     }
+//     // Execute swap
   
 //   String get formattedNetworkFee {
 //     if (currentQuote.isEmpty) return "0.000 ETH";
@@ -108,14 +123,27 @@
 //     try {
 //       isLoading(true);
 
+//       // Convert amount to wei (18 decimals)
 //       String amount = (cryptoAmount.value * 1e18).toStringAsFixed(0);
       
+//       // Get token addresses
+//       String sellTokenAddress = firstToken.value.contractAddress;
+//       String buyTokenAddress = secondToken.value.contractAddress;
+
+//       // If ETH is being sold, use special address
+//       if (firstToken.value.symbol == "ETH") {
+//         sellTokenAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+//       }
+//       if (secondToken.value.symbol == "ETH") {
+//         buyTokenAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+//       }
+
 //       final url = Uri.parse(
 //         'https://api.0x.org/swap/v1/quote?'
-//         'sellToken=ETH'
-//         '&buyToken=USDT'
+//         'sellToken=$sellTokenAddress'
+//         '&buyToken=$buyTokenAddress'
 //         '&sellAmount=$amount'
-//         '&slippagePercentage=0.01' // 1% default slippage
+//         '&slippagePercentage=${maxSlippage.value / 100}' // Convert percentage to decimal
 //       );
 
 //       print('Request URL: $url');
@@ -124,7 +152,7 @@
 //         url,
 //         headers: {
 //           'Accept': 'application/json',
-//           '0x-api-key': '9a827917-91ba-4739-87f9-23451d511ea6',
+//           '0x-api-key': dotenv.get('ZEROX_API_KEY', fallback: '9a827917-91ba-4739-87f9-23451d511ea6'),
 //         },
 //       );
 
@@ -141,7 +169,7 @@
 
 //         // Calculate the exchange rate
 //         double fromAmount = double.parse(quote['sellAmount']) / 1e18;  // ETH decimals
-//         double toAmount = double.parse(quote['buyAmount']) / 1e6;     // USDT decimals
+//         double toAmount = double.parse(quote['buyAmount']) / 1e18;     // Token decimals
         
 //         swapRate.value = toAmount / fromAmount;
         
@@ -151,7 +179,8 @@
 
 //         updateAmount2nd();
 //       } else {
-//         throw Exception('API Error: ${response.statusCode} - ${response.body}');
+//         print('API Error: ${response.statusCode} - ${response.body}');
+//         throw Exception('Failed to get quote: ${response.body}');
 //       }
 //     } catch (e) {
 //       print('Error in getSwapQuote: $e');
@@ -159,6 +188,7 @@
 //         'Error',
 //         'Failed to get quote. Please try again.',
 //         duration: const Duration(seconds: 3),
+//         snackPosition: SnackPosition.BOTTOM,
 //       );
 //     } finally {
 //       isLoading(false);
@@ -185,14 +215,28 @@
 //         throw Exception('No valid quote found');
 //       }
 
+//       // Convert amount to wei (18 decimals)
 //       String amount = (cryptoAmount.value * 1e18).toStringAsFixed(0);
       
+//       // Get token addresses
+//       String sellTokenAddress = firstToken.value.contractAddress;
+//       String buyTokenAddress = secondToken.value.contractAddress;
+
+//       // If ETH is being sold, use special address
+//       if (firstToken.value.symbol == "ETH") {
+//         sellTokenAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+//       }
+//       if (secondToken.value.symbol == "ETH") {
+//         buyTokenAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+//       }
+
 //       final url = Uri.parse(
 //         'https://api.0x.org/swap/v1/quote?'
-//         'sellToken=ETH'
-//         '&buyToken=USDT'
+//         'sellToken=$sellTokenAddress'
+//         '&buyToken=$buyTokenAddress'
 //         '&sellAmount=$amount'
-//         '&slippagePercentage=0.01'
+//         '&slippagePercentage=${maxSlippage.value / 100}'
+//         '&takerAddress=${walletCreatingCotroller.wallwtAddress.value}'
 //       );
 
 //       print('Executing swap with URL: $url');
@@ -201,7 +245,7 @@
 //         url,
 //         headers: {
 //           'Accept': 'application/json',
-//           '0x-api-key': '9a827917-91ba-4739-87f9-23451d511ea6',
+//           '0x-api-key': dotenv.get('ZEROX_API_KEY', fallback: '9a827917-91ba-4739-87f9-23451d511ea6'),
 //         },
 //       );
 
