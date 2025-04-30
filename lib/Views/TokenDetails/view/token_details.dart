@@ -304,13 +304,14 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                     ) ,
                                     title:Text(
                                     transection.method.capitalizeFirst!,
+                                    maxLines: 1,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w700,
                                           color:isDarkMode?whiteColor: blackColor2),
                                     ) ,
                                     subtitle: Text(
-                                      maxLines: 1,
+                                      maxLines: null,
                                      transection.method=="send"? "To: ${transection.to}": "From: ${transection.to}",
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.urbanist(
@@ -318,12 +319,17 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                           fontWeight: FontWeight.w800,
                                           color:isDarkMode?greyColor: greyColor3),
                                     ),
-                                    trailing: Text(
-                                     "${transection.amount} ${transection.token}",
-                                      style: GoogleFonts.urbanist(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color:isDarkMode?greyColor: blackColor2),
+                                    trailing: SizedBox(
+                                      width: Get.width*0.3,
+                                      child: Text(
+                                        textAlign: TextAlign.end,
+                                       "${transection.amount} ${transection.token}",
+                                       maxLines: null,
+                                        style: GoogleFonts.urbanist(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color:isDarkMode?greyColor: blackColor2),
+                                      ),
                                     ),
                                     ),
                   ),

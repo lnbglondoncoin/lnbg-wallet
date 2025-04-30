@@ -13,6 +13,7 @@ import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_divider.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_loading_spinner.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ConfirmSendCoinScreen extends StatelessWidget {
@@ -32,11 +33,13 @@ class ConfirmSendCoinScreen extends StatelessWidget {
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-      appBar: const CustomAppBar(
+      appBar: PreferredSize(preferredSize:  const Size.fromHeight(kToolbarHeight), child: Obx((){
+        return controller.isLoading.value?ShimmerAppBar(isDarkMode: isDarkMode):CustomAppBar(
         title: "Confirm",
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
-      ),
+      );
+      })),
       body: 
       Obx((){
         return controller.isLoading.value
@@ -152,10 +155,10 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             child:Obx((){
                               return  Text(
                                 controller.selectedNetworkSpeed.value=="Slow"?
-                             "${controller.networkFeeSlowCrypto.value} ${token.symbol} (\$${ controller.networkFeeSlowUsd.value.toString()} USD)":
+                             "${controller.networkFeeSlowCrypto.value} ETH (\$${ controller.networkFeeSlowUsd.value.toString()} USD)":
                                controller.selectedNetworkSpeed.value=="Moderate"?
-                                 "${controller.networkFeeModeratecrypto.value} ${token.symbol} (\$${ controller.networkFeeModerateUsd.value.toString()} USD)":
-                                "${controller.networkFeeFastcrypto.value} ${token.symbol} (\$${ controller.networkFeeFastUsd.value.toString()} USD)",
+                                 "${controller.networkFeeModeratecrypto.value} ETH (\$${ controller.networkFeeModerateUsd.value.toString()} USD)":
+                                "${controller.networkFeeFastcrypto.value} ETH (\$${ controller.networkFeeFastUsd.value.toString()} USD)",
                                
                               style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
@@ -206,10 +209,10 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                               child: Text(
                                 
                                 controller.selectedNetworkSpeed.value=="Slow"?
-                                  "${controller.totalFeeSlowCrypto.value} ${token.symbol} (\$${ controller.totalFeeSlowUsd.value.toString()} USD)":
+                                  "(\$${ controller.totalFeeSlowUsd.value.toString()} USD)" :
                                    controller.selectedNetworkSpeed.value=="Moderate"?
-                                     "${controller.totalFeeModerateCrypto.value} ${token.symbol} (\$${ controller.totalFeeModerateUsd.value.toString()} USD)":
-                                      "${controller.totalFeeFastCrypto.value} ${token.symbol} (\$${ controller.totalFeeFastUsd.value.toString()} USD)",
+                                     "(\$${ controller.totalFeeModerateUsd.value.toString()} USD)":
+                                      "(\$${ controller.totalFeeFastUsd.value.toString()} USD)",
                                     
                                 style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
@@ -239,7 +242,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.all(25.h),
         child: Obx((){
-          return controller.isLoading.value&&controller.transactionController.isLoading.value?
+          return controller.isLoading.value?
         const  LoadingSpinner()
           :isDarkMode? CustomGreenButton(
             buttonText: "Send",

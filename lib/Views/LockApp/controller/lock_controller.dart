@@ -133,7 +133,7 @@ class AppLockController extends GetxController {
        isLoading(false);
   }
 
- // RxInt screenLockTimer = 20.obs;
+ RxInt screenLockTimer = 5.obs;
   void startLockTimer() async {
   final prefs = await SharedPreferences.getInstance();
   String? timeTemp = prefs.getString('auto_lock_time');
@@ -144,19 +144,21 @@ class AppLockController extends GetxController {
     await prefs.setString('auto_lock_time', timeTemp);
   }
 
-  final privateKey = prefs.getString('privateKey') ?? '';
-
+  // Map the string value to an integer
   int time = timeTemp == "After 5 minutes"
       ? 5
       : timeTemp == "After 10 minutes"
           ? 10
-          : 15;
+          : 15; // Default to 15 minutes if no match
+
+  screenLockTimer.value = time; // Assign the parsed integer value
+  final privateKey = prefs.getString('privateKey') ?? '';
 
   Get.log("Auto-lock time set to: $time minutes");
 
-  stopLockTimer(); // clear any previous timer
+  stopLockTimer(); // Clear any previous timer
 
-  _lockTimer = Timer.periodic(Duration(minutes: time), (timer) {
+  _lockTimer = Timer.periodic(Duration(minutes: screenLockTimer.value), (timer) {
     if (privateKey.isNotEmpty) {
       _lockApp();
     }

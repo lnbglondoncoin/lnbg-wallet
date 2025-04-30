@@ -180,13 +180,18 @@ class SendCoin extends StatelessWidget {
                 ):
                      filteredTransactions.isEmpty?
               SizedBox():
-                           Text(
-                            "Clear",
-                            style: GoogleFonts.urbanist(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w800,
-                                color: isDarkMode ? lightGreenColor : orange4),
-                          );
+                           GestureDetector(
+                            onTap: (){
+                              controller.clearTransaction(controller.walletCreatingCotroller.wallwtAddress.value,"send");
+                            },
+                             child: Text(
+                              "Clear",
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: isDarkMode ? lightGreenColor : orange4),
+                                                       ),
+                           );
                          })
                         ],
                       ),
@@ -287,7 +292,7 @@ class SendCoin extends StatelessWidget {
 await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
+  tokenPriceInUSD:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
   token: token,
   senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
   recipientAddress:controller.addressController.text,
@@ -313,7 +318,7 @@ await controller.calculateFees(
 await controller.calculateFees(
   cryptoAmount: controller.ammountIncrypto.value,
   cryptoAmountInUsd: controller.ammountInUSD.value,
-  nativeTokenPriceInUsd:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
+  tokenPriceInUSD:controller.walletCreatingCotroller.ethereumData.value!.priceInUsd,
   token: token,
   senderAddress: controller.walletCreatingCotroller.wallwtAddress.value,
   recipientAddress:controller.addressController.text,

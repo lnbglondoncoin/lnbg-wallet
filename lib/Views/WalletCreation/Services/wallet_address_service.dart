@@ -55,8 +55,8 @@ class WalletCreatingController extends GetxController
     mnemonicWords.value = mnemonic.split(' ');
     firstHalfOfMnemonic.value = mnemonicWords.sublist(0, 6);
     secondHalfofMnemonic.value = mnemonicWords.sublist(6, 12);
-  
-     
+  fetchLNBGTokenData("LLC","LNBG London Coin");    
+      fetchLNBGTokenData("ETH","Ethereum"); 
    
   }
 
@@ -87,6 +87,8 @@ class WalletCreatingController extends GetxController
     String url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/token-balances";
 
+
+print("merge slugs are $hundredslugs");
     final Map<String, dynamic> requestBody = {"tokens": hundredslugs};
 
     try {
@@ -107,7 +109,12 @@ class WalletCreatingController extends GetxController
           tokens.add(TokenData.fromJson(key, value));
         });
 
-        hundredTokenData.assignAll(tokens);
+      // ✅ Insert previously fetched tokenData at index 0 if available
+      if (lnbgData.value != null) {
+        tokens.insert(0, lnbgData.value!);
+      }
+     var mergedList = (tokens + tokenData).toSet().toList();
+        hundredTokenData.assignAll(mergedList);
 
      
       } else {
@@ -332,10 +339,15 @@ var importngOrCreatingprocessCompletion=false.obs;
 
   Future<void> fetchWalletData(String walletAddress,bool isAppStarting,bool isAccountImported) async {
     print("slus are $slugs");
+    // 🔁 Replace "Lnbg_London_Coin" with "lnbg-london-coin" in slugs list
+  List<String> modifiedSlugs = slugs.map((slug) {
+    return slug == "LNBG London Coin" ? "lnbg-london-coin" : slug;
+  }).toList();
+
     String url =
         "http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$walletAddress/token-balances";
 print(url);
-    final Map<String, dynamic> requestBody = {"tokens": slugs};
+    final Map<String, dynamic> requestBody = {"tokens": modifiedSlugs};
 
     try {
       isLoading.value = true; // Set loading to true at start
@@ -353,9 +365,13 @@ print(url);
         data.forEach((key, value) {
           tokens.add(TokenData.fromJson(key, value));
         });
+       //  ✅ Insert previously fetched tokenData at index 0 if available
+      if (lnbgData.value != null) {
+        tokens.insert(0, lnbgData.value!);
+      }
 
         tokenData.assignAll(tokens);
-      ethereumData.value = tokens.first;
+  
         await getBalanceInUSD(walletAddress);
         if(isAppStarting||isAccountImported){
         Get.log("comes here $isAppStarting");
@@ -368,9 +384,7 @@ print(url);
         }
         await fetchUserData(walletAddress);
       Get.offAll(() => const BottomNavBar());
-        isAccountImporting.value=false;
-      isAcccontCreated.value=false;
-      importngOrCreatingprocessCompletion.value=true;
+      
       } else {
      //   isLoading.value = false;
         Get.snackbar("Errorrr", "Failed to load all slgs tokens");
@@ -383,6 +397,8 @@ print(url);
       isLoading(false);
     }
   }
+
+
 var isAcccontCreated=false.obs;
    // Define a function to call the API
   Future<void> createUser(String name, String walletAddress) async {
@@ -408,6 +424,9 @@ var isAcccontCreated=false.obs;
       // Check the response status code
       if (response.statusCode == 200) {
        // await fetchUserData(walletAddress);
+         isAccountImporting.value=false;
+      isAcccontCreated.value=false;
+      importngOrCreatingprocessCompletion.value=true;
       } else {
        
       }
@@ -433,6 +452,9 @@ var isAcccontCreated=false.obs;
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         userName.value = data['name'] ?? 'No name found';
+          isAccountImporting.value=false;
+      isAcccontCreated.value=false;
+      importngOrCreatingprocessCompletion.value=true;
       } else {
 
       }
@@ -441,6 +463,42 @@ var isAcccontCreated=false.obs;
       Get.snackbar("Error", "Name not get $e");
     } finally {
       isLoading(false);
+    }
+  }
+
+
+  var lnbgData = Rxn<TokenData>();
+
+
+  Future<void> fetchLNBGTokenData(String symbol, String name) async {
+    try {
+      isLoading.value = true;
+   
+
+      final url = 'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$symbol/coin';
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if(symbol=="LLC"){
+ lnbgData.value = TokenData.fromJson(name, data);
+        }
+       
+       else if(symbol=="ETH"){
+        ethereumData.value =TokenData.fromJson(name, data);
+       }
+       else{
+
+       }
+      } else {
+       // error.value = 'Failed to load data: ${response.statusCode}';
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", "Failed to get LNBG data:$e");
+     // error.value = 'Error: $e';
+    } finally {
+      isLoading.value = false;
     }
   }
 }

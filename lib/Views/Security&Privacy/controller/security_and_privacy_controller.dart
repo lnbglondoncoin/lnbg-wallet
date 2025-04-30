@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SecurityAndPrivacyController extends GetxController {
   var selectedlocTime = 'After 5 minutes'.obs;
-  
+  var isLoading=false.obs;
   RxBool isBiometric = false.obs;
   RxBool isface = false.obs;
   RxBool isRemember = false.obs;
@@ -48,5 +48,41 @@ class SecurityAndPrivacyController extends GetxController {
     Get.offAll(() => WalkThroughScreen());
   }
   
+  Future<void> clearBrowserCookies() async {
+    try {
+      isLoading(true);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('browser_cookies'); // Assuming cookies are stored under this key
+      Get.snackbar('Success', 'Browser cookies cleared successfully.',
+         // snackPosition: SnackPosition.BOTTOM
+          );
+    } catch (e) {
+      isLoading(false);
+      Get.snackbar('Error', 'Failed to clear browser cookies.',
+         // snackPosition: SnackPosition.BOTTOM
+          );
+    }
+    finally{
+      isLoading(false);
+    }
+  }
 
+  Future<void> clearBrowserHistory() async {
+    try {
+      isLoading(true);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('browser_history'); // Assuming history is stored under this key
+      Get.snackbar('Success', 'Browser history cleared successfully.',
+          //snackPosition: SnackPosition.BOTTOM
+          );
+    } catch (e) {
+      isLoading(false);
+      Get.snackbar('Error', 'Failed to clear browser history.',
+         // snackPosition: SnackPosition.BOTTOM
+          );
+    }
+    finally{
+      isLoading(false);
+    }
+  }
 }

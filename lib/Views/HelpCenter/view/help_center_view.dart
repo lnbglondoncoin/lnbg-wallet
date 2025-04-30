@@ -18,7 +18,7 @@ class HelpCenterScreen extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       appBar: const CustomAppBar(
-          isSuffix: true,
+          isSuffix: false,
           title: "Help Center",
           iconPath: "assets/icons/msg2.svg"),
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
@@ -27,105 +27,105 @@ class HelpCenterScreen extends StatelessWidget {
         child: Column(
           children: [
             // Tabs
-            Padding(
-              padding: EdgeInsets.only(left: 25.w),
-              child: SizedBox(
-                height: 38.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: controller.tabs.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: 12.w),
-                        child: GestureDetector(
-                            onTap: () => controller.selectedTab.value = index,
-                            child: Obx(() {
-                              return Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 12.w, vertical: 6.h),
-                                decoration: BoxDecoration(
-                                  color: controller.selectedTab.value == index
-                                      ? isDarkMode
-                                          ? lightGreenColor
-                                          : orange3
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  border: Border.all(
-                                      color: isDarkMode
-                                          ? lightGreenColor
-                                          : orange3,
-                                      width: 2),
-                                ),
-                                child: Text(
-                                  controller.tabs[index],
-                                  style: GoogleFonts.urbanist(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w800,
-                                    color: controller.selectedTab.value == index
-                                        ? whiteColor
-                                        : isDarkMode
-                                            ? lightGreenColor
-                                            : orange3,
-                                  ),
-                                ),
-                              );
-                            })),
-                      );
-                    }),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 25.w),
+            //   child: SizedBox(
+            //     height: 38.h,
+            //     child: ListView.builder(
+            //         scrollDirection: Axis.horizontal,
+            //         physics: const BouncingScrollPhysics(),
+            //         shrinkWrap: true,
+            //         itemCount: controller.tabs.length,
+            //         itemBuilder: (context, index) {
+            //           return Padding(
+            //             padding: EdgeInsets.only(right: 12.w),
+            //             child: GestureDetector(
+            //                 onTap: () => controller.selectedTab.value = index,
+            //                 child: Obx(() {
+            //                   return Container(
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 12.w, vertical: 6.h),
+            //                     decoration: BoxDecoration(
+            //                       color: controller.selectedTab.value == index
+            //                           ? isDarkMode
+            //                               ? lightGreenColor
+            //                               : orange3
+            //                           : Colors.transparent,
+            //                       borderRadius: BorderRadius.circular(20.r),
+            //                       border: Border.all(
+            //                           color: isDarkMode
+            //                               ? lightGreenColor
+            //                               : orange3,
+            //                           width: 2),
+            //                     ),
+            //                     child: Text(
+            //                       controller.tabs[index],
+            //                       style: GoogleFonts.urbanist(
+            //                         fontSize: 18.sp,
+            //                         fontWeight: FontWeight.w800,
+            //                         color: controller.selectedTab.value == index
+            //                             ? whiteColor
+            //                             : isDarkMode
+            //                                 ? lightGreenColor
+            //                                 : orange3,
+            //                       ),
+            //                     ),
+            //                   );
+            //                 })),
+            //           );
+            //         }),
+            //   ),
+            // ),
 
-            SizedBox(height: 20.h),
+            // SizedBox(height: 20.h),
 
             // Search Bar
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.w),
-              child: Container(
-                height: 45.h,
-                decoration: BoxDecoration(
-                  color: isDarkMode ? lightBlackColor2 : greyColor4,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: TextField(
-                  cursorColor: isDarkMode ? lightGreenColor : orange3,
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w400,
-                        color: isDarkMode ? grey5 : grey2),
-                    suffixIcon: SizedBox(
-                        height: 20.h,
-                        width: 20.w,
-                        child: Center(
-                            child: SvgPicture.asset(
-                          "assets/icons/filter.svg",
-                          height: 20.h,
-                          width: 20.w,
-                          colorFilter: ColorFilter.mode(
-                              isDarkMode ? lightGreenColor : orange3,
-                              BlendMode.srcIn),
-                        ))),
-                    prefixIcon: SizedBox(
-                        height: 20.h,
-                        width: 20.w,
-                        child: Center(
-                            child: SvgPicture.asset("assets/icons/search2.svg",
-                                colorFilter: ColorFilter.mode(
-                                    isDarkMode ? grey5 : grey2,
-                                    BlendMode.srcIn),
-                                height: 20.h,
-                                width: 20.w))),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 6.h),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 25.w),
+            //   child: Container(
+            //     height: 45.h,
+            //     decoration: BoxDecoration(
+            //       color: isDarkMode ? lightBlackColor2 : greyColor4,
+            //       borderRadius: BorderRadius.circular(12.r),
+            //     ),
+            //     child: TextField(
+            //       cursorColor: isDarkMode ? lightGreenColor : orange3,
+            //       decoration: InputDecoration(
+            //         hintText: 'Search',
+            //         hintStyle: GoogleFonts.urbanist(
+            //             fontSize: 18.sp,
+            //             fontWeight: FontWeight.w400,
+            //             color: isDarkMode ? grey5 : grey2),
+            //         suffixIcon: SizedBox(
+            //             height: 20.h,
+            //             width: 20.w,
+            //             child: Center(
+            //                 child: SvgPicture.asset(
+            //               "assets/icons/filter.svg",
+            //               height: 20.h,
+            //               width: 20.w,
+            //               colorFilter: ColorFilter.mode(
+            //                   isDarkMode ? lightGreenColor : orange3,
+            //                   BlendMode.srcIn),
+            //             ))),
+            //         prefixIcon: SizedBox(
+            //             height: 20.h,
+            //             width: 20.w,
+            //             child: Center(
+            //                 child: SvgPicture.asset("assets/icons/search2.svg",
+            //                     colorFilter: ColorFilter.mode(
+            //                         isDarkMode ? grey5 : grey2,
+            //                         BlendMode.srcIn),
+            //                     height: 20.h,
+            //                     width: 20.w))),
+            //         border: InputBorder.none,
+            //         contentPadding: EdgeInsets.only(top: 6.h),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
-            SizedBox(height: 20.h),
+            // SizedBox(height: 20.h),
 
             // FAQs
             Expanded(

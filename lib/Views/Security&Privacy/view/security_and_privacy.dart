@@ -31,7 +31,8 @@ class SecurityAndPrivacyView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.h),
-          child: Column(
+          child: Obx((){
+            return controller.isLoading.value?shimmerLoadingWidget():Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -117,22 +118,23 @@ class SecurityAndPrivacyView extends StatelessWidget {
     controller.setSelectedTime(newValue);
   },
               ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Hide Tokens Without Balance",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.isBiometric),
-                ],
-              ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Hide Tokens Without Balance",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.isBiometric),
+              //   ],
+              // ),
+             
               // SizedBox(
               //   height: 30.h,
               // ),
@@ -246,42 +248,42 @@ Obx(() {
                 child: _buildSectionTitle("Show Private Key", context)),
               SizedBox(height: 30.h),
               const CustomDivider(),
-              SizedBox(height: 35.h),
-              Text(
-                "Privacy",
-                style: GoogleFonts.urbanist(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w700,
-                    color: isDarkMode ? whiteColor : blackColor2),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Text(
-                "Clear Privacy Data",
-                style: GoogleFonts.urbanist(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: isDarkMode ? whiteColor : blackColor2),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Clear privacy data so all the websites mus request access to view account information again.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              GestureDetector(
-                onTap: (){
-                  //function to clear privacy data..
-                },
-                child: _buildSectionTitle("Clear Privacy Data", context)),
+              // SizedBox(height: 35.h),
+              // Text(
+              //   "Privacy",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 24.sp,
+              //       fontWeight: FontWeight.w700,
+              //       color: isDarkMode ? whiteColor : blackColor2),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Text(
+              //   "Clear Privacy Data",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 20.sp,
+              //       fontWeight: FontWeight.w700,
+              //       color: isDarkMode ? whiteColor : blackColor2),
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Clear privacy data so all the websites mus request access to view account information again.",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 15.h,
+              // ),
+              // GestureDetector(
+              //   onTap: (){
+              //     //function to clear privacy data..
+              //   },
+              //   child: _buildSectionTitle("Clear Privacy Data", context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -305,7 +307,11 @@ Obx(() {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Clear Browser History", context),
+              GestureDetector(
+                onTap: (){
+controller.clearBrowserHistory();
+                },
+                child: _buildSectionTitle("Clear Browser History", context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -329,141 +335,145 @@ Obx(() {
               SizedBox(
                 height: 15.h,
               ),
-              _buildSectionTitle("Clear Browser Cookies", context),
+              GestureDetector(
+                onTap: (){
+                  controller.clearBrowserCookies();
+                },
+                child: _buildSectionTitle("Clear Browser Cookies", context)),
               SizedBox(
                 height: 40.h,
               ),
              
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Privacy Mode",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.isPrivacy),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Websites mus request access to view account information again.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Show Incoming Transactions",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.incommingTransections),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Third party APIs (Etherscan) are used to show your incoming transactions in the history. Turn off if you don't want us to pull data from those services. ",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Use Phishing Detection",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.phishingDetection),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Display a warning for phishing domains targeting Ethereum users.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Enable OpenSea API",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.openSeaAPI),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Displaying NFT media & data may expose your IP address to centralized servers. Use OpenSea's API to fetch NFT data. NFT auto-detection relies on OpenSea's API, and will not be available when this is turned off. Enabling NFT auto-detection can expose you to fake NFTs being sent to your wallet by anyone, and can allow an attacker to learn your IP address from your Ethereum address.",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Autodetect NFTs ",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: isDarkMode ? whiteColor : blackColor2),
-                  ),
-                  CustomSwitch(isSwitched: controller.isAutoDectNFT),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                "Displaying NFT media & data may expose your IP address to centralized servers. Third-party APIs (like OpenSea) are used to detect NFTs in your wallet. This exposes your account address with those services. Leave this disabled if you don't want the app to pull data from those services. ",
-                style: GoogleFonts.urbanist(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: isDarkMode ? greyColor : greyColor3),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Privacy Mode",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.isPrivacy),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Websites mus request access to view account information again.",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Show Incoming Transactions",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.incommingTransections),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Third party APIs (Etherscan) are used to show your incoming transactions in the history. Turn off if you don't want us to pull data from those services. ",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Use Phishing Detection",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.phishingDetection),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Display a warning for phishing domains targeting Ethereum users.",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Enable OpenSea API",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.openSeaAPI),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Displaying NFT media & data may expose your IP address to centralized servers. Use OpenSea's API to fetch NFT data. NFT auto-detection relies on OpenSea's API, and will not be available when this is turned off. Enabling NFT auto-detection can expose you to fake NFTs being sent to your wallet by anyone, and can allow an attacker to learn your IP address from your Ethereum address.",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Autodetect NFTs ",
+              //       style: GoogleFonts.urbanist(
+              //           fontSize: 20.sp,
+              //           fontWeight: FontWeight.w700,
+              //           color: isDarkMode ? whiteColor : blackColor2),
+              //     ),
+              //     CustomSwitch(isSwitched: controller.isAutoDectNFT),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Text(
+              //   "Displaying NFT media & data may expose your IP address to centralized servers. Third-party APIs (like OpenSea) are used to detect NFTs in your wallet. This exposes your account address with those services. Leave this disabled if you don't want the app to pull data from those services. ",
+              //   style: GoogleFonts.urbanist(
+              //       fontSize: 14.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: isDarkMode ? greyColor : greyColor3),
+              // ),
+              // SizedBox(
+              //   height: 40.h,
+              // ),
               GestureDetector(
                 onTap: ()async{
                 await  controller.deleteWallet();
@@ -510,8 +520,8 @@ Obx(() {
                 height: 20.h,
               ),
             ],
-          ),
-        ),
+          );
+          })  ),
       ),
     );
   }
@@ -540,4 +550,113 @@ Obx(() {
       ),
     );
   }
+Widget shimmerLoadingWidget() {
+  return Padding(
+    padding: EdgeInsets.all(20.h),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 20.h,
+            width: 200.w,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 14.h,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 15.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 45.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100.r),
+            ),
+          ),
+        ),
+        SizedBox(height: 40.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 20.h,
+            width: 150.w,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 14.h,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 15.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 45.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100.r),
+            ),
+          ),
+        ),
+        SizedBox(height: 40.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 20.h,
+            width: 180.w,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 14.h,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 15.h),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 45.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100.r),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 }

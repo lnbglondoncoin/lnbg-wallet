@@ -13,10 +13,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsController extends GetxController {
   List settingIcons = [
-    "assets/icons/wallets.png",
+   // "assets/icons/wallets.png",
     "assets/icons/general.png",
     "assets/icons/security.png",
-    "assets/icons/advance.png",
+   // "assets/icons/advance.png",
     "assets/icons/darkMode.png",
     "assets/icons/contacts.png",
     "assets/icons/notifications5.png",
@@ -27,10 +27,10 @@ class SettingsController extends GetxController {
   ];
 
   List settingLabels = [
-    "Wallets",
-    "General",
+   // "Wallets",
+    "Language",
     "Security & Privacy",
-    "Advanced",
+   // "Advanced",
     "Dark Mode",
     "Contacts",
     "Notification",
@@ -41,26 +41,29 @@ class SettingsController extends GetxController {
   ];
 
   settingActions(index) {
-    if (index == 0) {
-      Get.to(() => WalletScreen());
-    } else if (index == 1) {
+    // if (index == 0) {
+    //   Get.to(() => WalletScreen());
+    // } 
+     if (index == 0) {
       Get.to(() => GenralSettingsView());
-    } else if (index == 2) {
+    } else if (index == 1) {
       Get.to(() => SecurityAndPrivacyView());
+    } 
+    // else if (index == 2) {
+    //   Get.to(() => AdvanceSettingView());
+    // }
+     else if (index == 2) {
     } else if (index == 3) {
-      Get.to(() => AdvanceSettingView());
-    } else if (index == 4) {
-    } else if (index == 5) {
       Get.to(() => ContactsView());
-    } else if (index == 6) {
+    } else if (index == 4) {
       Get.to(() => NotificationSettingsView());
-    } else if (index == 7) {
+    } else if (index == 5) {
       Get.to(() => HelpCenterScreen());
-    } else if (index == 8) {
+    } else if (index == 6) {
       Get.to(() => InviteFriend());
-    } else if (index == 9) {
+    } else if (index == 7) {
       Get.to(() => AboutLNBG());
-    } else if (index == 10) {
+    } else if (index == 8) {
       logout();
     } else {}
   }

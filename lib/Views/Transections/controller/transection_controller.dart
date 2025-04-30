@@ -47,6 +47,7 @@ fetchTransactions(walletCreatingCotroller.wallwtAddress.value);
 
     try {
       isLoading(true);
+      print('Sending transaction data: ${jsonEncode(body)}');
 
       final response = await http.post(
         Uri.parse(apiUrl),
@@ -56,18 +57,37 @@ fetchTransactions(walletCreatingCotroller.wallwtAddress.value);
         body: jsonEncode(body),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseData = json.decode(response.body);
-        Get.snackbar('Success', 'Transaction submitted successfully!');
-        print("Response: $responseData");
+      print('Response status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // Check if response is plain text or JSON
+        if (response.body.trim().startsWith('{')) {
+          try {
+            final responseData = json.decode(response.body);
+            print("Response data: $responseData");
+            //  await walletCreatingCotroller.fetchWalletData(walletAddress,false,false);
+            // await fetchTransactions(walletAddress);
+            Get.snackbar('Success', 'Transaction submitted successfully!');
+           
+          } catch (e) {
+            print('Error parsing JSON response: $e');
+            Get.snackbar('Success', 'Transaction saved successfully');
+          }
+        } else {
+          // Handle plain text response
+          print('Received plain text response: ${response.body}');
+          Get.snackbar('Success', 'Transaction saved successfully');
+        }
       } else {
-        print('Error: ${response.body}');
-        Get.snackbar('Failed', 'Error: ${response.statusCode}');
+        print('Error response: ${response.body}');
+        Get.snackbar('Failed post', 'Error: ${response.statusCode}');
       }
     } catch (e) {
       isLoading(false);
-      print('Exception occurred: $e');
-      Get.snackbar('Exception', e.toString());
+      print('Exception occurred posting: $e');
+      print('Request body that caused error: ${jsonEncode(body)}');
+      Get.snackbar('Exception posting', e.toString());
     } finally {
       isLoading(false);
     }
@@ -109,11 +129,11 @@ print(url);
         swapTransactions.value =
             transactions.where((tx) => tx.method == 'swap').toList();
       } else {
-        Get.snackbar("Error", "Failed to load transactions $walletAddress");
+        Get.snackbar("Error submitting", "Failed to load transactions $walletAddress");
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong: $e");
+      Get.snackbar("Error submitting", "Something went wrong: $e");
     } finally {
       isLoading.value = false;
     }

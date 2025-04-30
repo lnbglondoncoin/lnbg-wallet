@@ -12,6 +12,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
+import 'package:lnbg_crypto_wallet_app/Widgets/shimmer_app_bar_widget.dart';
 
 class SwapView extends StatefulWidget {
    final bool? isFirstTokenSelected;
@@ -36,11 +37,11 @@ final controller=Get.put(SwapController());
     if (widget.token != null) {
       if (widget.isFirstTokenSelected ?? false) {
         controller.firstToken.value = widget.token!;
-         controller.secondToken.value = walletCreatingCotroller.tokenData[0];
+         controller.secondToken.value = walletCreatingCotroller.tokenData[1];
       } else {
         if (walletCreatingCotroller.tokenData.isNotEmpty) {
-     controller.firstToken.value = walletCreatingCotroller.tokenData[0];
-      controller.secondToken.value = walletCreatingCotroller.tokenData[1];
+     controller.firstToken.value = walletCreatingCotroller.tokenData[1];
+      controller.secondToken.value = walletCreatingCotroller.tokenData[2];
    }
             
     controller.  oneFirstCoinEquelsSecondCoins.value=controller.firstToken.value.priceInUsd / controller.secondToken.value.priceInUsd;
@@ -55,11 +56,16 @@ final controller=Get.put(SwapController());
        bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
         backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-        appBar: const CustomAppBar(
-          title: "Swap",
-          iconPath: 'assets/icons/search.svg',
-        ),
-        body: Form(
+        appBar:  PreferredSize(preferredSize:  const Size.fromHeight(kToolbarHeight), child: Obx((){
+        return controller.isLoading.value?ShimmerAppBar(isDarkMode: isDarkMode):CustomAppBar(
+        title: "Swap",
+        iconPath: 'assets/icons/search.svg',
+        isSuffix: false,
+      );
+      })),
+      
+        body: Obx((){
+          return controller.isLoading.value?shimmerLoadingView(isDarkMode):Form(
           key: controller.swapFormKey,
           child: SingleChildScrollView(
             child: Padding(
@@ -275,71 +281,123 @@ final controller=Get.put(SwapController());
                  Row(
                   children: [
                      Flexible(
-                       child: Container(height: 32.h,
-                                       
+                       child: GestureDetector(
+                         onTap: () => controller.calculatePercentage(25),
+                         child: Obx(() => Container(height: 32.h,
                                        decoration: BoxDecoration(
                                          borderRadius: BorderRadius.circular(100.r),
-                                         border: Border.all(color:isDarkMode?lightGreenColor: orange3,width: 2)
+                                         border: Border.all(
+                                           color: controller.selectedPercentage.value == 25 
+                                             ? isDarkMode ? lightGreenColor : orange3 
+                                             : isDarkMode ? lightGreenColor : orange3,
+                                           width: 2
+                                         ),
+                                         color: controller.selectedPercentage.value == 25 
+                                           ? isDarkMode ? lightGreenColor.withOpacity(0.1) : orange3.withOpacity(0.1)
+                                           : Colors.transparent,
                                        ),
                                        child: Center(
                                          child: Text("25%",style: GoogleFonts.urbanist(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                        color:isDarkMode?lightGreenColor: orange3
+                                           fontSize: 14.sp,
+                                           fontWeight: FontWeight.w800,
+                                           color: controller.selectedPercentage.value == 25 
+                                             ? isDarkMode ? lightGreenColor : orange3
+                                             : isDarkMode ? lightGreenColor : orange3
                                          ),),
                                        ),
                                        ),
+                         ),
+                       ),
                      ),
                      SizedBox(width: 10.w,),
                       Flexible(
-                       child: Container(height: 32.h,
-                                       
+                       child: GestureDetector(
+                         onTap: () => controller.calculatePercentage(50),
+                         child: Obx(() => Container(height: 32.h,
                                        decoration: BoxDecoration(
                                          borderRadius: BorderRadius.circular(100.r),
-                                         border: Border.all( color:isDarkMode?lightGreenColor: orange3,width: 2)
+                                         border: Border.all(
+                                           color: controller.selectedPercentage.value == 50 
+                                             ? isDarkMode ? lightGreenColor : orange3 
+                                             : isDarkMode ? lightGreenColor : orange3,
+                                           width: 2
+                                         ),
+                                         color: controller.selectedPercentage.value == 50 
+                                           ? isDarkMode ? lightGreenColor.withOpacity(0.1) : orange3.withOpacity(0.1)
+                                           : Colors.transparent,
                                        ),
                                        child: Center(
                                          child: Text("50%",style: GoogleFonts.urbanist(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                        color:isDarkMode?lightGreenColor: orange3
+                                           fontSize: 14.sp,
+                                           fontWeight: FontWeight.w800,
+                                           color: controller.selectedPercentage.value == 50 
+                                             ? isDarkMode ? lightGreenColor : orange3
+                                             : isDarkMode ? lightGreenColor : orange3
                                          ),),
                                        ),
                                        ),
+                         ),
+                       ),
                      ),
                      SizedBox(width: 10.w,),
                       Flexible(
-                       child: Container(height: 32.h,
-                                       
+                       child: GestureDetector(
+                         onTap: () => controller.calculatePercentage(75),
+                         child: Obx(() => Container(height: 32.h,
                                        decoration: BoxDecoration(
                                          borderRadius: BorderRadius.circular(100.r),
-                                         border: Border.all( color:isDarkMode?lightGreenColor: orange3,width: 2)
+                                         border: Border.all(
+                                           color: controller.selectedPercentage.value == 75 
+                                             ? isDarkMode ? lightGreenColor : orange3 
+                                             : isDarkMode ? lightGreenColor : orange3,
+                                           width: 2
+                                         ),
+                                         color: controller.selectedPercentage.value == 75 
+                                           ? isDarkMode ? lightGreenColor.withOpacity(0.1) : orange3.withOpacity(0.1)
+                                           : Colors.transparent,
                                        ),
                                        child: Center(
                                          child: Text("75%",style: GoogleFonts.urbanist(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                        color:isDarkMode?lightGreenColor: orange3
+                                           fontSize: 14.sp,
+                                           fontWeight: FontWeight.w800,
+                                           color: controller.selectedPercentage.value == 75 
+                                             ? isDarkMode ? lightGreenColor : orange3
+                                             : isDarkMode ? lightGreenColor : orange3
                                          ),),
                                        ),
                                        ),
+                         ),
+                       ),
                      ),
                      SizedBox(width: 10.w,),
                       Flexible(
-                       child: Container(height: 32.h,
-                                       
+                       child: GestureDetector(
+                         onTap: () => controller.calculatePercentage(100),
+                         child: Obx(() => Container(height: 32.h,
                                        decoration: BoxDecoration(
                                          borderRadius: BorderRadius.circular(100.r),
-                                         border: Border.all( color:isDarkMode?lightGreenColor: orange3,width: 2)
+                                         border: Border.all(
+                                           color: controller.selectedPercentage.value == 100 
+                                             ? isDarkMode ? lightGreenColor : orange3 
+                                             : isDarkMode ? lightGreenColor : orange3,
+                                           width: 2
+                                         ),
+                                         color: controller.selectedPercentage.value == 100 
+                                           ? isDarkMode ? lightGreenColor.withOpacity(0.1) : orange3.withOpacity(0.1)
+                                           : Colors.transparent,
                                        ),
                                        child: Center(
                                          child: Text("100%",style: GoogleFonts.urbanist(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                         color:isDarkMode?lightGreenColor: orange3
+                                           fontSize: 14.sp,
+                                           fontWeight: FontWeight.w800,
+                                           color: controller.selectedPercentage.value == 100 
+                                             ? isDarkMode ? lightGreenColor : orange3
+                                             : isDarkMode ? lightGreenColor : orange3
                                          ),),
                                        ),
                                        ),
+                         ),
+                       ),
                      )
                   ],
                  ),
@@ -355,8 +413,10 @@ final controller=Get.put(SwapController());
               ),
             ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        );
+     
+        }),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
           padding:  EdgeInsets.all(20.h),
           child: isDarkMode?CustomGreenButton(buttonText: "Swap", onPressed: (){
@@ -371,4 +431,118 @@ final controller=Get.put(SwapController());
         ),
     );
   }
+  Widget shimmerLoadingView(bool isDarkMode) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+    child: Column(
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24.r),
+            color: isDarkMode ? lightBlackColor2 : whiteColor,
+            border: Border.all(
+              color: isDarkMode ? lightBlackColor : lightBlack,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(15.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                shimmerBox(width: 80.w, height: 14.sp),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    shimmerBox(width: 150.w, height: 24.sp),
+                    Spacer(),
+                    shimmerCircle(size: 24.w),
+                    SizedBox(width: 5.w),
+                    shimmerBox(width: 40.w, height: 20.sp),
+                    SizedBox(width: 5.w),
+                    shimmerCircle(size: 24.w),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                shimmerBox(width: 180.w, height: 14.sp),
+                SizedBox(height: 20.h),
+                Row(
+                  children: [
+                    shimmerLine(width: Get.width / 2.2),
+                    SizedBox(width: 8.w),
+                    shimmerCircle(size: 44.w),
+                    SizedBox(width: 8.w),
+                    Flexible(child: shimmerLine())
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                shimmerBox(width: 80.w, height: 14.sp),
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    shimmerBox(width: 150.w, height: 24.sp),
+                    Row(
+                      children: [
+                        shimmerCircle(size: 24.w),
+                        SizedBox(width: 5.w),
+                        shimmerBox(width: 40.w, height: 20.sp),
+                        SizedBox(width: 5.w),
+                        shimmerCircle(size: 24.w),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                shimmerBox(width: 180.w, height: 14.sp),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 20.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(4, (index) => Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: shimmerBox(height: 32.h),
+            ),
+          )),
+        )
+      ],
+    ),
+  );
+}
+
+// 🔸 Helper Widgets:
+Widget shimmerBox({double? width, double? height}) {
+  return Container(
+    width: width ?? double.infinity,
+    height: height ?? 20.h,
+    decoration: BoxDecoration(
+      color: Colors.grey.shade300,
+      borderRadius: BorderRadius.circular(8.r),
+    ),
+  );
+}
+
+Widget shimmerLine({double? width}) {
+  return Container(
+    width: width ?? double.infinity,
+    height: 1,
+    color: Colors.grey.shade300,
+  );
+}
+
+Widget shimmerCircle({double size = 24}) {
+  return Container(
+    height: size,
+    width: size,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: Colors.grey.shade300,
+    ),
+  );
+}
+
 }

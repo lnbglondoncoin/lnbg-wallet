@@ -8,6 +8,7 @@ class TokenData {
   final double priceInUsd;
   final String trend;
   final double trendPercentage;
+  
 
   TokenData({
     required this.symbol,
