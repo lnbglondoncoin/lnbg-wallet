@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/my_theme.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/theme_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LifeCycleWatcher/life_cycle_watcher.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/controller/lock_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/controller/splash_controller.dart';
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
               data: MediaQuery.of(context)
                   .copyWith(textScaler: const TextScaler.linear(1.0)),
               child: widget!,
+              
             );
           },
           debugShowCheckedModeBanner: false,
@@ -73,7 +75,9 @@ class _MyAppState extends State<MyApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeController.themeMode.value,
-          home: const SplashScreen(),
+          initialRoute: AppRoutes.splashScreen,
+          // home: AppRoutes.splashScreen,
+          getPages: AppRoutes.routes, // ✅ THIS LINE IS ESSENTIAL
           //home: BottomNavBar(),
         );
       },

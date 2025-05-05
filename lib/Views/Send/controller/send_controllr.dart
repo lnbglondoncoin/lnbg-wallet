@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/confir_send_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -229,12 +230,13 @@ Future<void> calculateFees({
     maxFeeUsd.value = feeFastCrypto * tokenPriceInUSD;
     maxFeeCrypto.value = feeFastCrypto;
 
-
-    // Navigate to the next screen
-    Get.to(() => ConfirmSendCoinScreen(
-          address: addressController.text,
-          token: token,
-        ));
+Get.toNamed(
+  AppRoutes.confirmSendCoinScreen,
+  arguments: {
+    'address': addressController.text,
+    'token': token,
+  },
+);
 
     print('Fees calculated successfully');
   } catch (e) {
@@ -604,7 +606,7 @@ Future<void> sendCoin({
     try {
       final response = await http.delete(url);
 
-      if (response.statusCode == 200 || response.statusCode == 204) {
+      if (response.statusCode == 200) {
         transactionController.fetchTransactions(walletAddress);
         Get.snackbar('Success', 'Transaction deleted successfully');
       } else {

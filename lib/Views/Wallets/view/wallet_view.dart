@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Settings/view/show_secret_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Wallets/controller/wallet_controller.dart';
@@ -146,7 +147,7 @@ class WalletScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(() => ShowSeedPhrase());
+                                                Get.toNamed(AppRoutes.showSeedPhrase);
                                             },
                                             child: Text('Show Secret Phrase',
                                                 style: GoogleFonts.urbanist(

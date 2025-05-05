@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/secure_vallet.dart';
 
@@ -47,7 +48,8 @@ class StepController extends GetxController {
     } else {
       updateIndex(1);
       walletCreatingController.savePassword(passController.text);
-      Get.to(() => SecureWalletScreen());
+      Get.toNamed(AppRoutes.secureWalletScreen);
+     
     }
   }
 

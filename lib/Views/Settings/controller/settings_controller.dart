@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AboutLNBG/view/about_lnbg_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AdvanceSettings/view/advance_setting_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Contacts/view/contacts.dart';
@@ -10,6 +11,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/walkth
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/security_and_privacy.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Wallets/view/wallet_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsController extends GetxController {
   List settingIcons = [
@@ -45,24 +47,28 @@ class SettingsController extends GetxController {
     //   Get.to(() => WalletScreen());
     // } 
      if (index == 0) {
-      Get.to(() => GenralSettingsView());
+      Get.toNamed(AppRoutes.genralSettingsView);
+      
     } else if (index == 1) {
-      Get.to(() => SecurityAndPrivacyView());
+      Get.toNamed(AppRoutes.securityAndPrivacyView);
     } 
     // else if (index == 2) {
     //   Get.to(() => AdvanceSettingView());
     // }
      else if (index == 2) {
     } else if (index == 3) {
-      Get.to(() => ContactsView());
+      Get.toNamed(AppRoutes.contactsView);
     } else if (index == 4) {
-      Get.to(() => NotificationSettingsView());
+      Get.toNamed(AppRoutes.notificationSettingsView);
     } else if (index == 5) {
-      Get.to(() => HelpCenterScreen());
+      Get.toNamed(AppRoutes.helpCenterScreen);
+    
     } else if (index == 6) {
-      Get.to(() => InviteFriend());
+      Get.toNamed(AppRoutes.inviteFriend);
+     
     } else if (index == 7) {
-      Get.to(() => AboutLNBG());
+      Get.toNamed(AppRoutes.aboutlnbg);
+     // Get.to(() => AboutLNBG());
     } else if (index == 8) {
       logout();
     } else {}
@@ -71,7 +77,31 @@ class SettingsController extends GetxController {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+Get.offAllNamed(AppRoutes.walkThroughScreen);
+    
+  }
 
-    Get.offAll(() => WalkThroughScreen());
+
+  void followUsTabsOnTap(index) {
+    if (index == 0  ) {
+      final Uri url = Uri.parse('https://twitter.com/lnbglondon');
+      _launchURL(url);
+    }
+    else if(index==2){
+   final Uri url = Uri.parse('https://discord.com/invite/nmZ5vRyyAg');
+      _launchURL(url);
+    }
+    else if(index==4){
+   final Uri url = Uri.parse('https://t.me/lnglondon');
+      _launchURL(url);
+    }
+
+  }
+    Future<void> _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

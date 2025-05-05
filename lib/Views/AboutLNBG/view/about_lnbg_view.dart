@@ -32,12 +32,17 @@ class AboutLNBG extends StatelessWidget {
               ),
             ),
             Center(
-              child: Text(
-                "LNBG Wallet v1.4.0",
-                style: GoogleFonts.urbanist(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24.sp,
-                    color: isDarkMode ? whiteColor : blackColor2),
+              child: GestureDetector(
+                onTap: (){
+                  print(Get.currentRoute);
+                },
+                child: Text(
+                  "LNBG Wallet v1.4.0",
+                  style: GoogleFonts.urbanist(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24.sp,
+                      color: isDarkMode ? whiteColor : blackColor2),
+                ),
               ),
             ),
             SizedBox(
@@ -54,29 +59,34 @@ class AboutLNBG extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 30.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          controller.aboutTabs[index],
-                          style: GoogleFonts.urbanist(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w800,
-                              color: isDarkMode ? whiteColor : blackColor2),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                          width: 20.w,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              "assets/icons/arrowRight.svg",
-                              colorFilter: ColorFilter.mode(
-                                  isDarkMode ? whiteColor : blackColor2,
-                                  BlendMode.srcIn),
-                            ),
+                    child: GestureDetector(
+                      onTap: (){
+                        controller.aboutLnbgTabsOnTap(index);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            controller.aboutTabs[index],
+                            style: GoogleFonts.urbanist(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w800,
+                                color: isDarkMode ? whiteColor : blackColor2),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: 20.h,
+                            width: 20.w,
+                            child: Center(
+                              child: SvgPicture.asset(
+                                "assets/icons/arrowRight.svg",
+                                colorFilter: ColorFilter.mode(
+                                    isDarkMode ? whiteColor : blackColor2,
+                                    BlendMode.srcIn),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 })

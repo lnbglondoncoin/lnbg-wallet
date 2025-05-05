@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_coin.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Receive/view/receive_coin_qr.dart';
@@ -92,10 +93,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  
-                                   Get.to(() => SendCoin(
-                                token: token,
-                              ));
+                                        Get.toNamed(AppRoutes.sendCoin,arguments: token);
+                               
                                  // Get.to(() =>  SendScreen());
                                 },
                                 child: Container(
@@ -124,9 +123,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                               Get.to(() => ReceiveCoinQR(
-                                token: token,
-                              ));
+                              Get.toNamed(AppRoutes.receiveCoinQR,arguments: token);
+                              
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,9 +155,8 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                             Get.to(() => BuyCoinScreen(
-                                token: token,
-                              ));
+                              Get.toNamed(AppRoutes.buyCoinScreen, arguments: token);
+                          
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,10 +187,14 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => SwapView(
-                                token: token,
-                                isFirstTokenSelected: true,
-                              ));
+                              Get.toNamed(
+  AppRoutes.swapView,
+  arguments: {
+    'isFirstTokenSelected': true,
+    'token': token,
+  },
+);
+
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -267,7 +268,14 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                 return                          GestureDetector(
                   onTap: (){
                     if(transection.method=='send'){
-                      Get.to(()=>TransferToken(token: token,transection: transection,));
+                       Get.toNamed(
+  AppRoutes.transferToken,
+  arguments: {
+    'transection': transection,
+    'token': token,
+  },
+);
+                      //Get.to(()=>TransferToken(token: token,transection: transection,));
                     }
                   },
                   child: Container(

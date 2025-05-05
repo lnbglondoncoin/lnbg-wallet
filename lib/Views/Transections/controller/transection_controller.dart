@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
 import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/more_coin_details.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 
@@ -165,11 +166,14 @@ void calculateAverageTransactionAmounts(String tokenName, String method, TokenDa
   avg1Year.value = _calculateAvg(now.subtract(Duration(days: 365)));
   avgTotal.value=avg1Hour.value+avg1Day.value+avg1Week.value+avg1Month.value+avg1Year.value;
   print("values are:$avg1Hour $avg1Day $avg1Day $avg1Week $avg1Month $avg1Year");
-   Get.to(() => MoreCoinDetails(
-                      token: token,
-                      transection: transection,
-                    ));
-                    isLoading(false);
+  Get.toNamed(
+  AppRoutes.moreCoinDetails,
+  arguments: {
+    'transection': transection,
+    'token': token,
+  },
+);
+  
 }
 
 

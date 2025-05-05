@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/view/lock_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/walkthrough.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
@@ -27,11 +28,13 @@ void onInit() async {
   void startTimer() {
     Timer(const Duration(seconds: 3), () async {
      if(isAppLock.value){
-      Get.offAll(()=>LockScreen());
+      Get.offAllNamed(AppRoutes.lockScreen);
+     
      }
      else{
        if (privateKey.value == null ||privateKey.value==""||privateKey.value.isEmpty) {
-        Get.off(() => WalkThroughScreen());
+        Get.offNamed(AppRoutes.walkThroughScreen);
+       
       } else {
         // walletCreatingController.isLoading.value =
         //     true; // Set loading before fetch

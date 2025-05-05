@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/change_password.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/view/show_private_key.dart';
@@ -57,7 +58,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ShowSeedPhrase());
+                  Get.toNamed(AppRoutes.showSeedPhrase);
                 },
                 child: _buildSectionTitle("Reveal Secret Recovery Phrase", context)),
               SizedBox(
@@ -85,7 +86,8 @@ class SecurityAndPrivacyView extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ChangePasswordScreen());
+                  Get.toNamed(AppRoutes.changePasswordScreen);
+              
                 },
                 child: _buildSectionTitle("Change Password", context)),
               SizedBox(
@@ -243,7 +245,7 @@ Obx(() {
               ),
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ShowPrivateKeyScreen());
+                  Get.toNamed(AppRoutes.showPrivateKeyScreen);
                 },
                 child: _buildSectionTitle("Show Private Key", context)),
               SizedBox(height: 30.h),

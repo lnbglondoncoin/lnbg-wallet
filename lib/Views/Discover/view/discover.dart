@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Discover/controller/descover_controlelr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Discover/view/category.dart';
 import 'package:shimmer/shimmer.dart';
@@ -144,8 +145,7 @@ class DiscoverView extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => CoinsCategoryScreen(
-                                          category: category,));
+                                      Get.toNamed(AppRoutes.coinsCategoryScreen,arguments: category);
                                     },
                                     child: Text(
                                       "See All",

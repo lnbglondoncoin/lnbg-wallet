@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/view/lock_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -32,7 +33,8 @@ class LifecycleWatcher with WidgetsBindingObserver {
     } else if (state == AppLifecycleState.resumed && shouldShowLock) {
       shouldShowLock = false;
       if(privateKey != null && privateKey != "" && privateKey.isNotEmpty&&walletCreatingController.importngOrCreatingprocessCompletion.value&&securityController.isRemember.value==false){
-         Get.offAll(() =>  LockScreen());
+         Get.offAllNamed(AppRoutes.lockScreen);
+         
       }
      
     }

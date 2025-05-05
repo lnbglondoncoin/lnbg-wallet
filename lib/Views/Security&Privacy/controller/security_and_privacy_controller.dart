@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/walkthrough.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,8 +45,8 @@ class SecurityAndPrivacyController extends GetxController {
     Future<void> deleteWallet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+Get.offAllNamed(AppRoutes.walkThroughScreen);
 
-    Get.offAll(() => WalkThroughScreen());
   }
   
   Future<void> clearBrowserCookies() async {

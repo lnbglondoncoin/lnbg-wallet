@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/view/lock_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/controller/splash_controller.dart';
@@ -165,55 +166,96 @@ class AppLockController extends GetxController {
   });
 }
 
-
-  void _lockApp() {
-    splashController.isAppLock.value = true;
-    _lastRoute = Get.currentRoute;
-    Get.offAll(() => LockScreen()); // navigate to lock screen
-  }
+void _lockApp() async {
+  splashController.isAppLock.value = true;
+  _lastRoute = Get.currentRoute;
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('last_route', _lastRoute ?? '/');
+  print("$_lastRoute");
+  Get.offAllNamed(AppRoutes.lockScreen);
+}
+  // void _lockApp() {
+  //   splashController.isAppLock.value = true;
+  //   _lastRoute = Get.currentRoute;
+    
+  //   Get.offAll(() => LockScreen()); // navigate to lock screen
+  // }
 
   void unlockApp() async {
     if (isAuthenticated.value) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final privateKey = prefs.getString('privateKey') ?? '';
-      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty&&walletCreatingController.importngOrCreatingprocessCompletion.value) {
-        Get.offAll(() => BottomNavBar());
+      final savedRoute = prefs.getString('last_route');
+
+      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
+      &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
+    if (savedRoute != null && savedRoute.isNotEmpty) {
+ if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
+ Get.offAllNamed(savedRoute); // Go to last route
+ }
+ else{
+    Get.offAllNamed(AppRoutes.home);
+ }
+} else {
+  Get.offAllNamed(AppRoutes.home);
+ 
+}
        
         clearControllers();
       } else {
-        Get.off(() => WalkThroughScreen());
+        Get.offNamed(AppRoutes.walkThroughScreen);
        
         clearControllers();
       }
-    } else if (!unlockAppKey.currentState!.validate()) {
+    } 
+    
+
+
+
+    
+    
+    else if (!unlockAppKey.currentState!.validate()) {
       return;
     } else if (walletCreatingController.password == passController.text) {
       isLoading(true);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+       SharedPreferences prefs = await SharedPreferences.getInstance();
       final privateKey = prefs.getString('privateKey') ?? '';
-      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty) {
-       if(walletCreatingController.tokenData.isNotEmpty&&walletCreatingController.hundredTokenData.isNotEmpty&&walletCreatingController.importngOrCreatingprocessCompletion.value){
-         Get.offAll(() => BottomNavBar());
-        
-        
-       }
-       else{
-        walletCreatingController.loadWaletData(true,);
-       }
-      
-        
+      final savedRoute = prefs.getString('last_route');
+
+      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
+      &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
+    if (savedRoute != null && savedRoute.isNotEmpty) {
+ if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
+ Get.offAllNamed(savedRoute); // Go to last route
+ }
+ else{
+    Get.offAllNamed(AppRoutes.home);
+ }
+} else {
+  Get.offAllNamed(AppRoutes.home);
+ 
+}
+       
         clearControllers();
       } else {
-        isLoading(true);
-        Get.off(() => WalkThroughScreen());
-      
-     
+        Get.offNamed(AppRoutes.walkThroughScreen);
+       
         clearControllers();
       }
-    } else if (walletCreatingController.password != passController.text) {
+    }
+    
+    
+    
+    
+     else if (walletCreatingController.password != passController.text) {
       Get.snackbar("Error", "Incorrect Password");
       clearControllers();
-    } else {
+    } 
+    else if(!isAuthenticated.value){
+ Get.snackbar("Error", "Please Authenticate");
+      clearControllers();
+    }
+    else {
       clearControllers();
     }
   }

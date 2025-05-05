@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/credentials.dart';
@@ -113,6 +114,17 @@ print("merge slugs are $hundredslugs");
       if (lnbgData.value != null) {
         tokens.insert(0, lnbgData.value!);
       }
+      // Check for duplicate tokens and prioritize "lnbg-london-coin"
+        tokens.removeWhere((token) =>
+            token.name == "LNBG London Coin" &&
+            tokens.any((t) => t.name == "lnbg-london-coin"));
+
+        // Place "lnbg-london-coin" at index 0 if it exists
+        final lnbgLondonCoinIndex = tokens.indexWhere((t) => t.name == "lnbg-london-coin");
+        if (lnbgLondonCoinIndex != -1) {
+          final lnbgLondonCoin = tokens.removeAt(lnbgLondonCoinIndex);
+          tokens.insert(0, lnbgLondonCoin);}
+          
      var mergedList = (tokens + tokenData).toSet().toList();
         hundredTokenData.assignAll(mergedList);
 
@@ -337,6 +349,8 @@ var importngOrCreatingprocessCompletion=false.obs;
     }
   }
 
+
+
   Future<void> fetchWalletData(String walletAddress,bool isAppStarting,bool isAccountImported) async {
     print("slus are $slugs");
     // 🔁 Replace "Lnbg_London_Coin" with "lnbg-london-coin" in slugs list
@@ -369,7 +383,17 @@ print(url);
       if (lnbgData.value != null) {
         tokens.insert(0, lnbgData.value!);
       }
+  // Check for duplicate tokens and prioritize "lnbg-london-coin"
+        tokens.removeWhere((token) =>
+            token.name == "LNBG London Coin" &&
+            tokens.any((t) => t.name == "lnbg-london-coin"));
 
+        // Place "lnbg-london-coin" at index 0 if it exists
+        final lnbgLondonCoinIndex = tokens.indexWhere((t) => t.name == "lnbg-london-coin");
+        if (lnbgLondonCoinIndex != -1) {
+          final lnbgLondonCoin = tokens.removeAt(lnbgLondonCoinIndex);
+          tokens.insert(0, lnbgLondonCoin);
+        }
         tokenData.assignAll(tokens);
   
         await getBalanceInUSD(walletAddress);
@@ -383,7 +407,7 @@ print(url);
   
         }
         await fetchUserData(walletAddress);
-      Get.offAll(() => const BottomNavBar());
+       Get.offAllNamed(AppRoutes.home);
       
       } else {
      //   isLoading.value = false;
@@ -478,7 +502,7 @@ var isAcccontCreated=false.obs;
       final url = 'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/wallet/$symbol/coin';
       final response = await http.get(Uri.parse(url));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200||response.statusCode==204) {
         final data = json.decode(response.body);
         if(symbol=="LLC"){
  lnbgData.value = TokenData.fromJson(name, data);

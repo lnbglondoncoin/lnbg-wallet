@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/view/hidden_write_phrase.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_button.dart';
@@ -289,7 +290,8 @@ class SecureWallet2 extends StatelessWidget {
             child: CustomOrangeButton(
                 buttonText: "Start",
                 onPressed: () {
-                  Get.to(() => HiddenWriteSeedPhraseScreen());
+                  Get.toNamed(AppRoutes.hiddenWriteSeedPhraseScreen);
+               
                 })),
       ),
     );

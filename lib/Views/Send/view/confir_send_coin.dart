@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/controller/send_controllr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Send/view/edit_network_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -174,7 +175,8 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                         SizedBox(width: 10.w),
                         GestureDetector(
                           onTap: () {
-                           Get.to(() => EditNetworkScreen(token: token));
+                            Get.toNamed(AppRoutes.editNetworkScreen);
+
                           },
                           child: SvgPicture.asset(
                             "assets/icons/Edit.svg",

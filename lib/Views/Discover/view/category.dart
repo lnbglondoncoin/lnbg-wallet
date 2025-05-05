@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Discover/controller/descover_controlelr.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Discover/view/coin_properties.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/token_details.dart';
@@ -128,11 +129,12 @@ void initState() {
                 padding:  EdgeInsets.only(bottom: index==filteredTokens.length-1?50.h:0.h),
                 child: GestureDetector(
                   onTap: () {
-                     Get.to(() =>
-                                                                  TokenDetailsScreen(
-                                                                    token:
-                                                                        crypto,
-                                                                  ));
+                      Get.toNamed(AppRoutes.tokenDetailsScreen,arguments: crypto);
+                    //  Get.to(() =>
+                    //                                               TokenDetailsScreen(
+                    //                                                 token:
+                    //                                                     crypto,
+                    //                                               ));
                   },
                   child: Container(
                     decoration: BoxDecoration(

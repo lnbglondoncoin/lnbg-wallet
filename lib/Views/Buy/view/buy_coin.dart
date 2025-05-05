@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/buy_coin_contrller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_currency_screen.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/select_provider.dart';
@@ -36,7 +37,8 @@ class BuyCoinScreen extends StatelessWidget {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => CurrencySelectionScreen());
+                    Get.toNamed(AppRoutes.currencySelectionScreen);
+                   
                   },
                   child: Container(
                     width: 100.w,

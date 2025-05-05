@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Settings/controller/settings_controller.dart';
 
 class SocialMediaGrid extends StatelessWidget {
+    final controller = Get.put(SettingsController());
   final List<Map<String, dynamic>> socialMedia = [
     {"icon": "assets/icons/twitter.svg", "name": "Twitter", "color": blueColor},
     {
@@ -42,10 +46,15 @@ class SocialMediaGrid extends StatelessWidget {
       ),
       itemCount: socialMedia.length,
       itemBuilder: (context, index) {
-        return SocialMediaButton(
-          iconPath: socialMedia[index]["icon"],
-          name: socialMedia[index]["name"],
-          color: socialMedia[index]["color"],
+        return GestureDetector(
+          onTap: (){
+            controller.followUsTabsOnTap(index);
+          },
+          child: SocialMediaButton(
+            iconPath: socialMedia[index]["icon"],
+            name: socialMedia[index]["name"],
+            color: socialMedia[index]["color"],
+          ),
         );
       },
     );

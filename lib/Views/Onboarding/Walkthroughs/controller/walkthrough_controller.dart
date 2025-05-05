@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Walkthroughs/view/wallet_setup.dart';
 
 class WalkThroughController extends GetxController {
@@ -37,7 +38,8 @@ class WalkThroughController extends GetxController {
       );
       currentIndex.value++;
     } else {
-      Get.to(() => const WalletSetUpScreen());
+      Get.toNamed(AppRoutes.walletSetUpScreen);
+   
     }
   }
 }

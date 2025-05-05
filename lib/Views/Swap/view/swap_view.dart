@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/controller/swap_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/select_coin_to_swap.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Swap/view/swap_coin.dart';
@@ -152,8 +153,8 @@ final controller=Get.put(SwapController());
                           SizedBox(width: 5.w,),
                           GestureDetector(
                             onTap: (){
-                              Get.to(()=>SelectCoinToSwap(firstCoin: true,));
-                              
+                              Get.toNamed(AppRoutes.selectCoinToSwap,arguments:true);
+                            
                             },
                             child: SizedBox(
                               height: 24.h,
@@ -249,7 +250,7 @@ final controller=Get.put(SwapController());
                           SizedBox(width: 5.w,),
                         GestureDetector(
                           onTap: (){
-                             Get.to(()=>SelectCoinToSwap(firstCoin: false,));
+                            Get.toNamed(AppRoutes.selectCoinToSwap,arguments:false);
                           },
                             child: SizedBox(
                               height: 24.h,
@@ -421,11 +422,12 @@ final controller=Get.put(SwapController());
           padding:  EdgeInsets.all(20.h),
           child: isDarkMode?CustomGreenButton(buttonText: "Swap", onPressed: (){
           if(controller.validateForm()){
-             Get.to(()=>SwapCoinScreen());
+            Get.toNamed(AppRoutes.swapCoinScreen);
+             
           }
           }):CustomButton(buttonText: "Swap", onPressed: (){
              if(controller.validateForm()){
-             Get.to(()=>SwapCoinScreen());
+              Get.toNamed(AppRoutes.swapCoinScreen);
           }
           }),
         ),

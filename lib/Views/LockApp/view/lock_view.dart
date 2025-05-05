@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/view/unlock_view.dart';
 
 class LockScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class LockScreen extends StatelessWidget {
               SizedBox(height: 20.h,),
               GestureDetector(
                 onTap: (){
-                  Get.offAll(()=>UnlockView());
+                  Get.offAllNamed(AppRoutes.unlockView);
                 },
                 child: Text("Click to unlock",
                   style: TextStyle(color: Colors.white, fontSize: 20.sp),),

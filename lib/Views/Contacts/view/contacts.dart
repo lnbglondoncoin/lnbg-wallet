@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Contacts/controller/contact_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Contacts/view/add_contact.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -24,7 +25,8 @@ class ContactsView extends StatelessWidget {
         iconPath: "assets/icons/plusIcon.svg",
         isSuffix: true,
         onSuffixTap: () {
-          Get.to(() => const AddContact());
+          Get.toNamed(AppRoutes.addContact);
+         
         },
       ),
       body: Padding(

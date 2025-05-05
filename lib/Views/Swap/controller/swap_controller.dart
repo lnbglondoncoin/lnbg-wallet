@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/BottomNavigationBar/view/bottom_nav_bar.dart';
@@ -841,12 +842,12 @@ void _showSuccesPopup(BuildContext context) {
                   buttonText: "View Details",
                   onPressed: () {
                     Navigator.pop(context);
-                    Get.offAll(() => const BottomNavBar());
+                    Get.offAllNamed(AppRoutes.home);
                   })
               : GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    Get.offAll(() => const BottomNavBar());
+                   Get.offAllNamed(AppRoutes.home);
                   },
                   child: Container(
                     height: 58.h,
@@ -873,7 +874,7 @@ void _showSuccesPopup(BuildContext context) {
               buttonText: "Cancel",
               onPressed: () {
                 Navigator.pop(context);
-                Get.offAll(() => const BottomNavBar());
+                Get.offAllNamed(AppRoutes.home);
               })
         ],
       );

@@ -11,3 +11,4 @@ String shortenAddress(String address) {
   String end = address.substring(address.length - 9); // Last 9 characters
   return '$start...$end';
 }
+

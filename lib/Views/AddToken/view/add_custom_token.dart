@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/controller/add_token_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/search_network.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -48,7 +49,8 @@ class AddCustomToken extends StatelessWidget {
                           child: Column(
                             children: [
                               GestureDetector(
-                                onTap: () => Get.to(() => SearchNetworkScreen()),
+                                onTap: () =>
+                                Get.toNamed(AppRoutes.searchNetworkScreen),
                                 child: Row(
                                   children: [
                                     Text(

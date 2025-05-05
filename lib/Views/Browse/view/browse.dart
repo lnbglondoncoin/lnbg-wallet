@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/controller/browse_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/view/all_popular_tokens.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Browse/view/browse_history.dart';
@@ -257,9 +258,8 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => BrowseHistoryScreen(
-                          
-                          ));
+                       Get.toNamed(AppRoutes.browseHistoryScreen);
+                   
                     },
                     child: Text(
                       "See All",
@@ -369,7 +369,8 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                   ),
                   GestureDetector(
                     onTap: (){
-                      Get.to(()=>AllPopularTokens());
+                      Get.toNamed(AppRoutes.allPopularTokens);
+                    
                     },
                     child: Text(
                       "See All",

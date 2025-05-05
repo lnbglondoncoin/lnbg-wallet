@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/constant_list.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/controller/buy_coin_contrller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/add_new_card.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
@@ -86,7 +87,8 @@ class SelectProviderScreen extends StatelessWidget {
         child: CustomLightGreenButton(
           buttonText: "Add Credit or Debit Card",
           onPressed: () {
-            Get.to(() => const AddNewCardScreen());
+            Get.toNamed(AppRoutes.addNewCardScreen);
+           
           },
         ),
       ),

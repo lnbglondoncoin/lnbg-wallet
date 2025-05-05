@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/controller/add_token_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_custom_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
@@ -112,7 +113,7 @@ class AddTokenScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(right: 20.w),
               child: GestureDetector(
-                onTap: () => Get.to(() => const AddCustomToken()),
+                onTap: () => Get.toNamed(AppRoutes.addCustomToken),
                 child: SvgPicture.asset(
                   "assets/icons/plusIcon.svg",
                   colorFilter: ColorFilter.mode(

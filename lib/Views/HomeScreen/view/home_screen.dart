@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/images.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/AddToken/view/add_token.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Buy/view/buy_view.dart';
 import 'package:lnbg_crypto_wallet_app/Views/NFT/controller/nft_controller.dart';
@@ -124,7 +125,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => NotificationScreen());
+                                      Get.toNamed(AppRoutes.notificationScreen);
+                            
                                     },
                                     child: SizedBox(
                                         height: 28.h,
@@ -175,7 +177,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          Get.to(() => SendScreen());
+                                          Get.toNamed(AppRoutes.sendScreen);
+                                       
                                         },
                                         child: Container(
                                           height: 60.h,
@@ -204,7 +207,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => ReceiveView());
+                                      Get.toNamed(AppRoutes.receiveView);
+                          
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -237,7 +241,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => BuyView());
+                                      Get.toNamed(AppRoutes.buyView);
+                                   
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -270,7 +275,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => SwapView());
+                                      Get.toNamed(AppRoutes.swapView);
+                                     
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -397,11 +403,12 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                           // final balances=walletCreatingController.coinBalances[index];
                                                           return GestureDetector(
                                                             onTap: () {
-                                                              Get.to(() =>
-                                                                  TokenDetailsScreen(
-                                                                    token:
-                                                                        token,
-                                                                  ));
+                                                              Get.toNamed(AppRoutes.tokenDetailsScreen,arguments: token);
+                                                              // Get.to(() =>
+                                                              //     TokenDetailsScreen(
+                                                              //       token:
+                                                              //           token,
+                                                              //     ));
                                                             },
                                                             child: Container(
                                                               // height: 80.h,
@@ -530,8 +537,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     ),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        Get.to(() =>
-                                                             AddTokenScreen());
+                                                        Get.toNamed(AppRoutes.addTokenScreen);
+                                                   
                                                       },
                                                       child: Container(
                                                         height: 45.h,
@@ -698,8 +705,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      Get.to(() =>
-                                                           ImportNFTScreen());
+                                                      Get.toNamed(AppRoutes.importNFTScreen);
                                                     },
                                                     child: Text(
                                                       "Import NFTs",

@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/animation_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/controller/wallet_controller.dart';
@@ -276,7 +277,8 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                 walletCreatingController.shuffleList(
                     walletCreatingController.mnemonicWords.sublist(6, 12));
                 walletCreatingController.orderList.clear();
-                Get.to(() => ConfirmSeedPhrase2Screen());
+                Get.toNamed(AppRoutes.confirmSeedPhrase2Screen);
+               // Get.to(() => ConfirmSeedPhrase2Screen());
                 walletCreatingController.indexes.clear();
                 controller.updateIndex(2);
               } else {
