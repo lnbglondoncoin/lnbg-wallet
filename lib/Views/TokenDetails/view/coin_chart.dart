@@ -57,7 +57,7 @@ final transactionController = Get.put(TransactionController());
                         getTitlesWidget: (value, meta) {
                           List<String> labels = ["1H", "1D", "1W", "1M", "1Y", "All"];
                           return Text(
-                            labels[value.toInt()],
+                            labels[value.toInt()].tr,
                             style: GoogleFonts.urbanist(
                               fontSize: 14.sp,
                                 color: value == 1

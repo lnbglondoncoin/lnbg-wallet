@@ -28,7 +28,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(title: "Security & Privacy", iconPath: ""),
+      appBar:  CustomAppBar(title: "Security & Privacy".tr, iconPath: ""),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.h),
@@ -37,7 +37,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Reveal Secret Recovery Phrase",
+                "Reveal Secret Recovery Phrase".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -47,7 +47,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                "Protect your wallet by saving your secret recovery phrase in the saving & various places like on a piece of paper, password manager, and/or the cloud.",
+                "Protect your wallet by saving your secret recovery phrase in the saving & various places like on a piece of paper, password manager, and/or the cloud.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -60,12 +60,12 @@ class SecurityAndPrivacyView extends StatelessWidget {
                 onTap: (){
                   Get.toNamed(AppRoutes.showSeedPhrase);
                 },
-                child: _buildSectionTitle("Reveal Secret Recovery Phrase", context)),
+                child: _buildSectionTitle("Reveal Secret Recovery Phrase".tr, context)),
               SizedBox(
                 height: 40.h,
               ),
               Text(
-                "Password",
+                "Password".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -75,7 +75,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                "Choose a strong password to unlock LNBG Wallet app on your devices. If you lose this password, you will need your secret recovery phrase to re-import your wallet.",
+                "Choose a strong password to unlock LNBG Wallet app on your devices. If you lose this password, you will need your secret recovery phrase to re-import your wallet.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -89,12 +89,12 @@ class SecurityAndPrivacyView extends StatelessWidget {
                   Get.toNamed(AppRoutes.changePasswordScreen);
               
                 },
-                child: _buildSectionTitle("Change Password", context)),
+                child: _buildSectionTitle("Change Password".tr, context)),
               SizedBox(
                 height: 40.h,
               ),
               Text(
-                "Auto-Lock",
+                "Auto-Lock".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -109,17 +109,20 @@ class SecurityAndPrivacyView extends StatelessWidget {
                     color: isDarkMode ? greyColor : greyColor3),
               ),
               SizedBox(height: 15.h),
-              ReusableDropdown(
-                items: const [
-                  "After 5 minutes",
-                  "After 10 minutes",
-                  "After 15 minutes"
-                ],
-                selectedValue: controller.selectedlocTime,
-                onChanged: (newValue) {
-    controller.setSelectedTime(newValue);
+ReusableDropdown(
+  items: [
+    "After 5 minutes".tr,
+    "After 10 minutes".tr,
+    "After 15 minutes".tr
+  ],
+  selectedValue: controller.selectedlocTime,
+  onChanged: (newValue) {
+    // Make sure the newValue is unique
+    if (newValue != null) {
+      controller.setSelectedTime(newValue.tr);
+    }
   },
-              ),
+),
               // SizedBox(
               //   height: 40.h,
               // ),
@@ -161,7 +164,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Turn on Remember me",
+                    "Turn on Remember me".tr,
                     style: GoogleFonts.urbanist(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -174,7 +177,7 @@ class SecurityAndPrivacyView extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                "When remember me is on, anyone with access to your phone can access your LNBG Wallet account.",
+                "When remember me is on, anyone with access to your phone can access your LNBG Wallet account.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -200,7 +203,7 @@ Obx(() {
     );
   } else {
     return Text(
-      "Show Private Key for ${walletCreatingController.userName.value}",
+      "${"Show Private Key for".tr} ${walletCreatingController.userName.value}",
       style: GoogleFonts.urbanist(
         fontSize: 20.sp,
         fontWeight: FontWeight.w700,
@@ -230,7 +233,7 @@ Obx(() {
     );
   } else {
     return Text(
-      "This is the private key for the current selected wallet account: ${walletCreatingController.userName.value}. Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.",
+      "${"This is the private key for the current selected wallet account:".tr} ${walletCreatingController.userName.value}. ${"Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.".tr}",
       style: GoogleFonts.urbanist(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
@@ -247,7 +250,7 @@ Obx(() {
                 onTap: (){
                   Get.toNamed(AppRoutes.showPrivateKeyScreen);
                 },
-                child: _buildSectionTitle("Show Private Key", context)),
+                child: _buildSectionTitle("Show Private Key".tr, context)),
               SizedBox(height: 30.h),
               const CustomDivider(),
               // SizedBox(height: 35.h),
@@ -290,7 +293,7 @@ Obx(() {
                 height: 40.h,
               ),
               Text(
-                "Clear Browser History",
+                "Clear Browser History".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -300,7 +303,7 @@ Obx(() {
                 height: 10.h,
               ),
               Text(
-                "Choose this option to clear all your entire browsing history.",
+                "Choose this option to clear all your entire browsing history.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -313,12 +316,12 @@ Obx(() {
                 onTap: (){
 controller.clearBrowserHistory();
                 },
-                child: _buildSectionTitle("Clear Browser History", context)),
+                child: _buildSectionTitle("Clear Browser History".tr, context)),
               SizedBox(
                 height: 40.h,
               ),
               Text(
-                "Clear Browser Cookies",
+                "Clear Browser Cookies".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -328,7 +331,7 @@ controller.clearBrowserHistory();
                 height: 10.h,
               ),
               Text(
-                "Choose this option to clear all your entire browser cookies.",
+                "Choose this option to clear all your entire browser cookies.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -341,7 +344,7 @@ controller.clearBrowserHistory();
                 onTap: (){
                   controller.clearBrowserCookies();
                 },
-                child: _buildSectionTitle("Clear Browser Cookies", context)),
+                child: _buildSectionTitle("Clear Browser Cookies".tr, context)),
               SizedBox(
                 height: 40.h,
               ),
@@ -476,23 +479,18 @@ controller.clearBrowserHistory();
               // SizedBox(
               //   height: 40.h,
               // ),
-              GestureDetector(
-                onTap: ()async{
-                await  controller.deleteWallet();
-                },
-                child: Text(
-                  "Delete Wallet",
+             Text(
+                  "Delete Wallet".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
                       color: isDarkMode ? whiteColor : blackColor2),
                 ),
-              ),
               SizedBox(
                 height: 10.h,
               ),
               Text(
-                "This will remove all wallet related data from your device. Your accounts exist on the blockchain and are not related to LNBG Wallet. You can always recover your accounts using your Secret Recovery Phrase. ",
+                "This will remove all wallet related data from your device. Your accounts exist on the blockchain and are not related to LNBG Wallet. You can always recover your accounts using your Secret Recovery Phrase. ".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -501,20 +499,25 @@ controller.clearBrowserHistory();
               SizedBox(
                 height: 20.h,
               ),
-              Container(
-                height: 45.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(color: pinkColor, width: 2.h),
-                    borderRadius: BorderRadius.circular(100.r)),
-                child: Center(
-                  child: Text(
-                    "Delete Wallet",
-                    style: GoogleFonts.urbanist(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: pinkColor),
+              GestureDetector(
+                onTap: ()async{
+                await  controller.deleteWallet();
+                },
+                child: Container(
+                  height: 45.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: pinkColor, width: 2.h),
+                      borderRadius: BorderRadius.circular(100.r)),
+                  child: Center(
+                    child: Text(
+                      "Delete Wallet".tr,
+                      style: GoogleFonts.urbanist(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                          color: pinkColor),
+                    ),
                   ),
                 ),
               ),
@@ -534,7 +537,7 @@ controller.clearBrowserHistory();
         theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Container(
-      height: 45.h,
+     // height: 45.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.transparent,
@@ -542,12 +545,16 @@ controller.clearBrowserHistory();
               color: isDarkMode ? lightGreenColor : orange3, width: 2.h),
           borderRadius: BorderRadius.circular(100.r)),
       child: Center(
-        child: Text(
-          title,
-          style: GoogleFonts.urbanist(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-              color: isDarkMode ? lightGreenColor : orange3),
+        child: Padding(
+          padding:  EdgeInsets.all(8.h),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.urbanist(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: isDarkMode ? lightGreenColor : orange3),
+          ),
         ),
       ),
     );

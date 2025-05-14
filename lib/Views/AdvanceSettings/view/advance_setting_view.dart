@@ -21,7 +21,7 @@ class AdvanceSettingView extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-        appBar: const CustomAppBar(title: "Advanced", iconPath: ""),
+        appBar:  CustomAppBar(title: "Advanced".tr, iconPath: ""),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(20.h),
@@ -29,7 +29,7 @@ class AdvanceSettingView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "State Logs",
+                  "State Logs".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -39,7 +39,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "State logs contain your public account addresses and sent transactions.",
+                  "State logs contain your public account addresses and sent transactions.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -48,12 +48,12 @@ class AdvanceSettingView extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                _buildSectionTitle("Download State Logs", context),
+                _buildSectionTitle("Download State Logs".tr, context),
                 SizedBox(
                   height: 30.h,
                 ),
                 Text(
-                  "Sync with Dekstop",
+                  "Sync with Dekstop".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -63,12 +63,12 @@ class AdvanceSettingView extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                _buildSectionTitle("Sync with Dekstop", context),
+                _buildSectionTitle("Sync with Dekstop".tr, context),
                 SizedBox(
                   height: 30.h,
                 ),
                 Text(
-                  "State Logs",
+                  "State Logs".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -78,7 +78,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "State logs contain your public account addresses and sent transactions.",
+                  "State logs contain your public account addresses and sent transactions.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -87,7 +87,7 @@ class AdvanceSettingView extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                _buildSectionTitle("Download State Logs", context),
+                _buildSectionTitle("Download State Logs".tr, context),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -95,7 +95,7 @@ class AdvanceSettingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Advanced Gas Controls",
+                      "Advanced Gas Controls".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -108,7 +108,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "Select this to show gas price and limit controls directly on the send and confirm screens.",
+                  "Select this to show gas price and limit controls directly on the send and confirm screens.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -122,7 +122,7 @@ class AdvanceSettingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Show Hex Data",
+                      "Show Hex Data".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -135,7 +135,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "Select this to show the hex data field on the send screen.",
+                  "Select this to show the hex data field on the send screen.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -148,7 +148,7 @@ class AdvanceSettingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Customize Transaction Nonce",
+                      "Customize Transaction Nonce".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -161,7 +161,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "Turn this on to change the nonce (transaction number) on confirmation screens. This is an advanced feature, use cautiously.",
+                  "Turn this on to change the nonce (transaction number) on confirmation screens. This is an advanced feature, use cautiously.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -175,7 +175,7 @@ class AdvanceSettingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Sync Data with 3Box",
+                      "Sync Data with 3Box".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -188,7 +188,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "Turn on to have your settings backed up with 3Box. This feature is currently experimental; use at your own risk.",
+                  "Turn on to have your settings backed up with 3Box. This feature is currently experimental; use at your own risk.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -202,7 +202,7 @@ class AdvanceSettingView extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        "Dismiss Secret Recovery Phrase Backup Reminder",
+                        "Dismiss Secret Recovery Phrase Backup Reminder".tr,
                         maxLines: 2,
                         style: GoogleFonts.urbanist(
                             fontSize: 20.sp,
@@ -217,7 +217,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "Turn this on to dismiss the Secret Recovery Phrase backup reminder message. We highly recommend that you back up your Secret Recovery Phrase to avoid loss of funds.",
+                  "Turn this on to dismiss the Secret Recovery Phrase backup reminder message. We highly recommend that you back up your Secret Recovery Phrase to avoid loss of funds.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -230,7 +230,7 @@ class AdvanceSettingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Enhanced Token Detection",
+                      "Enhanced Token Detection".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -243,7 +243,7 @@ class AdvanceSettingView extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  "We use third-party APIs to detect and display new tokens sent to your wallet. Turn off if you don’t want the app to pull data from those services.",
+                  "We use third-party APIs to detect and display new tokens sent to your wallet. Turn off if you don’t want the app to pull data from those services.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -254,7 +254,7 @@ class AdvanceSettingView extends StatelessWidget {
                 ),
 
                 Text(
-                  "IPFS Gateway",
+                  "IPFS Gateway".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -262,7 +262,7 @@ class AdvanceSettingView extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  "Enter the URL of the IPFS CID gateway to use for ENS content resolution.",
+                  "Enter the URL of the IPFS CID gateway to use for ENS content resolution.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -270,14 +270,14 @@ class AdvanceSettingView extends StatelessWidget {
                 ),
 
                 CustomTextField(
-                    hintText: "dweb.link",
+                    hintText: "dweb.link".tr,
                     controller: TextEditingController(),
                     labelText: ""),
                 SizedBox(
                   height: 30.h,
                 ),
                 Text(
-                  "Preferred Ledger Connection Type",
+                  "Preferred Ledger Connection Type".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -295,7 +295,7 @@ class AdvanceSettingView extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            "Customize how you connect your Ledger to LNBG Wallet. WebHID is recommended, but other options are available. Read more here: ",
+                            "Customize how you connect your Ledger to LNBG Wallet. WebHID is recommended, but other options are available. Read more here: ".tr,
                         style: GoogleFonts.urbanist(
                           color: isDarkMode ? greyColor : greyColor3,
                           fontWeight: FontWeight.bold,
@@ -317,7 +317,7 @@ class AdvanceSettingView extends StatelessWidget {
                 ),
                 SizedBox(height: 15.h),
                 ReusableDropdown(
-                  items: const ["WebHID", "WebHID2", "WebHID3"],
+                  items:  ["WebHID".tr, "WebHID2".tr, "WebHID3".tr],
                   selectedValue: controller.selectedLegerConType,
                 ),
                 SizedBox(

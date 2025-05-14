@@ -17,7 +17,7 @@ class NotificationSettingsView extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(title: "Notifications", iconPath: ""),
+      appBar:  CustomAppBar(title: "Notifications".tr, iconPath: ""),
       body: Padding(
           padding: EdgeInsets.all(20.h),
           child: ListView.builder(
@@ -32,7 +32,7 @@ class NotificationSettingsView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        controller.tabs[index],
+                        controller.tabs[index].tr,
                         style: GoogleFonts.urbanist(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w800,

@@ -56,7 +56,7 @@ class UnlockView extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Unlock Your App",
+          "Unlock Your App".tr,
           style: GoogleFonts.urbanist(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
@@ -78,16 +78,16 @@ class UnlockView extends StatelessWidget {
                   
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Password",
+                      hintText: "Password".tr,
                       controller: controller.passController,
-                      labelText: "Enter Password",
+                      labelText: "Enter Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Password cannot be empty";
+                          return "Password cannot be empty".tr;
                         } else if (value.length < 8) {
-                          return "Must be at least 8 characters";
+                          return "Must be at least 8 characters".tr;
                         }
                         return null;
                       },
@@ -97,16 +97,16 @@ class UnlockView extends StatelessWidget {
                     ),
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Confirm Password",
+                      hintText: "Confirm Password".tr,
                       controller: controller.confirmPasswordController,
-                      labelText: "Confirm Password",
+                      labelText: "Confirm Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Confirm Password cannot be empty";
+                          return "Confirm Password cannot be empty".tr;
                         } else if (value != controller.passController.text) {
-                          return "Password must be match";
+                          return "Password must be match".tr;
                         }
                         return null;
                       },
@@ -123,7 +123,7 @@ class UnlockView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Sign in with Biometrics?",
+                          "Sign in with Biometrics?".tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
@@ -169,7 +169,7 @@ class UnlockView extends StatelessWidget {
           child: Obx((){
             return  controller.isLoading.value?LoadingSpinner():
            CustomOrangeButton(
-                    buttonText: "Unlock",
+                    buttonText: "Unlock".tr,
                     onPressed: () {
                     controller.unlockApp();
                     });

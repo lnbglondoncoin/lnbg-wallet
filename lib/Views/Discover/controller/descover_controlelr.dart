@@ -26,7 +26,7 @@ void onInit() {
     isLoading(false); // All done!
   }).catchError((e) {
     isLoading(false);
-    Get.snackbar("Error", e.toString());
+    Get.snackbar("Error".tr, e.toString());
   });
 }
  
@@ -97,10 +97,10 @@ void onInit() {
         data.map((e) => TokenData.fromJson(category, e)).toList(),
       );
     } else {
-      Get.snackbar("Error", "Failed to load $category data");
+      Get.snackbar("Error".tr, "${"Failed to load".tr} $category ${"data".tr}");
     }
   } catch (e) {
-    Get.snackbar("Exception", e.toString());
+    Get.snackbar("Exception".tr, e.toString());
   }
 }
 
@@ -130,11 +130,11 @@ void onInit() {
       List data = jsonDecode(response.body);
       tokenList.value = data.map((e) => TokenData.fromJson(category, e)).toList();
     } else {
-      Get.snackbar("Error", "Failed to fetch tokens");
+      Get.snackbar("Error".tr, "Failed to fetch tokens".tr);
     }
   } catch (e) {
     isLoading(false);
-    Get.snackbar("Error", e.toString());
+    Get.snackbar("Error".tr, e.toString());
   } finally {
     isLoading(false);
   }

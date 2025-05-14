@@ -48,7 +48,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Write Down Your Seed Phrase",
+                      "Write Down Your Seed Phrase".tr,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w700,
                           fontSize: 32.sp,
@@ -60,7 +60,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",
+                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.".tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
@@ -123,7 +123,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      "Tap to reveal your seed phrase",
+                                      "Tap to reveal your seed phrase".tr,
                                       style: GoogleFonts.urbanist(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                     ),
                                     SizedBox(height: 10.h),
                                     Text(
-                                      "Make sure no one is watching your screen.",
+                                      "Make sure no one is watching your screen.".tr,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -165,7 +165,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
                                             color: whiteColor,
                                           ),
                                           SizedBox(width: 8.w),
-                                          Text("View",
+                                          Text("View".tr,
                                               style: GoogleFonts.urbanist(
                                                   fontSize: 18.sp,
                                                   fontWeight: FontWeight.w700,
@@ -199,7 +199,7 @@ class HiddenWriteSeedPhraseScreen extends StatelessWidget {
       floatingActionButton: Padding(
           padding:
               EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
-          child: CustomOrangeButton(buttonText: "Next", onPressed: () {})),
+          child: CustomOrangeButton(buttonText: "Next".tr, onPressed: () {})),
     );
   }
 }

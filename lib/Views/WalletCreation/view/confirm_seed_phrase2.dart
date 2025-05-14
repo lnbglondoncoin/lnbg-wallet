@@ -74,7 +74,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   Center(
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Confirm Seed Phrase",
+                      "Confirm Seed Phrase".tr,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w700,
                           fontSize: 32.sp,
@@ -86,7 +86,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Select each word in the order it was presented to you.",
+                    "Select each word in the order it was presented to you.".tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
@@ -287,7 +287,7 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
             return walletCreatingController.isLoading.value?
             shimmerLoadingWidget():
             CustomOrangeButton(
-              buttonText: "Next",
+              buttonText: "Next".tr,
               onPressed: () {
                 walletCreatingController.changeisTrue(true);
                 if (listEquals(walletCreatingController.secondHalfofMnemonic,
@@ -298,8 +298,8 @@ class ConfirmSeedPhrase2Screen extends StatelessWidget {
                   _showPopup(context);
                 } else {
                   walletCreatingController.changeisTrue(false);
-                  Get.snackbar('Error',
-                      'Please tap phrases in the order provided to you on the previous page',
+                  Get.snackbar('Error'.tr,
+                      'Please tap phrases in the order provided to you on the previous page'.tr,
                       backgroundColor: orange3,
                       snackPosition: SnackPosition.TOP);
                 }
@@ -493,12 +493,12 @@ Widget shimmerSeedPhraseScreen() {
                   width: 186.w,
                 ),
           title: Text(
-            "Successful!",
+            "Successful!".tr,
             style: GoogleFonts.urbanist(
                 fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
           ),
           content: Text(
-              "You've successfully protected your wallet. Remember to keep your seed phrase safe, it's your responsibility!",
+              "You\'ve successfully protected your wallet. Remember to keep your seed phrase safe, it\'s your responsibility!".tr,
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
@@ -520,7 +520,7 @@ Widget shimmerSeedPhraseScreen() {
                    // await walletCreatingController.fetchCoinData(true);
                   } else {
                     Get.snackbar(
-                        "Error", "Failed to create wallet. Try again.");
+                        "Error".tr, "Failed to create wallet. Try again.".tr);
                   }
                   //  walletCreatingController.fetchCoinData();
                 },
@@ -537,7 +537,7 @@ Widget shimmerSeedPhraseScreen() {
                                 colors: [orange2, orange1])),
                         child: Center(
                           child: Text(
-                            "OK",
+                            "OK".tr,
                             style: GoogleFonts.urbanist(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 18.sp,
@@ -550,7 +550,7 @@ Widget shimmerSeedPhraseScreen() {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20.h),
               child: Text(
-                "Your seeed phrase in Settings > Security & Privacy",
+                "Your seeed phrase in Settings > Security & Privacy".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,

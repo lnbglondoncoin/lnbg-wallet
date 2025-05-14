@@ -20,8 +20,8 @@ class EditNetworkScreen extends StatelessWidget {
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(
-        title: "Edit Network Fee",
+      appBar:  CustomAppBar(
+        title: "Edit Network Fee".tr,
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       ),
@@ -42,7 +42,7 @@ class EditNetworkScreen extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                "The network fee covers the cost of processing your transaction on the Ethereum network.",
+                "The network fee covers the cost of processing your transaction on the Ethereum network.".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
@@ -87,7 +87,7 @@ class EditNetworkScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      networkSpeedList[index],
+                                      networkSpeedList[index].tr,
                                       style: GoogleFonts.urbanist(
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w700,
@@ -164,7 +164,7 @@ class EditNetworkScreen extends StatelessWidget {
                 height: 20.h,
               ),
               Text(
-                "Advanced",
+                "Advanced".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -186,9 +186,9 @@ class EditNetworkScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                       Text(
-                index==0?"Max Fee (Gwei)":
-                index==1?"Gas Limit":
-                "Nonce",
+                index==0?"Max Fee (Gwei)".tr:
+                index==1?"Gas Limit".tr:
+                "Nonce".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -237,12 +237,12 @@ class EditNetworkScreen extends StatelessWidget {
           padding: EdgeInsets.all(20.h),
           child: isDarkMode
               ? CustomGreenButton(
-                  buttonText: "Ok",
+                  buttonText: "Ok".tr,
                   onPressed: () {
      Get.back();
                   })
               : CustomButton(
-                  buttonText: "Ok",
+                  buttonText: "Ok".tr,
                   onPressed: ()  {
                              Get.back();
                   })),

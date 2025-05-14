@@ -17,7 +17,7 @@ class LockScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'App Locked',
+                'App Locked'.tr,
                 style: TextStyle(color: Colors.white, fontSize: 30.sp),
               ),
           
@@ -26,13 +26,13 @@ class LockScreen extends StatelessWidget {
                 onTap: (){
                   Get.offAllNamed(AppRoutes.unlockView);
                 },
-                child: Text("Click to unlock",
+                child: Text("Click to unlock".tr,
                   style: TextStyle(color: Colors.white, fontSize: 20.sp),),
               ),
               SizedBox(height: 10.h,),
               Text(
                 textAlign: TextAlign.center,
-                "You can change auto lock app time in settings=>Security and Privacy in(Auto Lock section)",
+                "You can change auto lock app time in settings=>Security and Privacy in(Auto Lock section)".tr,
                   style: TextStyle(color: Colors.white, fontSize: 12.sp),),
             ],
           ),

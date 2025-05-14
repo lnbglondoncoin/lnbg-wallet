@@ -46,7 +46,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
               children: [
                 Row(
                   children: [
-                    Text("Coin",style: GoogleFonts.urbanist(
+                    Text("Coin".tr,style: GoogleFonts.urbanist(
                       color:isDarkMode?greyColor: darkGreyColor,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800
@@ -113,7 +113,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                 height: 10.h,
                               ),
                               Text(
-                                "Send",
+                                "Send".tr,
                                 style: GoogleFonts.urbanist(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w700,
@@ -144,7 +144,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                   height: 10.h,
                                 ),
                                 Text(
-                                  "Receive",
+                                  "Receive".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
@@ -176,7 +176,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                   height: 10.h,
                                 ),
                                 Text(
-                                  "Buy",
+                                  "Buy".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
@@ -214,7 +214,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                                   height: 10.h,
                                 ),
                                 Text(
-                                  "Swap",
+                                  "Swap".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700,
@@ -229,7 +229,7 @@ backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
                     const CustomDivider() ,
                     SizedBox(height: 20.h,), 
                      Text(
-                                  "Recent",
+                                  "Recent".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w800,

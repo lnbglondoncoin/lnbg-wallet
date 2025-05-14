@@ -23,7 +23,7 @@ class AddCustomToken extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(title: "Add Custom Token", iconPath: ""),
+      appBar:  CustomAppBar(title: "Add Custom Token".tr, iconPath: ""),
       body: LayoutBuilder(builder:(context,constraints){
         return SingleChildScrollView(
         child:ConstrainedBox(
@@ -54,7 +54,7 @@ class AddCustomToken extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Network",
+                                      "Network".tr,
                                       style: GoogleFonts.urbanist(
                                         fontWeight: FontWeight.w700,
                                         color:
@@ -65,7 +65,7 @@ class AddCustomToken extends StatelessWidget {
                                     const Spacer(),
                                     Obx(() {
                                       return Text(
-                                        controller.selectedNetwork.value,
+                                        controller.selectedNetwork.value.tr,
                                         style: GoogleFonts.urbanist(
                                           fontWeight: FontWeight.w700,
                                           color: isDarkMode
@@ -100,7 +100,7 @@ class AddCustomToken extends StatelessWidget {
                               CustomTextFieldWithPaste(
                                 controller: controller.addressController,
                                 validator: controller.validateAddress,
-                                hintText: "Contract Address",
+                                hintText: "Contract Address".tr,
                                 isDarkMode: isDarkMode,
                                 lightColor: lightWhiteColor,
                                 darkColor: lightBlackColor2,
@@ -122,7 +122,7 @@ class AddCustomToken extends StatelessWidget {
                                   controller: controller.nameController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Name",
+                                    hintText: "Name".tr,
                                     hintStyle: GoogleFonts.urbanist(
                                       fontWeight: FontWeight.w400,
                                       color: greyColor2,
@@ -239,7 +239,7 @@ class AddCustomToken extends StatelessWidget {
                               SizedBox(width: 10.w),
                               Flexible(
                                 child: Text(
-                                  "Anyone can create token, including a fake versions of existing tokens. Learn more about scams and security risks.",
+                                  "Anyone can create token, including a fake versions of existing tokens. Learn more about scams and security risks.".tr,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.urbanist(
@@ -268,7 +268,7 @@ class AddCustomToken extends StatelessWidget {
                               isDarkMode ? lightGreenColor : orange3,
                           tilePadding: EdgeInsets.zero,
                           title: Text(
-                            "What is Custom Token?",
+                            "What is Custom Token?".tr,
                             style: GoogleFonts.urbanist(
                               color: isDarkMode ? lightGreenColor : orange3,
                               fontSize: 18.sp,
@@ -312,7 +312,7 @@ class AddCustomToken extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: CustomButton(
-          buttonText: "Ok",
+          buttonText: "Ok".tr,
           onPressed: () {
             // TODO: Hook up submit logic
           },

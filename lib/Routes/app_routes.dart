@@ -149,7 +149,12 @@ class AppRoutes {
     GetPage(name: genralSettingsView, page: () => GenralSettingsView()),
     GetPage(name: helpCenterScreen, page: () => HelpCenterScreen()),
     GetPage(name: inviteFriend, page: () => InviteFriend()),
-    GetPage(name: unlockView, page: () => UnlockView()),
+    // GetPage(name: unlockView, page: () => UnlockView()),
+    GetPage(
+  name: unlockView,
+  page: () => UnlockView(),
+  transition: Transition.fadeIn, // Optional: Add a transition
+),
     GetPage(name: importNFTScreen, page: () => ImportNFTScreen()),
     GetPage(name: notificationScreen, page: () => NotificationScreen()),
     GetPage(name: notificationSettingsView, page: () => NotificationSettingsView()),

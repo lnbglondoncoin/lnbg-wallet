@@ -89,7 +89,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "What is a “Seed phrase”?",
+                "What is a “Seed phrase”?".tr,
                 style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
@@ -104,7 +104,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               height: 20.h,
             ),
             Text(
-              "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",
+              "A seed phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.".tr,
               style: GoogleFonts.urbanist(
                   fontWeight: FontWeight.w500,
                   fontSize: 18.sp,
@@ -114,7 +114,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               height: 20.h,
             ),
             Text(
-              "You must keep your seed phrase secret and safe. If someone gets your seed phrase, they'll gain control over your accounts.",
+              "You must keep your seed phrase secret and safe. If someone gets your seed phrase, they\'ll gain control over your accounts.".tr,
               style: GoogleFonts.urbanist(
                   fontWeight: FontWeight.w500,
                   fontSize: 18.sp,
@@ -124,7 +124,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               height: 20.h,
             ),
             Text(
-              "Save it in a place where only you can access it. If you lose it, not even LNBG Wallet can help you recover it.",
+              "Save it in a place where only you can access it. If you lose it, not even LNBG Wallet can help you recover it.".tr,
               style: GoogleFonts.urbanist(
                   fontWeight: FontWeight.w500,
                   fontSize: 18.sp,
@@ -224,7 +224,7 @@ class SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "Skip Account Security?",
+                "Skip Account Security?".tr,
                 style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
@@ -253,7 +253,7 @@ class SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 ),
                 Flexible(
                   child: Text(
-                    "I understand that if i lose my seed phrase i will not be able to access my wallet.",
+                    "I understand that if i lose my seed phrase i will not be able to access my wallet.".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w800,
                         fontSize: 18.sp,
@@ -274,7 +274,7 @@ class SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
               children: [
                 Flexible(
                     child: CustomLightGreenButton(
-                        buttonText: "No, Secure",
+                        buttonText: "No, Secure".tr,
                         onPressed: () {
                           Navigator.pop(context);
                         })),
@@ -283,12 +283,12 @@ class SkippedSecurityBottomSheetState extends State<SkippedSecurityBottomSheet>
                 ),
                 Flexible(
                     child: CustomOrangeButton(
-                        buttonText: "Yes, Skip",
+                        buttonText: "Yes, Skip".tr,
                         onPressed: () {
                           controller.isChecked.value
                               ? Navigator.pop(context)
                               : Get.snackbar(
-                                  "Attention", "Click the box to confirm",
+                                  "Attention".tr, "Click the box to confirm",
                                   backgroundColor: orange3,
                                   snackPosition: SnackPosition.TOP);
                         }))

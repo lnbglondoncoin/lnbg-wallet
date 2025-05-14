@@ -19,7 +19,7 @@ class AboutLNBG extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(title: "About LNBG Wallet", iconPath: ""),
+      appBar:  CustomAppBar(title: "About LNBG Wallet".tr, iconPath: ""),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
@@ -67,7 +67,7 @@ class AboutLNBG extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.aboutTabs[index],
+                            controller.aboutTabs[index].toString().tr,
                             style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w800,

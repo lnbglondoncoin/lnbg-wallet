@@ -17,9 +17,9 @@ class HelpCenterScreen extends StatelessWidget {
     bool isDarkMode =
         theme.brightness == Brightness.dark; // Check if dark mode is active
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
           isSuffix: false,
-          title: "Help Center",
+          title: "Help Center".tr,
           iconPath: "assets/icons/msg2.svg"),
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       body: Padding(
@@ -193,7 +193,7 @@ class HelpCenterScreen extends StatelessWidget {
                                   isExpanded ? index : -1;
                             },
                             title: Text(
-                              faq['question']!,
+                              faq['question']!.tr,
                               style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w700,
@@ -217,7 +217,7 @@ class HelpCenterScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.only(top: 10.h),
                                     child: Text(
-                                      faq['answer']!,
+                                      faq['answer']!.tr,
                                       style: GoogleFonts.urbanist(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w500,

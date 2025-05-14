@@ -30,7 +30,7 @@ class SearchNetworkScreen extends StatelessWidget {
                 controller.isLoading.value||walletCreatingController.isLoading.value?ShimmerAppBar(isDarkMode: isDarkMode):
                  CustomAppBar(
                       isSuffix: true,
-                      title: "Select Network",
+                      title: "Select Network".tr,
                       iconPath: 'assets/icons/search.svg',
                       onSuffixTap: () {
                         // Show search dialog on icon tap
@@ -38,7 +38,7 @@ class SearchNetworkScreen extends StatelessWidget {
               AlertDialog(
                 backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
                 title: Text(
-                  "Search Token",
+                  "Search Token".tr,
                   style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
@@ -50,7 +50,7 @@ class SearchNetworkScreen extends StatelessWidget {
                   onChanged: (value) => searchQuery.value = value.toLowerCase(),
                   style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
                   decoration: InputDecoration(
-                    hintText: "Enter token name...",
+                    hintText: "Enter token name...".tr,
                     hintStyle: TextStyle(color: greyColor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.r),
@@ -61,7 +61,7 @@ class SearchNetworkScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () => Get.back(),
                     child: Text(
-                      "Close",
+                      "Close".tr,
                       style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
                     ),
                   ),
@@ -100,7 +100,7 @@ class SearchNetworkScreen extends StatelessWidget {
                                     )),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  "Not Found",
+                                  "Not Found".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 24.sp,
                                       fontWeight: FontWeight.w700,
@@ -108,7 +108,7 @@ class SearchNetworkScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
+                                  "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w400,

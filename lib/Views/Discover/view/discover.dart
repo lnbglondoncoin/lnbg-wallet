@@ -49,7 +49,7 @@ class DiscoverView extends StatelessWidget {
                     width: 10.w,
                   ),
                   Text(
-                    "Discover",
+                    "Discover".tr,
                     style: GoogleFonts.poppins(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.w700,
@@ -65,7 +65,7 @@ class DiscoverView extends StatelessWidget {
                             controller: controller.searchController,
                             onChanged: (value) => controller.searchQuery.value = value,
                             decoration: InputDecoration(
-                              hintText: "Search categories or tokens",
+                              hintText: "Search categories or tokens".tr,
                               hintStyle: GoogleFonts.poppins(
                                 color: isDarkMode ? greyColor : Colors.grey,
                                 fontSize: 14.sp,
@@ -105,7 +105,7 @@ class DiscoverView extends StatelessWidget {
                       color: isDarkMode ? greyColor : Colors.grey),
                   SizedBox(height: 12.h),
                   Text(
-                    "No results found",
+                    "No results found".tr,
                     style: GoogleFonts.poppins(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
@@ -148,7 +148,7 @@ class DiscoverView extends StatelessWidget {
                                       Get.toNamed(AppRoutes.coinsCategoryScreen,arguments: category);
                                     },
                                     child: Text(
-                                      "See All",
+                                      "See All".tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w700,
@@ -198,7 +198,7 @@ class DiscoverView extends StatelessWidget {
                                               subtitle:         Row(
                                                     children: [
                                                       Text(
-                                                        "APR:",
+                                                        "APR:".tr,
                                                         style: GoogleFonts.urbanist(
                                                             fontSize: 14.sp,
                                                             fontWeight:

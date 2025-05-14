@@ -50,7 +50,7 @@ void initState() {
             AlertDialog(
               backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
               title: Text(
-                "Search Token",
+                "Search Token".tr,
                 style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
@@ -62,7 +62,7 @@ void initState() {
                 onChanged: (value) => searchQuery.value = value.toLowerCase(),
                 style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
                 decoration: InputDecoration(
-                  hintText: "Enter token name...",
+                  hintText: "Enter token name...".tr,
                   hintStyle: TextStyle(color: greyColor),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
@@ -73,7 +73,7 @@ void initState() {
                 TextButton(
                   onPressed: () => Get.back(),
                   child: Text(
-                    "Close",
+                    "Close".tr,
                     style: TextStyle(color: isDarkMode ? whiteColor : blackColor2),
                   ),
                 ),
@@ -101,7 +101,7 @@ void initState() {
                     color: isDarkMode ? greyColor : Colors.grey),
                 SizedBox(height: 12.h),
                 Text(
-                  "No results found",
+                  "No results found".tr,
                   style: GoogleFonts.poppins(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
@@ -150,7 +150,7 @@ void initState() {
                             backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(crypto.logoUrl),
                           ),
-                          title: widget.category == 'Staking'
+                          title: widget.category == 'Staking'.tr
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -166,7 +166,7 @@ void initState() {
                                     Row(
                                       children: [
                                         Text(
-                                          "APR:",
+                                          "APR:".tr,
                                           style: GoogleFonts.urbanist(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w800,
@@ -201,7 +201,7 @@ void initState() {
                                   ),
                                 ),
                           trailing: Visibility(
-                            visible: widget.category != 'Staking',
+                            visible: widget.category != 'Staking'.tr,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.center,

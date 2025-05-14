@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class HelpCenterController extends GetxController {
   var selectedTab = 0.obs;
   var expandedIndex = (-1).obs;
-  List<String> tabs = ['General', 'Account', 'Service', 'Application'];
+  List<String> tabs = ['General'.tr, 'Account'.tr, 'Service'.tr, 'Application'.tr];
 
   List<Map<String, String>> faqs = [
     {
@@ -17,7 +17,7 @@ class HelpCenterController extends GetxController {
     },
     {
       'question': 'How to receive cryptocurrency?',
-      'answer': "You can see list of coins on homescreen, click any coin you want to receive and you can see receive option there, click on receive option and 1). QR code will appear if you will click on share button below Qr Code of your wallet address ,it will take you to the options through which you can share QR code to anyone and request to send you crypto,otherwise if you click on copy button then your wallet address will be copied on yur clipboard you can paste in anyone's chat to send him and request crypto, otherwise you can also click on receive button on home screen and repeat step 1.",
+      'answer': "You can see list of coins on homescreen, click any coin you want to receive and you can see receive option there, click on receive option and 1). QR code will appear if you will click on share button below Qr Code of your wallet address ,it will take you to the options through which you can share QR code to anyone and request to send you crypto,otherwise if you click on copy button then your wallet address will be copied on your clipboard you can paste in anyone\'s chat to send him and request crypto, otherwise you can also click on receive button on home screen and repeat step 1.",
     },
     {
       'question': 'How can I buy cryptocurrency?',
@@ -25,11 +25,11 @@ class HelpCenterController extends GetxController {
     },
      {
       'question': 'How to swap cryptocurrency?',
-      'answer': 'You can see list of coins on homescreen, click any coin you want to swap and you can see swap option there, click on swap option, 1)Select the first coin you want to swap from   2).Select the second coin you want to swap to ,3) Enter balance of first coin in dolors that you want to swap or you can also click the tabs belo like 25%, 50%, 75% and 100% it will automatically check availabe balance of first coin and fill the selected percentage of that balance in balance feild ,4).Click on swap button  and it will take you to next screen where you can see the details,5) click on confirm button and wait ,you coin will be swaped,   ,otherwise you can also click on swap button on home screen and repeat step 1,2,3,4 and 5.'
+      'answer': 'You can see list of coins on homescreen, click any coin you want to swap and you can see swap option there, click on swap option, 1)Select the first coin you want to swap from   2).Select the second coin you want to swap to ,3) Enter balance of first coin in dolors that you want to swap or you can also click the tabs belo like 25%, 50%, 75% and 100% it will automatically check availabe balance of first coin and fill the selected percentage of that balance in balance feild ,4).Click on swap button  and it will take you to next screen where you can see the details,5) click on confirm button and wait ,you coin will be swaped,   ,otherwise you can also click on swap button on home screen and repeat step 1,2,3,4 and 5.',
     },
     {
       'question': 'How do I exit the app?',
-      'answer': 'You can simply press the home button on your device or swipe up from the bottom of screen to exit the app.'
+      'answer': 'You can simply press the home button on your device or swipe up from the bottom of screen to exit the app.',
     },
     {
       'question': 'How can I deactivate my account?',

@@ -64,7 +64,7 @@ class SecureWalletScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Secure Your Wallet",
+                    "Secure Your Wallet".tr,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.urbanist(
                       fontSize: 32.sp,
@@ -78,7 +78,7 @@ class SecureWalletScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text:
-                          "Don't risk losing your funds. Protect your wallet by saving your ",
+                          'Don\'t risk losing your funds. Protect your wallet by saving your '.tr,
                       style: GoogleFonts.urbanist(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
@@ -87,7 +87,7 @@ class SecureWalletScreen extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: "Seed phrase",
+                          text: "Seed phrase".tr,
                           style: GoogleFonts.urbanist(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
@@ -96,7 +96,7 @@ class SecureWalletScreen extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: " in a place you trust.",
+                          text: " in a place you trust.".tr,
                           style: GoogleFonts.urbanist(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
@@ -111,7 +111,7 @@ class SecureWalletScreen extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    "It's the only way to recover your wallet if you get locked out of the app or get a new device.",
+                    'It\'s the only way to recover your wallet if you get locked out of the app or get a new device.'.tr,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
@@ -134,7 +134,7 @@ class SecureWalletScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomOrangeButton(
-              buttonText: "Start",
+              buttonText: "Start".tr,
               onPressed: () {
                 Get.toNamed(AppRoutes.secureWallet2);
              

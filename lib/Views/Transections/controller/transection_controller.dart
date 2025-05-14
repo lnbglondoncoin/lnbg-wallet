@@ -2,14 +2,20 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:lnbg_crypto_wallet_app/Models/coin_model.dart';
+import 'package:lnbg_crypto_wallet_app/Models/token_decimal_and_description_model.dart';
 import 'package:lnbg_crypto_wallet_app/Models/transection_model.dart';
 import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
 import 'package:lnbg_crypto_wallet_app/Views/TokenDetails/view/more_coin_details.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TransactionController extends GetxController {
   var isLoading = false.obs;
   var walletCreatingCotroller=Get.find<WalletCreatingController>();
+   var tokenDescriptionAndDecimalModel = Rxn<TokenDescriptionAndDecimalModel>();
+
 @override
   void onInit(){
   super.onInit();
@@ -69,20 +75,20 @@ fetchTransactions(walletCreatingCotroller.wallwtAddress.value);
             print("Response data: $responseData");
             //  await walletCreatingCotroller.fetchWalletData(walletAddress,false,false);
             // await fetchTransactions(walletAddress);
-            Get.snackbar('Success', 'Transaction submitted successfully!');
+            Get.snackbar('Success'.tr, 'Transaction submitted successfully!'.tr);
            
           } catch (e) {
             print('Error parsing JSON response: $e');
-            Get.snackbar('Success', 'Transaction saved successfully');
+            Get.snackbar('Success'.tr, 'Transaction saved successfully'.tr);
           }
         } else {
           // Handle plain text response
           print('Received plain text response: ${response.body}');
-          Get.snackbar('Success', 'Transaction saved successfully');
+          Get.snackbar('Success'.tr, 'Transaction saved successfully'.tr);
         }
       } else {
         print('Error response: ${response.body}');
-        Get.snackbar('Failed post', 'Error: ${response.statusCode}');
+        Get.snackbar('Failed post'.tr, '${"Error".tr}: ${response.statusCode}');
       }
     } catch (e) {
       isLoading(false);
@@ -130,16 +136,16 @@ print(url);
         swapTransactions.value =
             transactions.where((tx) => tx.method == 'swap').toList();
       } else {
-        Get.snackbar("Error submitting", "Failed to load transactions $walletAddress");
+        Get.snackbar("Error submitting".tr, "${"Failed to load transactions".tr} $walletAddress");
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error submitting", "Something went wrong: $e");
+      Get.snackbar("Error submitting".tr, "${"Something went wrong:".tr} $e");
     } finally {
       isLoading.value = false;
     }
   }
-void calculateAverageTransactionAmounts(String tokenName, String method, TokenData token,TransactionModel transection) {
+void calculateAverageTransactionAmounts(String tokenName, String method, TokenData token,TransactionModel transection) async {
  isLoading(true);
   DateTime now = DateTime.now();
 
@@ -166,15 +172,55 @@ void calculateAverageTransactionAmounts(String tokenName, String method, TokenDa
   avg1Year.value = _calculateAvg(now.subtract(Duration(days: 365)));
   avgTotal.value=avg1Hour.value+avg1Day.value+avg1Week.value+avg1Month.value+avg1Year.value;
   print("values are:$avg1Hour $avg1Day $avg1Day $avg1Week $avg1Month $avg1Year");
-  Get.toNamed(
+  await fetchToken(token,transection);
+
+
+
+  
+}
+
+
+var contractAddress="".obs;
+   Future<void> fetchToken(TokenData token,TransactionModel transection) async {
+  
+    if(token.symbol=='ETH'){
+  contractAddress.value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+    }
+    else{
+      contractAddress.value=token.contractAddress;
+    }
+    final url =
+        'http://ec2-54-206-93-245.ap-southeast-2.compute.amazonaws.com:8000/api/tokens/${contractAddress.value}';
+
+    try {
+      isLoading.value = true;
+      
+      final response = await http.get(Uri.parse(url));
+print(contractAddress.value);
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+      
+        print(jsonData);
+        tokenDescriptionAndDecimalModel.value = TokenDescriptionAndDecimalModel.fromJson(jsonData);
+        Get.toNamed(
   AppRoutes.moreCoinDetails,
   arguments: {
     'transection': transection,
     'token': token,
   },
 );
-  
-}
+      } else {
+        Get.snackbar("Failed".tr, "Failed to load token data in else block".tr);
+      }
+    } catch (e) {
+       isLoading.value = false;
+      Get.snackbar("Failed".tr, "${"Failed to load token data".tr} ${e.toString()}");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
 
 
 }

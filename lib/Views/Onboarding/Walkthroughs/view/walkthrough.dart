@@ -81,7 +81,7 @@ class WalkThroughPage extends StatelessWidget {
                   children: [
                     SizedBox(height: 20.h),
                     Text(
-                      title,
+                      title.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.urbanist(
                         fontSize: 40.sp,
@@ -92,7 +92,7 @@ class WalkThroughPage extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     Text(
-                      description,
+                      description.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.urbanist(
                         fontSize: 18.sp,
@@ -143,7 +143,7 @@ class WalkThroughPage extends StatelessWidget {
                     ),
                     SizedBox(height: 30.h),
                     CustomOrangeButton(
-                      buttonText: isLastPage ? 'Get Started' : 'Next',
+                      buttonText: isLastPage ? 'Get Started'.tr : 'Next'.tr,
                       onPressed: onNext,
                     ),
                   ],

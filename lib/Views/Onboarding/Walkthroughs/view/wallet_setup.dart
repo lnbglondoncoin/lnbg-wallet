@@ -76,7 +76,7 @@ class WalletSetUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Wallet Setup",
+                          "Wallet Setup".tr,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.urbanist(
                             fontSize: 40.sp,
@@ -87,7 +87,7 @@ class WalletSetUpScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 20.h),
                         Text(
-                          "Easily create a new wallet or import your existing one using a seed phrase. Get started with LNBG Coin and securely manage your digital assets today!",
+                          "Easily create a new wallet or import your existing one using a seed phrase. Get started with LNBG Coin and securely manage your digital assets today!".tr,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.urbanist(
                             fontSize: 18.sp,
@@ -98,7 +98,7 @@ class WalletSetUpScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
                         CustomOrangeButton(
-                          buttonText: "Create a New Wallet",
+                          buttonText: "Create a New Wallet".tr,
                           onPressed: () {
                             Get.toNamed(AppRoutes.createNewWallet);
                             
@@ -106,7 +106,7 @@ class WalletSetUpScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 25.h),
                         CustomLightGreenButton(
-                          buttonText: "Import Using Seed Phrase",
+                          buttonText: "Import Using Seed Phrase".tr,
                           onPressed: () {
                             Get.toNamed(AppRoutes.importFromSeedPhraseScreen);
                            

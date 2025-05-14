@@ -28,7 +28,7 @@ class NftGridView extends StatelessWidget {
                 const AssetImage("assets/images/nek.png"), // Change as needed
           ),
           title: Text(
-            "NFTs",
+            "NFTs".tr,
             style: GoogleFonts.urbanist(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,

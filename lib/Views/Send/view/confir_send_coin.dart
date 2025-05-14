@@ -36,7 +36,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
       appBar: PreferredSize(preferredSize:  const Size.fromHeight(kToolbarHeight), child: Obx((){
         return controller.isLoading.value?ShimmerAppBar(isDarkMode: isDarkMode):CustomAppBar(
-        title: "Confirm",
+        title: "Confirm".tr,
         iconPath: 'assets/icons/search.svg',
         isSuffix: false,
       );
@@ -82,7 +82,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       height: 20.h,
                     ),
                     Text(
-                      "From",
+                      "From".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -99,7 +99,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       height: 20.h,
                     ),
                     Text(
-                      "To",
+                      "To".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
@@ -116,7 +116,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                               : false,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: address==""?"Enter address to send":address,
+                            hintText: address==""?"Enter address to send".tr:address,
                             hintStyle: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
@@ -142,7 +142,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Network Fee",
+                          "Network Fee".tr,
                           style: GoogleFonts.urbanist(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -155,9 +155,9 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child:Obx((){
                               return  Text(
-                                controller.selectedNetworkSpeed.value=="Slow"?
+                                controller.selectedNetworkSpeed.value=="Slow".tr?
                              "${controller.networkFeeSlowCrypto.value} ETH (\$${ controller.networkFeeSlowUsd.value.toString()} USD)":
-                               controller.selectedNetworkSpeed.value=="Moderate"?
+                               controller.selectedNetworkSpeed.value=="Moderate".tr?
                                  "${controller.networkFeeModeratecrypto.value} ETH (\$${ controller.networkFeeModerateUsd.value.toString()} USD)":
                                 "${controller.networkFeeFastcrypto.value} ETH (\$${ controller.networkFeeFastUsd.value.toString()} USD)",
                                
@@ -196,7 +196,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Max Total",
+                          "Max Total".tr,
                           style: GoogleFonts.urbanist(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -210,9 +210,9 @@ class ConfirmSendCoinScreen extends StatelessWidget {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 
-                                controller.selectedNetworkSpeed.value=="Slow"?
+                                controller.selectedNetworkSpeed.value=="Slow".tr?
                                   "(\$${ controller.totalFeeSlowUsd.value.toString()} USD)" :
-                                   controller.selectedNetworkSpeed.value=="Moderate"?
+                                   controller.selectedNetworkSpeed.value=="Moderate".tr?
                                      "(\$${ controller.totalFeeModerateUsd.value.toString()} USD)":
                                       "(\$${ controller.totalFeeFastUsd.value.toString()} USD)",
                                     
@@ -247,7 +247,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
           return controller.isLoading.value?
         const  LoadingSpinner()
           :isDarkMode? CustomGreenButton(
-            buttonText: "Send",
+            buttonText: "Send".tr,
             onPressed: () async{
            await controller. sendCoin(
             token:token,
@@ -258,7 +258,7 @@ class ConfirmSendCoinScreen extends StatelessWidget {
 );
                
             }): CustomButton(
-            buttonText: "Send",
+            buttonText: "Send".tr,
             onPressed: ()async {
              await controller. sendCoin(
                token:token,

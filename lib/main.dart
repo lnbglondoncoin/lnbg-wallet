@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/my_theme.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/theme_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Routes/app_routes.dart';
+import 'package:lnbg_crypto_wallet_app/Translations/app_translations.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LifeCycleWatcher/life_cycle_watcher.dart';
 import 'package:lnbg_crypto_wallet_app/Views/LockApp/controller/lock_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/controller/splash_controller.dart';
@@ -14,6 +15,7 @@ import 'package:lnbg_crypto_wallet_app/Views/Onboarding/Splash/view/splash_scree
 import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/Transections/controller/transection_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Views/WalletCreation/Services/wallet_address_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +40,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+ 
   @override
   void dispose() {
     LifecycleWatcher().dispose(); // 👈 Dispose the observer here
@@ -46,7 +50,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());
-// Set the status bar style based on the theme mode (light or dark)
+    var box=GetStorage();
+       String? languageCode = box.read('selected_language'); // e.g., 'en_US'
+      final localeParts = (languageCode ?? 'en_US').split('_');
+  final locale = Locale(localeParts[0], localeParts[1]);
+    Locale selectedLanguage=locale;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // Make the status bar transparent (optional)
       statusBarIconBrightness: themeController.themeMode.value == ThemeMode.dark 
@@ -61,6 +69,9 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+           translations: AppTranslations(), // Your translations
+            locale:selectedLanguage, // Initial locale
+      fallbackLocale: Locale('en', 'US'), // Fallback locale
           builder: (context, widget) {
             // This line ensures that the app doesn't scale with the phone's font size settings
             return MediaQuery(
@@ -84,3 +95,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+
+
+
+
+
+

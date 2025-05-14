@@ -62,19 +62,19 @@ var isLoading=false.obs;
   // Add validation methods
   String? validateAddress(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Recipient address is required';
+      return 'Recipient address is required'.tr;
     } else if (!RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(value)) {
-      return "Invalid Ethereum address format";
+      return "Invalid Ethereum address format".tr;
     }
     return null;
   }
 
   String? validateAmount(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Amount is required';
+      return 'Amount is required'.tr;
     }
     if (value == '0' || double.parse(value) == 0) {
-      return 'Amount cannot be zero';
+      return 'Amount cannot be zero'.tr;
     }
     return null;
   }
@@ -608,12 +608,12 @@ Future<void> sendCoin({
 
       if (response.statusCode == 200) {
         transactionController.fetchTransactions(walletAddress);
-        Get.snackbar('Success', 'Transaction deleted successfully');
+        Get.snackbar('Success'.tr, 'Transaction deleted successfully'.tr);
       } else {
-        Get.snackbar('Error', 'Failed to delete transaction: ${response.statusCode}');
+        Get.snackbar('Error'.tr, '${"Failed to delete transaction".tr}: ${response.statusCode}');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error'.tr, '${"An error occurred:".tr} $e');
     } finally {
       isLoading.value = false;
     }

@@ -29,7 +29,7 @@ class AllPopularTokens extends StatelessWidget {
     return walletCreatingController.isLoading.value
         ? ShimmerAppBar(isDarkMode: isDarkMode)
         : CustomAppBar(
-        title: "Popular Tokens",
+        title: "Popular Tokens".tr,
         iconPath: "assets/icons/delete.svg",
     );
   }),
@@ -41,7 +41,7 @@ class AllPopularTokens extends StatelessWidget {
           return 
           walletCreatingController.isLoading.value?shimmerPopularList(isDarkMode):
           walletCreatingController.hundredTokenData.isEmpty?Center(
-            child: Text("No Popular Tokens To Show"),
+            child: Text("No Popular Tokens To Show".tr),
           ):
           ListView.builder(
           physics: BouncingScrollPhysics(),
@@ -60,14 +60,14 @@ class AllPopularTokens extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 20.sp,
                             color: isDarkMode ? whiteColor : blackColor2)),
-                    subtitle: Text(
-                      "Description",
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.urbanist(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14.sp,
-                          color: isDarkMode ? greyColor : greyColor3),
-                    ),
+                    // subtitle: Text(
+                    //   "Description",
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: GoogleFonts.urbanist(
+                    //       fontWeight: FontWeight.w800,
+                    //       fontSize: 14.sp,
+                    //       color: isDarkMode ? greyColor : greyColor3),
+                    // ),
                     onTap: () {
                       // Handle tap if needed
                     },

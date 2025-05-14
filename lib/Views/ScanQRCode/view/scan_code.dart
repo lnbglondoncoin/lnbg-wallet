@@ -23,7 +23,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
       qrController.scanQr.value = false;
       _scannerController.stop();
       Get.snackbar(
-          "QR Code Scanned", barcode.barcodes.first.rawValue ?? "No Data");
+          "QR Code Scanned".tr, barcode.barcodes.first.rawValue ?? "No Data".tr);
     }
   }
 
@@ -59,7 +59,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
         child: Column(
           children: [
             Text(
-              "Scan QR Code",
+              "Scan QR Code".tr,
               style: GoogleFonts.urbanist(
                 fontSize: 32.sp,
                 fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
             ),
             SizedBox(height: 20.h),
             Text(
-              "Please point the camera at the QR Code",
+              "Please point the camera at the QR Code".tr,
               style: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,

@@ -41,18 +41,18 @@ var isLoading = false.obs;
         importedNFT.value = NFTModel.fromJson(data['nft']);
          Get.back();
          Get.log("come here");
-           Get.snackbar("Success", "NFT imported" );
+           Get.snackbar("Success".tr, "NFT imported".tr );
       await  fetchNFTs(walletAddress);
        
         
       } else {
-          Get.snackbar("Errorrr", "Fail to import" );
-        errorMessage.value = data['message'] ?? 'Failed to import NFT';
+          Get.snackbar("Error".tr, "Fail to import".tr );
+        errorMessage.value = data['message'] ?? 'Failed to import NFT'.tr;
       }
     } catch (e) {
         isLoading.value = false;
-        Get.snackbar("Error", "Fail to import $e" );
-      errorMessage.value = 'Something went wrong: $e';
+        Get.snackbar("Error".tr, "${"Fail to import".tr} $e" );
+      errorMessage.value = '${"Something went wrong:".tr} $e';
       print(errorMessage);
     } finally {
       isLoading.value = false;
@@ -110,7 +110,7 @@ Future<String> getImageUrlFromIpfs(String ipfsMetadataUrl) async {
     }
   }
 
-  throw Exception('Failed to load NFT image from metadata');
+  throw Exception('Failed to load NFT image from metadata'.tr);
 }
 }
 

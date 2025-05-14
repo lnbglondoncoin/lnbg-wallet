@@ -89,9 +89,9 @@ class AddTokenController extends GetxController {
 
    String? validateAddress(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Recipient address is required';
+      return 'Recipient address is required'.tr;
     } else if (!RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(value)) {
-      return "Invalid Ethereum address format";
+      return "Invalid Ethereum address format".tr;
     }
     return null;
   }
@@ -118,15 +118,15 @@ class AddTokenController extends GetxController {
         print(walletCreatingController.wallwtAddress.value);
         await walletCreatingController
             .fetchPreferences(walletCreatingController.wallwtAddress.value,false,walletCreatingController.isAccountImporting.value);
-        Get.snackbar("Success", "Preferences saved successfully!",
+        Get.snackbar("Success".tr, "Preferences saved successfully!".tr,
             snackPosition: SnackPosition.TOP);
       } else {
-        Get.snackbar("Error", "Failed to save preferences: ${response.body}",
+        Get.snackbar("Error".tr, "${'Failed to save preferences:'.tr} ${response.body}",
             snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong: $e",
+      Get.snackbar("Error".tr, "${'Something went wrong:'.tr} $e",
           snackPosition: SnackPosition.TOP);
     } finally {
       isLoading.value = false;

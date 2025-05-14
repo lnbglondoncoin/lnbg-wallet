@@ -98,7 +98,7 @@ class AddTokenScreen extends StatelessWidget {
                     ),
                   ),
                   border: InputBorder.none,
-                  hintText: "Search Tokens",
+                  hintText: "Search Tokens".tr,
                   hintStyle: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w400,
                     color: greyColor2,
@@ -109,21 +109,21 @@ class AddTokenScreen extends StatelessWidget {
               ),
             );
           }),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 20.w),
-              child: GestureDetector(
-                onTap: () => Get.toNamed(AppRoutes.addCustomToken),
-                child: SvgPicture.asset(
-                  "assets/icons/plusIcon.svg",
-                  colorFilter: ColorFilter.mode(
-                    isDarkMode ? whiteColor : blackColor2,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            )
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: EdgeInsets.only(right: 20.w),
+          //     child: GestureDetector(
+          //       onTap: () => Get.toNamed(AppRoutes.addCustomToken),
+          //       child: SvgPicture.asset(
+          //         "assets/icons/plusIcon.svg",
+          //         colorFilter: ColorFilter.mode(
+          //           isDarkMode ? whiteColor : blackColor2,
+          //           BlendMode.srcIn,
+          //         ),
+          //       ),
+          //     ),
+          //   )
+          // ],
           elevation: 0.0,
         );
         }),

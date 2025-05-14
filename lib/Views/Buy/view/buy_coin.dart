@@ -27,7 +27,7 @@ class BuyCoinScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
         appBar: CustomAppBar(
-          title: "Buy ${token.symbol}",
+          title: "${"Buy".tr} ${token.symbol}",
           iconPath: 'assets/icons/search.svg',
         ),
         body: SingleChildScrollView(
@@ -53,7 +53,7 @@ class BuyCoinScreen extends StatelessWidget {
                         children: [
                           Obx(() {
                             return Text(
-                              controller.selectedCurrency.value,
+                              controller.selectedCurrency.value.tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w700,
@@ -155,7 +155,7 @@ class BuyCoinScreen extends StatelessWidget {
                               width: 44.w,
                             ),
                             title: Text(
-                              controller.selectedProvider.value,
+                              controller.selectedProvider.value.tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w800,
@@ -183,29 +183,29 @@ class BuyCoinScreen extends StatelessWidget {
                   ? const LoadingSpinner()
                   : isDarkMode
                       ? CustomGreenButton(
-                          buttonText: "Continue",
+                          buttonText: "Continue".tr,
                           onPressed: () async {
                             if(controller.amountController.text==""||controller.amountController.text=="0"){
-                              Get.snackbar("Empty Ammount", "Amount cannot be zero");
+                              Get.snackbar("Empty Ammount".tr, "Amount cannot be zero".tr);
 
                             }
                            else{
                              if (controller.selectedProvider.value ==
-                                "MoonPay") {
+                                "MoonPay".tr) {
                               await controller.buyCrypto(token.symbol);
                             }
                            }
                          
                           })
                       : CustomButton(
-                          buttonText: "Continue",
+                          buttonText: "Continue".tr,
                           onPressed: () async {
                             if(controller.amountController.text==""||controller.amountController.text=="0"){
-                              Get.snackbar("Empty Ammount", "Amount cannot be zero");
+                              Get.snackbar("Empty Ammount".tr, "Amount cannot be zero".tr);
                             }
                             else{
                              if (controller.selectedProvider.value ==
-                                "MoonPay") {
+                                "MoonPay".tr) {
                               await controller.buyCrypto(token.symbol);
                             }
                            }

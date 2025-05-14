@@ -35,7 +35,7 @@ class ShowPrivateKeyScreen extends StatelessWidget {
                       },
                       child: Text(
                         textAlign: TextAlign.center,
-                        "Your private key",
+                        "Your private key".tr,
                         style: GoogleFonts.urbanist(
                             fontWeight: FontWeight.w700,
                             fontSize: 32.sp,
@@ -48,7 +48,7 @@ class ShowPrivateKeyScreen extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "This is the private key for the current selected wallet account: AndrewAinsley. Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.",
+                    "This is the private key for the current selected wallet account: AndrewAinsley. Never disclose this key. Anyone with your private key can fully control your account, including transferring away any of your funds.".tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,

@@ -20,8 +20,8 @@ class SelectProviderScreen extends StatelessWidget {
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(
-        title: "Providers",
+      appBar:  CustomAppBar(
+        title: "Providers".tr,
         iconPath: 'assets/icons/search.svg',
       ),
       body: Padding(
@@ -61,14 +61,14 @@ class SelectProviderScreen extends StatelessWidget {
                           width: 44.w,
                         ),
                         title: Text(
-                          providersTitles[index],
+                          providersTitles[index].tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
                               color: isDarkMode ? whiteColor : blackColor2),
                         ),
                         trailing: Text(
-                          providersprice[index],
+                          providersprice[index].tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
@@ -85,7 +85,7 @@ class SelectProviderScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.all(20.h),
         child: CustomLightGreenButton(
-          buttonText: "Add Credit or Debit Card",
+          buttonText: "Add Credit or Debit Card".tr,
           onPressed: () {
             Get.toNamed(AppRoutes.addNewCardScreen);
            

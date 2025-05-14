@@ -68,11 +68,11 @@ class CurrencyController extends GetxController {
             mode: LaunchMode.externalApplication);
             
       } else {
-        Get.snackbar("Error", "Could not open MoonPay");
+        Get.snackbar("Error".tr, "Could not open MoonPay".tr);
       }
     } catch (e) {
             isLoading.value = false;
-      Get.snackbar("Error", "Failed to launch MoonPay: $e");
+      Get.snackbar("Error".tr, "${"Failed to launch MoonPay:".tr} $e");
     } finally {
       isLoading.value = false;
     }
@@ -98,13 +98,13 @@ class CurrencyController extends GetxController {
             width: 186.w,
           ),
           title: Text(
-            "Successful Purchase!",
+            "Successful Purchase!".tr,
             style: GoogleFonts.urbanist(
                 fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
           ),
           content: Text(
               textAlign: TextAlign.center,
-              "Purchase Success! Crypto has been added to your wallet.",
+              "Purchase Success! Crypto has been added to your wallet.".tr,
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
@@ -122,7 +122,7 @@ class CurrencyController extends GetxController {
                     gradient: const LinearGradient(colors: [orange2, orange1])),
                 child: Center(
                   child: Text(
-                    "View Details",
+                    "View Details".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w700,
                         fontSize: 18.sp,
@@ -135,7 +135,7 @@ class CurrencyController extends GetxController {
               height: 15.h,
             ),
             CustomLightGreenButton(
-                buttonText: "Cancel",
+                buttonText: "Cancel".tr,
                 onPressed: () {
                   Navigator.pop(context);
                 })

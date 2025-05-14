@@ -170,7 +170,8 @@ void _lockApp() async {
   splashController.isAppLock.value = true;
   _lastRoute = Get.currentRoute;
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('last_route', _lastRoute ?? '/');
+  await prefs.setString('last_route', _lastRoute ?? AppRoutes.home);
+  Get.log("Last route before locking: $_lastRoute");
   print("$_lastRoute");
   Get.offAllNamed(AppRoutes.lockScreen);
 }
@@ -181,85 +182,148 @@ void _lockApp() async {
   //   Get.offAll(() => LockScreen()); // navigate to lock screen
   // }
 
-  void unlockApp() async {
-    if (isAuthenticated.value) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final privateKey = prefs.getString('privateKey') ?? '';
-      final savedRoute = prefs.getString('last_route');
+//   void unlockApp() async {
+//     if (isAuthenticated.value) {
+//       SharedPreferences prefs = await SharedPreferences.getInstance();
+//       final privateKey = prefs.getString('privateKey') ?? '';
+//       final savedRoute = prefs.getString('last_route');
 
-      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
-      &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
-    if (savedRoute != null && savedRoute.isNotEmpty) {
- if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
- Get.offAllNamed(savedRoute); // Go to last route
- }
- else{
-    Get.offAllNamed(AppRoutes.home);
- }
-} else {
-  Get.offAllNamed(AppRoutes.home);
+//       if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
+//       &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
+//     if (savedRoute != null && savedRoute.isNotEmpty) {
+//  if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
+//  Get.offAllNamed(savedRoute); // Go to last route
+//  }
+//  else{
+//     Get.offAllNamed(AppRoutes.home);
+//  }
+// } else {
+//   Get.offAllNamed(AppRoutes.home);
  
-}
+// }
        
-        clearControllers();
-      } else {
-        Get.offNamed(AppRoutes.walkThroughScreen);
+//         clearControllers();
+//       } else {
+//         Get.offNamed(AppRoutes.walkThroughScreen);
        
-        clearControllers();
-      }
-    } 
+//         clearControllers();
+//       }
+//     } 
     
 
 
 
     
     
-    else if (!unlockAppKey.currentState!.validate()) {
-      return;
-    } else if (walletCreatingController.password == passController.text) {
-      isLoading(true);
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final privateKey = prefs.getString('privateKey') ?? '';
-      final savedRoute = prefs.getString('last_route');
+//     else if (!unlockAppKey.currentState!.validate()) {
+//       return;
+//     } else if (walletCreatingController.password == passController.text) {
+//       isLoading(true);
+//        SharedPreferences prefs = await SharedPreferences.getInstance();
+//       final privateKey = prefs.getString('privateKey') ?? '';
+//       final savedRoute = prefs.getString('last_route');
 
-      if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
-      &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
-    if (savedRoute != null && savedRoute.isNotEmpty) {
- if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
- Get.offAllNamed(savedRoute); // Go to last route
- }
- else{
-    Get.offAllNamed(AppRoutes.home);
- }
-} else {
-  Get.offAllNamed(AppRoutes.home);
+//       if (privateKey != null && privateKey != "" && privateKey.isNotEmpty
+//       &&walletCreatingController.importngOrCreatingprocessCompletion.value) {
+//     if (savedRoute != null && savedRoute.isNotEmpty) {
+//  if((savedRoute!=AppRoutes.lockScreen)&&(savedRoute!=AppRoutes.unlockView)){
+//  Get.offAllNamed(savedRoute); // Go to last route
+//  }
+//  else{
+//     Get.offAllNamed(AppRoutes.home);
+//  }
+// } else {
+//   Get.offAllNamed(AppRoutes.home);
  
-}
+// }
        
-        clearControllers();
+//         clearControllers();
+//       } else {
+//         Get.offNamed(AppRoutes.walkThroughScreen);
+       
+//         clearControllers();
+//       }
+//     }
+    
+    
+    
+    
+//      else if (walletCreatingController.password != passController.text) {
+//       Get.snackbar("Error", "Incorrect Password");
+//       clearControllers();
+//     } 
+//     else if(!isAuthenticated.value){
+//  Get.snackbar("Error", "Please Authenticate");
+//       clearControllers();
+//     }
+//     else {
+//       clearControllers();
+//     }
+//   }
+
+ 
+ 
+
+
+ void unlockApp() async {
+  if (isAuthenticated.value) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final privateKey = prefs.getString('privateKey') ?? '';
+    final savedRoute = prefs.getString('last_route');
+
+    if (privateKey.isNotEmpty &&
+        walletCreatingController.importngOrCreatingprocessCompletion.value) {
+      if (savedRoute != null && savedRoute.isNotEmpty) {
+        if (savedRoute != AppRoutes.lockScreen &&
+            savedRoute != AppRoutes.unlockView) {
+          Get.offAllNamed(savedRoute); // Navigate to the last valid route
+        } else {
+          Get.offAllNamed(AppRoutes.home); // Default to home if invalid
+        }
       } else {
-        Get.offNamed(AppRoutes.walkThroughScreen);
-       
-        clearControllers();
+        Get.offAllNamed(AppRoutes.home); // Default to home if null
       }
-    }
-    
-    
-    
-    
-     else if (walletCreatingController.password != passController.text) {
-      Get.snackbar("Error", "Incorrect Password");
       clearControllers();
-    } 
-    else if(!isAuthenticated.value){
- Get.snackbar("Error", "Please Authenticate");
+    } else {
+      Get.offNamed(AppRoutes.walkThroughScreen); // Navigate to onboarding
       clearControllers();
     }
-    else {
+    Get.log("Last route after unlocking: ${prefs.getString('last_route')}");
+  } else if (!unlockAppKey.currentState!.validate()) {
+    return;
+  } else if (walletCreatingController.password == passController.text) {
+    isLoading(true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final privateKey = prefs.getString('privateKey') ?? '';
+    final savedRoute = prefs.getString('last_route');
+
+    if (privateKey.isNotEmpty &&
+        walletCreatingController.importngOrCreatingprocessCompletion.value) {
+      if (savedRoute != null && savedRoute.isNotEmpty) {
+        if (savedRoute != AppRoutes.lockScreen &&
+            savedRoute != AppRoutes.unlockView) {
+          Get.offAllNamed(savedRoute); // Navigate to the last valid route
+        } else {
+          Get.offAllNamed(AppRoutes.home); // Default to home if invalid
+        }
+      } else {
+        Get.offAllNamed(AppRoutes.home); // Default to home if null
+      }
+      clearControllers();
+    } else {
+      Get.offNamed(AppRoutes.walkThroughScreen); // Navigate to onboarding
       clearControllers();
     }
+  } else if (walletCreatingController.password != passController.text) {
+    Get.snackbar("Error".tr, "Incorrect Password".tr);
+    clearControllers();
+  } else if (!isAuthenticated.value) {
+    Get.snackbar("Error".tr, "Please Authenticate");
+    clearControllers();
+  } else {
+    clearControllers();
   }
-
+}
   void stopLockTimer() {
     _lockTimer?.cancel();
   }

@@ -26,9 +26,9 @@ final TransactionModel transection;
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode?lightBlackColor3:whiteColor,
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
        // isSuffix: true,
-        title: "Transfer",
+        title: "Transfer".tr,
         iconPath: 'assets/icons/chat11.svg',
       ),
       body: Padding(
@@ -78,7 +78,7 @@ final TransactionModel transection;
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Date",
+                          "Date".tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w800,
@@ -111,7 +111,7 @@ final TransactionModel transection;
                         Row(
                           children: [
                             Text(
-                              "Status",
+                              "Status".tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w800,
@@ -143,7 +143,7 @@ final TransactionModel transection;
                               child: Padding(
                                 padding: EdgeInsets.all(8.h),
                                 child: Text(
-                                  "Completed",
+                                  "Completed".tr,
                                   style: GoogleFonts.urbanist(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w800,
@@ -169,7 +169,7 @@ final TransactionModel transection;
                         Row(
                           children: [
                             Text(
-                              "Receiver",
+                              "Receiver".tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w800,
@@ -207,7 +207,7 @@ final TransactionModel transection;
                         Row(
                           children: [
                             Text(
-                              "Network Fee",
+                              "Network Fee".tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w800,
@@ -256,7 +256,7 @@ final TransactionModel transection;
                
               },
               child: Text(
-                "View More Details",
+                "View More Details".tr,
                 style: GoogleFonts.urbanist(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,

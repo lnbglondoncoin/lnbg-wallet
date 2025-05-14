@@ -21,26 +21,26 @@ class SettingsController extends GetxController {
    // "assets/icons/advance.png",
     "assets/icons/darkMode.png",
     "assets/icons/contacts.png",
-    "assets/icons/notifications5.png",
+   // "assets/icons/notifications5.png",
     "assets/icons/helpc.png",
     "assets/icons/invite.png",
     "assets/icons/about.png",
     "assets/icons/about.png", //logout
   ];
 
-  List settingLabels = [
+  var settingLabels = [
    // "Wallets",
     "Language",
     "Security & Privacy",
    // "Advanced",
     "Dark Mode",
     "Contacts",
-    "Notification",
+   // "Notifications",
     "Help Center",
     "Invite Friends",
     "About LNBG Wallet",
     "Logout",
-  ];
+  ].obs;
 
   settingActions(index) {
     // if (index == 0) {
@@ -58,18 +58,20 @@ class SettingsController extends GetxController {
      else if (index == 2) {
     } else if (index == 3) {
       Get.toNamed(AppRoutes.contactsView);
-    } else if (index == 4) {
-      Get.toNamed(AppRoutes.notificationSettingsView);
-    } else if (index == 5) {
+    } 
+    // else if (index == 4) {
+    //   Get.toNamed(AppRoutes.notificationSettingsView);
+    // } 
+    else if (index == 4) {
       Get.toNamed(AppRoutes.helpCenterScreen);
     
-    } else if (index == 6) {
+    } else if (index == 5) {
       Get.toNamed(AppRoutes.inviteFriend);
      
-    } else if (index == 7) {
+    } else if (index == 6) {
       Get.toNamed(AppRoutes.aboutlnbg);
      // Get.to(() => AboutLNBG());
-    } else if (index == 8) {
+    } else if (index == 7) {
       logout();
     } else {}
   }

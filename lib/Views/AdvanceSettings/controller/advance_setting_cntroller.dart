@@ -7,5 +7,5 @@ class AdvanceSettingCntroller extends GetxController {
   RxBool syncData = false.obs;
   RxBool haxData = false.obs;
   RxBool transaction = false.obs;
-  var selectedLegerConType = 'WebHID'.obs;
+  var selectedLegerConType = 'WebHID'.tr.obs;
 }

@@ -42,7 +42,7 @@ class SettingView extends StatelessWidget {
                       width: 10.w,
                     ),
                     Text(
-                      "Settings",
+                      "Settings".tr,
                       style: GoogleFonts.poppins(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,
@@ -74,14 +74,16 @@ class SettingView extends StatelessWidget {
                                     controller.settingIcons[index],
                                     width: 56.w,
                                     height: 56.h),
-                                title: Text(controller.settingLabels[index],
+                                title: Obx((){
+                                  return Text(controller.settingLabels[index].toString().tr,
                                     style: GoogleFonts.urbanist(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 20.sp,
                                         color: isDarkMode
                                             ? whiteColor
-                                            : blackColor2)),
-                                trailing: index == 4
+                                            : blackColor2));
+                                }),
+                                trailing: index == 2
                                     ? CustomSwitch(
                                         isSwitched: swictched,
                                         onChanged: () {
@@ -113,7 +115,7 @@ class SettingView extends StatelessWidget {
                   height: 15.h,
                 ),
                 Text(
-                  "Follow us:",
+                  "Follow us:".tr,
                   style: GoogleFonts.poppins(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,

@@ -64,7 +64,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Confirm Seed Phrase",
+                      "Confirm Seed Phrase".tr,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w700,
                           fontSize: 32.sp,
@@ -74,7 +74,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                   SizedBox(height: 10.h),
                   Text(
                     textAlign: TextAlign.center,
-                    "Select each word in the order it was presented to you.",
+                    "Select each word in the order it was presented to you.".tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
@@ -269,7 +269,7 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
         padding:
             EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
         child: CustomOrangeButton(
-            buttonText: "Next",
+            buttonText: "Next".tr,
             onPressed: () {
               if (listEquals(walletCreatingController.firstHalfOfMnemonic,
                   walletCreatingController.orderList)) {
@@ -282,8 +282,8 @@ class ConfirmSeedPhraseScreen extends StatelessWidget {
                 walletCreatingController.indexes.clear();
                 controller.updateIndex(2);
               } else {
-                Get.snackbar('Error',
-                    'Please tap phrases in the order provided to you on the previous page',
+                Get.snackbar('Error'.tr,
+                    'Please tap phrases in the order provided to you on the previous page'.tr,
                     backgroundColor: orange3, snackPosition: SnackPosition.TOP);
                 walletCreatingController.changeisTrue(false);
               }

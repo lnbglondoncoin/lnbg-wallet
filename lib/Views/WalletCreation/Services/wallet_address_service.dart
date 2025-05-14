@@ -50,7 +50,7 @@ class WalletCreatingController extends GetxController
   var balance = ''.obs;
   var pvKey = ''.obs;
   @override
-  void onInit() {
+  void onInit()async {
     super.onInit();
     mnemonic.value = generateMnemonic();
     mnemonicWords.value = mnemonic.split(' ');
@@ -58,7 +58,8 @@ class WalletCreatingController extends GetxController
     secondHalfofMnemonic.value = mnemonicWords.sublist(6, 12);
   fetchLNBGTokenData("LLC","LNBG London Coin");    
       fetchLNBGTokenData("ETH","Ethereum"); 
-   
+    // 👇 Read stored language code from SharedPreferences
+ 
   }
 
 
@@ -73,11 +74,11 @@ class WalletCreatingController extends GetxController
         hundredslugs.assignAll(List<String>.from(data['slugs']));
       await  fetchHundredTokens(wallwtAddress.value);
       } else {
-        Get.snackbar('Error', 'Failed to fetch  100 Slugs');
+        Get.snackbar('Error'.tr, 'Failed to fetch  100 Slugs');
       }
     } catch (e) {
       isLoading(false);
-      Get.snackbar('Error', e.toString());
+      Get.snackbar('Error.tr', e.toString());
     }
     finally{
       isLoading(false);
@@ -131,11 +132,11 @@ print("merge slugs are $hundredslugs");
      
       } else {
         isLoading.value = false;
-        Get.snackbar("Error", "Failed to load 100 tokenData");
+        Get.snackbar("Error".tr, "Failed to load 100 tokenData".tr);
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong with 1000 tokens");
+      Get.snackbar("Error".tr, "Something went wrong with 1000 tokens".tr);
     }
   }
 
@@ -311,7 +312,7 @@ print(url);
       }
     } catch (e) {
       isLoading(false);
-      Get.snackbar("Error with CMC slug loading", e.toString());
+      Get.snackbar("Error with CMC slug loading".tr, e.toString());
     } finally {
       isLoading(false);
     }
@@ -330,8 +331,8 @@ var importngOrCreatingprocessCompletion=false.obs;
         tBlnc.value = data['balanceUsd'].toStringAsFixed(5);
       } else {
         Get.snackbar(
-          'Error',
-          'Failed to fetch balance: ${response.statusCode}',
+          'Error'.tr,
+          '${"Failed to fetch balance:".tr} ${response.statusCode}',
           snackPosition: SnackPosition.BOTTOM,
         );
         tBlnc.value = '0';
@@ -339,8 +340,8 @@ var importngOrCreatingprocessCompletion=false.obs;
     } catch (e) {
        isLoading.value = false; // Set loading to false only at the very end
       Get.snackbar(
-        'Error',
-        'Failed to fetch balance',
+        'Error'.tr,
+        'Failed to fetch balance'.tr,
         snackPosition: SnackPosition.BOTTOM,
       );
       tBlnc.value = '0';

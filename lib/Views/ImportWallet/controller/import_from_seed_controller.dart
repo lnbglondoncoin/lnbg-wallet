@@ -52,10 +52,10 @@ class ImportFromSeedController extends GetxController {
         ),
       );
       if (authenticated) {
-        Get.snackbar("Success", "Authenticated", backgroundColor: orange3);
+        Get.snackbar("Success".tr, "Authenticated".tr, backgroundColor: orange3);
         showPopup(context);
       } else {
-        Get.snackbar("Error", "Authentication Failed",
+        Get.snackbar("Error".tr, "Authentication Failed".tr,
             backgroundColor: orange3);
       }
     } on PlatformException catch (e) {
@@ -93,13 +93,13 @@ class ImportFromSeedController extends GetxController {
                   width: 186.w,
                 ),
           title: Text(
-            "Successful!",
+            "Successful!".tr,
             style: GoogleFonts.urbanist(
                 fontSize: 24.sp, fontWeight: FontWeight.w700, color: orange3),
           ),
           content: Text(
               textAlign: TextAlign.center,
-              "Preparing...\nPlease wait a moment.",
+              "Preparing...\nPlease wait a moment.".tr,
               style: GoogleFonts.urbanist(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w400,
@@ -127,14 +127,17 @@ var isLoading=false.obs;
   void verfifyMnemonicAndImport() async {
     isLoading(true);
     if (!importSeedKey.currentState!.validate()) {
+      isLoading(false);
       return;
     }
 
     String seedPhrase = seedPhraseController.text.trim();
 
     if (!bip39.validateMnemonic(seedPhrase)) {
-      Get.snackbar("Error", "Invalid seed phrase. Please check again.");
+      isLoading(false);
+      Get.snackbar("Error".tr, "Invalid seed phrase. Please check again.".tr);
       return;
+      
     }
 
     final privateKey = await walletCreatingController.getPrivateKey(seedPhrase);
@@ -150,7 +153,7 @@ var isLoading=false.obs;
    // await  walletCreatingController.fetchCoinData(true,true);
     } else {
       isLoading(false);
-      Get.snackbar("Error", "Failed to import wallet. Try again.");
+      Get.snackbar("Error".tr, "Failed to import wallet. Try again.");
     }
   }
 }

@@ -9,10 +9,10 @@ import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 class ReusableDropdown extends StatelessWidget {
   final List<String> items;
   final RxString selectedValue;
-   final Function(String)? onChanged;
+  final Function(String)? onChanged;
 
   const ReusableDropdown(
-      {super.key, required this.items, required this.selectedValue,this.onChanged,});
+      {super.key, required this.items, required this.selectedValue, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -21,54 +21,65 @@ class ReusableDropdown extends StatelessWidget {
         theme.brightness == Brightness.dark; // Check if dark mode is active
 
     return Obx(
-      () => Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        decoration: BoxDecoration(
-          color: isDarkMode ? lightBlackColor2 : lightWhiteColor,
-          border: Border.all(
-              color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            dropdownColor: isDarkMode ? lightBlackColor2 : whiteColor,
-            value: selectedValue.value,
-            icon: SizedBox(
-              height: 10.h,
-              width: 10.w,
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/diamond.svg',
-                  height: 20.h,
-                  width: 20.w,
-                  colorFilter: ColorFilter.mode(
-                      isDarkMode ? whiteColor : blackColor2, BlendMode.srcIn),
+      () {
+        // Ensure the selected value is valid
+        if (!items.contains(selectedValue.value)) {
+          print(items);
+          print(items.first);
+          print(selectedValue.value);
+          selectedValue.value = items.isNotEmpty ? items.first : "";
+        }
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          decoration: BoxDecoration(
+            color: isDarkMode ? lightBlackColor2 : lightWhiteColor,
+            border: Border.all(
+                color: isDarkMode ? lightBlackColor2 : lightWhiteColor),
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Obx((){
+            return DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              dropdownColor: isDarkMode ? lightBlackColor2 : whiteColor,
+              value: selectedValue.value,
+              icon: SizedBox(
+                height: 10.h,
+                width: 10.w,
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/diamond.svg',
+                    height: 20.h,
+                    width: 20.w,
+                    colorFilter: ColorFilter.mode(
+                        isDarkMode ? whiteColor : blackColor2, BlendMode.srcIn),
+                  ),
                 ),
               ),
+              items: items.map((item) {
+                return DropdownMenuItem(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: GoogleFonts.urbanist(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800,
+                        color: isDarkMode ? whiteColor : blackColor2),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  selectedValue.value = value;
+                  onChanged?.call(value);
+                }
+              },
+              isExpanded: true,
             ),
-            items: items.map((item) {
-              return DropdownMenuItem(
-                value: item,
-                child: Text(
-                  item,
-                  style: GoogleFonts.urbanist(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                      color: isDarkMode ? whiteColor : blackColor2),
-                ),
-              );
-            }).toList(),
-            onChanged: (value) {
-              if (value != null) {
-                selectedValue.value = value;
-                              onChanged?.call(value);
-
-              }
-            },
-            isExpanded: true,
-          ),
-        ),
-      ),
+          );
+          })
+        );
+      },
     );
   }
 }

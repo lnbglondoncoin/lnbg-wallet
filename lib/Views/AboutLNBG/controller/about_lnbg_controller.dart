@@ -27,7 +27,7 @@ class AboutLNBGController extends GetxController {
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      throw 'Could not launch $url';
+      throw '${'Could not launch'.tr} $url';
     }
   }
 }

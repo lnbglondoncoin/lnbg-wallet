@@ -120,25 +120,25 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                   //                       whiteColor,
                                   //                       BlendMode.srcIn)))),
                                   // ),
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.notificationScreen);
+                                  // SizedBox(
+                                  //   width: 15.w,
+                                  // ),
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     Get.toNamed(AppRoutes.notificationScreen);
                             
-                                    },
-                                    child: SizedBox(
-                                        height: 28.h,
-                                        width: 28.w,
-                                        child: Center(
-                                            child: SvgPicture.asset(
-                                                notification,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                        whiteColor,
-                                                        BlendMode.srcIn)))),
-                                  ),
+                                  //   },
+                                  //   child: SizedBox(
+                                  //       height: 28.h,
+                                  //       width: 28.w,
+                                  //       child: Center(
+                                  //           child: SvgPicture.asset(
+                                  //               notification,
+                                  //               colorFilter:
+                                  //                   const ColorFilter.mode(
+                                  //                       whiteColor,
+                                  //                       BlendMode.srcIn)))),
+                                  // ),
                                 ],
                               ),
                               // SizedBox(height: 30.h,),
@@ -197,7 +197,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                         height: 10.h,
                                       ),
                                       Text(
-                                        "Send",
+                                        "Send".tr,
                                         style: GoogleFonts.urbanist(
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.w700,
@@ -230,7 +230,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                           height: 10.h,
                                         ),
                                         Text(
-                                          "Receive",
+                                          "Receive".tr,
                                           style: GoogleFonts.urbanist(
                                               fontSize: 18.sp,
                                               fontWeight: FontWeight.w700,
@@ -264,7 +264,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                           height: 10.h,
                                         ),
                                         Text(
-                                          "Buy",
+                                          "Buy".tr,
                                           style: GoogleFonts.urbanist(
                                               fontSize: 18.sp,
                                               fontWeight: FontWeight.w700,
@@ -364,9 +364,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w800,
                                   ),
-                                  tabs: const [
-                                    Tab(text: 'Tokens'),
-                                    Tab(text: 'NFTs'),
+                                  tabs:  [
+                                    Tab(text: 'Tokens'.tr),
+                                    Tab(text: 'NFTs'.tr),
                                   ],
                                 ),
                                 SizedBox(height: 10.h),
@@ -378,9 +378,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                       Obx(() {
                                         return walletCreatingController
                                                 .tokenData.isEmpty
-                                            ? const Center(
+                                            ?  Center(
                                                 child: Text(
-                                                    "No Tokens To Display"))
+                                                    "No Tokens To Display".tr))
                                             : SingleChildScrollView(
                                                 child: Column(
                                                   children: [
@@ -575,7 +575,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                               width: 2.w,
                                                             ),
                                                             Text(
-                                                              "Add Token",
+                                                              "Add Token".tr,
                                                               style: GoogleFonts.urbanist(
                                                                   fontSize:
                                                                       18.sp,
@@ -676,7 +676,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                   return
                                                   nftController.nftList.isEmpty?
                                                    Text(
-                                                    "No NFTs Yet",
+                                                    "No NFTs Yet".tr,
                                                     style: GoogleFonts.urbanist(
                                                         fontSize: 24.sp,
                                                         fontWeight:
@@ -689,7 +689,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                       nftController.showImportednfts.value=true;
                                                     },
                                                     child: Text(
-                                                      "Show imporetd NFTs",
+                                                      "Show imporetd NFTs".tr,
                                                       style: GoogleFonts.urbanist(
                                                           fontSize: 24.sp,
                                                           fontWeight:
@@ -708,7 +708,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                       Get.toNamed(AppRoutes.importNFTScreen);
                                                     },
                                                     child: Text(
-                                                      "Import NFTs",
+                                                      "Import NFTs".tr,
                                                       style: GoogleFonts.urbanist(
                                                           fontSize: 20.sp,
                                                           fontWeight:

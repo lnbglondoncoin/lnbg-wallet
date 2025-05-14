@@ -33,7 +33,7 @@ class StepProgressIndicator extends StatelessWidget {
                   controller.updateIndex(controller.currentIndex.value - 1);
                 }
               },
-              child: const Text("Previous"),
+              child:  Text("Previous".tr),
             ),
             SizedBox(width: 10.w),
             ElevatedButton(
@@ -42,7 +42,7 @@ class StepProgressIndicator extends StatelessWidget {
                   controller.updateIndex(controller.currentIndex.value + 1);
                 }
               },
-              child: const Text("Next"),
+              child:  Text("Next".tr),
             ),
           ],
         )

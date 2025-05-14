@@ -22,7 +22,7 @@ final nftController = Get.put(NftController());
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(title: "Import NFT", iconPath: ""),
+      appBar:  CustomAppBar(title: "Import NFT".tr, iconPath: ""),
       body: SingleChildScrollView(
         child: Obx((){
           return 
@@ -36,12 +36,12 @@ final nftController = Get.put(NftController());
                 CustomTextField(
                     hintText: "0x7131CA84856767f3126a2C75468d48f8E696",
                     controller: nftController.adressController,
-                    labelText: "Address",
+                    labelText: "Address".tr,
                      validator: (value) {
                             if (value == null || value.isEmpty) {
-                  return 'Address is required';
+                  return 'Address is required'.tr;
                 } else if (!RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(value)) {
-                  return "Invalid contract address format";
+                  return "Invalid contract address format".tr;
                 }
                             return null;
                           },),
@@ -49,12 +49,12 @@ final nftController = Get.put(NftController());
                   height: 20.h,
                 ),
                 CustomTextField(
-                    hintText: "Enter the Collectible ID",
+                    hintText: "Enter the Collectible ID".tr,
                     controller: nftController.idController,
-                    labelText: "ID",
+                    labelText: "ID".tr,
                       validator: (value) {
                             if (value == null || value.isEmpty) {
-                  return 'ID is required';
+                  return 'ID is required'.tr;
                 }
                  if (!RegExp(r'^\d+$').hasMatch(value)) {
                   return 'ID must be a number';
@@ -81,14 +81,14 @@ final nftController = Get.put(NftController());
             children: [
               Flexible(
                   child: CustomLightGreenButton(
-                      buttonText: "Cancel", onPressed: () {
+                      buttonText: "Cancel".tr, onPressed: () {
                         Get.back();
                       })),
               SizedBox(
                 width: 10.w,
               ),
               Flexible(
-                  child: CustomButton(buttonText: "Import", onPressed: () {
+                  child: CustomButton(buttonText: "Import".tr, onPressed: () {
                       if (nftController.importNftKey.currentState!.validate()) {
         nftController.importNFT(
           walletAddress: walletCreatingController.wallwtAddress.value,

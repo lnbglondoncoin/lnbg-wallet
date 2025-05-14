@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SecurityAndPrivacyController extends GetxController {
-  var selectedlocTime = 'After 5 minutes'.obs;
+  var selectedlocTime = 'After 5 minutes'.tr.obs;
   var isLoading=false.obs;
   RxBool isBiometric = false.obs;
   RxBool isface = false.obs;
@@ -38,7 +38,7 @@ class SecurityAndPrivacyController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String? time = prefs.getString('auto_lock_time');
     if (time != null) {
-      selectedlocTime.value = time;
+      selectedlocTime.value = time.tr;
     }
   }
 
@@ -49,17 +49,18 @@ Get.offAllNamed(AppRoutes.walkThroughScreen);
 
   }
   
+  
   Future<void> clearBrowserCookies() async {
     try {
       isLoading(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('browser_cookies'); // Assuming cookies are stored under this key
-      Get.snackbar('Success', 'Browser cookies cleared successfully.',
+      Get.snackbar('Success'.tr, 'Browser cookies cleared successfully.'.tr,
          // snackPosition: SnackPosition.BOTTOM
           );
     } catch (e) {
       isLoading(false);
-      Get.snackbar('Error', 'Failed to clear browser cookies.',
+      Get.snackbar('Error'.tr, 'Failed to clear browser cookies.',
          // snackPosition: SnackPosition.BOTTOM
           );
     }
@@ -73,12 +74,12 @@ Get.offAllNamed(AppRoutes.walkThroughScreen);
       isLoading(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('browser_history'); // Assuming history is stored under this key
-      Get.snackbar('Success', 'Browser history cleared successfully.',
+      Get.snackbar('Success'.tr, 'Browser history cleared successfully.'.tr,
           //snackPosition: SnackPosition.BOTTOM
           );
     } catch (e) {
       isLoading(false);
-      Get.snackbar('Error', 'Failed to clear browser history.',
+      Get.snackbar('Error'.tr, 'Failed to clear browser history.'.tr,
          // snackPosition: SnackPosition.BOTTOM
           );
     }

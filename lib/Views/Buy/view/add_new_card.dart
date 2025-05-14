@@ -18,8 +18,8 @@ class AddNewCardScreen extends StatelessWidget {
     bool isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(
-        title: "Add New Card",
+      appBar:  CustomAppBar(
+        title: "Add New Card".tr,
         iconPath: scanIcon,
         isSuffix: true,
       ),
@@ -35,15 +35,15 @@ class AddNewCardScreen extends StatelessWidget {
                     CustomTextField2(
                       hintText: '7648 4737 4840 2799',
                       controller: TextEditingController(),
-                      labelText: 'Card Number',
+                      labelText: 'Card Number'.tr,
                     ),
                     SizedBox(
                       height: 25.h,
                     ),
                     CustomTextField2(
-                      hintText: 'Andrew Ainsley',
+                      hintText: 'Andrew Ainsley'.tr,
                       controller: TextEditingController(),
-                      labelText: 'Card Name',
+                      labelText: 'Card Name'.tr,
                     ),
                     SizedBox(
                       height: 25.h,
@@ -51,7 +51,7 @@ class AddNewCardScreen extends StatelessWidget {
                     CustomTextField2(
                       hintText: '7648 4737 4840 2799',
                       controller: TextEditingController(),
-                      labelText: 'Expiration Date',
+                      labelText: 'Expiration Date'.tr,
                     ),
                     SizedBox(
                       height: 25.h,
@@ -59,7 +59,7 @@ class AddNewCardScreen extends StatelessWidget {
                     CustomTextField2(
                       hintText: '12/26/2025',
                       controller: TextEditingController(),
-                      labelText: 'Expiration Date',
+                      labelText: 'Expiration Date'.tr,
                       isSuffix: true,
                       suffixiconPath: "assets/icons/calendar.svg",
                     ),
@@ -69,7 +69,7 @@ class AddNewCardScreen extends StatelessWidget {
                     CustomTextField2(
                       hintText: '755',
                       controller: TextEditingController(),
-                      labelText: '755CVV',
+                      labelText: '755CVV'.tr,
                       isNumber: true,
                     )
                   ],
@@ -89,12 +89,12 @@ class AddNewCardScreen extends StatelessWidget {
         padding: EdgeInsets.all(20.h),
         child: isDarkMode
             ? CustomGreenButton(
-                buttonText: "Continue",
+                buttonText: "Continue".tr,
                 onPressed: () {
                   _showSuccesPopup(context);
                 })
             : CustomButton(
-                buttonText: "Continue",
+                buttonText: "Continue".tr,
                 onPressed: () {
                   _showSuccesPopup(context);
                 }),

@@ -32,7 +32,7 @@ class ReceiveCoinQR extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomAppBar(
-        title: "Receive ${token.symbol}",
+        title: "${"Receive".tr} ${token.symbol}",
         iconPath: 'assets/icons/search.svg',
       ),
       body: SingleChildScrollView(
@@ -89,7 +89,7 @@ class ReceiveCoinQR extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
                   textAlign: TextAlign.center,
-                  "Send only Ethereum (ETH) to this address.",
+                  "Send only Ethereum (ETH) to this address.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -100,7 +100,7 @@ class ReceiveCoinQR extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
                   textAlign: TextAlign.center,
-                  "Sending any other coins may result in permanent loss.",
+                  "Sending any other coins may result in permanent loss.".tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -136,7 +136,7 @@ class ReceiveCoinQR extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Copy",
+                          "Copy".tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
@@ -200,7 +200,7 @@ class ReceiveCoinQR extends StatelessWidget {
                             )),
                           ),
                           Text(
-                            "Share",
+                            "Share".tr,
                             style: GoogleFonts.urbanist(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w700,
@@ -263,7 +263,7 @@ class ReceiveCoinQR extends StatelessWidget {
   void _shareQRCode() async {
     File? imageFile = await _captureQRImage();
     if (imageFile != null) {
-      Share.shareXFiles([XFile(imageFile.path)], text: "Here is my QR code!");
+      Share.shareXFiles([XFile(imageFile.path)], text: "Here is my QR code!".tr);
     } else {}
   }
 }
@@ -344,7 +344,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
               SizedBox(height: 20.h),
               Center(
                 child: Text(
-                  "Set Amount",
+                  "Set Amount".tr,
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
@@ -363,7 +363,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                     borderRadius: BorderRadius.circular(18.r),
                     borderSide: BorderSide.none, // Makes the border invisible
                   ),
-                  hintText: "Set amount",
+                  hintText: "Set amount".tr,
                   hintStyle: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w400,
                     color: isDarkMode ? whiteColor : greyColor2,
@@ -413,7 +413,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                           borderRadius: BorderRadius.circular(100.r)),
                       child: Center(
                         child: Text(
-                          "Cancel",
+                          "Cancel".tr,
                           style: GoogleFonts.urbanist(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
@@ -430,12 +430,12 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                   Flexible(
                     child: isDarkMode
                         ? CustomGreenButton(
-                            buttonText: "Confirm",
+                            buttonText: "Confirm".tr,
                             onPressed: () {
                               Navigator.pop(context);
                             })
                         : CustomButton(
-                            buttonText: "Confirm",
+                            buttonText: "Confirm".tr,
                             onPressed: () {
                               Navigator.pop(context);
                             }),

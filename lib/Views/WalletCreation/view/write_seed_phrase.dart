@@ -48,7 +48,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Write Down Your Seed Phrase",
+                      "Write Down Your Seed Phrase".tr,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w700,
                           fontSize: 32.sp,
@@ -60,7 +60,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",
+                    'This is your seed phrase. Write it down on a paper and keep it in a safe place. You\'ll be asked to re-enter this phrase (in order) on the next step.'.tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
@@ -120,7 +120,7 @@ class WriteSeedPhraseScreen extends StatelessWidget {
           padding:
               EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w, bottom: 10.h),
           child: CustomOrangeButton(
-              buttonText: "Next",
+              buttonText: "Next".tr,
               onPressed: () {
                 walletCreatingController.shuffleFirstList(
                     walletCreatingController.mnemonicWords.sublist(0, 6));

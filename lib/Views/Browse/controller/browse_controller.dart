@@ -30,17 +30,17 @@ class BrowseController extends GetxController {
 
   }
 
-  var cryptoList = <CryptoItem>[
-    CryptoItem(name: "Ethereum", imagePath: "assets/icons/etg.png"),
-    CryptoItem(name: "Solana", imagePath: "assets/icons/solana.png"),
-    CryptoItem(name: "Polygon", imagePath: "assets/icons/polygon.png"),
-    CryptoItem(name: "Shiba Inu", imagePath: "assets/icons/shiba.png"),
-    CryptoItem(name: "Google", imagePath: "assets/icons/google.png"),
-    CryptoItem(name: "Bitcoin", imagePath: "assets/icons/bitcoin.png"),
-    CryptoItem(name: "Binance", imagePath: "assets/icons/binance.png"),
-    CryptoItem(
-        name: "Decentraland", imagePath: "assets/icons/decentraland.png"),
-  ].obs;
+  // var cryptoList = <CryptoItem>[
+  //   CryptoItem(name: "Ethereum", imagePath: "assets/icons/etg.png"),
+  //   CryptoItem(name: "Solana", imagePath: "assets/icons/solana.png"),
+  //   CryptoItem(name: "Polygon", imagePath: "assets/icons/polygon.png"),
+  //   CryptoItem(name: "Shiba Inu", imagePath: "assets/icons/shiba.png"),
+  //   CryptoItem(name: "Google", imagePath: "assets/icons/google.png"),
+  //   CryptoItem(name: "Bitcoin", imagePath: "assets/icons/bitcoin.png"),
+  //   CryptoItem(name: "Binance", imagePath: "assets/icons/binance.png"),
+  //   CryptoItem(
+  //       name: "Decentraland", imagePath: "assets/icons/decentraland.png"),
+  // ].obs;
 
   // var historyList = <HistoryItem>[
   //   HistoryItem(
@@ -103,11 +103,11 @@ Future<void> fetchSearchData(String query, String address) async {
 fetchHistoryOfAnAddress(address);
       print("Parsed tokens: $tokens");
     } else {
-      Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
+      Get.snackbar("Error".tr, "${"Failed to fetch data:".tr} ${response.statusCode}");
     }
   } catch (e) {
      isSearching.value = false;
-    Get.snackbar("Error", "Something went wrong: $e");
+    Get.snackbar("Error".tr, "${"Something went wrong:".tr} $e");
     print("fetchSearchData: $e");
   } finally {
     // Ensure loading state is set to false once the data is fetched or if an error occurs
@@ -150,10 +150,10 @@ Future<void> fetchHistoryOfAnAddress(String address) async {
         historyResults.clear();
       }
     } else {
-      Get.snackbar("Error", "Failed to fetch data: ${response.statusCode}");
+      Get.snackbar("Error".tr, "${"Failed to fetch data:".tr} ${response.statusCode}");
     }
   } catch (e) {
-    Get.snackbar("Error", "Something went wrong: $e");
+    Get.snackbar("Error".tr, "${"Something went wrong:".tr} $e");
     print("fetchHistoryOfAnAddress: $e");
   } finally {
     isLoading.value = false;
@@ -171,13 +171,13 @@ Future<void> fetchHistoryOfAnAddress(String address) async {
       if (response.statusCode == 200) {
         historyResults.clear(); // clear local history
         Get.back(); // close bottom sheet
-        Get.snackbar("Success", "Search history cleared successfully");
+        Get.snackbar("Success".tr, "Search history cleared successfully".tr);
       } else {
-        Get.snackbar("Error", "Failed to clear history: ${response.statusCode}");
+        Get.snackbar("Error".tr, "${"Failed to clear history:".tr} ${response.statusCode}");
       }
     } catch (e) {
         isLoading.value = false;
-      Get.snackbar("Error", "Something went wrong: $e");
+      Get.snackbar("Error".tr, "${"Something went wrong:".tr} $e");
     } finally {
       isLoading.value = false;
     }

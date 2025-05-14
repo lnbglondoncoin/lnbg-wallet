@@ -109,7 +109,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: List.generate(
                   _icons.length,
-                  (index) => buildNavItem(index, _icons[index], _labels[index]),
+                  (index) => buildNavItem(index, _icons[index], _labels[index].tr),
                 ),
               ),
             );

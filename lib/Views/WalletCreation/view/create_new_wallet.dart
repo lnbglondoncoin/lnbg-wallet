@@ -49,7 +49,7 @@ class CreateNewWallet extends StatelessWidget {
                       height: 15.h,
                     ),
                     Text(
-                      "Create Password",
+                      "Create Password".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w700,
@@ -60,7 +60,7 @@ class CreateNewWallet extends StatelessWidget {
                     ),
                     Text(
                       textAlign: TextAlign.center,
-                      "This password will unlock your LNBG Wallet wallet only on this device.",
+                      "This password will unlock your LNBG Wallet wallet only on this device.".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
@@ -71,16 +71,16 @@ class CreateNewWallet extends StatelessWidget {
                     ),
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Password",
+                      hintText: "Password".tr,
                       controller: controller.passController,
-                      labelText: "New Password",
+                      labelText: "New Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Password cannot be empty";
+                          return "Password cannot be empty".tr;
                         } else if (value.length < 8) {
-                          return "Must be at least 8 characters";
+                          return "Must be at least 8 characters".tr;
                         }
                         return null;
                       },
@@ -90,16 +90,16 @@ class CreateNewWallet extends StatelessWidget {
                     ),
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Password",
+                      hintText: "Password".tr,
                       controller: controller.confirmPasswordController,
-                      labelText: "Confirm New Password",
+                      labelText: "Confirm New Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Confirm Password cannot be empty";
+                          return "Confirm Password cannot be empty".tr;
                         } else if (value != controller.passController.text) {
-                          return "Password must be match";
+                          return "Password must be match".tr;
                         }
                         return null;
                       },
@@ -109,14 +109,14 @@ class CreateNewWallet extends StatelessWidget {
                     ),
                     CustomTextField(
                       //isPasswordField: true,
-                      hintText: "Name",
+                      hintText: "Name".tr,
                       controller: controller.walletCreatingController.nameController,
-                      labelText: "Enter Your Name",
+                      labelText: "Enter Your Name".tr,
                      // suffixIcoPath: eyeIcon,
                      // prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Name cannot be empty";
+                          return "Name cannot be empty".tr;
                         } 
                         return null;
                       },
@@ -147,7 +147,7 @@ class CreateNewWallet extends StatelessWidget {
                             child: RichText(
                               text: TextSpan(
                                 text:
-                                    "I understand that LNBG cannot recover this password for me. ",
+                                    "I understand that LNBG cannot recover this password for me. ".tr,
                                 style: GoogleFonts.urbanist(
                                     color:
                                         isDarkMode ? whiteColor : blackColor2,
@@ -156,7 +156,7 @@ class CreateNewWallet extends StatelessWidget {
                                     height: 1.1.h),
                                 children: [
                                   TextSpan(
-                                    text: "Learn more",
+                                    text: "Learn more".tr,
                                     style: GoogleFonts.urbanist(
                                         color: orange3,
                                         fontSize: 18.sp,
@@ -191,15 +191,15 @@ class CreateNewWallet extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(left: 15.w, right: 15.h,bottom: 8.h,top: 15.h),
           child: CustomOrangeButton(
-              buttonText: "Create Password",
+              buttonText: "Create Password".tr,
               onPressed: () {
                 controller.isChecked.value
                     ? controller.createPassword()
                     : Get.snackbar(
                         backgroundColor: orange3,
                         snackPosition: SnackPosition.TOP,
-                        "Attention",
-                        "Please accept terms and conditions");
+                        "Attention".tr,
+                        "Please accept terms and conditions".tr);
               }),
         ),
       ),

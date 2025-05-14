@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
@@ -61,7 +62,7 @@ class CustomTextFieldWithPaste extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 15.h),
               child: Text(
-                "Paste",
+                "Paste".tr,
                 style:  GoogleFonts.urbanist(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w800,

@@ -59,7 +59,7 @@ import 'package:shimmer/shimmer.dart';
               ),
             ),
             title: Text(
-              "Import From Seed",
+              "Import From Seed".tr,
               style: GoogleFonts.urbanist(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
@@ -104,27 +104,27 @@ import 'package:shimmer/shimmer.dart';
                   child: Column(
                     children: [
                       CustomDescriptionTextField(
-                        hintText: "Seed Phrase",
+                        hintText: "Seed Phrase".tr,
                         controller: controller.seedPhraseController,
-                        labelText: "Seed Phrase",
+                        labelText: "Seed Phrase".tr,
                         // suffixIcoPath: eyeIcon,
                         //prefixIconPath: eyeIcon,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Seed phrase cannot be empty";
+                            return "Seed phrase cannot be empty".tr;
                           } else {
                             // Split the input into words
                             List<String> words = value.trim().split(' ');
 
                             // Check if the length is exactly 12 words
                             if (words.length != 12) {
-                              return "Phrase must consist of exactly 12 words";
+                              return "Phrase must consist of exactly 12 words".tr;
                             }
 
                             // Optionally, check if all words are valid (if necessary)
                             for (var word in words) {
                               if (word.isEmpty) {
-                                return "Seed phrase cannot have empty words";
+                                return "Seed phrase cannot have empty words".tr;
                               }
                             }
                           }
@@ -136,16 +136,16 @@ import 'package:shimmer/shimmer.dart';
                       ),
                       CustomTextField(
                         isPasswordField: true,
-                        hintText: "Password",
+                        hintText: "Password".tr,
                         controller: controller.passController,
-                        labelText: "New Password",
+                        labelText: "New Password".tr,
                         suffixIcoPath: eyeIcon,
                         prefixIconPath: lockIcon,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Password cannot be empty";
+                            return "Password cannot be empty".tr;
                           } else if (value.length < 8) {
-                            return "Must be at least 8 characters";
+                            return "Must be at least 8 characters".tr;
                           }
                           return null;
                         },
@@ -155,16 +155,16 @@ import 'package:shimmer/shimmer.dart';
                       ),
                       CustomTextField(
                         isPasswordField: true,
-                        hintText: "Confirm Password",
+                        hintText: "Confirm Password".tr,
                         controller: controller.confirmPasswordController,
-                        labelText: "Confirm New Password",
+                        labelText: "Confirm New Password".tr,
                         suffixIcoPath: eyeIcon,
                         prefixIconPath: lockIcon,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Confirm Password cannot be empty";
+                            return "Confirm Password cannot be empty".tr;
                           } else if (value != controller.passController.text) {
-                            return "Password must be match";
+                            return "Password must be match".tr;
                           }
                           return null;
                         },
@@ -192,7 +192,7 @@ import 'package:shimmer/shimmer.dart';
                             Expanded(
                               child: RichText(
                                 text: TextSpan(
-                                  text: "I agree to LNBG Wallet ",
+                                  text: "I agree to LNBG Wallet ".tr,
                                   style: GoogleFonts.urbanist(
                                       color:
                                           isDarkMode ? whiteColor : blackColor2,
@@ -201,7 +201,7 @@ import 'package:shimmer/shimmer.dart';
                                       height: 1.4.h),
                                   children: [
                                     TextSpan(
-                                      text: "Term & Conditions.",
+                                      text: "Term & Conditions.".tr,
                                       style: GoogleFonts.urbanist(
                                           color: orange3,
                                           fontSize: 18.sp,
@@ -241,15 +241,15 @@ import 'package:shimmer/shimmer.dart';
               return controller.walletCreatingController.isLoading.value||controller.isLoading.value
                   ? shimmerOrangeButton()
                   : CustomOrangeButton(
-                      buttonText: "Import",
+                      buttonText: "Import".tr,
                       onPressed: () {
                         controller.isChecked.value
                             ? controller.verfifyMnemonicAndImport()
                             : Get.snackbar(
                                 backgroundColor: orange3,
                                 snackPosition: SnackPosition.TOP,
-                                "Attention",
-                                "Please accept terms and conditions");
+                                "Attention".tr,
+                                "Please accept terms and conditions".tr);
                       });
             })),
       );

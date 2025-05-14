@@ -45,7 +45,7 @@ class SecureWallet2 extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      "Secure Your Wallet",
+                      "Secure Your Wallet".tr,
                       style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w700,
                           fontSize: 32.sp,
@@ -58,7 +58,7 @@ class SecureWallet2 extends StatelessWidget {
                   Center(
                     child: RichText(
                       text: TextSpan(
-                        text: "Secure your wallet's ",
+                        text:  'Secure your wallet\'s '.tr,
                         style: GoogleFonts.urbanist(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
@@ -74,7 +74,7 @@ class SecureWallet2 extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: "Seed Phrase",
+                            text: "Seed Phrase".tr,
                             style: GoogleFonts.urbanist(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
@@ -101,7 +101,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 25.h,
                   ),
                   Text(
-                    "Manual",
+                    "Manual".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w700,
                         fontSize: 20.sp,
@@ -111,7 +111,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 20.h,
                   ),
                   Text(
-                    "Write down your seed phrase on a piece of paper and store in a safe place.",
+                    "Write down your seed phrase on a piece of paper and store in a safe place.".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 19.sp,
@@ -121,7 +121,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 20.h,
                   ),
                   Text(
-                    "Security level: Very strong",
+                    "Security level: Very strong".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
@@ -162,7 +162,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 20.h,
                   ),
                   Text(
-                    "Risks are: ",
+                    "Risks are: ".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
@@ -191,10 +191,10 @@ class SecureWallet2 extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 index == 0
-                                    ? "You lose it"
+                                    ? "You lose it".tr
                                     : index == 1
-                                        ? "You forget where you put it"
-                                        : "Someone else finds it",
+                                        ? "You forget where you put it".tr
+                                        : "Someone else finds it".tr,
                                 style: GoogleFonts.urbanist(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
@@ -212,7 +212,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 20.h,
                   ),
                   Text(
-                    "Other options: Doesn't have to be paper!",
+                   'Other options: Doesn\'t have to be paper!'.tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
@@ -222,7 +222,7 @@ class SecureWallet2 extends StatelessWidget {
                     height: 20.h,
                   ),
                   Text(
-                    "Tips:",
+                    "Tips:".tr,
                     style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.sp,
@@ -251,10 +251,10 @@ class SecureWallet2 extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 index == 0
-                                    ? "Store in bank vault"
+                                    ? "Store in bank vault".tr
                                     : index == 1
-                                        ? "Store in a safe"
-                                        : "Store in multiple secret places",
+                                        ? "Store in a safe".tr
+                                        : "Store in multiple secret places".tr,
                                 style: GoogleFonts.urbanist(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
@@ -288,7 +288,7 @@ class SecureWallet2 extends StatelessWidget {
             padding: EdgeInsets.only(
                 left: 15.w, top: 20.h, right: 15.w, bottom: 10.h),
             child: CustomOrangeButton(
-                buttonText: "Start",
+                buttonText: "Start".tr,
                 onPressed: () {
                   Get.toNamed(AppRoutes.hiddenWriteSeedPhraseScreen);
                

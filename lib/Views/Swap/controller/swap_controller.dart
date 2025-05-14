@@ -128,9 +128,9 @@ class SwapController extends GetxController {
   final swapFormKey = GlobalKey<FormState>();
   String? validateBLance(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Balance is required';
+      return 'Balance is required'.tr;
     } else if (value == "0") {
-      return "Balance cannot be zero";
+      return "Balance cannot be zero".tr;
     }
     // Add additional address validation if needed
     return null;
@@ -294,14 +294,14 @@ class SwapController extends GetxController {
 
           updateAmount2nd();
         } else {
-          throw Exception('Failed to get quote: ${response.body}');
+          throw Exception('${"Failed to get quote:".tr} ${response.body}');
         }
       });
     } catch (e) {
       isLoading(false);
       print('Error in getSwapQuote: $e');
       Get.snackbar(
-        'Error',
+        'Error'.tr,
         e.toString(),
         duration: const Duration(seconds: 3),
         snackPosition: SnackPosition.BOTTOM,
@@ -328,14 +328,14 @@ class SwapController extends GetxController {
       isLoading(true);
 
       if (currentQuote.isEmpty) {
-        throw Exception('No valid quote found');
+        throw Exception('No valid quote found'.tr);
       }
 
       // Check user balance
       if (firstToken.value.balance < cryptoAmount.value) {
         Get.snackbar(
-          'Error',
-          'Insufficient balance to perform the swap.',
+          'Error'.tr,
+          'Insufficient balance to perform the swap'.tr,
           duration: const Duration(seconds: 3),
           snackPosition: SnackPosition.BOTTOM,
         );
@@ -499,7 +499,7 @@ Get.log("Swapqoute=$swapQuote");
       }
     } catch (e) {
       print('Error in executeSwapWithXTAPI: $e');
-      throw Exception('Failed to execute swap with XT API: $e');
+      throw Exception('${"Failed to execute swap with XT API: ".tr} $e');
     }
   }
 
@@ -530,7 +530,7 @@ Get.log("Swapqoute=$swapQuote");
     balanceInUsd: 0.0,
     priceInUsd: 0.0,
     trend: "",
-    trendPercentage: 0.0,
+    trendPercentage: 0.0, 
   ).obs;
 
   var secondToken = TokenData(
@@ -658,7 +658,7 @@ Get.log("Swapqoute=$swapQuote");
           return txHash;
         } catch (e) {
           print('Transaction error: $e');
-          throw Exception('Transaction failed: $e');
+          throw Exception('${"Transaction failed:".tr} $e');
         } finally {
           // Clean up the client
           client.dispose();
@@ -666,16 +666,16 @@ Get.log("Swapqoute=$swapQuote");
       } catch (e) {
         print('Network error: $e');
         Get.snackbar(
-          'Network Error',
-          'Unable to connect to the blockchain. Please check your internet connection.',
+          'Network Error'.tr,
+          'Unable to connect to the blockchain. Please check your internet connection.'.tr,
           duration: const Duration(seconds: 3),
           snackPosition: SnackPosition.BOTTOM,
         );
-        throw Exception('Transaction submission failed: $e');
+        throw Exception('${"Transaction submission failed:".tr} $e');
       }
     } catch (e) {
       print('Error in submitTransaction: $e');
-      throw Exception('Transaction submission failed: $e');
+      throw Exception('${"Transaction submission failed:".tr} $e');
     }
   }
 
@@ -756,12 +756,12 @@ Get.log("Swapqoute=$swapQuote");
         );
 
         if (updatedAllowance < BigInt.parse(amount)) {
-          throw Exception('Allowance not updated. Please try again.');
+          throw Exception('Allowance not updated. Please try again.'.tr);
         }
       }
     } catch (e) {
       print('Error in approvePermit2: $e');
-      throw Exception('Failed to approve Permit2: $e');
+      throw Exception('${"Failed to approve Permit2:".tr} $e');
     }
   }
 }
@@ -823,7 +823,7 @@ void _showSuccesPopup(BuildContext context) {
           width: 186.w,
         ),
         title: Text(
-          "Successful Swap!",
+          "Successful Swap!".tr,
           style: GoogleFonts.urbanist(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
@@ -831,7 +831,7 @@ void _showSuccesPopup(BuildContext context) {
         ),
         content: Text(
             textAlign: TextAlign.center,
-            "Your crypto was swap successfully. You can view more details below.",
+            "Your crypto was swap successfully. You can view more details below.".tr,
             style: GoogleFonts.urbanist(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
@@ -839,7 +839,7 @@ void _showSuccesPopup(BuildContext context) {
         actions: [
           isDarkMode
               ? CustomGreenButton(
-                  buttonText: "View Details",
+                  buttonText: "View Details".tr,
                   onPressed: () {
                     Navigator.pop(context);
                     Get.offAllNamed(AppRoutes.home);
@@ -858,7 +858,7 @@ void _showSuccesPopup(BuildContext context) {
                             const LinearGradient(colors: [orange2, orange1])),
                     child: Center(
                       child: Text(
-                        "View Details",
+                        "View Details".tr,
                         style: GoogleFonts.urbanist(
                             fontWeight: FontWeight.w700,
                             fontSize: 18.sp,
@@ -871,7 +871,7 @@ void _showSuccesPopup(BuildContext context) {
             height: 15.h,
           ),
           CustomLightGreenButton(
-              buttonText: "Cancel",
+              buttonText: "Cancel".tr,
               onPressed: () {
                 Navigator.pop(context);
                 Get.offAllNamed(AppRoutes.home);
@@ -903,7 +903,7 @@ void _showFailPopup(
           width: 186.w,
         ),
         title: Text(
-          "Oops.. .Failed!",
+          "Oops.. .Failed!".tr,
           style: GoogleFonts.urbanist(
               fontSize: 24.sp, fontWeight: FontWeight.w700, color: pinkColor),
         ),
@@ -917,7 +917,7 @@ void _showFailPopup(
         actions: [
           isDarkMode
               ? CustomGreenButton(
-                  buttonText: "Try Again",
+                  buttonText: "Try Again".tr,
                   onPressed: () async {
                     Navigator.pop(context); // Close the dialog
                     await retryFunction(); // Retry the swap
@@ -936,7 +936,7 @@ void _showFailPopup(
                             const LinearGradient(colors: [orange2, orange1])),
                     child: Center(
                       child: Text(
-                        "Try Again",
+                        "Try Again".tr,
                         style: GoogleFonts.urbanist(
                             fontWeight: FontWeight.w700,
                             fontSize: 18.sp,
@@ -949,7 +949,7 @@ void _showFailPopup(
             height: 15.h,
           ),
           CustomLightGreenButton(
-              buttonText: "Cancel",
+              buttonText: "Cancel".tr,
               onPressed: () {
                 Navigator.pop(context);
               })
@@ -1001,7 +1001,7 @@ Future<void> waitForTransactionConfirmation(String txHash) async {
   }
 
   if (!confirmed) {
-    throw Exception('Approval transaction not confirmed. Please try again.');
+    throw Exception('Approval transaction not confirmed. Please try again.'.tr);
   }
 }
 

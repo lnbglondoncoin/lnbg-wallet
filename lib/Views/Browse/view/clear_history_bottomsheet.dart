@@ -81,7 +81,7 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                "Clear Browsing Data?",
+                "Clear Browsing Data?".tr,
                 style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.w700,
                     fontSize: 24.sp,
@@ -99,7 +99,7 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
               children: [
                 Flexible(
                     child: CustomLightGreenButton(
-                        buttonText: "Cancel", onPressed: () {
+                        buttonText: "Cancel".tr, onPressed: () {
                           Navigator.pop(context);
                         })),
                 SizedBox(
@@ -107,7 +107,7 @@ class ClearHistoryBottomSheetState extends State<ClearHistoryBottomSheet>
                 ),
                 Flexible(
                     child: CustomButton(
-                        buttonText: "Yes, Clear", onPressed: ()async {
+                        buttonText: "Yes, Clear".tr, onPressed: ()async {
                        await   controller.clearHistory();
                         }))
               ],

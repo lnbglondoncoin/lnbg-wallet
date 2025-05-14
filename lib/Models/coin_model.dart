@@ -8,6 +8,9 @@ class TokenData {
   final double priceInUsd;
   final String trend;
   final double trendPercentage;
+  // final double maarketCap;
+  // final double volume;
+  
   
 
   TokenData({
@@ -20,6 +23,8 @@ class TokenData {
     required this.priceInUsd,
     required this.trend,
     required this.trendPercentage,
+    // required this.maarketCap,
+    // required this.volume
   });
 
   factory TokenData.fromJson(String name, Map<String, dynamic> json) {
@@ -33,6 +38,8 @@ class TokenData {
       priceInUsd: json["priceInUsd"]?.toDouble() ?? 0.0,
       trend: json["trend"] ?? "",
       trendPercentage: json["trendPercentage"]?.toDouble() ?? 0.0,
+      // maarketCap: json["market_cap"]?.toDouble() ?? 0.0,
+      // volume: json["volume"]?.toDouble() ?? 0.0,
     );
   }
 }

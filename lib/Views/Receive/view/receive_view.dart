@@ -32,7 +32,7 @@ class ReceiveView extends StatelessWidget {
         ? ShimmerAppBar(isDarkMode: isDarkMode):
           CustomAppBar(
           isSuffix: true,
-          title: "Receive",
+          title: "Receive".tr,
           iconPath: 'assets/icons/search.svg',
           onSuffixTap: () {
          showSearchBar.value = !showSearchBar.value; // Toggle search bar visibility
@@ -85,7 +85,7 @@ class ReceiveView extends StatelessWidget {
                                 ),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  "Not Found",
+                                  "Not Found".tr,
                                   style: GoogleFonts.urbanist(
                                     fontSize: 24.sp,
                                     fontWeight: FontWeight.w700,
@@ -94,7 +94,7 @@ class ReceiveView extends StatelessWidget {
                                 ),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.",
+                                  "Sorry, the keyword you entered cannot be found, please check again or search with another keyword.".tr,
                                   style: GoogleFonts.urbanist(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w400,

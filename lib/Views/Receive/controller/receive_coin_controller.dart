@@ -6,6 +6,6 @@ class ReceiveCoinController extends GetxController {
   var amountController = TextEditingController();
   void copyAddress(String walletAddress) {
     Clipboard.setData(ClipboardData(text: walletAddress));
-    Get.snackbar("Copied", "Wallet address copied to clipboard");
+    Get.snackbar("Copied".tr, "Wallet address copied to clipboard".tr);
   }
 }

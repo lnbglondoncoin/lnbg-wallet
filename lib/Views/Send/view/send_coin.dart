@@ -30,7 +30,7 @@ class SendCoin extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
       appBar: CustomAppBar(
-        title: "Send ${token.name}",
+        title: "${"Send".tr} ${token.name}",
         //isSuffix: true,
         iconPath: 'assets/icons/msg.svg',
       ),
@@ -56,7 +56,7 @@ class SendCoin extends StatelessWidget {
                          CustomTextFieldWithPaste(
             controller: controller.addressController,
             validator: controller.validateAddress,
-            hintText: "Recipient Address",
+            hintText: "Recipient Address".tr,
             // iconPath: "assets/icons/scan2.svg",
             isDarkMode: isDarkMode,
             lightColor: lightWhiteColor,
@@ -98,7 +98,7 @@ class SendCoin extends StatelessWidget {
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Amount ${token.symbol}",
+                                    hintText: "${"Amount".tr} ${token.symbol}",
                                     hintStyle: GoogleFonts.urbanist(
                                       fontWeight: FontWeight.w400,
                                       color: greyColor2,
@@ -121,7 +121,7 @@ class SendCoin extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                                 child: Text(
-                                  "Max",
+                                  "Max".tr,
                                   style: GoogleFonts.urbanist(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w800,
@@ -138,7 +138,7 @@ class SendCoin extends StatelessWidget {
                         return Center(
                           child: Text(
                             textAlign: TextAlign.center,
-                            "Total Offer Amount: ${token.symbol} ${controller.ammountIncrypto.value.toStringAsFixed(10)} (${controller.ammountInUSD.value.toStringAsFixed(10)} USD)",
+                            "${"Total Offer Amount:".tr} ${token.symbol} ${controller.ammountIncrypto.value.toStringAsFixed(10)} (${controller.ammountInUSD.value.toStringAsFixed(10)} USD)",
                             style: GoogleFonts.urbanist(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w800,
@@ -158,7 +158,7 @@ class SendCoin extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                          Text(
-                              "Recents",
+                              "Recents".tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
@@ -185,7 +185,7 @@ class SendCoin extends StatelessWidget {
                               controller.clearTransaction(controller.walletCreatingCotroller.wallwtAddress.value,"send");
                             },
                              child: Text(
-                              "Clear",
+                              "Clear".tr,
                               style: GoogleFonts.urbanist(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w800,
@@ -210,7 +210,7 @@ class SendCoin extends StatelessWidget {
                 padding:  EdgeInsets.only(top: Get.height/10),
                 child: Text(
                   textAlign: TextAlign.center,
-                  "No Transactions for ${token.symbol.toUpperCase()}",
+                  "${"No Transactions for".tr} ${token.symbol.toUpperCase()}",
                  
                                 style: GoogleFonts.urbanist(
                                     fontSize: 20.sp,
@@ -274,7 +274,7 @@ class SendCoin extends StatelessWidget {
           return controller.isLoading.value? const LoadingSpinner()
           : isDarkMode
             ? CustomGreenButton(
-                buttonText: "Continue",
+                buttonText: "Continue".tr,
                onPressed: () async {
                   if (controller.validateForm()) {
               // Then execute the network fee calculation
@@ -300,7 +300,7 @@ await controller.calculateFees(
             }
                 })
             : CustomButton(
-                buttonText: "Continue",
+                buttonText: "Continue".tr,
                 onPressed: () async {
                   if (controller.validateForm()) {
               // Then execute the network fee calculation

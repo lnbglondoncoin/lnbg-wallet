@@ -53,7 +53,7 @@ class ChangePasswordScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Change Password",
+          "Change Password".tr,
           style: GoogleFonts.urbanist(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
@@ -75,16 +75,16 @@ class ChangePasswordScreen extends StatelessWidget {
         
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Password",
+                      hintText: "Password".tr,
                       controller: controller.passController,
-                      labelText: "New Password",
+                      labelText: "New Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Password cannot be empty";
+                          return "Password cannot be empty".tr;
                         } else if (value.length < 8) {
-                          return "Must be at least 8 characters";
+                          return "Must be at least 8 characters".tr;
                         }
                         return null;
                       },
@@ -94,16 +94,16 @@ class ChangePasswordScreen extends StatelessWidget {
                     ),
                     CustomTextField(
                       isPasswordField: true,
-                      hintText: "Confirm Password",
+                      hintText: "Confirm Password".tr,
                       controller: controller.confirmPasswordController,
-                      labelText: "Confirm New Password",
+                      labelText: "Confirm New Password".tr,
                       suffixIcoPath: eyeIcon,
                       prefixIconPath: lockIcon,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Confirm Password cannot be empty";
+                          return "Confirm Password cannot be empty".tr;
                         } else if (value != controller.passController.text) {
-                          return "Password must be match";
+                          return "Password must be match".tr;
                         }
                         return null;
                       },
@@ -126,7 +126,7 @@ class ChangePasswordScreen extends StatelessWidget {
       floatingActionButton: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
           child:  CustomOrangeButton(
-                    buttonText: "Change Password",
+                    buttonText: "Change Password".tr,
                     onPressed: ()async {
                         if (!controller.changePasswordKey.currentState!.validate()) {
       return;
@@ -135,7 +135,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         await controller. walletCreatingController.savePassword(controller.passController.text);
                         
                         Get.back();
-                        Get.snackbar("Success", "Password has been changed successfully");
+                        Get.snackbar("Success".tr, "Password has been changed successfully".tr);
                       }
                     })
           ),

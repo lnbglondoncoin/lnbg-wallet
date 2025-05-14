@@ -41,7 +41,7 @@ class BrowseScreen extends StatelessWidget {
                     width: 10.w,
                   ),
                   Text(
-                    "Browser",
+                    "Browser".tr,
                     style: GoogleFonts.poppins(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.w700,
@@ -118,7 +118,7 @@ class BrowseScreen extends StatelessWidget {
                                 BlendMode.srcIn),
                           ))),
                       border: InputBorder.none,
-                      hintText: "Search",
+                      hintText: "Search".tr,
                       hintStyle: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w400,
                         color: greyColor2,
@@ -141,7 +141,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
     children: [
       SizedBox(height: 20.h),
       Text(
-        "Search Result:",
+        "Search Result:".tr,
         style: GoogleFonts.poppins(
             fontSize: 18.sp,
             fontWeight: FontWeight.w600,
@@ -201,7 +201,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
               ):
                walletCreatingController.hundredTokenData.isEmpty?
               Center(
-                child: Text("No Tokens"),
+                child: Text("No Tokens".tr),
               ):
                SizedBox(
                     height: 210.h,
@@ -250,7 +250,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "History",
+                    "History".tr,
                     style: GoogleFonts.poppins(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -262,7 +262,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                    
                     },
                     child: Text(
-                      "See All",
+                      "See All".tr,
                       style: GoogleFonts.poppins(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
@@ -313,16 +313,16 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                                               color: isDarkMode
                                                   ? whiteColor
                                                   : blackColor2)),
-                                      subtitle: Text(
-                                        "Discription",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.urbanist(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 14.sp,
-                                            color: isDarkMode
-                                                ? greyColor
-                                                : greyColor3),
-                                      ),
+                                      // subtitle: Text(
+                                      //   "Discription",
+                                      //   overflow: TextOverflow.ellipsis,
+                                      //   style: GoogleFonts.urbanist(
+                                      //       fontWeight: FontWeight.w800,
+                                      //       fontSize: 14.sp,
+                                      //       color: isDarkMode
+                                      //           ? greyColor
+                                      //           : greyColor3),
+                                      // ),
                                       onTap: () {
                                         // Handle tap if needed
                                       },
@@ -361,7 +361,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Popular",
+                    "Popular".tr,
                     style: GoogleFonts.poppins(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -373,7 +373,7 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                     
                     },
                     child: Text(
-                      "See All",
+                      "See All".tr,
                       style: GoogleFonts.poppins(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
@@ -421,16 +421,16 @@ controller.isSearching.value?shimmerSearchLoadingWidget(isDarkMode):
                                               color: isDarkMode
                                                   ? whiteColor
                                                   : blackColor2)),
-                                      subtitle: Text(
-                                        "Discription",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.urbanist(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 14.sp,
-                                            color: isDarkMode
-                                                ? greyColor
-                                                : greyColor3),
-                                      ),
+                                      // subtitle: Text(
+                                      //   "Discription",
+                                      //   overflow: TextOverflow.ellipsis,
+                                      //   style: GoogleFonts.urbanist(
+                                      //       fontWeight: FontWeight.w800,
+                                      //       fontSize: 14.sp,
+                                      //       color: isDarkMode
+                                      //           ? greyColor
+                                      //           : greyColor3),
+                                      // ),
                                       onTap: () {
                                         // Handle tap if needed
                                       },

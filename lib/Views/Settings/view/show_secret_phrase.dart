@@ -35,7 +35,7 @@ class ShowSeedPhrase extends StatelessWidget {
                       },
                       child: Text(
                         textAlign: TextAlign.center,
-                        "Write Down Your Seed Phrase",
+                        "Write Down Your Seed Phrase".tr,
                         style: GoogleFonts.urbanist(
                             fontWeight: FontWeight.w700,
                             fontSize: 32.sp,
@@ -48,7 +48,7 @@ class ShowSeedPhrase extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",
+                    "This is your seed phrase. Write it down on a paper and keep it in a safe place. You\'ll be asked to re-enter this phrase (in order) on the next step.".tr,
                     style: GoogleFonts.urbanist(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,

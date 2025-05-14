@@ -18,9 +18,9 @@ class NotificationScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
        // isSuffix: true,
-        title: "Notifications",
+        title: "Notifications".tr,
         iconPath: 'assets/icons/msg.svg',
       ),
       body: Obx(() {
@@ -141,7 +141,7 @@ class NotificationScreen extends StatelessWidget {
                       height: 40.h,
                     ),
                     Text(
-                      "Empty",
+                      "Empty".tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,
@@ -151,7 +151,7 @@ class NotificationScreen extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      "You don't have any notifications at this time",
+                      'You don\'t have any notifications at this time'.tr,
                       style: GoogleFonts.urbanist(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w400,

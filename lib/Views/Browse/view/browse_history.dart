@@ -29,7 +29,7 @@ class BrowseHistoryScreen extends StatelessWidget {
     return controller.isLoading.value
         ? ShimmerAppBar(isDarkMode: isDarkMode)
         : CustomAppBar(
-            title: "History",
+            title: "History".tr,
             iconPath: "assets/icons/delete.svg",
             isSuffix: true,
             onSuffixTap: () {
@@ -43,7 +43,7 @@ class BrowseHistoryScreen extends StatelessWidget {
         child:  Obx((){
           return controller.isLoading.value?shimmerHistoryList(isDarkMode): 
           controller.historyResults.isEmpty?Center(
-            child: Text("Your Search History is Empty"),
+            child: Text("Your Search History is Empty".tr),
           ):
           ListView.builder(
             padding: EdgeInsets.zero,
@@ -62,14 +62,14 @@ class BrowseHistoryScreen extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 20.sp,
                             color: isDarkMode ? whiteColor : blackColor2)),
-                    subtitle: Text(
-                      "discription",
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.urbanist(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14.sp,
-                          color: isDarkMode ? greyColor : greyColor3),
-                    ),
+                    // subtitle: Text(
+                    //   "discription",
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: GoogleFonts.urbanist(
+                    //       fontWeight: FontWeight.w800,
+                    //       fontSize: 14.sp,
+                    //       color: isDarkMode ? greyColor : greyColor3),
+                    // ),
                     onTap: () {
                       // Handle tap if needed
                     },

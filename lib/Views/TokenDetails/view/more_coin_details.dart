@@ -27,7 +27,7 @@ class MoreCoinDetails extends StatelessWidget {
 backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
         appBar: CustomAppBar(
         //  isSuffix: true,
-          title:"${transection.token} Graph" ,
+          title:"${transection.token} ${"Graph".tr}" ,
           iconPath: 'assets/icons/chat11.svg',
         ),
         body: SingleChildScrollView(
@@ -97,7 +97,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                    "Price Alerts",
+                    "Price Alerts".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -111,7 +111,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                    
                     children: [
                       Text(
-                    "Website",
+                    "Website".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -119,7 +119,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                   ),
                   const Spacer(),
                   Text(
-                    "ethereum.org",
+                     controller.transactionController.tokenDescriptionAndDecimalModel.value!.website,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -135,7 +135,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                    
                     children: [
                       Text(
-                    "Explorer",
+                    "Explorer".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -143,7 +143,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                   ),
                   const Spacer(),
                   Text(
-                    "etherscan.io",
+                    "etherscan.io".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?whiteColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -182,7 +182,7 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                    "Market Cap",
+                    "Market Cap".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
@@ -192,7 +192,8 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                   Flexible(
                     child: Text(
                         textDirection:TextDirection.rtl,
-                      "\$164,387,883,628",
+                       "\$164,387,883,628",
+                     
                       style: GoogleFonts.urbanist(
                           color: isDarkMode?whiteColor: darkGreyColor,
                           fontSize: 18.sp,
@@ -207,17 +208,18 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                    "Volume (24h)",
+                    "Volume (24h)".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
-                
+                SizedBox(width: 5.w,),
                   Flexible(
                     child: Text(
                         textDirection:TextDirection.rtl,
-                      "\$13,634,523,467",
+                      // "\$13,634,523,467",
+                      controller.transactionController.tokenDescriptionAndDecimalModel.value!.voulme.toString(),
                       style: GoogleFonts.urbanist(
                           color:isDarkMode?whiteColor: darkGreyColor,
                           fontSize: 18.sp,
@@ -232,17 +234,17 @@ backgroundColor:isDarkMode?lightBlackColor3:whiteColor,
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                    "Circulating Supply",
+                    "Circulating Supply".tr,
                     style: GoogleFonts.urbanist(
                         color:isDarkMode?greyColor: darkGreyColor,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   ),
-                
+                SizedBox(width: 5.w,),
                   Flexible(
                     child: Text(
                       textDirection:TextDirection.rtl,
-                      "122,587,625.50 ETH",
+                      controller.transactionController.tokenDescriptionAndDecimalModel.value!.circulatingSuply.toString(),
                       style: GoogleFonts.urbanist(
                           color:isDarkMode?whiteColor: darkGreyColor,
                           fontSize: 18.sp,

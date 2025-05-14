@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lnbg_crypto_wallet_app/Constants/colors.dart';
 import 'package:lnbg_crypto_wallet_app/Views/GeneralSettings/controller/general_settings_controller.dart';
+import 'package:lnbg_crypto_wallet_app/Views/Security&Privacy/controller/security_and_privacy_controller.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_app_bar.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/custom_switch.dart';
 import 'package:lnbg_crypto_wallet_app/Widgets/reuseable_dropdown.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GenralSettingsView extends StatelessWidget {
   final controller = Get.put(GeneralSettingsController());
+    final SecurityAndPrivacyController securityController =
+      Get.find<SecurityAndPrivacyController>();
   GenralSettingsView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -19,9 +24,9 @@ class GenralSettingsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDarkMode ? lightBlackColor3 : whiteColor,
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         iconPath: '',
-        title: 'Change Language',
+        title: 'Change Language'.tr,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -120,17 +125,37 @@ class GenralSettingsView extends StatelessWidget {
               // ),
             
              SizedBox(height: 40.h),
-              _buildSectionTitle('Current Language', context),
+              _buildSectionTitle('Current Language'.tr, context),
               SizedBox(height: 10.h),
               Text(
-                  'Translate the application to a different supported language.',
+                  'Translate the application to a different supported language.'.tr,
                   style: GoogleFonts.urbanist(
                       fontSize: 14.sp,
                       color: isDarkMode ? greyColor : greyColor3)),
               SizedBox(height: 10.h),
               ReusableDropdown(
-                items: const ['English - US', 'Spanish - ES', 'French - FR'],
+                items: controller.items,
                 selectedValue: controller.selectedLanguage,
+                onChanged: (value)  {
+                  var box=GetStorage();
+                  if (value == 'English - US'.tr) {
+                    controller.items.value=['English - US', 'Spanish - ES', 'French - FR'];
+                    controller.selectedLanguage.value = 'English - US';
+                    Get.updateLocale(Locale('en', 'US'));
+                     box.write('selected_language', 'en_US');
+                  } else if (value == 'Spanish - ES'.tr) {
+                     controller.items.value=["Inglés - EE.UU.", "Español - ES", "Francés - FR"];
+                    controller.selectedLanguage.value = 'Español - ES';
+                    Get.updateLocale(Locale('es', 'ES'));
+                     box.write('selected_language', 'es_ES');
+                  } else {
+                     controller.items.value=['Anglais - US', 'Espagnol - ES', 'Français - FR'];
+                    controller.selectedLanguage.value = 'Français - FR';
+                    Get.updateLocale(Locale('fr', 'FR'));
+                  box.write('selected_language', 'fr_FR');
+                  }
+                 // securityController.loadSelectedTime();
+                },
               ),
               // SizedBox(height: 40.h),
               // _buildSectionTitle('Search Engine', context),
